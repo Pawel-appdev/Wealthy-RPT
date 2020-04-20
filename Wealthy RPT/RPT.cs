@@ -442,6 +442,7 @@ namespace Wealthy_RPT
                     DateTime dtActual;
                     dr.Read();
                     CU_ID = Convert.ToInt32(dr["CU_ID"]);
+                    Segment = dr["Segment"].ToString();
                     Surname = dr["Surname"].ToString();
                     Firstname = dr["FirstName"].ToString();
                     UTR = double.Parse(dr["UTR"].ToString(), System.Globalization.CultureInfo.InvariantCulture);

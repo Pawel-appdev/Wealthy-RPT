@@ -17,6 +17,8 @@ namespace Wealthy_RPT
         public DataSet dsRPTDetailCombo = new DataSet();
         public DataSet dsRPTDetailOfficeCRMs = new DataSet();
         public DataSet dsRPTDetailPopulations = new DataSet();
+        public DataSet dsOfficeTeams = new DataSet();
+
         public void GetRPTDetailLookups()
         {
 
@@ -60,9 +62,10 @@ namespace Wealthy_RPT
                 {
                     using (SqlCommand cmd = new SqlCommand())
                     {
-                        cmd.CommandText = "qryFrmDetailsOfficeCRMs";
-                        SqlParameter prm = cmd.Parameters.Add("@nOffice", SqlDbType.Text);
-                        prm.Value = "East Kilbride";
+                        //cmd.CommandText = "qryFrmDetailsOfficeCRMs";
+                        cmd.CommandText = "qryGetCRMs";
+                        //SqlParameter prm = cmd.Parameters.Add("@nOffice", SqlDbType.Text);
+                        //prm.Value = "";
                         cmd.Connection = con;
                         cmd.CommandType = CommandType.StoredProcedure;
 
@@ -110,6 +113,42 @@ namespace Wealthy_RPT
             {
                 //con.Close();
                 MessageBox.Show("Unable to retrieve drop-down lists using: 'qryFrmDetailsOfficeCRMs'." + Environment.NewLine + Environment.NewLine
+                    + "Error: " + e.Number + Environment.NewLine + e.Message
+                    , Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+
+            }
+
+        }
+
+        public void GetOfficeCRMs()
+        {
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(Global.ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.CommandText = "qryGetOfficeTeams";
+                        SqlParameter prm1 = cmd.Parameters.Add("@nOffice", SqlDbType.Text);
+                        prm1.Value = "East Kilbride";  // ######################
+                        SqlParameter prm2 = cmd.Parameters.Add("@nPop", SqlDbType.Text);
+                        prm2.Value = "rPt20Mill";  // ######################
+                        cmd.Connection = con;
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        con.Open();
+
+                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                        adapter.Fill(dsOfficeTeams);
+                        con.Close();
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                //con.Close();
+                MessageBox.Show("Unable to retrieve drop-down lists using: 'qryGetOfficeTeams'." + Environment.NewLine + Environment.NewLine
                     + "Error: " + e.Number + Environment.NewLine + e.Message
                     , Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
 

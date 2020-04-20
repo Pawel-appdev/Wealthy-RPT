@@ -62,7 +62,7 @@
                                 <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
                             <TextBlock x:Name="lblCustomerSegment" Margin="8,2,0,2" Grid.Row="0"  Grid.Column="0" FontSize="18"><Bold>Customer Segment</Bold></TextBlock>
-                            <ComboBox x:Name="cboSegment" Grid.Row="0"  Grid.Column="1" Margin="11,4,10,4" GotFocus="CboSegment_GotFocus"/>
+                            <ComboBox x:Name="cboSegment" Grid.Row="0"  Grid.Column="1" Margin="11,4,10,4" GotFocus="CboSegment_GotFocus" SelectedValue="{Binding Segment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <TextBlock x:Name="lblPopulation" Margin="8,2,9,2" Grid.Row="0"  Grid.Column="2" FontSize="18"><Bold>Population</Bold></TextBlock>
                             <ComboBox x:Name="cboPopFriendly" Grid.Row="0"  Grid.Column="3" Background="LightGray" IsEnabled="False" Margin="11,4,10,4" GotFocus="CboPopFriendly_GotFocus"/>
                             <ComboBox x:Name="cboPopCode" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="3" Margin="0,4,121,4">
@@ -198,10 +198,10 @@
                                         <ComboBox x:Name="cboOffice" Height="22" Margin="4,2,1,2" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="CboOffice_GotFocus" SelectedValue="{Binding Office, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         <ComboBox x:Name="cboTeam" Height="22" Margin="6,2,4,2" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="2" GotFocus="CboTeam_GotFocus" SelectedValue="{Binding Team, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         <TextBlock x:Name="lblAllocatedTo" Margin="8,2,9,2" Grid.Row="2"  Grid.Column="0" Grid.ColumnSpan="2">Allocated To</TextBlock>
-                                        <ComboBox x:Name="cboAllocatedTo" Height="22" Margin="4,2,4,2" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="6" GotFocus="CboAllocatedTo_GotFocus"/>
+                                        <ComboBox x:Name="cboAllocatedTo" Height="22" Margin="4,2,4,2" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="6" GotFocus="CboAllocatedTo_GotFocus" SelectedValue="{Binding 'Team Identifer', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         <TextBlock x:Name="lblCRMName" Margin="8,2,9,2" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">CCM Name</TextBlock>
                                         <TextBlock x:Name="lblCRMDA" Margin="8,2,9,2" Grid.Row="3"  Grid.Column="4" Grid.ColumnSpan="2">Date Appointed</TextBlock>
-                                        <ComboBox x:Name="cboCRMName" Margin="4,2,1,2" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="CboCRMName_GotFocus" SelectedValue="{Binding CRMName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <ComboBox x:Name="cboCRMName" Margin="4,2,1,2" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="CboCRMName_GotFocus" SelectedValue="{Binding CRM_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         <TextBox x:Name="txtCRMDA"  Margin="6,2,4,2" Grid.Row="3" Grid.Column="6" Grid.ColumnSpan="2" Background="LightGray" GotFocus="TxtCRMDA_GotFocus" Text = "{Binding CRM_Appointed, StringFormat=dd/MM/yyyy, Mode = TwoWay}"/>
                                         <TextBox x:Name="txtCRMName"  Margin="6,0,4,0" Grid.Row="4" Grid.Column="0"/>
                                     </Grid>

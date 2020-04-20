@@ -38,7 +38,8 @@ namespace Wealthy_RPT
             Lookups lu = new Lookups();
             lu.GetRPTDetailLookups();
             lu.GetRPTDetailOfficeCRMs();
-            
+            lu.GetOfficeCRMs();
+
             // == Customer Segment
 
             // cboSegment
@@ -93,11 +94,16 @@ namespace Wealthy_RPT
             // cboOffice populated via cboPopFriendly_Click()  qryGetTeams
             // cboTeam populated via cboOffice_Click()  qryGetOfficeTeams  qryFrmAllPopOfficeTeam
             //cboAllocatedTo qryGetOfficeTeamStaff
-            
-            //cboCRMName  ##### NEEDS TO PASS OFFICE NAME
+
+
+            cboAllocatedTo.ItemsSource = lu.dsOfficeTeams.Tables[0].DefaultView;
+            cboAllocatedTo.DisplayMemberPath = "Team Identifier";
+            cboAllocatedTo.SelectedValuePath = "Team Identifier";
+
+            //cboCRMName
             cboCRMName.ItemsSource = lu.dsRPTDetailOfficeCRMs.Tables[0].DefaultView;
-            cboCRMName.DisplayMemberPath = "PID";
-            cboCRMName.SelectedValuePath = "Full Name";
+            cboCRMName.DisplayMemberPath = "CRM_Name";
+            cboCRMName.SelectedValuePath = "CRM_Name";
 
             // == Appointed Agent
             //cbo648 [yes/no]
@@ -154,6 +160,7 @@ namespace Wealthy_RPT
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //SetColumnHeaders();
+
 
             //' questionnaire scores     [behaviours]
             //Me.txtOpenIDMS.Text = 0
