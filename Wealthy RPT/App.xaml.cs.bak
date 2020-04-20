@@ -67,7 +67,6 @@ namespace Wealthy_RPT
             User user = new User();
             Global.FullName = user.FullName;
             Global.PID = user.PID;
-            Global.AccessLevel = user.AccessLevel;
             Thread.Sleep(1500);
 
             splashWindow.SetProgress("Loading Application");
@@ -82,6 +81,8 @@ namespace Wealthy_RPT
                 {
                     MainWindow mainWindow = new MainWindow();
                     mainWindow.Show();
+                    //RPT_Detail rptDetail = new RPT_Detail();
+                    //rptDetail.Show();
                     Global.blnmainWindow=true;
                 }
             });

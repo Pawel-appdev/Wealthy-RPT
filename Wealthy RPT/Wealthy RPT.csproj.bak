@@ -78,7 +78,6 @@
     <Compile Include="RPT Detail.xaml.cs">
       <DependentUpon>RPT Detail.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RPT.cs" />
     <Compile Include="SimpleReports.xaml.cs">
       <DependentUpon>SimpleReports.xaml</DependentUpon>
     </Compile>
@@ -88,8 +87,6 @@
     <Compile Include="StandardReports.xaml.cs">
       <DependentUpon>StandardReports.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TextBoxDate.cs" />
-    <Compile Include="TextBoxWholeNum.cs" />
     <Compile Include="User.cs" />
     <Page Include="About.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -222,9 +219,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="alarm-clock-16.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Copy.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\pink-flag-16.ico" />

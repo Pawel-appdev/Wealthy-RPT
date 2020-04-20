@@ -1,0 +1,16 @@
+[System]
+;HP
+ConnectString=Server=localhost\SQLEXPRESS;Database=HNWU_rPt_Combined_110201;TRUSTED_CONNECTION=Yes;Connection Timeout=100
+ConnectString=Server=localhost\SQLEXPRESS;Database=DTaS_LaunchPad;Trusted_Connection=Yes;Connection Timeout=30
+'ConnectString=Server=10.21.222.31\SQL_PRDU_01;Database=HNWU_rPt_Combined_110201;Trusted_Connection=Yes;Connection Timeout=50
+
+TimeOut=50
+
+[AppDetails]
+CurrentVersion=1000
+ApplicationName=Wealthy RPT
+BDAppNo=110201
+ResolverGroup=HMRC B Local Compliance
+InstallPath=
+
+

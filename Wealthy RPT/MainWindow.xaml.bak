@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wealthy_RPT"
         mc:Ignorable="d"
-        Title="Wealthy RPT" Height="700" MinHeight="300" Width="1300" MinWidth="1100" WindowStartupLocation="CenterScreen" Icon="RPT16V1.ico"
+        Title="Wealthy RPT" Height="700" MinHeight="300" Width="1300" MinWidth="1111" WindowStartupLocation="CenterScreen" Icon="RPT16V1.ico"
         KeyDown="MainWindow_KeyDown">
 
     <Window.Background>
@@ -87,7 +87,7 @@
         <TextBox x:Name="txtPage" HorizontalAlignment="Right" Height="25" Margin="0,105,88,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="227" UndoLimit="98" TextAlignment="Center" VerticalContentAlignment="Center" IsEnabled="False"/>
         <Button x:Name="btnNext" Content="&gt;" HorizontalAlignment="Right" Height="25" Margin="0,105,56,0" VerticalAlignment="Top" Width="25" FontSize="16" FontFamily="Microsoft Sans Serif" ToolTip="Next Page" Grid.Column="2" Click="btnNext_Click"/>
         <Button x:Name="btnLastPage" Content="&gt;&gt;" HorizontalAlignment="Right" Height="25" Margin="0,105,26,0" VerticalAlignment="Top" Width="25" FontSize="16" FontFamily="Microsoft Sans Serif" ToolTip="Last Page" Grid.Column="2" Click="btnLastPage_Click"/>
-        <DataGrid x:Name="dgCases" HorizontalAlignment="Stretch"  Margin="32,163,25,38" VerticalAlignment="Stretch" Style="{DynamicResource headerStyle}" FontWeight="Normal" AutoGenerateColumns="False" VerticalGridLinesBrush="#FFD1D1D1" HorizontalGridLinesBrush="#FFD1D1D1" AlternatingRowBackground="WhiteSmoke"  AlternationCount="2" IsReadOnly="True" MouseDoubleClick="DgCases_MouseDoubleClick">
+        <DataGrid x:Name="dgCases" HorizontalAlignment="Stretch"  Margin="32,163,25,38" VerticalAlignment="Stretch" Style="{DynamicResource headerStyle}" FontWeight="Normal" AutoGenerateColumns="False" VerticalGridLinesBrush="#FFD1D1D1" HorizontalGridLinesBrush="#FFD1D1D1" AlternatingRowBackground="WhiteSmoke"  AlternationCount="2" IsReadOnly="True">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#D1D1D1" />
                 <!--color of selected row-->
@@ -182,10 +182,10 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Time_Span" Binding="{Binding TimeSpan}" Visibility="Hidden" ></DataGridTextColumn>
                 <DataGridTextColumn Header="CCM TimeSpan" Binding="{Binding CRM_Name}" Width="*"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <Label x:Name="lblSearchItems" Content="" HorizontalAlignment="Center" Height="28" Margin="818,51,25,0" VerticalAlignment="Top" Width="451" Background="#FFE2E2E2" Visibility="Hidden" HorizontalContentAlignment="Right" />
 
 
 

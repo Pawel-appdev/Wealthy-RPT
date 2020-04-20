@@ -1,0 +1,24 @@
+﻿<Window x:Class="Wealthy_RPT.Key_Legend"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wealthy_RPT"
+        mc:Ignorable="d"
+        Title="Key Legend" Height="229.134" Width="272.047" Icon="RPT16V1.ico" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Canvas>
+
+        <Image x:Name="Icon1" HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="16" Canvas.Left="39" Canvas.Top="32" Source="flag-16REV.ico" />
+        <Image x:Name="Icon2" HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="16" Canvas.Left="39" Canvas.Top="55" Source="arrow-up-16.ico" RenderTransformOrigin="0.557,-0.212"/>
+        <Image HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="16" Canvas.Left="39" Canvas.Top="80" Source="arrow-174-16REV.ico" RenderTransformOrigin="0.919,0.518"/>
+        <Image HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="16" Canvas.Left="39" Canvas.Top="105" Source="arrow-239-16REV.ico"/>
+        <Image HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="16" Canvas.Left="39" Canvas.Top="132" Source="alarm-clock-16.ico"/>
+        <Image HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="16" Canvas.Left="39" Canvas.Top="154" Source="exclamation-16.ico"/>
+        <Label Content="Additional Information" Height="25" Canvas.Left="70" Canvas.Top="25" Width="158"/>
+        <Label Content="CCM Boost" Height="25" Canvas.Left="70" Canvas.Top="50" Width="158"/>
+        <Label Content="Segment Up" Height="25" Canvas.Left="70" Canvas.Top="75" Width="158"/>
+        <Label Content="Segment Down" Height="25" Canvas.Left="70" Canvas.Top="100" Width="158"/>
+        <Label Content="CCM Appointed over 4 years" Height="25" Canvas.Left="70" Canvas.Top="125" Width="162"/>
+        <Label Content="CCM Appointed over 5 years" Height="25" Canvas.Left="70" Canvas.Top="150" Width="162"/>
+    </Canvas>
+</Window>
