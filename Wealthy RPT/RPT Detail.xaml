@@ -65,12 +65,9 @@
                             <ComboBox x:Name="cboSegment" Grid.Row="0"  Grid.Column="1" Margin="11,4,10,4" GotFocus="CboSegment_GotFocus" SelectedValue="{Binding Segment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <TextBlock x:Name="lblPopulation" Margin="8,2,9,2" Grid.Row="0"  Grid.Column="2" FontSize="18"><Bold>Population</Bold></TextBlock>
                             <ComboBox x:Name="cboPopFriendly" Grid.Row="0"  Grid.Column="3" Background="LightGray" IsEnabled="False" Margin="11,4,10,4" GotFocus="CboPopFriendly_GotFocus"/>
-                            <ComboBox x:Name="cboPopCode" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="3" Margin="0,4,121,4">
-                                <ComboBoxItem>rPt10Mill</ComboBoxItem>
-                                <ComboBoxItem >rPt20Mill</ComboBoxItem>
-                            </ComboBox>
+                            <ComboBox x:Name="cboPopCode" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="3" Margin="0,4,121,4" SelectedValue="{Binding Pop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <TextBlock x:Name="txtPopFriendly" Grid.Row="0"  Grid.Column="5" Grid.ColumnSpan="2" Margin="0,4,121,4"/>
-                            <TextBlock x:Name="lblPopYear" Margin="29,2,10,2" Grid.Row="0"  Grid.Column="6" FontSize="18"><Bold>2020</Bold></TextBlock>
+                            <TextBlock x:Name="lblPopYear" Margin="29,2,10,2" Grid.Row="0"  Grid.Column="6" FontSize="18"/>
                             <TextBlock x:Name="lblReqd" Margin="0,7,10,2"  HorizontalAlignment="Right" Grid.Row="0"  Grid.Column="7" Width="97">Compulsory Fields</TextBlock>
                             <TextBox x:Name="txtReqd" Margin="20,4,0,0" Height="20" Width="64" Grid.Row="0"  Grid.Column="8" Background="#50000003" Grid.ColumnSpan="2"/>
                         </Grid>
@@ -341,7 +338,7 @@
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="30"/>
                                             <RowDefinition Height="Auto"/>

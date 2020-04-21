@@ -34,133 +34,150 @@ namespace Wealthy_RPT
 
         private void PopulateCombos()
         {
+            try
+            {
+                Lookups lu = new Lookups();
+                lu.GetRPTDetailLookups();
+                lu.GetRPTDetailOfficeCRMs();
+                //lu.GetOfficeCRMs();
 
-            Lookups lu = new Lookups();
-            lu.GetRPTDetailLookups();
-            lu.GetRPTDetailOfficeCRMs();
-            lu.GetOfficeCRMs();
+                // == Customer Segment
 
-            // == Customer Segment
+                // cboSegment
+                cboSegment.ItemsSource = lu.dsRPTDetailCombo.Tables[0].DefaultView;
+                cboSegment.DisplayMemberPath = "Options";
+                cboSegment.SelectedValuePath = "DecodedValue";
 
-            // cboSegment
-            cboSegment.ItemsSource = lu.dsRPTDetailCombo.Tables[0].DefaultView;
-            cboSegment.DisplayMemberPath = "Options";
-            cboSegment.SelectedValuePath = "DecodedValue";
+                // cboPopFriendly
+                cboPopFriendly.ItemsSource = lu.dsRPTDetailCombo.Tables[1].DefaultView;
+                cboPopFriendly.DisplayMemberPath = "Pop_Friendly_Name";
+                cboPopFriendly.SelectedValuePath = "Pop_Code_Name";
 
-            // cboPopFriendly
-            cboPopFriendly.ItemsSource = lu.dsRPTDetailCombo.Tables[1].DefaultView;
-            cboPopFriendly.DisplayMemberPath = "Pop_Friendly_Name";
-            cboPopFriendly.SelectedValuePath = "Pop_Code_Name";
+                // cboPopCode
+                cboPopCode.ItemsSource = lu.dsRPTDetailCombo.Tables[1].DefaultView;
+                cboPopCode.DisplayMemberPath = "Pop_Friendly_Name";
+                cboPopCode.SelectedValuePath = "Pop_Code_Name";
 
-            // cboPopCode
-            //cboPopCode.ItemsSource = lu.dsRPTDetailCombo.Tables[1].DefaultView;
-            //cboPopCode.DisplayMemberPath = "Pop_Friendly_Name";
-            //cboPopCode.SelectedValuePath = "Pop_Code_Name";
+                // == Customer Details
 
-            // == Customer Details
+                // cboUTR
+                //cboUTR.ItemsSource = lu.dsRPTDetailCombo.Tables[2].DefaultView;
+                //cboUTR.DisplayMemberPath = "Options";
+                //cboUTR.SelectedValuePath = "DecodedValue";
 
-            // cboUTR
-            //cboUTR.ItemsSource = lu.dsRPTDetailCombo.Tables[2].DefaultView;
-            //cboUTR.DisplayMemberPath = "Options";
-            //cboUTR.SelectedValuePath = "DecodedValue";
+                // cboDeceased [yes/no]
+                cboDeceased.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
+                cboDeceased.DisplayMemberPath = "Options";
+                cboDeceased.SelectedValuePath = "DecodedValue";
 
-            // cboDeceased [yes/no]
-            cboDeceased.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
-            cboDeceased.DisplayMemberPath = "Options";
-            cboDeceased.SelectedValuePath = "DecodedValue";
+                // cboMarital
+                cboMarital.ItemsSource = lu.dsRPTDetailCombo.Tables[2].DefaultView;
+                cboMarital.DisplayMemberPath = "Options";
+                cboMarital.SelectedValuePath = "DecodedValue";
 
-            // cboMarital
-            cboMarital.ItemsSource = lu.dsRPTDetailCombo.Tables[2].DefaultView;
-            cboMarital.DisplayMemberPath = "Options";
-            cboMarital.SelectedValuePath = "DecodedValue";
+                // cboGender
+                cboGender.ItemsSource = lu.dsRPTDetailCombo.Tables[3].DefaultView;
+                cboGender.DisplayMemberPath = "Options";
+                cboGender.SelectedValuePath = "DecodedValue";
 
-            // cboGender
-            cboGender.ItemsSource = lu.dsRPTDetailCombo.Tables[3].DefaultView;
-            cboGender.DisplayMemberPath = "Options";
-            cboGender.SelectedValuePath = "DecodedValue";
+                // cboResidence
+                cboResidence.ItemsSource = lu.dsRPTDetailCombo.Tables[4].DefaultView;
+                cboResidence.DisplayMemberPath = "Options";
+                cboResidence.SelectedValuePath = "DecodedValue";
 
-            // cboResidence
-            cboResidence.ItemsSource = lu.dsRPTDetailCombo.Tables[4].DefaultView;
-            cboResidence.DisplayMemberPath = "Options";
-            cboResidence.SelectedValuePath = "DecodedValue";
+                // cboDomicile
+                cboDomicile.ItemsSource = lu.dsRPTDetailCombo.Tables[5].DefaultView;
+                cboDomicile.DisplayMemberPath = "Options";
+                cboDomicile.SelectedValuePath = "DecodedValue";
 
-            // cboDomicile
-            cboDomicile.ItemsSource = lu.dsRPTDetailCombo.Tables[5].DefaultView;
-            cboDomicile.DisplayMemberPath = "Options";
-            cboDomicile.SelectedValuePath = "DecodedValue";
+                // == Customer Team
 
-            // == Customer Team
+                // cboOffice populated on Window_Loaded() in order to pass selected PopCode
 
-            // cboOffice populated via cboPopFriendly_Click()  qryGetTeams
-            // cboTeam populated via cboOffice_Click()  qryGetOfficeTeams  qryFrmAllPopOfficeTeam
-            //cboAllocatedTo qryGetOfficeTeamStaff
+                // cboTeam  populated on Window_Loaded() in order to pass selected Office and PopCode
 
+                // cboAllocatedTo: qryGetOfficeTeamStaff @nOffice @nTeam GetOfficeTeamStaff(string strOffice, string strTeam)
+                //cboAllocatedTo.ItemsSource = lu.dsOfficeTeams.Tables[0].DefaultView;
+                //cboAllocatedTo.DisplayMemberPath = "Team Identifier";
+                //cboAllocatedTo.SelectedValuePath = "Team Identifier";
 
-            cboAllocatedTo.ItemsSource = lu.dsOfficeTeams.Tables[0].DefaultView;
-            cboAllocatedTo.DisplayMemberPath = "Team Identifier";
-            cboAllocatedTo.SelectedValuePath = "Team Identifier";
+                //cboCRMName
+                cboCRMName.ItemsSource = lu.dsRPTDetailOfficeCRMs.Tables[0].DefaultView;
+                cboCRMName.DisplayMemberPath = "CRM_Name";
+                cboCRMName.SelectedValuePath = "CRM_Name";
 
-            //cboCRMName
-            cboCRMName.ItemsSource = lu.dsRPTDetailOfficeCRMs.Tables[0].DefaultView;
-            cboCRMName.DisplayMemberPath = "CRM_Name";
-            cboCRMName.SelectedValuePath = "CRM_Name";
+                // == Appointed Agent
+                //cbo648 [yes/no]
+                cbo648.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
+                cbo648.DisplayMemberPath = "Options";
+                cbo648.SelectedValuePath = "DecodedValue";
+                //cboChange [yes/no]
+                cboChange.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
+                cboChange.DisplayMemberPath = "Options";
+                cboChange.SelectedValuePath = "DecodedValue";
 
-            // == Appointed Agent
-            //cbo648 [yes/no]
-            cbo648.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
-            cbo648.DisplayMemberPath = "Options";
-            cbo648.SelectedValuePath = "DecodedValue";
-            //cboChange [yes/no]
-            cboChange.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
-            cboChange.DisplayMemberPath = "Options";
-            cboChange.SelectedValuePath = "DecodedValue";
+                // == Behaviors
+                //cboCurrentSuspensions [yes/no]
+                cboCurrentSuspensions.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
+                cboCurrentSuspensions.DisplayMemberPath = "Options";
+                cboCurrentSuspensions.SelectedValuePath = "DecodedValue";
+                //cboPrevSuspensions [yes/no]
+                cboPrevSuspensions.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
+                cboPrevSuspensions.DisplayMemberPath = "Options";
+                cboPrevSuspensions.SelectedValuePath = "DecodedValue";
+                //cboFailures [yes/no]
+                cboFailures.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
+                cboFailures.DisplayMemberPath = "Options";
+                cboFailures.SelectedValuePath = "DecodedValue";
 
-            // == Behaviors
-            //cboCurrentSuspensions [yes/no]
-            cboCurrentSuspensions.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
-            cboCurrentSuspensions.DisplayMemberPath = "Options";
-            cboCurrentSuspensions.SelectedValuePath = "DecodedValue";
-            //cboPrevSuspensions [yes/no]
-            cboPrevSuspensions.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
-            cboPrevSuspensions.DisplayMemberPath = "Options";
-            cboPrevSuspensions.SelectedValuePath = "DecodedValue";
-            //cboFailures [yes/no]
-            cboFailures.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
-            cboFailures.DisplayMemberPath = "Options";
-            cboFailures.SelectedValuePath = "DecodedValue";
-
-            // == Case overview tab
-            //cboWealth
-            cboWealth.ItemsSource = lu.dsRPTDetailCombo.Tables[6].DefaultView;
-            cboWealth.DisplayMemberPath = "Options";
-            cboWealth.SelectedValuePath = "DecodedValue";
-            //cboSector
-            cboSector.ItemsSource = lu.dsRPTDetailCombo.Tables[9].DefaultView;
-            cboSector.DisplayMemberPath = "Options";
-            cboSector.SelectedValuePath = "DecodedValue";
-            //cboPathway
-            cboPathway.ItemsSource = lu.dsRPTDetailCombo.Tables[7].DefaultView;
-            cboPathway.DisplayMemberPath = "Options";
-            cboPathway.SelectedValuePath = "DecodedValue";
-            //cboLongTerm
-            cboLongTerm.ItemsSource = lu.dsRPTDetailCombo.Tables[10].DefaultView;
-            cboLongTerm.DisplayMemberPath = "Options";
-            cboLongTerm.SelectedValuePath = "DecodedValue";
-            //cboSource
-            cboSource.ItemsSource = lu.dsRPTDetailCombo.Tables[8].DefaultView;
-            cboSource.DisplayMemberPath = "Options";
-            cboSource.SelectedValuePath = "DecodedValue";
-            //cboLifeEvents
-            cboLifeEvents.ItemsSource = lu.dsRPTDetailCombo.Tables[11].DefaultView;
-            cboLifeEvents.DisplayMemberPath = "Options";
-            cboLifeEvents.SelectedValuePath = "DecodedValue";
+                // == Case overview tab
+                //cboWealth
+                cboWealth.ItemsSource = lu.dsRPTDetailCombo.Tables[6].DefaultView;
+                cboWealth.DisplayMemberPath = "Options";
+                cboWealth.SelectedValuePath = "DecodedValue";
+                //cboSector
+                cboSector.ItemsSource = lu.dsRPTDetailCombo.Tables[9].DefaultView;
+                cboSector.DisplayMemberPath = "Options";
+                cboSector.SelectedValuePath = "DecodedValue";
+                //cboPathway
+                cboPathway.ItemsSource = lu.dsRPTDetailCombo.Tables[7].DefaultView;
+                cboPathway.DisplayMemberPath = "Options";
+                cboPathway.SelectedValuePath = "DecodedValue";
+                //cboLongTerm
+                cboLongTerm.ItemsSource = lu.dsRPTDetailCombo.Tables[10].DefaultView;
+                cboLongTerm.DisplayMemberPath = "Options";
+                cboLongTerm.SelectedValuePath = "DecodedValue";
+                //cboSource
+                cboSource.ItemsSource = lu.dsRPTDetailCombo.Tables[8].DefaultView;
+                cboSource.DisplayMemberPath = "Options";
+                cboSource.SelectedValuePath = "DecodedValue";
+                //cboLifeEvents
+                cboLifeEvents.ItemsSource = lu.dsRPTDetailCombo.Tables[11].DefaultView;
+                cboLifeEvents.DisplayMemberPath = "Options";
+                cboLifeEvents.SelectedValuePath = "DecodedValue";
+            }
+            catch
+            {
+                MessageBox.Show("Unable to load combo box data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //SetColumnHeaders();
 
+            Lookups lu = new Lookups();
+            string strPopCode = this.cboPopCode.SelectedValue.ToString();
+            lu.GetOffices(strPopCode);
+            cboOffice.ItemsSource = lu.dsOffices.Tables[0].DefaultView;
+            cboOffice.DisplayMemberPath = "Office";
+            cboOffice.SelectedValuePath = "Office";
+
+            string strOffice = this.cboOffice.SelectedValue.ToString();
+            lu.GetOfficeCRMs(strOffice, strPopCode); // "rPt20Mill"
+            cboTeam.ItemsSource = lu.dsOfficeTeams.Tables[0].DefaultView;
+            cboTeam.DisplayMemberPath = "Team Identifier";
+            cboTeam.SelectedValuePath = "Team Identifier";
 
             //' questionnaire scores     [behaviours]
             //Me.txtOpenIDMS.Text = 0

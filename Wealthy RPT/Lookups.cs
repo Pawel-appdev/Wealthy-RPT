@@ -18,6 +18,8 @@ namespace Wealthy_RPT
         public DataSet dsRPTDetailOfficeCRMs = new DataSet();
         public DataSet dsRPTDetailPopulations = new DataSet();
         public DataSet dsOfficeTeams = new DataSet();
+        public DataSet dsOffices= new DataSet();
+        public DataSet dsOfficeTeamStaff = new DataSet();
 
         public void GetRPTDetailLookups()
         {
@@ -120,9 +122,9 @@ namespace Wealthy_RPT
 
         }
 
-        public void GetOfficeCRMs()
+        public void GetOfficeCRMs(string strOffice, string strPopCode)
         {
-
+            // returns matching tblOfficeCRM:  Office, [Team Identifier], Pop
             try
             {
                 using (SqlConnection con = new SqlConnection(Global.ConnectionString))
@@ -131,9 +133,9 @@ namespace Wealthy_RPT
                     {
                         cmd.CommandText = "qryGetOfficeTeams";
                         SqlParameter prm1 = cmd.Parameters.Add("@nOffice", SqlDbType.Text);
-                        prm1.Value = "East Kilbride";  // ######################
+                        prm1.Value = strOffice;
                         SqlParameter prm2 = cmd.Parameters.Add("@nPop", SqlDbType.Text);
-                        prm2.Value = "rPt20Mill";  // ######################
+                        prm2.Value = strPopCode;
                         cmd.Connection = con;
                         cmd.CommandType = CommandType.StoredProcedure;
 
@@ -149,6 +151,77 @@ namespace Wealthy_RPT
             {
                 //con.Close();
                 MessageBox.Show("Unable to retrieve drop-down lists using: 'qryGetOfficeTeams'." + Environment.NewLine + Environment.NewLine
+                    + "Error: " + e.Number + Environment.NewLine + e.Message
+                    , Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+
+            }
+
+        }
+
+
+        public void GetOffices(string strPopCode)
+        {
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(Global.ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.CommandText = "qryGetOffices";
+                        SqlParameter prm1 = cmd.Parameters.Add("@nPop", SqlDbType.Text);
+                        prm1.Value = strPopCode;  
+                        cmd.Connection = con;
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        con.Open();
+
+                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                        adapter.Fill(dsOffices);
+                        con.Close();
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                //con.Close();
+                MessageBox.Show("Unable to retrieve drop-down lists using: 'qryGetOfficeTeams'." + Environment.NewLine + Environment.NewLine
+                    + "Error: " + e.Number + Environment.NewLine + e.Message
+                    , Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+
+            }
+
+        }
+
+        public void GetOfficeTeamStaff(string strOffice, string strTeam)
+        {
+            // returns formatted data from tblUsers
+            try
+            {
+                using (SqlConnection con = new SqlConnection(Global.ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.CommandText = "qryGetOfficeTeamStaff";
+                        SqlParameter prm1 = cmd.Parameters.Add("@nOffice", SqlDbType.Text);
+                        prm1.Value = strOffice;
+                        SqlParameter prm2 = cmd.Parameters.Add("@nTeam", SqlDbType.Text);
+                        prm2.Value = strTeam;
+                        cmd.Connection = con;
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        con.Open();
+
+                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                        adapter.Fill(dsOfficeTeamStaff);
+                        con.Close();
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                //con.Close();
+                MessageBox.Show("Unable to retrieve drop-down lists using: 'qryGetTeams'." + Environment.NewLine + Environment.NewLine
                     + "Error: " + e.Number + Environment.NewLine + e.Message
                     , Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
 

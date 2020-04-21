@@ -951,6 +951,9 @@ namespace Wealthy_RPT
             double dUTR = Convert.ToDouble((dgCases.Columns[1].GetCellContent(dgCases.CurrentCell.Item) as TextBlock).Text);
             rpt.GetRPDData(dUTR);
             rptDetail.DataContext = rpt;
+            rptDetail.cboPopFriendly.SelectedIndex = this.cboPopulation.SelectedIndex;
+            rptDetail.cboPopCode.SelectedIndex = this.cboPopulation.SelectedIndex;
+            try { rptDetail.lblPopYear.Text = this.cboYear.SelectedValue.ToString(); } catch { DateTime.Now.Year.ToString(); }
             System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
             rptDetail.Show();
         }
