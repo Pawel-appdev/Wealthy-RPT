@@ -46,7 +46,7 @@
             <MenuItem x:Name="mnuAdmin" Header="Admin" Height="24" Width="56" RenderTransformOrigin="-1.134,0.48">
                 <MenuItem x:Name="mnuImportData" Header="Import Data" HorizontalAlignment="Left" Height="24" Width="211" Margin="0,0,0,0" Click="mnuImportData_Click"/>
                 <MenuItem x:Name="mnuPercCalculation" Header="Percentile Recalculation" HorizontalAlignment="Left" Height="24" Width="211" Margin="0,0,0,0" Click="mnuPercCalculation_Click"/>
-                <MenuItem x:Name="mnuUpdateDBTables" Header="Update DB Tables" HorizontalAlignment="Left" Height="24" Width="211" Margin="0,0,0,0"/>
+                <MenuItem x:Name="mnuUpdateDBTables" Header="Update DB Tables" HorizontalAlignment="Left" Height="24" Width="211" Margin="0,0,0,0" Click="mnuUpdateDBTables_Click"/>
             </MenuItem>
             <MenuItem x:Name="mnuUpdates" Header="Updates" Height="24" Width="62" RenderTransformOrigin="-1.114,0.58">
                 <MenuItem Header="Monthly Update" HorizontalAlignment="Left" Height="24" Width="182" Margin="0,0,0,0"/>

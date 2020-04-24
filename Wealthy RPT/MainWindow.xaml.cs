@@ -1132,5 +1132,11 @@ namespace Wealthy_RPT
             System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
             rptDetail.Show();
         }
+
+        private void mnuUpdateDBTables_Click(object sender, RoutedEventArgs e)
+        {
+            Admin ctr_Admin = new Admin();
+            ctr_Admin.ShowDialog();
+        }
     }
 }
