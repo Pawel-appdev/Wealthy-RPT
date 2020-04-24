@@ -78,6 +78,7 @@ namespace Wealthy_RPT
         private static string _fullname;
         private static string _accesslevel;
         private static string _displayRAG;
+        private static bool _admin;
 
         public static string PID
         {
@@ -112,6 +113,18 @@ namespace Wealthy_RPT
             set
             {
                 _accesslevel = value;
+            }
+        }
+
+        public static bool Admin
+        {
+            get
+            {
+                return _admin;
+            }
+            set
+            {
+                _admin = value;
             }
         }
 

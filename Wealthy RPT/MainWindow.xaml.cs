@@ -103,6 +103,19 @@ namespace Wealthy_RPT
             this.sbiVersion.Content = "Version : " + Global.CurrentVersion;
             this.sbiAccessLevel.Content = "Access Level : " + Global.AccessLevel;
 
+            HideMenuItems();
+            PopulateCases();
+        }
+
+        private void HideMenuItems()
+        {
+            if (Global.Admin != true)
+            {
+                mnuAdmin.IsEnabled = false;
+            }
+        }
+        private void PopulateCases()
+        {
             int intYear = Convert.ToInt32(cboYear.SelectedValue);
             string strOffice = (cboOffice.SelectedIndex == -1) ? "All" : cboOffice.SelectedValue.ToString();
             string strTeam = (cboTeam.SelectedIndex == -1) ? "All" : cboTeam.SelectedValue.ToString();
@@ -110,7 +123,7 @@ namespace Wealthy_RPT
             string strPop = "";
             try
             {
-            strPop = this.cboPopulation.SelectedValue.ToString();
+                strPop = this.cboPopulation.SelectedValue.ToString();
             }
             catch
             {
@@ -935,11 +948,176 @@ namespace Wealthy_RPT
         private void mnuPercCalculation_Click(object sender, RoutedEventArgs e)
         {
             
-           IniFile GlobalFile = new IniFile(LoadAppVariables.GlobalFile);
+           //IniFile GlobalFile = new IniFile(LoadAppVariables.GlobalFile);
+           //GlobalFile.IniWriteValue("System", "DailyRecalc", DateTime.Now.ToString("dd/mm/yyyy"));
+            if (UpdateDailyPercentile())
+            {
+                PopulateCases();
+                MessageBox.Show("Daily Ranking Figures Recalculated.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
 
+                if (DPDuplicates())
+                {
+                    MessageBox.Show("The daily Percentile Calculation appears to have generated duplicates." + "\n" + "\n" + "Run the Percentile Recalculation Admin function manually to resolve.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            GlobalFile.IniWriteValue("System", "DailyRecalc", DateTime.Now.ToString("dd/mm/yyyy"));
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        private bool UpdateDailyPercentile()
+        {
+            IniFile GlobalFile = new IniFile(LoadAppVariables.GlobalFile);
+            GlobalFile.IniWriteValue("System", "DailyRecalc", DateTime.Now.ToString("dd/MM/yyyy"));
             
+            if(GetDbInfo())
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Issue with performing Daily Ranking Figures Recalculation, Please retry.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return false;
+            }
+        }
+
+        private bool GetDbInfo()
+        {
+            try
+            {
+                SqlConnection conn = new SqlConnection(Global.ConnectionString);
+                SqlDataAdapter da = new SqlDataAdapter("SELECT Pop_Code_Name FROM dbo.tblPopulations", conn);//get all populations
+                DataSet ds = new DataSet();
+                da.Fill(ds, "dbo.tblPopulations");
+
+                foreach (DataRow Row in ds.Tables["dbo.tblPopulations"].Rows)
+                {
+                    string strPopCode = Row["Pop_Code_Name"].ToString();
+                    UpdateDailyPercentiles(strPopCode);
+                }
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        private void UpdateDailyPercentiles(string strPopCode)
+        {
+            try
+            {
+                //delete daily percentile figures for current year
+                int intCurrentYear = DateTime.Today.Year;
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                con.Open();
+
+                SqlCommand cmd = new SqlCommand("qryDeleteThisYearsDailyPercentile", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@nYear", SqlDbType.Int).Value = intCurrentYear;
+                cmd.Parameters.Add("@nPop", SqlDbType.Text).Value = strPopCode;
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                //Define command object
+                con.Open();
+                SqlCommand comd = new SqlCommand("qryDailyPSScores", con);
+
+                comd.CommandType = CommandType.StoredProcedure;
+
+                comd.Parameters.Add("@nYear", SqlDbType.Int).Value = intCurrentYear;
+                comd.Parameters.Add("@nPop", SqlDbType.Text).Value = strPopCode;
+                SqlDataAdapter da = new SqlDataAdapter(comd);
+                DataSet dailyscores = new DataSet();
+                da.Fill(dailyscores, "DailyPSScores");
+                con.Close();
+
+                int intScoreRows = dailyscores.Tables["DailyPSScores"].Rows.Count;
+
+                //Update Rank/ Percentile Score for each entry
+                SqlDataAdapter dperc = new SqlDataAdapter("SELECT TOP 1 tblDailyPercentile.* FROM tblDailyPercentile WHERE tblDailyPercentile.Pop ='" + strPopCode + "'", con);
+                DataSet dpercentile = new DataSet();
+                dperc.Fill(dpercentile, "tblDailyPercentile");
+                int intPercRows = dpercentile.Tables["tblDailyPercentile"].Rows.Count;
+
+                if(intPercRows > 0 && intScoreRows > 0)
+                {
+                    DataTable dt = new DataTable("dailypercentile");
+                    dperc.Fill(dt);
+
+                    for (int x = 0; x < intScoreRows; x++)
+                    {
+                        DataRow dr = dt.NewRow();
+                        dr["CalendarYear"] = intCurrentYear;
+                        dr["UTR"] = dailyscores.Tables["DailyPSScores"].Rows[x][2];
+                        dr["PriorityScore"] = dailyscores.Tables["DailyPSScores"].Rows[x][1];
+                        dr["DailyRank"] = Math.Round(Convert.ToDouble(100.00 * (x+1) / intScoreRows),2);
+                        dr["Pop"] = dailyscores.Tables["DailyPSScores"].Rows[x][3];
+                        dt.Rows.Add(dr);
+                    }
+                    //delete first row as already exist in database
+                    dt.Rows.Remove(dt.Rows[0]);
+
+                    //update SQL table
+
+                    using (SqlConnection connection = new SqlConnection(Global.ConnectionString))
+                    {
+                        connection.Open();
+                        using (SqlBulkCopy bulkCopy = new SqlBulkCopy(connection))
+                        {
+                            foreach (DataColumn c in dt.Columns)
+                                bulkCopy.ColumnMappings.Add(c.ColumnName, c.ColumnName);
+
+                            bulkCopy.DestinationTableName = "tblDailyPercentile";
+                            connection.Close();
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(),"Wealthy RPT",MessageBoxButton.OK,MessageBoxImage.Error);
+            }
+
+        }
+
+        private bool DPDuplicates()
+        {
+            //check if daily percentile recalculation has produced duplicates
+            try
+            {
+                int intCurrentYear = DateTime.Today.Year;
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                SqlCommand comd = new SqlCommand("qryDPDuplicates", con);
+
+                comd.CommandType = CommandType.StoredProcedure;
+
+                comd.Parameters.Add("@nYear", SqlDbType.Int).Value = intCurrentYear;
+                SqlDataAdapter da = new SqlDataAdapter(comd);
+                DataSet dups = new DataSet();
+                da.Fill(dups, "UTRCount");
+                con.Close();
+
+                int intDupRows = dups.Tables["UTRCount"].Rows.Count;
+                if (intDupRows > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private void DgCases_MouseDoubleClick(object sender, MouseButtonEventArgs e)
