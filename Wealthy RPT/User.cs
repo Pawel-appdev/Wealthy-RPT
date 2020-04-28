@@ -71,7 +71,7 @@ namespace Wealthy_RPT
         private string _fullname = "";
         private bool _active = false; // 0 = No, 1 = Yes
         private bool _admin = false; // 0 = No, 1 = Yes
-        private string _baadmin = "";
+        private bool _baadmin = false;// 0 = No, 1 = Yes
         private string _accesslevel = "";
 
         public string PID
@@ -110,7 +110,7 @@ namespace Wealthy_RPT
             }
         }
 
-        public string BA_Admin
+        public bool BA_Admin
         {
             get
             {
@@ -207,6 +207,7 @@ namespace Wealthy_RPT
                 reader.Read();
                 {
                     Admin = reader.GetBoolean(0);
+                    BA_Admin = reader.GetBoolean(1);
                 }
             }
 
