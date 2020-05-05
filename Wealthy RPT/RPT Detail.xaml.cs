@@ -21,14 +21,17 @@ namespace Wealthy_RPT
     /// </summary>
     public partial class RPT_Detail : Window
     {
+
+        public double dblUTR;
+
         TextBoxDate tbd = new TextBoxDate();
         public RPT_Detail()
         {
             InitializeComponent();
             PopulateCombos();
-
             this.WindowState = WindowState.Maximized;
 
+            //GetEmails();
         }
 
 
@@ -154,7 +157,6 @@ namespace Wealthy_RPT
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //SetColumnHeaders();
-
             //' questionnaire scores     [behaviours]
             //Me.txtOpenIDMS.Text = 0
             //Me.txtClosedIDMS.Text = 0
@@ -176,6 +178,12 @@ namespace Wealthy_RPT
 
             //TabFrames
 
+            try
+            {
+            dblUTR = Convert.ToDouble(txtUTR.Text);
+            GetEmails(dblUTR);
+            }
+            catch { }
         }
 
         private void TxtDOB_KeyDown(object sender, KeyEventArgs e)
@@ -698,7 +706,7 @@ namespace Wealthy_RPT
         {
             if (Globals.blnAccess == true)
             {
-                ShowActiveControl(mscHistory);
+                //ShowActiveControl(mscHistory);
             }
         }
 
@@ -739,6 +747,81 @@ namespace Wealthy_RPT
         private void CmdCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        public static void refreshScreen(double dUTR)
+        {
+            RPT_Detail frm = new RPT_Detail();
+
+            frm.dblUTR = dUTR;
+
+            frm.GetEmails(frm.dblUTR);
+        }
+
+        private void GetEmails(double UTR)
+        {
+            SqlConnection con = new SqlConnection(Global.ConnectionString);
+            SqlCommand cmd = new SqlCommand("qryGetEmailAddresses", con);
+            cmd.Parameters.Clear();
+            SqlParameter prm = cmd.Parameters.Add("@nUTR", SqlDbType.Float);
+            prm.Value = UTR;
+            cmd.CommandTimeout = Global.TimeOut;
+            cmd.CommandType = CommandType.StoredProcedure;
+            con.Open();
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+
+            lvwEmail.DataContext = ds.Tables[0].DefaultView;
+            con.Close();
+        }
+
+        private void cmdEmailAdd_Click(object sender, RoutedEventArgs e)
+        {
+            if(txtUTR.Text.Length != 10)
+            {
+                MessageBox.Show("Please ensure you have input a UTR and added the " + "\n" + "Customer Record before adding an Email address.","Email address", MessageBoxButton.OK ,MessageBoxImage.Information);
+                return;
+            }
+
+
+            dblUTR = Convert.ToDouble(txtUTR.Text);
+
+            Email email = new Email(dblUTR);
+            email.Title = "Add Email Address";
+            email.btnAction.Content = "Add";
+    
+            email.ShowDialog();
+
+        }
+
+        private void cmdEmailUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            //Email email = new Email();
+            //email.Title = "Update Email Address";
+            //email.btnAction.Content = "Update";
+            //email.ShowDialog();
+        }
+
+        private void cmdEmailDelete_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string strtext = lvwEmail.SelectedItem.ToString();
+            }
+            catch { }
+
+
+
+
+
+
+            //Email email = new Email(dblUTR);
+            //email.Title = "Delete Email Address";
+            //email.btnAction.Content = "Delete";
+            //email.ShowDialog();
         }
     }
 

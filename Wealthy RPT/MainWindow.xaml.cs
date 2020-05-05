@@ -1129,8 +1129,12 @@ namespace Wealthy_RPT
             double dUTR = Convert.ToDouble((dgCases.Columns[1].GetCellContent(dgCases.CurrentCell.Item) as TextBlock).Text);
             rpt.GetRPDData(dUTR);
             rptDetail.DataContext = rpt;
+
+            //////rpt.GetEmailAddress(dUTR);
+
             System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
             rptDetail.Show();
+
         }
 
         private void mnuUpdateDBTables_Click(object sender, RoutedEventArgs e)

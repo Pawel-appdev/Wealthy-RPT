@@ -489,6 +489,110 @@ namespace Wealthy_RPT
                 con.Close();
             }
 
+            public void GetEmailAddress(double dblUTR)
+            {
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                //SqlCommand cmd = new SqlCommand("qryGetEmailAddresses", con);
+                //cmd.Parameters.Clear();
+                //SqlParameter prm01 = cmd.Parameters.Add("@nUTR", SqlDbType.Float);
+                //prm01.Value = dblUTR;
+                //cmd.CommandTimeout = Global.TimeOut;
+                //cmd.CommandType = CommandType.StoredProcedure;
+                //con.Open();
+
+
+                //////SqlConnection con = new SqlConnection();
+                SqlDataAdapter ad = new SqlDataAdapter();
+                SqlCommand cmd = new SqlCommand();
+                String str = "SELECT Contact, Email_Address, Contact_Role, Contact_Date_Added, Email_ID FROM tblEmailAddress";
+                cmd.CommandText = str;
+                ad.SelectCommand = cmd;
+                ////////con.ConnectionString = "Data Source=localhost; Initial Catalog=Northwind; Integrated Security=True";
+                cmd.Connection = con;
+                DataSet ds = new DataSet();
+                ad.Fill(ds);
+
+
+                RPT_Detail rptDet = new RPT_Detail();  // initialise form
+
+
+
+                rptDet.lvwEmail.DataContext = ds.Tables[0].DefaultView;
+                con.Close();
+
+
+
+
+
+
+
+
+
+
+
+                //////SqlDataReader sqlReader = cmd.ExecuteReader();
+
+
+                //////while (sqlReader.Read())
+                //////{
+                //////    ListViewItem lvItem = new ListViewItem();
+                //////    lvItem.SubItems[0].Text = sqlReader[0].ToString();
+                //////    lvItem.SubItems.Add(sqlReader[1].ToString());
+
+                //////    RPT_Detail rptDet = new RPT_Detail();  // initialise form
+                //////    rptDet.lvwEmail.Items.Add(lvItem);
+
+                //////    //listView1.Items.Add(lvItem);
+                //////}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                //SqlDataAdapter da = new SqlDataAdapter(cmd);
+                ////DataTable dt = new DataTable("Test");
+                ////da.Fill(dt);
+
+                //DataSet ds = new DataSet();
+                //da.Fill(ds);
+
+
+                //RPT_Detail rptDet = new RPT_Detail();  // initialise form
+
+                ////rptDet.lvwEmail.DataContext = ds.Tables[0].DefaultView;
+                //rptDet.lvwEmail.ItemsSource = ds.Tables[0].DefaultView;
+
+
+                //rptDet.lvwEmail.View = View.Details;<<<<<<<<<<<<<<<<<<<<<
+
+                ////List<User> items = new List<User>();
+
+                //DataTable dt = new DataTable();
+                //da.Fill(dt);
+
+                //for (int i = 0; i < dt.Rows.Count; i++)
+                //{
+                //    DataRow dr = dt.Rows[i];
+                //    ListViewItem listitem = new ListViewItem(dr["Email_ID"].ToString());
+                //    listitem.SubItems.Add(dr["Email_ID"].ToString());
+                //    listitem.SubItems.Add(dr["Email_Address"].ToString());
+                //    listitem.SubItems.Add(dr["Contact_Role"].ToString());
+                //    rptDet.lvwEmail.Items.Add(listitem);
+                //}
+
+            }
+
         }
 
 
