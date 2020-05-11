@@ -13,6 +13,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+//using System.Windows.Forms;
+//using MessageBox = System.Windows.MessageBox;
 
 namespace Wealthy_RPT
 {
@@ -22,6 +24,7 @@ namespace Wealthy_RPT
     public partial class RPT_Detail : Window
     {
         TextBoxDate tbd = new TextBoxDate();
+        bool bFormLoaded = false;
         public RPT_Detail()
         {
             InitializeComponent();
@@ -158,7 +161,7 @@ namespace Wealthy_RPT
             }
             catch
             {
-                MessageBox.Show("Unable to load combo box data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("Unable to load combo box data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
@@ -166,18 +169,7 @@ namespace Wealthy_RPT
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-            Lookups lu = new Lookups();
-            string strPopCode = this.cboPopCode.SelectedValue.ToString();
-            lu.GetOffices(strPopCode);
-            cboOffice.ItemsSource = lu.dsOffices.Tables[0].DefaultView;
-            cboOffice.DisplayMemberPath = "Office";
-            cboOffice.SelectedValuePath = "Office";
-
-            string strOffice = this.cboOffice.SelectedValue.ToString();
-            lu.GetOfficeCRMs(strOffice, strPopCode); // "rPt20Mill"
-            cboTeam.ItemsSource = lu.dsOfficeTeams.Tables[0].DefaultView;
-            cboTeam.DisplayMemberPath = "Team Identifier";
-            cboTeam.SelectedValuePath = "Team Identifier";
+            PopulateAndSetAllocationCombos();
 
             //' questionnaire scores     [behaviours]
             //Me.txtOpenIDMS.Text = 0
@@ -199,7 +191,85 @@ namespace Wealthy_RPT
             // End If
 
             //TabFrames
+            //this.Activated += AfterLoading;
+            bFormLoaded = true;
+        }
 
+        //private void AfterLoading(object sender, EventArgs e)
+        //{
+        //    this.Activated -= AfterLoading;
+        //    bFormLoaded = true;
+        //}
+
+        private void PopulateAndSetAllocationCombos()
+        {
+            bool blnTest = PopulateOfficeCombo();
+            blnTest = PopulateTeamCombo();
+            blnTest = PopulateAllocatedToCombo();
+        }
+
+        private bool PopulateOfficeCombo()
+        {
+            string strPopCode = "";
+            Lookups lu = new Lookups();
+            try
+            {
+                // populate cboOffice, based on PopCode
+                strPopCode = this.cboPopCode.SelectedValue.ToString();
+                lu.GetOffices(strPopCode);
+                cboOffice.ItemsSource = lu.dsOffices.Tables[0].DefaultView;
+                cboOffice.DisplayMemberPath = "Office";
+                cboOffice.SelectedValuePath = "Office";
+                return true;
+            }
+            catch
+            {
+                return false;
+            };
+        }
+
+        private bool PopulateTeamCombo()
+        {
+            string strPopCode = "";
+            string strOffice = "";
+            Lookups lu = new Lookups();
+            try
+            {
+                // populate cboTeam, based on Office and PopCode
+                strOffice = this.cboOffice.SelectedValue.ToString();
+                strPopCode = this.cboPopCode.SelectedValue.ToString();
+                lu.GetOfficeCRMs(strOffice, strPopCode); // "rPt20Mill"
+                cboTeam.ItemsSource = lu.dsOfficeTeams.Tables[0].DefaultView;
+                cboTeam.DisplayMemberPath = "Team Identifier";
+                cboTeam.SelectedValuePath = "Team Identifier";
+                return true;
+            }
+            catch
+            {
+                return false;
+            };
+        }
+
+        private bool PopulateAllocatedToCombo()
+        {
+            string strOffice = "";
+            string strTeam = "";
+            Lookups lu = new Lookups();
+            try
+            {
+                // populate cboAllocatedTo, based on Office and Team
+                strOffice = this.cboOffice.SelectedValue.ToString();
+                strTeam = this.cboTeam.SelectedValue.ToString();
+                lu.GetOfficeTeamStaff(strOffice, strTeam);
+                cboAllocatedTo.ItemsSource = lu.dsOfficeTeamStaff.Tables[0].DefaultView;
+                cboAllocatedTo.DisplayMemberPath = "AllocatedTo";
+                cboAllocatedTo.SelectedValuePath = "AllocatedTo";
+                return true;
+            }
+            catch
+            {
+                return false;
+            };
         }
 
         private void TxtDOB_KeyDown(object sender, KeyEventArgs e)
@@ -763,6 +833,43 @@ namespace Wealthy_RPT
         private void CmdCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void CboPopFriendly_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if ((cboPopCode.SelectedIndex != cboPopFriendly.SelectedIndex)&&(bFormLoaded == true))
+            {
+                if (System.Windows.Forms.MessageBox.Show
+                            ("You are about to change the Records Population and you will also need to update the Office, Team and Allocation."
+                    + Environment.NewLine + Environment.NewLine
+                    + "You may also need to consider changing the CCM."
+                    + Environment.NewLine + Environment.NewLine
+                    + "Select Yes to Proceed", "Population", System.Windows.Forms.MessageBoxButtons.YesNo,
+                            System.Windows.Forms.MessageBoxIcon.Exclamation, System.Windows.Forms.MessageBoxDefaultButton.Button2)
+                            == System.Windows.Forms.DialogResult.No)
+                {
+                    // aborted so reset population
+                    cboPopFriendly.SelectedIndex = cboPopCode.SelectedIndex;
+                }
+                else
+                {
+                    // user confirmed yes so change population
+                    cboPopCode.SelectedIndex = cboPopFriendly.SelectedIndex;
+                    txtPopFriendly.Text = cboPopFriendly.Text;
+                    // update Office options as not all populations may have same office locations
+                    cboOffice.Items.Clear();
+                    bool blnTest = PopulateOfficeCombo();
+                    foreach (var item in cboOffice.Items)
+                    {
+                        if(item.ToString() == txtOffice.Text)
+                        {
+                            cboOffice.Text = txtOffice.Text;
+                            break;
+                        }
+                    }
+                    cboTeam.Items.Clear();
+                }
+            }
         }
     }
 

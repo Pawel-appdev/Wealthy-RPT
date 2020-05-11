@@ -64,7 +64,7 @@
                             <TextBlock x:Name="lblCustomerSegment" Margin="8,2,0,2" Grid.Row="0"  Grid.Column="0" FontSize="18"><Bold>Customer Segment</Bold></TextBlock>
                             <ComboBox x:Name="cboSegment" Grid.Row="0"  Grid.Column="1" Margin="11,4,10,4" GotFocus="CboSegment_GotFocus" SelectedValue="{Binding Segment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <TextBlock x:Name="lblPopulation" Margin="8,2,9,2" Grid.Row="0"  Grid.Column="2" FontSize="18"><Bold>Population</Bold></TextBlock>
-                            <ComboBox x:Name="cboPopFriendly" Grid.Row="0"  Grid.Column="3" Background="LightGray" IsEnabled="False" Margin="11,4,10,4" GotFocus="CboPopFriendly_GotFocus"/>
+                            <ComboBox x:Name="cboPopFriendly" Grid.Row="0"  Grid.Column="3" Background="LightGray" IsEnabled="True" Margin="11,4,10,4" GotFocus="CboPopFriendly_GotFocus" SelectionChanged="CboPopFriendly_SelectionChanged"/>
                             <ComboBox x:Name="cboPopCode" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="3" Margin="0,4,121,4" SelectedValue="{Binding Pop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <TextBlock x:Name="txtPopFriendly" Grid.Row="0"  Grid.Column="5" Grid.ColumnSpan="2" Margin="0,4,121,4"/>
                             <TextBlock x:Name="lblPopYear" Margin="29,2,10,2" Grid.Row="0"  Grid.Column="6" FontSize="18"/>
@@ -191,6 +191,8 @@
                                             <RowDefinition Height="0"/>
                                         </Grid.RowDefinitions>
                                         <TextBlock x:Name="lblCustomerTeam" Margin="8,2,9,2" Grid.Row="0" Grid.Column="0" FontSize="16" Grid.ColumnSpan="2">Customer Team</TextBlock>
+                                        <TextBox x:Name="txtOffice"  Margin="6,2,4,2" Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="2" Visibility="Hidden"/>
+                                        <TextBox x:Name="txtTeam"  Margin="6,2,4,2" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Visibility="Hidden"/>
                                         <TextBlock x:Name="lblOffice" Margin="8,2,9,2" Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2">Office</TextBlock>
                                         <ComboBox x:Name="cboOffice" Height="22" Margin="4,2,1,2" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="CboOffice_GotFocus" SelectedValue="{Binding Office, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         <ComboBox x:Name="cboTeam" Height="22" Margin="6,2,4,2" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="2" GotFocus="CboTeam_GotFocus" SelectedValue="{Binding Team, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -227,20 +229,20 @@
                                         </Grid.RowDefinitions>
                                         <TextBlock x:Name="lblAppointedAgent" Margin="8,2,9,2" Grid.Row="0" Grid.Column="0" FontSize="16" Grid.ColumnSpan="2">Appointed Agent</TextBlock>
                                         <TextBlock x:Name="lblFirm" Margin="8,2,9,2" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" >Name of Firm</TextBlock>
-                                        <TextBox x:Name="txtFirm"  Margin="6,2,4,2" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="6" GotFocus="TxtFirm_GotFocus"/>
+                                        <TextBox x:Name="txtFirm"  Margin="6,2,4,2" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="6" Text = "{Binding Agent, Mode = TwoWay}" GotFocus="TxtFirm_GotFocus"/>
                                         <TextBlock x:Name="lblTelNo" Margin="8,2,9,2" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">Telephone number</TextBlock>
-                                        <TextBox x:Name="txtTelNo"  Margin="6,2,4,2" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="TxtTelNo_GotFocus"/>
+                                        <TextBox x:Name="txtTelNo"  Margin="6,2,4,2" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Text = "{Binding AgentTelNo, Mode = TwoWay}" GotFocus="TxtTelNo_GotFocus"/>
                                         <TextBlock x:Name="lblAgentCode" Margin="8,2,9,2" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" >Agent Code</TextBlock>
-                                        <TextBox x:Name="txtAgentCode"  Margin="6,2,4,2" Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="2" GotFocus="TxtAgentCode_GotFocus"/>
+                                        <TextBox x:Name="txtAgentCode"  Margin="6,2,4,2" Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="2" Text = "{Binding AgentCode, Mode = TwoWay}" GotFocus="TxtAgentCode_GotFocus"/>
                                         <TextBlock x:Name="lblAgentAddress" Margin="8,2,9,2" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" >Agent Address</TextBlock>
-                                        <TextBox x:Name="txtAgentAddress"  Margin="6,2,4,2" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="6" GotFocus="TxtAgentAddress_GotFocus"/>
+                                        <TextBox x:Name="txtAgentAddress"  Margin="6,2,4,2" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="6" Text = "{Binding AgentAddress, Mode = TwoWay}" GotFocus="TxtAgentAddress_GotFocus"/>
                                         <TextBlock x:Name="lblNamedAgent" Margin="8,2,9,2" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">Named Agent(s)</TextBlock>
-                                        <TextBox x:Name="txtNamedAgent"  Margin="6,2,4,2" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="TxtNamedAgent_GotFocus"/>
-                                        <TextBox x:Name="txtOtherContact"  Margin="6,2,4,2" Grid.Row="4" Grid.Column="6" Grid.ColumnSpan="2" GotFocus="TxtOtherContact_GotFocus"/>
+                                        <TextBox x:Name="txtNamedAgent"  Margin="6,2,4,2" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Text = "{Binding NamedAgent, Mode = TwoWay}" GotFocus="TxtNamedAgent_GotFocus"/>
+                                        <TextBox x:Name="txtOtherContact"  Margin="6,2,4,2" Grid.Row="4" Grid.Column="6" Grid.ColumnSpan="2" Text = "{Binding OtherContact, Mode = TwoWay}" GotFocus="TxtOtherContact_GotFocus"/>
                                         <TextBlock x:Name="lbl648" Margin="8,2,9,2" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">64-8 held?</TextBlock>
-                                        <ComboBox x:Name="cbo648" Height="22" Margin="6,2,4,2" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="Cbo648_GotFocus"/>
+                                        <ComboBox x:Name="cbo648" Height="22" Margin="6,2,4,2" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" SelectedValue="{Binding 'Agent648Held', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="Cbo648_GotFocus"/>
                                         <TextBlock x:Name="lblChange" Margin="8,2,9,2" Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" >Changed in past year?</TextBlock>
-                                        <ComboBox x:Name="cboChange" Height="22" Margin="6,2,4,2" Grid.Row="5" Grid.Column="6" Grid.ColumnSpan="2" GotFocus="CboChange_GotFocus"/>
+                                        <ComboBox x:Name="cboChange" Height="22" Margin="6,2,4,2" Grid.Row="5" Grid.Column="6" Grid.ColumnSpan="2" SelectedValue="{Binding 'Changed', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="CboChange_GotFocus"/>
                                     </Grid>
                                 </StackPanel>
                                 <!--#endregion-->

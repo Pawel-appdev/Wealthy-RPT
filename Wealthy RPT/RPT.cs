@@ -15,7 +15,7 @@ namespace Wealthy_RPT
 
         public struct RPT_Data
         {
-
+            // Customer Data
             private Int32 _cuid;
             private string _segment;
             //private string _fullname;
@@ -24,7 +24,7 @@ namespace Wealthy_RPT
             private double _utr;
             private DateTime _dob;
             private byte _deceased;
-            private DateTime _dod;
+            private string _dod;
             private DateTime _deselected;
             private string _marital;
             private string _gender;
@@ -47,7 +47,18 @@ namespace Wealthy_RPT
             private string _crmname;
             private DateTime _crmappointed;
             private DateTime _cdlu;
+            // Agent Data
+            private Int32 _agentrecordid;
+            private string _agent;
+            private string _agentcode;
+            private byte _agent648held;
+            private string _agentaddress;
+            private string _namedagent;
+            private string _othercontact;
+            private string _agenttelno;
+            private byte _changed;
 
+            // Customer Data
             public Int32 CU_ID
             {
                 get
@@ -144,7 +155,7 @@ namespace Wealthy_RPT
                 }
             }
 
-            public DateTime DOD
+            public string DOD
             {
                 get
                 {
@@ -421,12 +432,135 @@ namespace Wealthy_RPT
                 }
             }
 
+            // Agent Data
 
-            public void GetRPDData(double dblUTR)
+            public Int32 AgentRecordID
             {
+                get
+                {
+                    return _agentrecordid;
+                }
+                set
+                {
+                    _agentrecordid = value;
+                }
+            }
 
+            public string Agent
+            {
+                get
+                {
+                    return _agent;
+                }
+                set
+                {
+                    _agent = value;
+                }
+            }
+
+            public string AgentCode
+            {
+                get
+                {
+                    return _agentcode;
+                }
+                set
+                {
+                    _agentcode = value;
+                }
+            }
+
+            public byte Agent648Held
+            {
+                get
+                {
+                    return _agent648held;
+                }
+            set
+                {
+                    _agent648held = value;
+                }
+            }
+
+            public string AgentAddress
+            {
+                get
+                {
+                    return _agentaddress;
+                }
+                set
+                {
+                    _agentaddress = value;
+                }
+            }
+
+            public string NamedAgent
+            {
+                get
+                {
+                    return _namedagent;
+                }
+                set
+                {
+                    _namedagent = value;
+                }
+            }
+
+            public string OtherContact
+            {
+                get
+                {
+                    return _othercontact;
+                }
+                set
+                {
+                    _othercontact = value;
+                }
+            }
+
+            public string AgentTelNo
+            {
+                get
+                {
+                    return _agenttelno;
+                }
+                set
+                {
+                    _agenttelno = value;
+                }
+            }
+
+            public byte Changed
+            {
+                get
+                {
+                    return _changed;
+                }
+                set
+                {
+                    _changed = value;
+                }
+            }
+
+public void GetRPDData(double dblUTR)
+            {
+                if (GetCustomerData(dblUTR) == true)
+                {
+                }
+
+                if (GetAgentData(dblUTR) == true)
+                {
+                }
+
+                //GetRPDScoresData(nUTR, nYear, strPop)
+                //GetRPDHistoricalData(nUTR, nYear, nPercentile, strPop)
+
+            }
+
+            public bool GetCustomerData(double dblUTR)
+            {
+                bool bReturn = false;
                 SqlConnection con = new SqlConnection(Global.ConnectionString);
-                //SqlCommand cmd = new SqlCommand("qryGetRPDData", con);
                 SqlCommand cmd = new SqlCommand("qryGetCustomerData", con);
                 cmd.Parameters.Clear();
                 SqlParameter prm01 = cmd.Parameters.Add("@nUTR", SqlDbType.Float);
@@ -440,6 +574,7 @@ namespace Wealthy_RPT
                 {
                     DateTime dtmin = new DateTime(1900, 1, 1);
                     DateTime dtActual;
+                    string sDate;
                     dr.Read();
                     CU_ID = Convert.ToInt32(dr["CU_ID"]);
                     Segment = dr["Segment"].ToString();
@@ -450,11 +585,11 @@ namespace Wealthy_RPT
                     try { dtActual = Convert.ToDateTime(dr["DOB"]).Date; } catch { dtActual = dtmin; }
                     DOB = dtActual;
                     Deceased = Convert.ToByte(dr["Deceased"]);
-                    try { dtActual = Convert.ToDateTime(dr["DOD"]).Date; } catch { dtActual = dtmin; }
-                    DOD = dtActual;
+                    try { sDate = Convert.ToDateTime(dr["DOD"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
+                    DOD = sDate;
                     try { dtActual = Convert.ToDateTime(dr["Deselected"]).Date; } catch { dtActual = dtmin; }
                     Deselected = dtActual;
-                    Marital= dr["Marital"].ToString();
+                    Marital = dr["Marital"].ToString();
                     Gender = dr["Gender"].ToString();
                     MainAdd = dr["MainAdd"].ToString();
                     MainPC = dr["MainPC"].ToString();
@@ -470,7 +605,8 @@ namespace Wealthy_RPT
                     LongTerm = dr["LongTerm"].ToString();
                     LifeEvents = dr["LifeEvents"].ToString();
                     Narrative = dr["Narrative"].ToString();
-                    HNWUPID = Convert.ToInt32(dr["HNWUPID"]);
+                    //HNWUPID = Convert.ToInt32(dr["HNWUPID"]);
+                    HNWUPID = (string.IsNullOrEmpty(dr["HNWUPID"].ToString()) == true) ? 0 : Convert.ToInt32(dr["HNWUPID"]);
                     Pop = dr["Pop"].ToString();
                     CRM_Name = dr["CRM_Name"].ToString();
                     // ###### NEED NULL DATES #####
@@ -478,21 +614,59 @@ namespace Wealthy_RPT
                     CRM_Appointed = dtActual;
                     try { dtActual = Convert.ToDateTime(dr["CDLU"]).Date; } catch { dtActual = dtmin; }
                     CDLU = dtActual;
-
+                    bReturn = true;
                 }
                 else if (dr.HasRows == false)
                 {
-                    MessageBox.Show("Record not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
-
+                    MessageBox.Show("Customer record not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    bReturn = false;
                 }
 
                 #endregion
                 con.Close();
+                return bReturn;
+            }
+
+            public bool GetAgentData(double dblUTR)
+            {
+                bool bReturn = false;
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                SqlCommand cmd = new SqlCommand("qryGetAgentData", con);  // tblAgent_Details
+                cmd.Parameters.Clear();
+                SqlParameter prm01 = cmd.Parameters.Add("@nUTR", SqlDbType.Float);
+                prm01.Value = dblUTR;
+                cmd.CommandTimeout = Global.TimeOut;
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                #region Recordset
+                if (dr.HasRows)
+                {
+                    dr.Read();
+                    AgentRecordID = Convert.ToInt32(dr["Agent_Record_ID"]);
+                    Agent = dr["Agent"].ToString();
+                    AgentCode = dr["AgentCode"].ToString();
+                    Agent648Held = Convert.ToByte(dr["648_held"]);
+                    AgentAddress = dr["Agent_Address"].ToString();
+                    NamedAgent = dr["Named_Agent"].ToString();
+                    OtherContact = dr["Other_Contact"].ToString();
+                    AgentTelNo = dr["Agent_Tel_No"].ToString();
+                    bool blnChanged = (dr["Changed"] is DBNull) ? false : Convert.ToBoolean(dr["Changed"]);
+                    Changed = Convert.ToByte(blnChanged);
+                    bReturn = true;
+                }
+                else if (dr.HasRows == false)
+                {
+                    MessageBox.Show("Agent record not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    bReturn = false;
+                }
+
+                #endregion
+                con.Close();
+                return bReturn;
             }
 
         }
-
-
 
     }
 }
