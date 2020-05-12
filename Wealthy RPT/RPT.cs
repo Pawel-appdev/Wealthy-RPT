@@ -15,6 +15,7 @@ namespace Wealthy_RPT
 
         public struct RPT_Data
         {
+            #region propertydeclarations
             // Customer Data
             private Int32 _cuid;
             private string _segment;
@@ -22,10 +23,10 @@ namespace Wealthy_RPT
             private string _surname;
             private string _firstname;
             private double _utr;
-            private DateTime _dob;
+            private string _dob;
             private byte _deceased;
             private string _dod;
-            private DateTime _deselected;
+            private string _deselected;
             private string _marital;
             private string _gender;
             private string _mainadd;
@@ -45,8 +46,8 @@ namespace Wealthy_RPT
             private Int32 _hnwupid;
             private string _pop;
             private string _crmname;
-            private DateTime _crmappointed;
-            private DateTime _cdlu;
+            private string _crmappointed;
+            private string _cdlu;
             // Agent Data
             private Int32 _agentrecordid;
             private string _agent;
@@ -57,7 +58,33 @@ namespace Wealthy_RPT
             private string _othercontact;
             private string _agenttelno;
             private byte _changed;
+            // Behavious Data
+            private Int32 _rpdid;
+            private string _updateddate;
+            private Int32 _updatedby;
+            private int _calendaryear;
+            private int _lpopen;
+            private int _lpclosed;
+            private float _hppenalty;
+            private Int32 _pscurrent;
+            private Int32 _psprevious;
+            private Int32 _psfailures;
+            private int _qsscore;
+            private int _rptprscore;
+            private int _rptavscore;
+            private int _cgscore;
+            private int _resscore;
+            private int _crmscore;
+            private int _priorityscore;
+            private float _percentile;
+            private string _supercededdate;
+            private byte _riskingcomplete;
+            private string _segmentrecorded;
+            private string _rsdlu;
+            private string _crmexplanation;
+            #endregion
 
+            #region readwriteproperites
             // Customer Data
             public Int32 CU_ID
             {
@@ -131,7 +158,7 @@ namespace Wealthy_RPT
                 }
             }
 
-            public DateTime DOB
+            public string DOB
             {
                 get
                 {
@@ -167,7 +194,7 @@ namespace Wealthy_RPT
                 }
             }
 
-            public DateTime Deselected
+            public string Deselected
             {
                 get
                 {
@@ -408,7 +435,7 @@ namespace Wealthy_RPT
                 }
             }
 
-            public DateTime CRM_Appointed
+            public string CRM_Appointed
             {
                 get
                 {
@@ -420,7 +447,7 @@ namespace Wealthy_RPT
                 }
             }
 
-            public DateTime CDLU
+            public string CDLU
             {
                 get
                 {
@@ -542,128 +569,481 @@ namespace Wealthy_RPT
                 }
             }
 
-public void GetRPDData(double dblUTR)
+            // Behaviours Data
+
+            public Int32 RPD_ID
             {
-                if (GetCustomerData(dblUTR) == true)
+                get
                 {
+                    return _rpdid;
+                }
+                set
+                {
+                    _rpdid = value;
+                }
+            }
+
+            public string UpdatedDate
+            {
+                get
+                {
+                    return _updateddate;
+                }
+                set
+                {
+                    _updateddate = value;
+                }
+            }
+
+            public Int32 UpdatedBy
+            {
+                get
+                {
+                    return _updatedby;
+                }
+                set
+                {
+                    _updatedby = value;
+                }
+            }
+
+            public int CalendarYear
+            {
+                get
+                {
+                    return _calendaryear;
+                }
+                set
+                {
+                    _calendaryear = value;
+                }
+            }
+
+            public int LPOpen
+            {
+                get
+                {
+                    return _lpopen;
+                }
+                set
+                {
+                    _lpopen = value;
+                }
+            }
+
+            public int LPClosed
+            {
+                get
+                {
+                    return _lpclosed;
+                }
+                set
+                {
+                    _lpclosed = value;
+                }
+            }
+
+            public float HPPenalty
+            {
+                get
+                {
+                    return _hppenalty;
+                }
+                set
+                {
+                    _hppenalty = value;
+                }
+            }
+
+            public Int32 PSCurrent
+            {
+                get
+                {
+                    return _pscurrent;
+                }
+                set
+                {
+                    _pscurrent = value;
+                }
+            }
+
+            public Int32 PSPrevious
+            {
+                get
+                {
+                    return _psprevious;
+                }
+                set
+                {
+                    _psprevious = value;
+                }
+            }
+
+            public Int32 PSFailures
+            {
+                get
+                {
+                    return _psfailures;
+                }
+                set
+                {
+                    _psfailures = value;
+                }
+            }
+
+            public int QSScore
+            {
+                get
+                {
+                    return _qsscore;
+                }
+                set
+                {
+                    _qsscore = value;
+                }
+            }
+
+            public int RPTPRScore
+            {
+                get
+                {
+                    return _rptprscore;
+                }
+                set
+                {
+                    _rptprscore = value;
+                }
+            }
+
+            public int RPTAVScore
+            {
+                get
+                {
+                    return _rptavscore;
+                }
+                set
+                {
+                    _rptavscore = value;
+                }
+            }
+
+            public int CGScore
+            {
+                get
+                {
+                    return _cgscore;
+                }
+                set
+                {
+                    _cgscore = value;
+                }
+            }
+
+            public int ResScore
+            {
+                get
+                {
+                    return _resscore;
+                }
+                set
+                {
+                    _resscore = value;
+                }
+            }
+
+            public int CRMScore
+            {
+                get
+                {
+                    return _crmscore;
+                }
+                set
+                {
+                    _crmscore = value;
+                }
+            }
+
+
+            public int PriorityScore
+            {
+                get
+                {
+                    return _priorityscore;
+                }
+                set
+                {
+                    _priorityscore = value;
+                }
+            }
+
+            public float Percentile
+            {
+                get
+                {
+                    return _percentile;
+                }
+                set
+                {
+                    _percentile = value;
+                }
+            }
+
+            public string SupecededDate
+            {
+                get
+                {
+                    return _supercededdate;
+                }
+                set
+                {
+                    _supercededdate = value;
+                }
+            }
+
+            public byte RiskingComplete
+            {
+                get
+                {
+                    return _riskingcomplete;
+                }
+                set
+                {
+                    _riskingcomplete = value;
+                }
+            }
+
+            public string SegmentRecorded
+            {
+                get
+                {
+                    return _segmentrecorded;
+                }
+                set
+                {
+                    _segmentrecorded = value;
+                }
+            }
+
+            public string RSDLU
+            {
+                get
+                {
+                    return _rsdlu;
+                }
+                set
+                {
+                    _rsdlu = value;
+                }
+            }
+
+            public string CRMExplanation
+            {
+                get
+                {
+                    return _crmexplanation;
+                }
+                set
+                {
+                    _crmexplanation = value;
+                }
+            }
+            #endregion
+
+            public bool GetRPDData(double dblUTR, int iYear, string sPop)
+            {
+                if (GetCustomerData(dblUTR) == false)
+                {
+                    return false;
                 }
 
-                if (GetAgentData(dblUTR) == true)
+                if (GetAgentData(dblUTR) == false)
                 {
+                    return false;
                 }
 
-                //GetRPDScoresData(nUTR, nYear, strPop)
+
+                if (GetRPDScoresData(dblUTR, iYear, sPop) == false)
+                {
+                    return false;
+                }
+
                 //GetRPDHistoricalData(nUTR, nYear, nPercentile, strPop)
-
+                return true;
             }
 
             public bool GetCustomerData(double dblUTR)
             {
-                bool bReturn = false;
                 SqlConnection con = new SqlConnection(Global.ConnectionString);
-                SqlCommand cmd = new SqlCommand("qryGetCustomerData", con);
-                cmd.Parameters.Clear();
-                SqlParameter prm01 = cmd.Parameters.Add("@nUTR", SqlDbType.Float);
-                prm01.Value = dblUTR;
-                cmd.CommandTimeout = Global.TimeOut;
-                cmd.CommandType = CommandType.StoredProcedure;
-                con.Open();
-                SqlDataReader dr = cmd.ExecuteReader();
-                #region Recordset
-                if (dr.HasRows)
+                try
                 {
-                    DateTime dtmin = new DateTime(1900, 1, 1);
-                    DateTime dtActual;
-                    string sDate;
-                    dr.Read();
-                    CU_ID = Convert.ToInt32(dr["CU_ID"]);
-                    Segment = dr["Segment"].ToString();
-                    Surname = dr["Surname"].ToString();
-                    Firstname = dr["FirstName"].ToString();
-                    UTR = double.Parse(dr["UTR"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
-                    // ###### NEED NULL DATES #####
-                    try { dtActual = Convert.ToDateTime(dr["DOB"]).Date; } catch { dtActual = dtmin; }
-                    DOB = dtActual;
-                    Deceased = Convert.ToByte(dr["Deceased"]);
-                    try { sDate = Convert.ToDateTime(dr["DOD"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
-                    DOD = sDate;
-                    try { dtActual = Convert.ToDateTime(dr["Deselected"]).Date; } catch { dtActual = dtmin; }
-                    Deselected = dtActual;
-                    Marital = dr["Marital"].ToString();
-                    Gender = dr["Gender"].ToString();
-                    MainAdd = dr["MainAdd"].ToString();
-                    MainPC = dr["MainPC"].ToString();
-                    SecAdd = dr["SecAdd"].ToString();
-                    Residence = dr["Residence"].ToString();
-                    Domicile = dr["Domicile"].ToString();
-                    Office = dr["Office"].ToString();
-                    Team = dr["Team"].ToString();
-                    WealthLevel = dr["WealthLevel"].ToString();
-                    Pathway = dr["Pathway"].ToString();
-                    Source = dr["Source"].ToString();
-                    Sector = dr["Sector"].ToString();
-                    LongTerm = dr["LongTerm"].ToString();
-                    LifeEvents = dr["LifeEvents"].ToString();
-                    Narrative = dr["Narrative"].ToString();
-                    //HNWUPID = Convert.ToInt32(dr["HNWUPID"]);
-                    HNWUPID = (string.IsNullOrEmpty(dr["HNWUPID"].ToString()) == true) ? 0 : Convert.ToInt32(dr["HNWUPID"]);
-                    Pop = dr["Pop"].ToString();
-                    CRM_Name = dr["CRM_Name"].ToString();
-                    // ###### NEED NULL DATES #####
-                    try { dtActual = Convert.ToDateTime(dr["CRM_Appointed"]).Date; } catch { dtActual = dtmin; }
-                    CRM_Appointed = dtActual;
-                    try { dtActual = Convert.ToDateTime(dr["CDLU"]).Date; } catch { dtActual = dtmin; }
-                    CDLU = dtActual;
-                    bReturn = true;
+                    SqlCommand cmd = new SqlCommand("qryGetCustomerData", con);
+                    cmd.Parameters.Clear();
+                    SqlParameter prm01 = cmd.Parameters.Add("@nUTR", SqlDbType.Float);
+                    prm01.Value = dblUTR;
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    #region Recordset
+                    if (dr.HasRows)
+                    {
+                        //DateTime dtmin = new DateTime(1900, 1, 1);
+                        //DateTime dtActual;
+                        string sDate;
+                        dr.Read();
+                        CU_ID = Convert.ToInt32(dr["CU_ID"]);
+                        Segment = dr["Segment"].ToString();
+                        Surname = dr["Surname"].ToString();
+                        Firstname = dr["FirstName"].ToString();
+                        UTR = double.Parse(dr["UTR"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
+                        try { sDate = Convert.ToDateTime(dr["DOB"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
+                        DOB = sDate;
+                        Deceased = Convert.ToByte(dr["Deceased"]);
+                        try { sDate = Convert.ToDateTime(dr["DOD"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
+                        DOD = sDate;
+                        try { sDate = Convert.ToDateTime(dr["Deselected"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
+                        Deselected = sDate;
+                        Marital = dr["Marital"].ToString();
+                        Gender = dr["Gender"].ToString();
+                        MainAdd = dr["MainAdd"].ToString();
+                        MainPC = dr["MainPC"].ToString();
+                        SecAdd = dr["SecAdd"].ToString();
+                        Residence = dr["Residence"].ToString();
+                        Domicile = dr["Domicile"].ToString();
+                        Office = dr["Office"].ToString();
+                        Team = dr["Team"].ToString();
+                        WealthLevel = dr["WealthLevel"].ToString();
+                        Pathway = dr["Pathway"].ToString();
+                        Source = dr["Source"].ToString();
+                        Sector = dr["Sector"].ToString();
+                        LongTerm = dr["LongTerm"].ToString();
+                        LifeEvents = dr["LifeEvents"].ToString();
+                        Narrative = dr["Narrative"].ToString();
+                        //HNWUPID = Convert.ToInt32(dr["HNWUPID"]);
+                        HNWUPID = (string.IsNullOrEmpty(dr["HNWUPID"].ToString()) == true) ? 0 : Convert.ToInt32(dr["HNWUPID"]);
+                        Pop = dr["Pop"].ToString();
+                        CRM_Name = dr["CRM_Name"].ToString();
+                        try { sDate = Convert.ToDateTime(dr["CRM_Appointed"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
+                        CRM_Appointed = sDate;
+                        try { sDate = Convert.ToDateTime(dr["CDLU"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
+                        CDLU = sDate;
+                    }
+                        #endregion
+                    else if (dr.HasRows == false)
+                    {
+                        //MessageBox.Show("Customer record not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    }
+                    con.Close();
                 }
-                else if (dr.HasRows == false)
+                catch
                 {
-                    MessageBox.Show("Customer record not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    bReturn = false;
+                    con.Close();
+                    return false;
                 }
-
-                #endregion
-                con.Close();
-                return bReturn;
+                return true;
             }
 
             public bool GetAgentData(double dblUTR)
             {
-                bool bReturn = false;
                 SqlConnection con = new SqlConnection(Global.ConnectionString);
-                SqlCommand cmd = new SqlCommand("qryGetAgentData", con);  // tblAgent_Details
-                cmd.Parameters.Clear();
-                SqlParameter prm01 = cmd.Parameters.Add("@nUTR", SqlDbType.Float);
-                prm01.Value = dblUTR;
-                cmd.CommandTimeout = Global.TimeOut;
-                cmd.CommandType = CommandType.StoredProcedure;
-                con.Open();
-                SqlDataReader dr = cmd.ExecuteReader();
-                #region Recordset
-                if (dr.HasRows)
+                try
                 {
-                    dr.Read();
-                    AgentRecordID = Convert.ToInt32(dr["Agent_Record_ID"]);
-                    Agent = dr["Agent"].ToString();
-                    AgentCode = dr["AgentCode"].ToString();
-                    Agent648Held = Convert.ToByte(dr["648_held"]);
-                    AgentAddress = dr["Agent_Address"].ToString();
-                    NamedAgent = dr["Named_Agent"].ToString();
-                    OtherContact = dr["Other_Contact"].ToString();
-                    AgentTelNo = dr["Agent_Tel_No"].ToString();
-                    bool blnChanged = (dr["Changed"] is DBNull) ? false : Convert.ToBoolean(dr["Changed"]);
-                    Changed = Convert.ToByte(blnChanged);
-                    bReturn = true;
+                    SqlCommand cmd = new SqlCommand("qryGetAgentData", con);  // tblAgent_Details
+                    cmd.Parameters.Clear();
+                    SqlParameter prm01 = cmd.Parameters.Add("@nUTR", SqlDbType.Float);
+                    prm01.Value = dblUTR;
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    #region Recordset
+                    if (dr.HasRows)
+                    {
+                        dr.Read();
+                        AgentRecordID = Convert.ToInt32(dr["Agent_Record_ID"]);
+                        Agent = dr["Agent"].ToString();
+                        AgentCode = dr["AgentCode"].ToString();
+                        Agent648Held = Convert.ToByte(dr["648_held"]);
+                        AgentAddress = dr["Agent_Address"].ToString();
+                        NamedAgent = dr["Named_Agent"].ToString();
+                        OtherContact = dr["Other_Contact"].ToString();
+                        AgentTelNo = dr["Agent_Tel_No"].ToString();
+                        bool blnChanged = (dr["Changed"] is DBNull) ? false : Convert.ToBoolean(dr["Changed"]);
+                        Changed = Convert.ToByte(blnChanged);
+                    }
+                    #endregion
+                    else if (dr.HasRows == false)
+                    {
+                        //MessageBox.Show("Agent record not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    }
+                    con.Close();
                 }
-                else if (dr.HasRows == false)
+                catch
                 {
-                    MessageBox.Show("Agent record not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    bReturn = false;
+                    con.Close();
+                    return false;
                 }
+                return true;
+            }
 
-                #endregion
-                con.Close();
-                return bReturn;
+            public bool GetRPDScoresData(double dblUTR, int iYear, string sPop)
+            {
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("qryGetRPDDataScore", con);
+                    cmd.Parameters.Clear();
+                    SqlParameter prm01 = cmd.Parameters.Add("@nUTR", SqlDbType.Float);
+                    prm01.Value = dblUTR;
+                    SqlParameter prm02 = cmd.Parameters.Add("@nYear", SqlDbType.Int);
+                    prm02.Value = iYear;
+                    SqlParameter prm03 = cmd.Parameters.Add("@nPop", SqlDbType.Text);
+                    prm03.Value = sPop;
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    #region Recordset
+                    if (dr.HasRows)
+                    {
+                        dr.Read();
+                        RPD_ID = Convert.ToInt32(dr["RPD_ID"]);
+                        UpdatedDate = dr["UpdatedDate"].ToString();
+                        UpdatedBy = Convert.ToInt32(dr["UpdatedBy"]);
+                        CalendarYear = Convert.ToInt16(dr["CalendarYear"]);
+                        LPOpen = Convert.ToInt16(dr["LPOpen"]);
+                        LPClosed = Convert.ToInt16(dr["LPClosed"]);
+                        HPPenalty = Convert.ToInt32(dr["HPPenalty"]);
+                        PSCurrent = Convert.ToInt32(dr["PSCurrent"]);
+                        PSPrevious = Convert.ToInt32(dr["PSPrevious"]);
+                        PSFailures = Convert.ToInt32(dr["PSFailures"]);
+                        QSScore = Convert.ToInt16(dr["QSScore"]);
+                        RPTPRScore = Convert.ToInt16(dr["RPTPRScore"]);
+                        RPTAVScore = Convert.ToInt16(dr["RPTAVScore"]);
+                        CGScore = Convert.ToInt16(dr["CGScore"]);
+                        ResScore = Convert.ToInt16(dr["ResScore"]);
+                        CRMScore = Convert.ToInt16(dr["CRMScore"]);
+                        PriorityScore = Convert.ToInt16(dr["PriorityScore"]);
+                        Percentile = Convert.ToInt32(dr["Percentile"]);
+                        SupecededDate = dr["SupecededDate"].ToString();
+                        RiskingComplete = Convert.ToByte(dr["RiskingComplete"]);
+                        //SegmentRecorded = dr["Segment_Recorded"].ToString();
+                        //RSDLU = dr["RSDLU"].ToString();
+                        //CRMExplanation = dr["CRM_Explanation"].ToString();
+                    }
+                    #endregion
+                    else if (dr.HasRows == false)
+                    {
+                        //MessageBox.Show("Behaviours scores data not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    }
+                    con.Close();
+                }
+                catch
+                {
+                    con.Close();
+                    return false;
+                }
+                return true;
             }
 
         }

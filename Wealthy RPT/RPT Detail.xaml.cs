@@ -857,7 +857,7 @@ namespace Wealthy_RPT
                     cboPopCode.SelectedIndex = cboPopFriendly.SelectedIndex;
                     txtPopFriendly.Text = cboPopFriendly.Text;
                     // update Office options as not all populations may have same office locations
-                    cboOffice.Items.Clear();
+                    // ##########cboOffice.Items.Clear();
                     bool blnTest = PopulateOfficeCombo();
                     foreach (var item in cboOffice.Items)
                     {
@@ -867,7 +867,7 @@ namespace Wealthy_RPT
                             break;
                         }
                     }
-                    cboTeam.Items.Clear();
+                    // ###########cboTeam.Items.Clear();
                 }
             }
         }

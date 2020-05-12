@@ -277,7 +277,7 @@
                                         </Grid.RowDefinitions>
                                         <TextBlock x:Name="lblEmail" Grid.Row="0" Grid.Column="0" FontSize="16" Margin="0,0,10,0" Grid.ColumnSpan="2"><Run Text="Email Contacts"/><InlineUIContainer>
                                         </InlineUIContainer></TextBlock>
-                                        <TextBlock x:Name="lblPopFields" Margin="0,5,19,0" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="2" Width="107" Grid.ColumnSpan="3">ICT Populated Fields</TextBlock>
+                                        <TextBlock x:Name="lblPopFields" Margin="0,5,19,0" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="2" Width="107" Grid.ColumnSpan="3">R &amp; I Populated Fields</TextBlock>
                                         <TextBox x:Name="txtPopFields" Margin="10,1,0,0" Grid.Row="0" Grid.Column="5" Background="#339966" IsEnabled="False" />
                                         <Button x:Name="cmdEmailAdd" Grid.Row="1" Grid.Column="0" Width="60" Height="30" Margin="0,5,4,5" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailAdd_GotFocus">
                                             <TextBlock Text="Add" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Add" />
@@ -304,7 +304,7 @@
                                 <!--#endregion-->
                                 <!--#region Behaviours-->
                                 <TextBlock x:Name="lblBehaviours" FontSize="18"><Bold>Behaviours</Bold></TextBlock>
-                                <GroupBox x:Name="grpBehaviours" Header="CRMM Data - last updated" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Height="106" Width="384">
+                                <GroupBox x:Name="grpBehaviours" Header="CRMM / Caseflow Data - last updated" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Height="106" Width="384">
                                     <Grid x:Name="grdBehaviours">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="227*"/>
@@ -365,10 +365,10 @@
                                         <TextBox x:Name="txtFailuresHD" Visibility="Collapsed" Grid.Row="4" Grid.Column="3" Margin="0,3"/>
                                         <TextBlock x:Name="lblLateFiling" Padding="5,10,0,0" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" ><Bold>Late filing / payment history</Bold></TextBlock>
                                         <TextBlock x:Name="lblOpenIDMS" Padding="5,10,0,0" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" >Number of open work items on IDMS</TextBlock>
-                                        <TextBox x:Name="txtOpenIDMS"  Grid.Row="6" Grid.Column="2" Margin="6,3,20,3" Grid.ColumnSpan="2" GotFocus="TxtOpenIDMS_GotFocus"/>
+                                        <TextBox x:Name="txtOpenIDMS"  Grid.Row="6" Grid.Column="2" Margin="6,3,20,3" Grid.ColumnSpan="2" Text = "{Binding LPOpen, Mode = TwoWay}" GotFocus="TxtOpenIDMS_GotFocus"/>
                                         <TextBox x:Name="txtOpenIDMSHD" Visibility="Collapsed" Grid.Row="6" Grid.Column="3" Margin="0,3"/>
                                         <TextBlock x:Name="lblClosedIDMS" Padding="5,10,0,0" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" >Number of closed work items on IDMS</TextBlock>
-                                        <TextBox x:Name="txtClosedIDMS"  Grid.Row="7" Grid.Column="2" Margin="6,5,20,5" Grid.ColumnSpan="2" GotFocus="TxtClosedIDMS_GotFocus"/>
+                                        <TextBox x:Name="txtClosedIDMS"  Grid.Row="7" Grid.Column="2" Margin="6,5,20,5" Grid.ColumnSpan="2" Text = "{Binding LPClosed, Mode = TwoWay}" GotFocus="TxtClosedIDMS_GotFocus"/>
                                         <TextBox x:Name="txtClosedIDMSHD" Visibility="Collapsed" Grid.Row="7" Grid.Column="3" Margin="0,5"/>
                                         <TextBox x:Name="txtPSCalc" Visibility="Collapsed" Grid.Row="8" Grid.Column="3" Margin="0,0,0,10" Grid.RowSpan="2"/>
                                         <TextBox x:Name="txtPFCalc" Visibility="Collapsed" Grid.Row="9" Grid.Column="3" Margin="0,5"/>

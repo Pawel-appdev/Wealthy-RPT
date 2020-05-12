@@ -949,13 +949,25 @@ namespace Wealthy_RPT
             RPT.RPT_Data rpt = new RPT.RPT_Data(); // initialise data
             // get data for selected UTR
             double dUTR = Convert.ToDouble((dgCases.Columns[1].GetCellContent(dgCases.CurrentCell.Item) as TextBlock).Text);
-            rpt.GetRPDData(dUTR);
-            rptDetail.DataContext = rpt;
-            rptDetail.cboPopFriendly.SelectedIndex = this.cboPopulation.SelectedIndex;
-            rptDetail.cboPopCode.SelectedIndex = this.cboPopulation.SelectedIndex;
-            try { rptDetail.lblPopYear.Text = this.cboYear.SelectedValue.ToString(); } catch { DateTime.Now.Year.ToString(); }
-            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
-            rptDetail.Show();
+            //int iYear = 2020;
+            int iYear = Convert.ToInt16(cboYear.SelectedValue);
+            string sPop = "rPt10Mill";
+            //string sPop = rptDetail.cboPopCode.SelectedValue.ToString(); 
+            if (rpt.GetRPDData(dUTR, iYear, sPop) == false)
+            {
+                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+                rptDetail.Close();
+                MessageBox.Show("Problem loading RPT Data.", "RPT Data", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                rptDetail.DataContext = rpt;
+                rptDetail.cboPopFriendly.SelectedIndex = this.cboPopulation.SelectedIndex;
+                rptDetail.cboPopCode.SelectedIndex = this.cboPopulation.SelectedIndex;
+                try { rptDetail.lblPopYear.Text = this.cboYear.SelectedValue.ToString(); } catch { DateTime.Now.Year.ToString(); }
+                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+                rptDetail.Show();
+            }
         }
     }
 }
