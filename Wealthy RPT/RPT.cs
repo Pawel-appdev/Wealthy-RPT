@@ -517,7 +517,7 @@ namespace Wealthy_RPT
 
 
 
-                rptDet.lvwEmail.DataContext = ds.Tables[0].DefaultView;
+                //rptDet.lvwEmail.DataContext = ds.Tables[0].DefaultView;
                 con.Close();
 
 

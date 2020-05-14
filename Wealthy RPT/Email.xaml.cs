@@ -23,34 +23,38 @@ namespace Wealthy_RPT
 
     {
         public double dUTR;
+        public string Email_ID;
 
-        public Email(double dblUTR)
+        public Email(double dblUTR,string EmailID, string strContact, string strEmail, string strRole, string strDateAdded)
         {
             InitializeComponent();
             //testAction();
             dUTR = dblUTR;
+            Email_ID = EmailID;
+            this.txtContact.Text = strContact;
+            this.txtEmailAddr.Text = strEmail;
+            this.txtRole.Text = strRole;
+
+            if(strDateAdded == "")//button 'Add' clicked
+            {
+                txtDateAdded.Text = "";
+            }
+            else//button 'Update' clicked
+            {
+                this.lblDate.Content = Convert.ToDateTime(strDateAdded);
+            }
         }
 
-        //private void testAction()
-        //{
-        //    switch (this.Title)
-        //    {
-        //        case "Add Email Address":
-        //            break;
-
-        //        case "Update Email Address":
-        //            break;
-
-        //        case "Delete Email Address":
-        //            break;
-        //    }
-
-        //}
-
-        private bool addEmail()
+        private void addEmail()
         {
-            //try
-            //{
+
+            if(txtContact.Text.Trim() == "" || txtEmailAddr.Text.Trim() == "" || txtRole.Text.Trim() == "")
+            {
+                MessageBox.Show("None of the required fields appear to have been completed." + "\n" + "\n" + "Please rectify.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            try
+            {
                 SqlConnection con = new SqlConnection(Global.ConnectionString);
                 con.Open();
 
@@ -67,15 +71,39 @@ namespace Wealthy_RPT
                 con.Close();
 
                 this.Close();
+                int intTab = 0;
+                Forms.reloadForm(dUTR, intTab);
 
-                refreshScreen();
+        }
+            catch
+            {
+                MessageBox.Show("Contact details have not been added", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+        }
 
-                return true;
-            //}
-            //catch
-            //{
-            //    return false;
-            //}
+        private void updateEmail()
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                con.Open();
+                SqlCommand cmd = new SqlCommand("qryUpdateEmailAddress", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@oEmailID", SqlDbType.Int).Value = Email_ID;
+                cmd.Parameters.Add("@nContact", SqlDbType.Text).Value = this.txtContact.Text;
+                cmd.Parameters.Add("@nEmailAddress", SqlDbType.Text).Value = this.txtEmailAddr.Text;
+                cmd.Parameters.Add("@nRole", SqlDbType.Text).Value = this.txtRole.Text;
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                this.Close();
+                int intTab = 0;
+                Forms.reloadForm(dUTR, intTab);
+        }
+            catch
+            {
+                MessageBox.Show("Contact details have not been updated", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
         }
 
         private void btnAction_Click(object sender, RoutedEventArgs e)
@@ -84,11 +112,11 @@ namespace Wealthy_RPT
             {
                 addEmail();
             }
-        }
 
-        private void refreshScreen()
-        {
-            RPT_Detail.refreshScreen(dUTR);
+            if (btnAction.Content.ToString() == "Update")
+            {
+                updateEmail();
+            }
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)

@@ -95,7 +95,7 @@
         <Button x:Name="btnLastPage" Content="&gt;&gt;" HorizontalAlignment="Right" Height="25" Margin="0,105,3.5,0" VerticalAlignment="Top" Width="25" FontSize="16" FontFamily="Microsoft Sans Serif" ToolTip="Last Page" Grid.Column="3" Click="btnLastPage_Click"/>
         <DataGrid x:Name="dgCases" HorizontalAlignment="Stretch"  Margin="16,163,2.5,38.4" VerticalAlignment="Stretch" Style="{DynamicResource headerStyle}" FontWeight="Normal" AutoGenerateColumns="False" VerticalGridLinesBrush="#FFD1D1D1" HorizontalGridLinesBrush="#FFD1D1D1" AlternatingRowBackground="WhiteSmoke"  AlternationCount="2" IsReadOnly="True" MouseDoubleClick="DgCases_MouseDoubleClick" Grid.ColumnSpan="3" Grid.Column="1">
             <DataGrid.Resources>
-                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#D1D1D1" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#8080FF" />
                 <!--color of selected row-->
             </DataGrid.Resources>
 

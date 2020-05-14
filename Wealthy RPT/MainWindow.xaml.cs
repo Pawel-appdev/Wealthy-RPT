@@ -1122,19 +1122,18 @@ namespace Wealthy_RPT
 
         private void DgCases_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
-            RPT_Detail rptDetail = new RPT_Detail();  // initialise form
-            RPT.RPT_Data rpt = new RPT.RPT_Data(); // initialise data
-            // get data for selected UTR
+            //System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
+            //RPT_Detail rptDetail = new RPT_Detail();  // initialise form
+            //RPT.RPT_Data rpt = new RPT.RPT_Data(); // initialise data
+            //// get data for selected UTR
             double dUTR = Convert.ToDouble((dgCases.Columns[1].GetCellContent(dgCases.CurrentCell.Item) as TextBlock).Text);
-            rpt.GetRPDData(dUTR);
-            rptDetail.DataContext = rpt;
+            //rpt.GetRPDData(dUTR);
+            //rptDetail.DataContext = rpt;
 
-            //////rpt.GetEmailAddress(dUTR);
-
-            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
-            rptDetail.Show();
-
+            //System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+            //rptDetail.Show();
+            int intTab = 0;
+            Forms.reloadForm(dUTR, intTab);
         }
 
         private void mnuUpdateDBTables_Click(object sender, RoutedEventArgs e)
