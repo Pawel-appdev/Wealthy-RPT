@@ -849,7 +849,7 @@ namespace Wealthy_RPT
             }
             #endregion
 
-            public bool GetRPDData(double dblUTR, int iYear, string sPop)
+            public bool GetRPDData(double dblUTR, int iYear, double dPercentile, string sPop)
             {
                 if (GetCustomerData(dblUTR) == false)
                 {
@@ -867,7 +867,11 @@ namespace Wealthy_RPT
                     return false;
                 }
 
-                //GetRPDHistoricalData(nUTR, nYear, nPercentile, strPop)
+                //if (GetRPDHistoricalData(dblUTR, iYear, dPercentile, sPop) == false)
+                //{
+                //    return false;
+                //}
+
                 return true;
             }
 
@@ -1046,6 +1050,52 @@ namespace Wealthy_RPT
                 return true;
             }
 
+            public bool GetRPDHistoricalData(double dblUTR, int iYear, double dPercentile, string sPop)
+            {
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("qryGetRPDHistoricalData", con);
+                    cmd.Parameters.Clear();
+                    SqlParameter prm01 = cmd.Parameters.Add("@nUTR", SqlDbType.Float);
+                    prm01.Value = dblUTR;
+                    SqlParameter prm02 = cmd.Parameters.Add("@nYear", SqlDbType.Int);
+                    prm02.Value = iYear;
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    #region Recordset
+                    if (dr.HasRows)
+                    {
+                        dr.Read();
+                        RPD_ID = Convert.ToInt32(dr["RPD_ID"]);
+                        QSScore = Convert.ToInt16(dr["QSScore"]);
+                        RPTPRScore = Convert.ToInt16(dr["RPTPRScore"]);
+                        RPTAVScore = Convert.ToInt16(dr["RPTAVScore"]);
+                        CGScore = Convert.ToInt16(dr["CGScore"]);
+                        ResScore = Convert.ToInt16(dr["ResScore"]);
+                        CRMScore = Convert.ToInt16(dr["CRMScore"]);
+                        PriorityScore = Convert.ToInt16(dr["PriorityScore"]);
+                        Percentile = Convert.ToInt32(dr["Percentile"]);
+                        SegmentRecorded = dr["Segment_Recorded"].ToString();
+                        RSDLU = dr["RSDLU"].ToString();
+                        CRMExplanation = dr["CRM_Explanation"].ToString();
+                    }
+                    #endregion
+                    else if (dr.HasRows == false)
+                    {
+                        //MessageBox.Show("Behaviours scores data not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    }
+                    con.Close();
+                }
+                catch
+                {
+                    con.Close();
+                    return false;
+                }
+                return true;
+            }
         }
 
     }

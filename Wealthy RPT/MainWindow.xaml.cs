@@ -689,6 +689,7 @@ namespace Wealthy_RPT
                 MessageBox.Show("Unable to connect to database.");
             }
         }
+
         private void clearOtherCasesCombos()
         {
             cboOffice.Text = "";
@@ -948,12 +949,16 @@ namespace Wealthy_RPT
             RPT_Detail rptDetail = new RPT_Detail();  // initialise form
             RPT.RPT_Data rpt = new RPT.RPT_Data(); // initialise data
             // get data for selected UTR
-            double dUTR = Convert.ToDouble((dgCases.Columns[1].GetCellContent(dgCases.CurrentCell.Item) as TextBlock).Text);
-            //int iYear = 2020;
-            int iYear = Convert.ToInt16(cboYear.SelectedValue);
-            string sPop = "rPt10Mill";
-            //string sPop = rptDetail.cboPopCode.SelectedValue.ToString(); 
-            if (rpt.GetRPDData(dUTR, iYear, sPop) == false)
+            double dUTR = 0;
+            try { dUTR = Convert.ToDouble((dgCases.Columns[1].GetCellContent(dgCases.CurrentCell.Item) as TextBlock).Text); } catch { }
+            int iYear = 2000;
+            try { iYear = Convert.ToInt16(cboYear.SelectedValue); } catch { }
+            double dPercentile = 0;
+            int iPercentileIndex = dgCases.Columns.IndexOf(dgCases.Columns.FirstOrDefault(c => c.Header.ToString() == "Daily Ranking"));
+            try { dPercentile = Convert.ToDouble((dgCases.Columns[iPercentileIndex].GetCellContent(dgCases.CurrentCell.Item) as TextBlock).Text); } catch { dPercentile = 0; } // text can be 'N/A'
+            string sPop = "";
+            try { sPop = this.cboPopulation.SelectedValue.ToString(); } catch {}
+            if (rpt.GetRPDData(dUTR, iYear, dPercentile, sPop) == false)
             {
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
                 rptDetail.Close();
