@@ -939,7 +939,7 @@ namespace Wealthy_RPT
            IniFile GlobalFile = new IniFile(LoadAppVariables.GlobalFile);
 
 
-            GlobalFile.IniWriteValue("System", "DailyRecalc", DateTime.Now.ToString("dd/mm/yyyy"));
+            GlobalFile.IniWriteValue("System", "DailyRecalc", DateTime.Now.ToString("dd/MM/yyyy"));
             
         }
 

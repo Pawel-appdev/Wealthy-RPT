@@ -27,6 +27,7 @@ namespace Wealthy_RPT
         bool bFormLoaded = false;
         public RPT_Detail()
         {
+            this.DataContext = new RPT(); // set data context
             InitializeComponent();
             PopulateCombos();
 
@@ -871,6 +872,36 @@ namespace Wealthy_RPT
                 }
             }
         }
+
+        private void CmdSave_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            BindingExpression obj = txtSecondaryAddress.GetBindingExpression(TextBox.TextProperty);
+            obj.UpdateSource();
+        }
+
+        private void ChkDeselected_Checked(object sender, RoutedEventArgs e)
+        {
+            if (System.Windows.Forms.MessageBox.Show
+                        ("Please confirm that you wish to deselect this case.", "Deselection", System.Windows.Forms.MessageBoxButtons.YesNo,
+                        System.Windows.Forms.MessageBoxIcon.Exclamation, System.Windows.Forms.MessageBoxDefaultButton.Button2)
+                        == System.Windows.Forms.DialogResult.No)
+            {
+                chkDeselected.IsChecked = false;
+            }
+            else
+            {
+                txtDeselected.Text = DateTime.Now.ToString("dd/MM/yyyy");
+            }
+
+        }
+
+        private void ChkDeselected_Unchecked(object sender, RoutedEventArgs e)
+        {
+            txtDeselected.Tag = txtDeselected.Text; /*store for possible recall*/
+            txtDeselected.Text = "";
+        }
+
+
     }
 
 }

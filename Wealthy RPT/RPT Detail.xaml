@@ -153,19 +153,19 @@
                                         <TextBox x:Name="txtPrivateAddress" Margin="6.383,2,8.767,2" Grid.Row="5"  Grid.Column="2" Grid.ColumnSpan="5" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" GotFocus="TxtPrivateAddress_GotFocus" Text = "{Binding MainAdd, Mode = TwoWay}"/>
                                         <TextBlock x:Name="lblPostcode" Margin="8,2,8.617,2" Grid.Row="6"  Grid.Column="0" Grid.ColumnSpan="2">Postcode</TextBlock>
                                         <TextBox x:Name="txtPostcode" Margin="5,2,65.778,2" Width="100" Grid.Row="6"  Grid.Column="2" Grid.ColumnSpan="2" GotFocus="TxtPostcode_GotFocus" Text = "{Binding MainPC, Mode = TwoWay}"/>
-                                        <CheckBox x:Name="chkDeselected" FlowDirection="RightToLeft"  Margin="7.383,2,9.767,2" Grid.Row="6"  Grid.Column="5" VerticalAlignment="Center" GotFocus="ChkDeselected_GotFocus">
+                                        <CheckBox x:Name="chkDeselected" FlowDirection="RightToLeft"  Margin="7.383,2,9.767,2" Grid.Row="6"  Grid.Column="5" VerticalAlignment="Center" GotFocus="ChkDeselected_GotFocus" IsChecked = "{Binding DeselectedTF, Mode = OneWay}" Checked="ChkDeselected_Checked" Unchecked="ChkDeselected_Unchecked">
                                             <CheckBox.Resources>
                                                 <Style TargetType="{x:Type Path}">
                                                     <Setter Property="FlowDirection" Value="LeftToRight"/>
                                                 </Style>
                                             </CheckBox.Resources> Deselected
                                         </CheckBox>
-                                        <TextBox x:Name="txtDeselected" Margin="6.233,2,9.767,2" Grid.Row="6"  Grid.Column="6" GotFocus="TxtDeselected_GotFocus"/>
+                                        <TextBox x:Name="txtDeselected" Margin="6.233,2,9.767,2" Grid.Row="6"  Grid.Column="6" GotFocus="TxtDeselected_GotFocus" Text = "{Binding Deselected, Mode = TwoWay}"/>
                                         <TextBlock x:Name="lblSecondaryAddress" Margin="8,2,7.617,2" Grid.Row="7"  Grid.Column="0" Grid.ColumnSpan="2">Secondary Address</TextBlock>
                                         <TextBox x:Name="txtSecondaryAddress" Margin="7.383,2,7.767,2" Grid.Row="7"  Grid.Column="2" Grid.ColumnSpan="5" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" GotFocus="TxtSecondaryAddress_GotFocus" Text = "{Binding SecAdd, Mode = TwoWay}"/>
                                         <TextBlock x:Name="lblResidence" Margin="8,2,7.617,2" Grid.Row="8"  Grid.Column="0" Grid.ColumnSpan="2">Residence Status</TextBlock>
                                         <ComboBox x:Name="cboResidence" Height="22" Margin="8.383,2,7.617,2" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="3" GotFocus="CboResidence_GotFocus" SelectedValue="{Binding Residence, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                         <TextBlock x:Name="lblDomicile" Margin="7.383,2,7.767,2" Grid.Row="8"  Grid.Column="5">Domicile Status</TextBlock>
+                                        <TextBlock x:Name="lblDomicile" Margin="7.383,2,7.767,2" Grid.Row="8"  Grid.Column="5">Domicile Status</TextBlock>
                                         <ComboBox x:Name="cboDomicile" Height="22" Width="160" Margin="8.233,2,7.767,2" Grid.Row="8" Grid.Column="6" GotFocus="CboDomicile_GotFocus" SelectedValue="{Binding Domicile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </Grid>
                                 </StackPanel>
@@ -261,13 +261,14 @@
                                 <StackPanel x:Name="pnlEmailContacts02" Orientation="Horizontal">
                                     <Grid x:Name="grdEmailContacts" Width="430">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="76*"/>
+                                            <ColumnDefinition Width="90*"/>
+                                            <ColumnDefinition Width="54*"/>
+                                            <ColumnDefinition Width="90*"/>
+                                            <ColumnDefinition Width="22*"/>
+                                            <ColumnDefinition Width="54*"/>
+                                            <ColumnDefinition Width="30*"/>
+                                            <ColumnDefinition Width="46*"/>
                                             <ColumnDefinition Width="45*"/>
-                                            <ColumnDefinition Width="75*"/>
-                                            <ColumnDefinition Width="18*"/>
-                                            <ColumnDefinition Width="45*"/>
-                                            <ColumnDefinition Width="63*"/>
-                                            <ColumnDefinition Width="38*"/>
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
@@ -277,18 +278,18 @@
                                         </Grid.RowDefinitions>
                                         <TextBlock x:Name="lblEmail" Grid.Row="0" Grid.Column="0" FontSize="16" Margin="0,0,10,0" Grid.ColumnSpan="2"><Run Text="Email Contacts"/><InlineUIContainer>
                                         </InlineUIContainer></TextBlock>
-                                        <TextBlock x:Name="lblPopFields" Margin="0,5,19,0" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="2" Width="107" Grid.ColumnSpan="3">R &amp; I Populated Fields</TextBlock>
-                                        <TextBox x:Name="txtPopFields" Margin="10,1,0,0" Grid.Row="0" Grid.Column="5" Background="#339966" IsEnabled="False" />
-                                        <Button x:Name="cmdEmailAdd" Grid.Row="1" Grid.Column="0" Width="60" Height="30" Margin="0,5,4,5" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailAdd_GotFocus">
+                                        <TextBlock x:Name="lblPopFields" Margin="0,5,19,0" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="2" Width="118" Grid.ColumnSpan="3">R &amp; I Populated Fields</TextBlock>
+                                        <TextBox x:Name="txtPopFields" Margin="10,1,0,0" Grid.Row="0" Grid.Column="5" Background="#339966" IsEnabled="False" Grid.ColumnSpan="2" />
+                                        <Button x:Name="cmdEmailAdd" Grid.Row="1" Grid.Column="0" Width="60" Height="30" Margin="13,5,17,5" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailAdd_GotFocus">
                                             <TextBlock Text="Add" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Add" />
                                         </Button>
-                                        <Button x:Name="cmdEmailUpdate" Grid.Row="2"  Grid.Column="0" Width="60" Height="30" Margin="0,5,4,5" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailUpdate_GotFocus">
+                                        <Button x:Name="cmdEmailUpdate" Grid.Row="2"  Grid.Column="0" Width="60" Height="30" Margin="13,5,17,5" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailUpdate_GotFocus">
                                             <TextBlock Text="Update" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Update" />
                                         </Button>
-                                        <Button x:Name="cmdEmailDelete" Grid.Row="3"  Grid.Column="0" Width="60" Height="30" Margin="0,5,4,11" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailDelete_GotFocus">
+                                        <Button x:Name="cmdEmailDelete" Grid.Row="3"  Grid.Column="0" Width="60" Height="30" Margin="13,5,17,11" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailDelete_GotFocus">
                                             <TextBlock Text="Delete" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Delete" />
                                         </Button>
-                                         <ListView x:Name="lvwEmail" Grid.Row="1"  Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="5" Margin="0,5,0,3" GotFocus="lvwEmail_GotFocus">
+                                        <ListView x:Name="lvwEmail" Grid.Row="1"  Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="6" Margin="0,5,0,3" GotFocus="lvwEmail_GotFocus">
                                             <ListView.View>
                                                 <GridView>
                                                     <GridViewColumn Header="Contact" Width="50" DisplayMemberBinding="{Binding Contact}"/>
@@ -318,13 +319,13 @@
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
                                         <TextBlock x:Name="lblOpenRisks" Padding="0,10,0,0" Grid.Row="1" Grid.Column="0">Open Risks</TextBlock>
-                                        <TextBox x:Name="txtOpenRisks"  Grid.Row="1" Grid.Column="1" Background="#339966" IsEnabled="False" Margin="0,3,0,4" GotFocus="TxtOpenRisks_GotFocus"/>
+                                        <TextBox x:Name="txtOpenRisks"  Grid.Row="1" Grid.Column="1" Background="#339966" IsEnabled="False" Margin="0,3,0,4" GotFocus="TxtOpenRisks_GotFocus" Text = "{Binding Risks_Open, Mode = TwoWay}" HorizontalContentAlignment="Right"/>
                                         <TextBox x:Name="txtOpenRisksHD" Visibility="Collapsed" Grid.Row="1" Grid.Column="2"/>
                                         <TextBlock x:Name="lblSettledRisks" Padding="0,10,0,0" Grid.Row="2" Grid.Column="0">Settled Risks</TextBlock>
-                                        <TextBox x:Name="txtSettledRisks" Grid.Row="2" Grid.Column="1" Background="#339966" IsEnabled="False" Margin="0,4,0,3" GotFocus="TxtSettledRisks_GotFocus"/>
+                                        <TextBox x:Name="txtSettledRisks" Grid.Row="2" Grid.Column="1" Background="#339966" IsEnabled="False" Margin="0,4,0,3" GotFocus="TxtSettledRisks_GotFocus" Text = "{Binding Settled_Risks, Mode = TwoWay}" HorizontalContentAlignment="Right"/>
                                         <TextBox x:Name="txtSettledHD" Visibility="Collapsed" Grid.Row="2" Grid.Column="2"/>
                                         <TextBlock x:Name="lblHighestSettled"  Padding="0,10,0,0" Grid.Row="3" Grid.Column="0">Highest settlement recorded</TextBlock>
-                                        <TextBox x:Name="txtHighestSettled" Grid.Row="3" Grid.Column="1" Background="#339966" IsEnabled="False" Margin="0,3,0,4" GotFocus="TxtHighestSettled_GotFocus"/>
+                                        <TextBox x:Name="txtHighestSettled" Grid.Row="3" Grid.Column="1" Background="#339966" IsEnabled="False" Margin="0,3,0,4" GotFocus="TxtHighestSettled_GotFocus" Text = "{Binding Highest_Settlement, Mode = TwoWay}" HorizontalContentAlignment="Right"/>
                                         <TextBox x:Name="txtHighestSettledHD" Visibility="Collapsed" Grid.Row="3" Grid.Column="2"/>
                                     </Grid>
                                 </GroupBox>
@@ -351,11 +352,11 @@
                                             <RowDefinition Height="30"/>
                                         </Grid.RowDefinitions>
                                         <TextBlock x:Name="lblHighestPercent" Padding="5,10,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" >Highest percentage penalty charged*</TextBlock>
-                                        <TextBox x:Name="txtHighestPercent" Margin="6,3,20,3"  Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="TxtHighestPercent_GotFocus"/>
+                                        <TextBox x:Name="txtHighestPercent" Margin="6,3,20,3"  Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="TxtHighestPercent_GotFocus" Text = "{Binding HPPenalty, Mode = TwoWay}" HorizontalContentAlignment="Right"/>
                                         <TextBox x:Name="txtHighestPercentHD" Visibility="Collapsed" Grid.Row="0" Grid.Column="3" Margin="0,3"/>
                                         <TextBlock x:Name="lblPenalty" Padding="5,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ><Bold>Penalty suspensions</Bold></TextBlock>
                                         <TextBlock x:Name="lblCurrentSuspensions" Padding="5,10,0,0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" >Any current suspension periods</TextBlock>
-                                        <ComboBox x:Name="cboCurrentSuspensions"  Grid.Row="2" Grid.Column="2" Margin="6,3,20,3" Grid.ColumnSpan="2" GotFocus="CboCurrentSuspensions_GotFocus"/>
+                                        <ComboBox x:Name="cboCurrentSuspensions"  Grid.Row="2" Grid.Column="2" Margin="6,3,20,3" Grid.ColumnSpan="2" GotFocus="CboCurrentSuspensions_GotFocus" SelectedValue="{Binding PSCurrent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                         <TextBox x:Name="txtCurrentSuspensionsHD" Visibility="Collapsed" Grid.Row="2" Grid.Column="3" Margin="0,3"/>
                                         <TextBlock x:Name="lblPrevSuspensions" Padding="5,10,0,0" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" >Any previous suspensions</TextBlock>
                                         <ComboBox x:Name="cboPrevSuspensions"  Grid.Row="3" Grid.Column="2" Margin="6,5,20,5" Grid.ColumnSpan="2" GotFocus="CboPrevSuspensions_GotFocus"/>
@@ -365,10 +366,10 @@
                                         <TextBox x:Name="txtFailuresHD" Visibility="Collapsed" Grid.Row="4" Grid.Column="3" Margin="0,3"/>
                                         <TextBlock x:Name="lblLateFiling" Padding="5,10,0,0" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" ><Bold>Late filing / payment history</Bold></TextBlock>
                                         <TextBlock x:Name="lblOpenIDMS" Padding="5,10,0,0" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" >Number of open work items on IDMS</TextBlock>
-                                        <TextBox x:Name="txtOpenIDMS"  Grid.Row="6" Grid.Column="2" Margin="6,3,20,3" Grid.ColumnSpan="2" Text = "{Binding LPOpen, Mode = TwoWay}" GotFocus="TxtOpenIDMS_GotFocus"/>
+                                        <TextBox x:Name="txtOpenIDMS"  Grid.Row="6" Grid.Column="2" Margin="6,3,20,3" Grid.ColumnSpan="2" Text = "{Binding LPOpen, Mode = TwoWay}" GotFocus="TxtOpenIDMS_GotFocus" HorizontalContentAlignment="Right"/>
                                         <TextBox x:Name="txtOpenIDMSHD" Visibility="Collapsed" Grid.Row="6" Grid.Column="3" Margin="0,3"/>
                                         <TextBlock x:Name="lblClosedIDMS" Padding="5,10,0,0" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" >Number of closed work items on IDMS</TextBlock>
-                                        <TextBox x:Name="txtClosedIDMS"  Grid.Row="7" Grid.Column="2" Margin="6,5,20,5" Grid.ColumnSpan="2" Text = "{Binding LPClosed, Mode = TwoWay}" GotFocus="TxtClosedIDMS_GotFocus"/>
+                                        <TextBox x:Name="txtClosedIDMS"  Grid.Row="7" Grid.Column="2" Margin="6,5,20,5" Grid.ColumnSpan="2" Text = "{Binding LPClosed, Mode = TwoWay}" GotFocus="TxtClosedIDMS_GotFocus" HorizontalContentAlignment="Right"/>
                                         <TextBox x:Name="txtClosedIDMSHD" Visibility="Collapsed" Grid.Row="7" Grid.Column="3" Margin="0,5"/>
                                         <TextBox x:Name="txtPSCalc" Visibility="Collapsed" Grid.Row="8" Grid.Column="3" Margin="0,0,0,10" Grid.RowSpan="2"/>
                                         <TextBox x:Name="txtPFCalc" Visibility="Collapsed" Grid.Row="9" Grid.Column="3" Margin="0,5"/>
@@ -431,7 +432,7 @@
                                     <RowDefinition Height="240"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock x:Name="lblNarrative" Grid.Row="0" Grid.Column="0" FontSize="16" Margin="0,0,10,0" Grid.ColumnSpan="2">Comments / narrative (maximum of 2000 Characters)</TextBlock>
-                                <TextBox x:Name="txtNarrative" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Margin="0,10,0,0" GotFocus="TxtNarrative_GotFocus"/>
+                                <TextBox x:Name="txtNarrative" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Margin="0,10,0,0" Text = "{Binding Narrative, Mode = TwoWay}" GotFocus="TxtNarrative_GotFocus"/>
                             </Grid>
                         </StackPanel>
                         <!--#endregion panel: Comments-->
@@ -528,11 +529,11 @@
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>
                                             <GridViewColumn Header="Noted" Width="150" DisplayMemberBinding="{Binding Noted}">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding Noted}" TextAlignment="Center" />
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Noted}" TextAlignment="Center" />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
                                             </GridViewColumn>
                                             <GridViewColumn Header="InfoAction" Width="0" DisplayMemberBinding="{Binding InfoAction}" />
                                             <GridViewColumn Header="InfoID" Width="0" DisplayMemberBinding="{Binding InfoID}" />
@@ -627,11 +628,11 @@
                                         <TextBlock x:Name="lblRiskScore" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Padding="0,10,0,10">Risk Profile</TextBlock>
                                         <TextBlock x:Name="lblCGScore" Grid.Row="3" Grid.Column="0"  VerticalAlignment="Center" Padding="0,10,0,10">Capital Gains</TextBlock>
                                         <TextBlock x:Name="lblResScore" Grid.Row="4" Grid.Column="0"  VerticalAlignment="Center" Padding="0,10,0,10">Residence</TextBlock>
-                                        <TextBox x:Name="txtQSScore" Grid.Row="0" Grid.Column="1" Margin="0,2,0,2"/>
-                                        <TextBox x:Name="txtAVScore" Grid.Row="1" Grid.Column="1" Margin="0,2,0,2"/>
-                                        <TextBox x:Name="txtRSScore" Grid.Row="2" Grid.Column="1" Margin="0,2,0,2"/>
-                                        <TextBox x:Name="txtCGScore" Grid.Row="3" Grid.Column="1" Margin="0,2,0,2"/>
-                                        <TextBox x:Name="txtRESScore" Grid.Row="4" Grid.Column="1" Margin="0,2,0,2"/>
+                                        <TextBox x:Name="txtQSScore" Grid.Row="0" Grid.Column="1" Margin="0,2,0,2" Text = "{Binding QSScore, Mode = TwoWay}"/>
+                                        <TextBox x:Name="txtAVScore" Grid.Row="1" Grid.Column="1" Margin="0,2,0,2" Text = "{Binding RPTAVScore, Mode = TwoWay}"/>
+                                        <TextBox x:Name="txtRSScore" Grid.Row="2" Grid.Column="1" Margin="0,2,0,2" Text = "{Binding RPTPRScore, Mode = TwoWay}"/>
+                                        <TextBox x:Name="txtCGScore" Grid.Row="3" Grid.Column="1" Margin="0,2,0,2" Text = "{Binding CGScore, Mode = TwoWay}"/>
+                                        <TextBox x:Name="txtRESScore" Grid.Row="4" Grid.Column="1" Margin="0,2,0,2" Text = "{Binding ResScore, Mode = TwoWay}"/>
                                         <CheckBox x:Name="chkCRMDescretion" FlowDirection="RightToLeft"  Margin="15,0,0,0" Grid.Row="0"  Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2">
                                             <CheckBox.Resources>
                                                 <Style TargetType="{x:Type Path}">
@@ -642,13 +643,13 @@
                                         <TextBlock x:Name="lblCRMExplanation" Grid.Row="1" Grid.Column="2"  TextWrapping="Wrap" VerticalAlignment="Top" Padding="15,10,0,10" Grid.RowSpan="2">CCM Explanation</TextBlock>
                                         <TextBlock x:Name="lblPriorityScore" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Padding="15,10,0,10">Total Priority</TextBlock>
                                         <TextBlock x:Name="lblPercentile" Grid.Row="4" Grid.Column="2"  VerticalAlignment="Center" Padding="15,10,0,10">Ranking</TextBlock>
-                                        <TextBox x:Name="txtCRMScore" Grid.Row="0" Grid.Column="5" Margin="0,0,0,0"/>
-                                        <TextBox x:Name="txtCRMExplanation" Grid.Row="1" Grid.Column="3" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.ColumnSpan="3" Grid.RowSpan="2" Margin="0,2,0,2"/>
-                                        <TextBox x:Name="txtPRScore" Grid.Row="3" Grid.Column="5" Margin="0,2,0,2"/>
+                                        <TextBox x:Name="txtCRMScore" Grid.Row="0" Grid.Column="5" Margin="0,0,0,0" Text = "{Binding CRMScore, Mode = TwoWay}"/>
+                                        <TextBox x:Name="txtCRMExplanation" Grid.Row="1" Grid.Column="3" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.ColumnSpan="3" Grid.RowSpan="2" Margin="0,2,0,2" Text = "{Binding CRMExplanation, Mode = TwoWay}"/>
+                                        <TextBox x:Name="txtPRScore" Grid.Row="3" Grid.Column="5" Margin="0,2,0,2" Text = "{Binding PriorityScore, Mode = TwoWay}"/>
                                         <Button x:Name="cmdPercentile" Grid.Row="3" Grid.Column="3" Margin="0,13,0,2" Grid.RowSpan="2" Style="{StaticResource 3DButtonStyle}">
                                             <TextBlock TextWrapping="Wrap" Text="Re-Check Ranking" TextAlignment="Center" ToolTip="Re-Check Ranking"/>
                                         </Button>
-                                        <TextBox x:Name="txtPercentile" Grid.Row="5" Grid.Column="5" Margin="0,2,0,2"/>
+                                        <TextBox x:Name="txtPercentile" Grid.Row="5" Grid.Column="5" Margin="0,2,0,2" Text = "{Binding Percentile, Mode = TwoWay}"/>
                                     </Grid>
                                 </GroupBox>
                                 <chartingToolkit:Chart  Title="RPT History" x:Name="mscHistory" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" BorderThickness="2" Margin="0,0,10,10" GotFocus="MscHistory_GotFocus">
@@ -681,8 +682,8 @@
                     <TextBlock Text="Guidance" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Guidance" />
 
                 </Button>
-                <Button x:Name="cmdSave" Grid.Column="1" HorizontalAlignment="Left" Margin="0,10,0,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdSave_GotFocus">
-                    <TextBlock Text="Save Changes" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Save Changes" />
+                <Button x:Name="cmdSave" Grid.Column="1" HorizontalAlignment="Left" Margin="0,10,0,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdSave_GotFocus" MouseDoubleClick="CmdSave_MouseDoubleClick">
+                    <TextBlock Text="Save Changes" HorizontalAlignment="Left" VerticalAlignment="Top" ToolTip="Save Changes" Margin="2,2,0,0" />
                 </Button>
                 <Button x:Name="cmdUpdateClose" Grid.Column="2" HorizontalAlignment="Left" Margin="0,10,0,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdUpdateClose_GotFocus">
                     <TextBlock Text="Save &amp; Close" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Save &amp; Close"/>

@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace Wealthy_RPT
@@ -66,7 +61,7 @@ namespace Wealthy_RPT
             private int _lpopen;
             private int _lpclosed;
             private float _hppenalty;
-            private Int32 _pscurrent;
+            private byte _pscurrent;
             private Int32 _psprevious;
             private Int32 _psfailures;
             private int _qsscore;
@@ -82,6 +77,15 @@ namespace Wealthy_RPT
             private string _segmentrecorded;
             private string _rsdlu;
             private string _crmexplanation;
+            // CRMM enquiry data
+            private int _risksopen;
+            private int _settledrisks;
+            private float _highestsettlement;
+            private int _highestpercentage;
+            private string _crmmdata;
+            private float _crmmscore;
+            private string _crmmdateadded;
+
             #endregion
 
             #region readwriteproperites
@@ -191,6 +195,14 @@ namespace Wealthy_RPT
                 set
                 {
                     _dod = value;
+                }
+            }
+
+            public byte DeselectedTF        /* DeselectedTrueFalse for Deselected checkbox*/
+            {
+                get
+                {
+                    return Convert.ToDateTime(Deselected) == null ? Convert.ToByte(0) : Convert.ToByte(1);
                 }
             }
 
@@ -655,7 +667,7 @@ namespace Wealthy_RPT
                 }
             }
 
-            public Int32 PSCurrent
+            public byte PSCurrent
             {
                 get
                 {
@@ -847,6 +859,55 @@ namespace Wealthy_RPT
                     _crmexplanation = value;
                 }
             }
+
+            // CRMM
+            public int Risks_Open
+            {
+                get
+                {
+                    return _risksopen;
+                }
+                set
+                {
+                    _risksopen = value;
+                }
+            }
+
+            public int Settled_Risks
+            {
+                get
+                {
+                    return _settledrisks;
+                }
+                set
+                {
+                    _settledrisks = value;
+                }
+            }
+
+            public float Highest_Settlement
+            {
+                get
+                {
+                    return _highestsettlement;
+                }
+                set
+                {
+                    _highestsettlement = value;
+                }
+            }
+
+            public string CRMM_Date_Added
+            {
+                get
+                {
+                    return _crmmdateadded;
+                }
+                set
+                {
+                    _crmmdateadded = value;
+                }
+            }
             #endregion
 
             public bool GetRPDData(double dblUTR, int iYear, double dPercentile, string sPop)
@@ -867,10 +928,10 @@ namespace Wealthy_RPT
                     return false;
                 }
 
-                //if (GetRPDHistoricalData(dblUTR, iYear, dPercentile, sPop) == false)
-                //{
-                //    return false;
-                //}
+                if (GetRPDHistoricalData(dblUTR, iYear, dPercentile, sPop) == false)
+                {
+                    return false;
+                }
 
                 return true;
             }
@@ -1018,7 +1079,7 @@ namespace Wealthy_RPT
                         LPOpen = Convert.ToInt16(dr["LPOpen"]);
                         LPClosed = Convert.ToInt16(dr["LPClosed"]);
                         HPPenalty = Convert.ToInt32(dr["HPPenalty"]);
-                        PSCurrent = Convert.ToInt32(dr["PSCurrent"]);
+                        PSCurrent = Convert.ToByte(dr["PSCurrent"]);
                         PSPrevious = Convert.ToInt32(dr["PSPrevious"]);
                         PSFailures = Convert.ToInt32(dr["PSFailures"]);
                         QSScore = Convert.ToInt16(dr["QSScore"]);
@@ -1069,7 +1130,6 @@ namespace Wealthy_RPT
                     if (dr.HasRows)
                     {
                         dr.Read();
-                        RPD_ID = Convert.ToInt32(dr["RPD_ID"]);
                         QSScore = Convert.ToInt16(dr["QSScore"]);
                         RPTPRScore = Convert.ToInt16(dr["RPTPRScore"]);
                         RPTAVScore = Convert.ToInt16(dr["RPTAVScore"]);
@@ -1094,6 +1154,49 @@ namespace Wealthy_RPT
                     con.Close();
                     return false;
                 }
+
+
+
+
+
+
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("qryGetCRMMEnquiryDataScore", con);
+                    cmd.Parameters.Clear();
+                    SqlParameter prm01 = cmd.Parameters.Add("@nUTR", SqlDbType.Float);
+                    prm01.Value = dblUTR;
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    #region Recordset
+                    if (dr.HasRows)
+                    {
+                        dr.Read();
+                        Risks_Open = Convert.ToInt16(dr["Risks_Open"]);
+                        Settled_Risks = Convert.ToInt16(dr["Settled_Risks"]);
+                        Highest_Settlement = Convert.ToInt32(dr["Highest_Settlement"]);
+                        CRMM_Date_Added = dr["CRMM_Date_Added"].ToString();
+                    }
+                    #endregion
+                    else if (dr.HasRows == false)
+                    {
+                        //MessageBox.Show("Behaviours scores data not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    }
+                    con.Close();
+                }
+                catch
+                {
+                    con.Close();
+                    return false;
+                }
+
+
+
+
+
+
                 return true;
             }
         }
