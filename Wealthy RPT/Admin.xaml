@@ -10,10 +10,10 @@
         <Label x:Name="lblLookUp" Content="Select Lookup Table from list" HorizontalAlignment="Left" Height="26" Margin="40,20,0,0" VerticalAlignment="Top" Width="392"/>
         <ComboBox x:Name="cboTableName" HorizontalAlignment="Left" Height="25" Margin="40,50,0,0" VerticalAlignment="Top" Width="286" DropDownClosed="cboTableName_DropDownClosed"/>
         <DataGrid x:Name="dgQueries" HorizontalAlignment="Left" Height="25" Margin="464,50,0,0" VerticalAlignment="Top" Width="691" Visibility="Hidden"/>
-        <DataGrid x:Name="dgTables" HorizontalAlignment="Left" Height="398" Margin="40,105,0,0" VerticalAlignment="Top" Width="1115"/>
+        <DataGrid x:Name="dgTables" HorizontalAlignment="Left" Height="398" Margin="40,105,0,0" VerticalAlignment="Top" Width="1115" RowEditEnding="dgTables_RowEditEnding"/>
         <Button x:Name="btnRefresh" Content="Refresh" HorizontalAlignment="Left" Height="35" Margin="757,45,0,0" VerticalAlignment="Top" Width="98" Click="btnRefresh_Click"/>
         <Button x:Name="btnHelp" Content="Admin Helpcard" HorizontalAlignment="Left" Height ="35" Margin="885,45,0,0" VerticalAlignment="Top" Width="98"/>
-        <Button x:Name="btnClose" Content="Close" HorizontalAlignment="Left" Height="35" Margin="1053,45,0,0" VerticalAlignment="Top" Width="98"/>
+        <Button x:Name="btnClose" Content="Close" HorizontalAlignment="Left" Height="35" Margin="1053,45,0,0" VerticalAlignment="Top" Width="98" Click="btnClose_Click"/>
 
     </Grid>
 </Window>

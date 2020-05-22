@@ -24,6 +24,14 @@ namespace Wealthy_RPT
         public static string strAddlDataInstr;
         public static string strMainKey;
 
+        //private static SqlConnection conn = new SqlConnection(Global.ConnectionString);
+
+        //private static string SQLquery = "SELECT * FROM [tblAdditional_Data_Sources]";
+
+        //private static SqlCommand myCmd = new SqlCommand(SQLquery, conn);
+        //private static SqlDataAdapter sda = new SqlDataAdapter(myCmd);
+        //private static DataTable dt = new DataTable("Tables");
+
         public Admin()
         {
             InitializeComponent();
@@ -86,24 +94,61 @@ namespace Wealthy_RPT
 
         private void FillTablesGrid(string strAddlDataInstr)
         {
-            try
-            {
-            SqlConnection conn = new SqlConnection(Global.ConnectionString);
-            SqlDataAdapter da = new SqlDataAdapter(strAddlDataInstr, conn);
-            DataSet ds = new DataSet();
-            da.Fill(ds, "Tables");
+            cmdBuilder.dt.Clear();
+            cmdBuilder.sda.Fill(cmdBuilder.dt);
+            dgTables.ItemsSource = cmdBuilder.dt.DefaultView;
 
-            dgTables.ItemsSource = ds.Tables[0].DefaultView;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+
+            ////try
+            ////{
+            ////SqlConnection conn = new SqlConnection(Global.ConnectionString);
+            ////SqlDataAdapter da = new SqlDataAdapter(strAddlDataInstr, conn);
+            ////DataSet ds = new DataSet();
+            ////da.Fill(ds, "Tables");
+
+            ////dgTables.ItemsSource = ds.Tables[0].DefaultView;
+            ////}
+            ////catch (Exception ex)
+            ////{
+            ////    MessageBox.Show(ex.ToString());
+            ////}
+
+            //string strSQLquery = strAddlDataInstr;// "SELECT * FROM [tblAdditional_Data_Sources]";
+            //DataTable dt = new DataTable();
+            //SqlConnection connection = new SqlConnection(Global.ConnectionString);
+            //connection.Open();
+            //SqlDataAdapter sqlDa = new SqlDataAdapter();
+            //sqlDa.SelectCommand = new SqlCommand(strSQLquery, connection);
+            //SqlCommandBuilder cb = new SqlCommandBuilder(sqlDa);
+            //sqlDa.Fill(dt);
+            //dt.Rows[0]["Friendly_Name"] = "Info 1";
+            //dt.Rows[1]["Calendar_Year"] = "";
+            //sqlDa.UpdateCommand = cb.GetUpdateCommand();
+            //sqlDa.Update(dt);
+            //dgTables.ItemsSource = dt.DefaultView;
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-            
+            cmdBuilder.conn.Open();
+            SqlCommandBuilder builder = new SqlCommandBuilder(cmdBuilder.sda);
+            cmdBuilder.sda.UpdateCommand = builder.GetUpdateCommand();
+            cmdBuilder.sda.Update(cmdBuilder.dt);
+            cmdBuilder.conn.Close();
+        }
+
+        private void dgTables_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            cmdBuilder.conn.Open();
+            SqlCommandBuilder builder = new SqlCommandBuilder(cmdBuilder.sda);
+            cmdBuilder.sda.UpdateCommand = builder.GetUpdateCommand();
+            cmdBuilder.sda.Update(cmdBuilder.dt);
+            cmdBuilder.conn.Close();
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
