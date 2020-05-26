@@ -6,19 +6,15 @@ using System.Threading.Tasks;
 
 namespace Wealthy_RPT
 {
-    public static class Globals
+    public class Globals
     {
         // Access
         public static bool blnAccess = false;  // set with mnuAccessibility_Click()
         // form event boolean
         public static bool blnIgnoreEvents = false; // set with MnuNewCase_Click()
         // version number variables
-        public static long gnVersion = 0;
-        public static string gsVersion = "";
         public static long CurrentVersion = 0;
-
-        //public fixed int gs_CRM[2];
-        //Public gs_CRM(2) As Integer
-
+        // CRM List
+        public static List<int> gn_CRM = new List<int>();
     }
 }

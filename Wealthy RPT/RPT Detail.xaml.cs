@@ -38,6 +38,10 @@ namespace Wealthy_RPT
 
         private void PopulateCombos()
         {
+            Dictionary<int, string> yesnodictionary = new Dictionary<int, string>();
+            yesnodictionary.Add(0, "No");
+            yesnodictionary.Add(1, "Yes");
+
             try
             {
                 Lookups lu = new Lookups();
@@ -46,6 +50,11 @@ namespace Wealthy_RPT
                 //lu.GetOfficeCRMs();
 
                 // == Customer Segment
+
+                // cboSegment
+                cboStrand.ItemsSource = lu.dsRPTDetailCombo.Tables[13].DefaultView;
+                cboStrand.DisplayMemberPath = "Options";
+                cboStrand.SelectedValuePath = "DecodedValue";
 
                 // cboSegment
                 cboSegment.ItemsSource = lu.dsRPTDetailCombo.Tables[0].DefaultView;
@@ -111,10 +120,10 @@ namespace Wealthy_RPT
                 cboCRMName.SelectedValuePath = "CRM_Name";
 
                 // == Appointed Agent
-                //cbo648 [yes/no]
-                cbo648.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
-                cbo648.DisplayMemberPath = "Options";
-                cbo648.SelectedValuePath = "DecodedValue";
+                cbo648.ItemsSource = new System.Windows.Forms.BindingSource(yesnodictionary, null);
+                cbo648.DisplayMemberPath = "Value";
+                cbo648.SelectedValuePath = "Key";
+
                 //cboChange [yes/no]
                 cboChange.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
                 cboChange.DisplayMemberPath = "Options";
@@ -172,6 +181,13 @@ namespace Wealthy_RPT
 
             PopulateAndSetAllocationCombos();
 
+            if ((Globals.gn_CRM.ElementAt(1) == 0) || (Globals.gn_CRM.ElementAt(2) == 0))
+            {
+                RPT.RPT_Data rpt = new RPT.RPT_Data();
+                rpt.GetCRM();
+            }
+
+            int iTest = Globals.gn_CRM.ElementAt(1);
             //' questionnaire scores     [behaviours]
             //Me.txtOpenIDMS.Text = 0
             //Me.txtClosedIDMS.Text = 0
@@ -193,6 +209,7 @@ namespace Wealthy_RPT
 
             //TabFrames
             //this.Activated += AfterLoading;
+
             bFormLoaded = true;
         }
 
@@ -322,6 +339,14 @@ namespace Wealthy_RPT
                     break;
             }
             ((TabItem)tabRPD.Items[tabRPD.SelectedIndex]).Header = strName;
+        }
+
+        private void CboStrand_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (Globals.blnAccess == true)
+            {
+                ShowActiveControl(cboStrand);
+            }
         }
 
         private void TxtSurname_GotFocus(object sender, RoutedEventArgs e)
@@ -899,6 +924,37 @@ namespace Wealthy_RPT
         {
             txtDeselected.Tag = txtDeselected.Text; /*store for possible recall*/
             txtDeselected.Text = "";
+        }
+
+        private void ChkCRMDescretion_Checked(object sender, RoutedEventArgs e)
+        {
+            if ((Globals.gn_CRM.ElementAt(1) == 0) || (Globals.gn_CRM.ElementAt(2) == 0))
+            {
+                RPT.RPT_Data rpt = new RPT.RPT_Data();
+                rpt.GetCRM();
+            }
+            switch (cboPopCode.Text.ToUpper())
+            {
+                case "RPT10MILL":
+                    txtCRMScore.Text = Globals.gn_CRM.ElementAt(1).ToString();
+                    break;
+                case "RPT20MILL":
+                    txtCRMScore.Text = Globals.gn_CRM.ElementAt(2).ToString();
+                    break;
+                default:
+                    break;
+            }
+            txtCRMExplanation.Text = "";
+            txtCRMExplanation.IsEnabled = true;
+            //RecalculateResults();
+        }
+
+        private void ChkCRMDescretion_Unchecked(object sender, RoutedEventArgs e)
+        {
+            txtCRMScore.Text = "";
+            txtCRMExplanation.Text = "";
+            txtCRMExplanation.IsEnabled = false;
+            //RecalculateResults();
         }
 
 

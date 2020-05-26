@@ -1154,12 +1154,6 @@ namespace Wealthy_RPT
                     con.Close();
                     return false;
                 }
-
-
-
-
-
-
                 try
                 {
                     SqlCommand cmd = new SqlCommand("qryGetCRMMEnquiryDataScore", con);
@@ -1192,13 +1186,67 @@ namespace Wealthy_RPT
                     return false;
                 }
 
-
-
-
-
-
                 return true;
             }
+
+            public void GetCRM()
+            {
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                try
+                {
+                    int iCRM_Weighting = 0;
+                    string sPop = "";
+                    Globals.gn_CRM.Clear();
+                    Globals.gn_CRM.Insert(0, 0);
+                    Globals.gn_CRM.Insert(1, 0);
+                    Globals.gn_CRM.Insert(2, 0);
+                    SqlCommand cmd = new SqlCommand("qryGetCRMWeighting", con);
+                    cmd.Parameters.Clear();
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    #region Recordset
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            iCRM_Weighting = Convert.ToInt16(dr["CRM_Weighting"]);
+                            sPop = dr["pop"].ToString().ToUpper();
+                            switch (sPop)
+                            {
+                                case "RPT10MILL":
+                                    Globals.gn_CRM.Insert(1, iCRM_Weighting);
+                                    break;
+                                case "RPT20MILL":
+                                    Globals.gn_CRM.Insert(2, iCRM_Weighting);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                    #endregion
+                    else if (dr.HasRows == false)
+                    {
+                        Globals.gn_CRM.Clear();
+                        Globals.gn_CRM.Insert(0, 0);
+                        Globals.gn_CRM.Insert(1, 0);
+                        Globals.gn_CRM.Insert(2, 0);
+                    }
+                    con.Close();
+                }
+                catch
+                {
+                    Globals.gn_CRM.Clear();
+                    Globals.gn_CRM.Insert(0, 0);
+                    Globals.gn_CRM.Insert(1, 0);
+                    Globals.gn_CRM.Insert(2, 0);
+                    con.Close();
+                }
+                
+            }
+
         }
 
     }
