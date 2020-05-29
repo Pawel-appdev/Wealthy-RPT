@@ -126,7 +126,7 @@ namespace Wealthy_RPT
         {
             //cboYear
             int intCurrentYear = DateTime.Today.Year;
-            for (int intYear = 2014; intYear <= intCurrentYear; intYear++)
+            for (int intYear = intCurrentYear - 2; intYear <= intCurrentYear; intYear++)
             {
                 cboYear.Items.Add(intYear);
             }
@@ -956,6 +956,12 @@ namespace Wealthy_RPT
             try { rptDetail.lblPopYear.Text = this.cboYear.SelectedValue.ToString(); } catch { DateTime.Now.Year.ToString(); }
             System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
             rptDetail.Show();
+        }
+
+        private void mnuQuarterlyUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            PeriodImport periodImport = new PeriodImport();
+            periodImport.Show();
         }
     }
 }

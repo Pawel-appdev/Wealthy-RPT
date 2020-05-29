@@ -78,6 +78,9 @@ namespace Wealthy_RPT
         private static string _fullname;
         private static string _accesslevel;
         private static string _displayRAG;
+        private static string _dailyRecalc;
+        private static string _annualUpdate;
+        private static string _defaultImportFolder;
 
         public static string PID
         {
@@ -218,6 +221,42 @@ namespace Wealthy_RPT
             set
             {
                 _displayRAG = value;
+            }
+        }
+
+        public static string DailyRecalc
+        {
+            get
+            {
+                return _dailyRecalc;
+            }
+            set
+            {
+                _dailyRecalc = value;
+            }
+        }
+
+        public static string AnnualUpdate
+        {
+            get
+            {
+                return _annualUpdate;
+            }
+            set
+            {
+                _annualUpdate = value;
+            }
+        }
+
+        public static string DefaultImportFolder
+        {
+            get
+            {
+                return _defaultImportFolder;
+            }
+            set
+            {
+                _defaultImportFolder = value;
             }
         }
 

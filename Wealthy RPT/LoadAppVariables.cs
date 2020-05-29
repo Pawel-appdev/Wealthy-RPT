@@ -50,6 +50,10 @@ namespace Wealthy_RPT
             Global.CurrentVersion = iniGlobal.IniReadValue("AppDetails", "CurrentVersion");
             Global.InstallPath = iniGlobal.IniReadValue("AppDetails", "InstallPath");
             Global.DisplayRAG = iniGlobal.IniReadValue("System", "DisplayRagStatus");
+            Global.DailyRecalc = iniGlobal.IniReadValue("System", "DailyRecalc");
+            Global.AnnualUpdate = iniGlobal.IniReadValue("System", "LastAnnualUpdate");
+            Global.DefaultImportFolder = iniGlobal.IniReadValue("System", "DefaultImportFolder");
+            Global.DefaultImportFolder = Global.DefaultImportFolder == "" ? "C:\\" : Global.DefaultImportFolder;
 
 
             // Application Name, default to Assembly Name
