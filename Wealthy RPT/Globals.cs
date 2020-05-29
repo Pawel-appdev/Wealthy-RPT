@@ -16,5 +16,7 @@ namespace Wealthy_RPT
         public static long CurrentVersion = 0;
         // CRM List
         public static List<int> gn_CRM = new List<int>();
+        public static bool blnOfficeWiped = false; // set with RPTDetail CboOffice_SelectionChanged()
+
     }
 }

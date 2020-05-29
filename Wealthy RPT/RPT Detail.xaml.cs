@@ -79,9 +79,9 @@ namespace Wealthy_RPT
                 //cboUTR.SelectedValuePath = "DecodedValue";
 
                 // cboDeceased [yes/no]
-                cboDeceased.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
-                cboDeceased.DisplayMemberPath = "Options";
-                cboDeceased.SelectedValuePath = "DecodedValue";
+                cboDeceased.ItemsSource = new System.Windows.Forms.BindingSource(yesnodictionary, null);
+                cboDeceased.DisplayMemberPath = "Value";
+                cboDeceased.SelectedValuePath = "Key";
 
                 // cboMarital
                 cboMarital.ItemsSource = lu.dsRPTDetailCombo.Tables[2].DefaultView;
@@ -105,14 +105,9 @@ namespace Wealthy_RPT
 
                 // == Customer Team
 
-                // cboOffice populated on Window_Loaded() in order to pass selected PopCode
-
-                // cboTeam  populated on Window_Loaded() in order to pass selected Office and PopCode
-
-                // cboAllocatedTo: qryGetOfficeTeamStaff @nOffice @nTeam GetOfficeTeamStaff(string strOffice, string strTeam)
-                //cboAllocatedTo.ItemsSource = lu.dsOfficeTeams.Tables[0].DefaultView;
-                //cboAllocatedTo.DisplayMemberPath = "Team Identifier";
-                //cboAllocatedTo.SelectedValuePath = "Team Identifier";
+                // cboOffice populated on Window_Loaded() / PopulateAndSetAllocationCombos() in order to pass selected PopCode
+                // cboTeam  populated on Window_Loaded() / PopulateAndSetAllocationCombos()  in order to pass selected Office and PopCode
+                // cboAllocatedTo: populated on Window_Loaded() / PopulateAndSetAllocationCombos()  in order to pass selected Office and Team
 
                 //cboCRMName
                 cboCRMName.ItemsSource = lu.dsRPTDetailOfficeCRMs.Tables[0].DefaultView;
@@ -120,25 +115,30 @@ namespace Wealthy_RPT
                 cboCRMName.SelectedValuePath = "CRM_Name";
 
                 // == Appointed Agent
+
+                //cbo648 [yes/no]
                 cbo648.ItemsSource = new System.Windows.Forms.BindingSource(yesnodictionary, null);
                 cbo648.DisplayMemberPath = "Value";
                 cbo648.SelectedValuePath = "Key";
 
                 //cboChange [yes/no]
-                cboChange.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
-                cboChange.DisplayMemberPath = "Options";
-                cboChange.SelectedValuePath = "DecodedValue";
+                cboChange.ItemsSource = new System.Windows.Forms.BindingSource(yesnodictionary, null);
+                cboChange.DisplayMemberPath = "Value";
+                cboChange.SelectedValuePath = "Key";
 
                 // == Behaviors
-                //cboCurrentSuspensions [yes/no]
+                
+                //cboCurrentSuspensions [yes/no/unknown]
                 cboCurrentSuspensions.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
                 cboCurrentSuspensions.DisplayMemberPath = "Options";
                 cboCurrentSuspensions.SelectedValuePath = "DecodedValue";
-                //cboPrevSuspensions [yes/no]
+                
+                //cboPrevSuspensions [yes/no/unknown]
                 cboPrevSuspensions.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
                 cboPrevSuspensions.DisplayMemberPath = "Options";
                 cboPrevSuspensions.SelectedValuePath = "DecodedValue";
-                //cboFailures [yes/no]
+                
+                //cboFailures [yes/no/unknown]
                 cboFailures.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
                 cboFailures.DisplayMemberPath = "Options";
                 cboFailures.SelectedValuePath = "DecodedValue";
@@ -188,36 +188,13 @@ namespace Wealthy_RPT
             }
 
             int iTest = Globals.gn_CRM.ElementAt(1);
-            //' questionnaire scores     [behaviours]
-            //Me.txtOpenIDMS.Text = 0
-            //Me.txtClosedIDMS.Text = 0
-            //Me.txtOpenRisks.Text = 0
-            //Me.txtSettled.Text = 0
-            //Me.txtHighestSettled.Text = 0
-            //Me.txtHighestPercent.Text = 0
-
-            //## frmRPD  chkCRMDescretion_Click()
-
-            //## modGetData  GetCRM
-
-            //## modGlobal
-            //## Public gs_CRM(2) As Integer
-
-            // If gs_CRM(1) = 0 Or gs_CRM(2) = 0 Then
-            //  GetCRM
-            // End If
-
+            
             //TabFrames
             //this.Activated += AfterLoading;
 
             bFormLoaded = true;
         }
 
-        //private void AfterLoading(object sender, EventArgs e)
-        //{
-        //    this.Activated -= AfterLoading;
-        //    bFormLoaded = true;
-        //}
 
         private void PopulateAndSetAllocationCombos()
         {
@@ -898,11 +875,6 @@ namespace Wealthy_RPT
             }
         }
 
-        private void CmdSave_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            BindingExpression obj = txtSecondaryAddress.GetBindingExpression(TextBox.TextProperty);
-            obj.UpdateSource();
-        }
 
         private void ChkDeselected_Checked(object sender, RoutedEventArgs e)
         {
@@ -957,7 +929,70 @@ namespace Wealthy_RPT
             //RecalculateResults();
         }
 
+        private void CmdSave_Click(object sender, RoutedEventArgs e)
+        {
+            BindingExpression obj = txtSecondaryAddress.GetBindingExpression(TextBox.TextProperty);
+            obj.UpdateSource();
+        }
 
+        private void CmdUTR_Click(object sender, RoutedEventArgs e)
+        {
+            string sUTR = txtUTR.Text.ToString().Trim();
+            if ((sUTR == "") || (sUTR.Length != 10)) /*UTR is blank or not 10 characters long*/
+            {
+                return; /*do nothing*/
+            }
+            else
+            {
+                /*copy UTR to Clipboard*/
+                Clipboard.Clear();
+                Clipboard.SetText(sUTR);
+            }
+        }
+
+        private void CboOffice_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(cboOffice.Text == "")
+            {
+                bool blnTest = PopulateTeamCombo();
+                cboTeam.Text = "";
+                blnTest = PopulateAllocatedToCombo();
+                cboAllocatedTo.Text = ""; 
+                Globals.blnOfficeWiped = true;
+                return;
+            }
+            else
+            {
+                if (Globals.blnOfficeWiped == true)
+                {
+                    Globals.blnOfficeWiped = false;
+                }
+                else
+                {
+                    if (txtOffice.Text == cboOffice.Text)
+                    {
+                        return;
+                    }
+                }
+            }
+
+            if (cboPopFriendly.Text == "")
+            {
+                MessageBox.Show("Please confirm the Record Population first.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+                cboPopFriendly.Focus();
+                cboPopFriendly.IsDropDownOpen = true;
+                return;
+            }
+
+            //PopulateCombo Me.cboTeam, "qryGetOfficeTeams", "Team Identifier", Me.cboOffice.Text, True, cUser.Pop
+            //Me.cboAllocatedTo.Clear
+            //Me.cboAllocatedTo.Text = ""
+
+            //Me.txtOffice.Text = Me.cboOffice.Text
+            //Me.txtTeam.Text = Me.cboTeam.Text
+
+            //Me.cboTeam.Enabled = True
+        }
     }
 
 }

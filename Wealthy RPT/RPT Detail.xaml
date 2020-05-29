@@ -35,6 +35,25 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="PressedButtonEffect" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" Background="Transparent" BorderThickness="1" BorderBrush="Gray">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Button.IsPressed" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="DarkGray" />
+                                <Setter TargetName="border" Property="BorderThickness" Value="2" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Window.Resources>
 
 
@@ -129,7 +148,7 @@
                                         <TextBox x:Name="txtFirstName"  Margin="5.133,2,10.867,2" Grid.Row="1" Grid.Column="6" GotFocus="TxtFirstName_GotFocus" Text = "{Binding Firstname, Mode = TwoWay}" Grid.ColumnSpan="2"/>
                                         <TextBlock x:Name="lblUTR" Margin="8,2,9,2" Grid.Row="2"  Grid.Column="0" Grid.ColumnSpan="2">UTR</TextBlock>
                                         <TextBox x:Name="txtUTR" Height="23" Background="#50000003"  Margin="7,4,39,4" Grid.Row="2" Grid.Column="2" GotFocus="TxtUTR_GotFocus" Text = "{Binding UTR, Mode = TwoWay}"/>
-                                        <Button x:Name="cmdUTR" Grid.Row="2" Width="20" Height="20" Grid.Column="2"  Margin="107,6,16,4" RenderTransformOrigin="0.5,0.5">
+                                        <Button x:Name="cmdUTR" Grid.Row="2" Width="20" Height="23" Grid.Column="2"  Margin="107,3,16,2" RenderTransformOrigin="0.5,0.5" Click="CmdUTR_Click" Style="{StaticResource PressedButtonEffect}" BorderBrush="Transparent" BorderThickness="0" Background="Transparent">
                                             <Button.RenderTransform>
                                                 <TransformGroup>
                                                     <ScaleTransform ScaleX="-1"/>
@@ -155,7 +174,7 @@
                                         <TextBlock x:Name="lblPrivateAddress" Margin="8,2,9,2" Grid.Row="5"  Grid.Column="0" Grid.ColumnSpan="2">Private Address</TextBlock>
                                         <TextBox x:Name="txtPrivateAddress" Margin="5,2,9.867,2" Grid.Row="5"  Grid.Column="2" Grid.ColumnSpan="6" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" GotFocus="TxtPrivateAddress_GotFocus" Text = "{Binding MainAdd, Mode = TwoWay}"/>
                                         <TextBlock x:Name="lblPostcode" Margin="8,2,9,2" Grid.Row="6"  Grid.Column="0" Grid.ColumnSpan="2">Postcode</TextBlock>
-                                        <TextBox x:Name="txtPostcode" Margin="6,2,37,2" Width="100" Grid.Row="6"  Grid.Column="2" GotFocus="TxtPostcode_GotFocus" Text = "{Binding MainPC, Mode = TwoWay}"/>
+                                        <TextBox x:Name="txtPostcode" Margin="5,2,9,2" HorizontalAlignment="Left" Width="100" Grid.Row="6"  Grid.Column="2" GotFocus="TxtPostcode_GotFocus" Text = "{Binding MainPC, Mode = TwoWay}"/>
                                         <CheckBox x:Name="chkDeselected" FlowDirection="RightToLeft"  Margin="6,6,10.867,6" Grid.Row="6"  Grid.Column="5" VerticalAlignment="Center" GotFocus="ChkDeselected_GotFocus" IsChecked = "{Binding DeselectedTF, Mode = OneWay}" Checked="ChkDeselected_Checked" Unchecked="ChkDeselected_Unchecked">
                                             <CheckBox.Resources>
                                                 <Style TargetType="{x:Type Path}">
@@ -197,7 +216,7 @@
                                         <TextBox x:Name="txtOffice"  Margin="6,2,4,2" Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="2" Visibility="Hidden"/>
                                         <TextBox x:Name="txtTeam"  Margin="6,2,4,2" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Visibility="Hidden"/>
                                         <TextBlock x:Name="lblOffice" Margin="8,2,9,2" Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2">Office</TextBlock>
-                                        <ComboBox x:Name="cboOffice" Height="22" Margin="4,2,1,2" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="CboOffice_GotFocus" SelectedValue="{Binding Office, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <ComboBox x:Name="cboOffice" Height="22" Margin="4,2,1,2" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="CboOffice_GotFocus" SelectedValue="{Binding Office, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="CboOffice_SelectionChanged" />
                                         <ComboBox x:Name="cboTeam" Height="22" Margin="6,2,4,2" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="2" GotFocus="CboTeam_GotFocus" SelectedValue="{Binding Team, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         <TextBlock x:Name="lblAllocatedTo" Margin="8,2,9,2" Grid.Row="2"  Grid.Column="0" Grid.ColumnSpan="2">Allocated To</TextBlock>
                                         <ComboBox x:Name="cboAllocatedTo" Height="22" Margin="4,2,4,2" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="6" GotFocus="CboAllocatedTo_GotFocus" SelectedValue="{Binding 'Team Identifer', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -690,8 +709,8 @@
                     <TextBlock Text="Guidance" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Guidance" />
 
                 </Button>
-                <Button x:Name="cmdSave" Grid.Column="1" HorizontalAlignment="Left" Margin="0,10,0,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdSave_GotFocus" MouseDoubleClick="CmdSave_MouseDoubleClick">
-                    <TextBlock Text="Save Changes" HorizontalAlignment="Left" VerticalAlignment="Top" ToolTip="Save Changes" Margin="2,2,0,0" />
+                <Button x:Name="cmdSave" Grid.Column="1" HorizontalAlignment="Left" Margin="0,10,0,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdSave_GotFocus" Click="CmdSave_Click">
+                    <TextBlock Text="Save Changes" VerticalAlignment="Top" ToolTip="Save Changes" Margin="2,2,2,0" />
                 </Button>
                 <Button x:Name="cmdUpdateClose" Grid.Column="2" HorizontalAlignment="Left" Margin="0,10,0,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdUpdateClose_GotFocus">
                     <TextBlock Text="Save &amp; Close" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Save &amp; Close"/>

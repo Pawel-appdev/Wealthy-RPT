@@ -62,8 +62,8 @@ namespace Wealthy_RPT
             private int _lpclosed;
             private float _hppenalty;
             private byte _pscurrent;
-            private Int32 _psprevious;
-            private Int32 _psfailures;
+            private byte _psprevious;
+            private byte _psfailures;
             private int _qsscore;
             private int _rptprscore;
             private int _rptavscore;
@@ -679,7 +679,7 @@ namespace Wealthy_RPT
                 }
             }
 
-            public Int32 PSPrevious
+            public byte PSPrevious
             {
                 get
                 {
@@ -691,7 +691,7 @@ namespace Wealthy_RPT
                 }
             }
 
-            public Int32 PSFailures
+            public byte PSFailures
             {
                 get
                 {
@@ -952,8 +952,6 @@ namespace Wealthy_RPT
                     #region Recordset
                     if (dr.HasRows)
                     {
-                        //DateTime dtmin = new DateTime(1900, 1, 1);
-                        //DateTime dtActual;
                         string sDate;
                         dr.Read();
                         CU_ID = Convert.ToInt32(dr["CU_ID"]);
@@ -963,7 +961,8 @@ namespace Wealthy_RPT
                         UTR = double.Parse(dr["UTR"].ToString(), System.Globalization.CultureInfo.InvariantCulture);
                         try { sDate = Convert.ToDateTime(dr["DOB"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
                         DOB = sDate;
-                        Deceased = Convert.ToByte(dr["Deceased"]);
+                        bool blnDeceased = (dr["Deceased"] is DBNull) ? false : Convert.ToBoolean(dr["Deceased"]);
+                        Deceased = Convert.ToByte(blnDeceased);
                         try { sDate = Convert.ToDateTime(dr["DOD"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
                         DOD = sDate;
                         try { sDate = Convert.ToDateTime(dr["Deselected"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
@@ -984,7 +983,6 @@ namespace Wealthy_RPT
                         LongTerm = dr["LongTerm"].ToString();
                         LifeEvents = dr["LifeEvents"].ToString();
                         Narrative = dr["Narrative"].ToString();
-                        //HNWUPID = Convert.ToInt32(dr["HNWUPID"]);
                         HNWUPID = (string.IsNullOrEmpty(dr["HNWUPID"].ToString()) == true) ? 0 : Convert.ToInt32(dr["HNWUPID"]);
                         Pop = dr["Pop"].ToString();
                         CRM_Name = dr["CRM_Name"].ToString();
@@ -1028,7 +1026,8 @@ namespace Wealthy_RPT
                         AgentRecordID = Convert.ToInt32(dr["Agent_Record_ID"]);
                         Agent = dr["Agent"].ToString();
                         AgentCode = dr["AgentCode"].ToString();
-                        Agent648Held = Convert.ToByte(dr["648_held"]);
+                        bool blnAgent648Held = (dr["648_held"] is DBNull) ? false : Convert.ToBoolean(dr["648_held"]);
+                        Agent648Held = Convert.ToByte(blnAgent648Held);
                         AgentAddress = dr["Agent_Address"].ToString();
                         NamedAgent = dr["Named_Agent"].ToString();
                         OtherContact = dr["Other_Contact"].ToString();
@@ -1079,9 +1078,13 @@ namespace Wealthy_RPT
                         LPOpen = Convert.ToInt16(dr["LPOpen"]);
                         LPClosed = Convert.ToInt16(dr["LPClosed"]);
                         HPPenalty = Convert.ToInt32(dr["HPPenalty"]);
-                        PSCurrent = Convert.ToByte(dr["PSCurrent"]);
-                        PSPrevious = Convert.ToInt32(dr["PSPrevious"]);
-                        PSFailures = Convert.ToInt32(dr["PSFailures"]);
+                        byte MaxThreeWay = 2; /*Yes/No/Unknown*/
+                        PSCurrent = (dr["PSCurrent"] is DBNull) ? MaxThreeWay : Convert.ToByte(dr["PSCurrent"]);
+                        PSCurrent = (PSCurrent > MaxThreeWay) ? MaxThreeWay : PSCurrent;
+                        PSPrevious = (dr["PSPrevious"] is DBNull) ? MaxThreeWay : Convert.ToByte(dr["PSPrevious"]);
+                        PSPrevious = (PSPrevious > MaxThreeWay) ? MaxThreeWay : PSPrevious;
+                        PSFailures = (dr["PSFailures"] is DBNull) ? MaxThreeWay : Convert.ToByte(dr["PSFailures"]);
+                        PSFailures = (PSFailures > MaxThreeWay) ? MaxThreeWay : PSFailures;
                         QSScore = Convert.ToInt16(dr["QSScore"]);
                         RPTPRScore = Convert.ToInt16(dr["RPTPRScore"]);
                         RPTAVScore = Convert.ToInt16(dr["RPTAVScore"]);
