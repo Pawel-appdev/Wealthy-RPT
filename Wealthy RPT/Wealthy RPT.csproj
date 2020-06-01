@@ -69,7 +69,7 @@
     <Compile Include="Associates.xaml.cs">
       <DependentUpon>Associates.xaml</DependentUpon>
     </Compile>
-    <Compile Include="cmdBuilder.cs" />
+    <Compile Include="AdminClasses.cs" />
     <Compile Include="Email.xaml.cs">
       <DependentUpon>Email.xaml</DependentUpon>
     </Compile>

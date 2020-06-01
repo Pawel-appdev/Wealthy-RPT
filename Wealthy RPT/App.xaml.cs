@@ -69,6 +69,7 @@ namespace Wealthy_RPT
             Global.PID = user.PID;
             Global.AccessLevel = user.AccessLevel;
             Global.Admin = user.Admin;
+            Global.BA_Admin = user.BA_Admin;
             
             Thread.Sleep(1500);
 
