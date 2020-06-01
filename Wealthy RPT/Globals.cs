@@ -15,7 +15,8 @@ namespace Wealthy_RPT
         // version number variables
         public static long CurrentVersion = 0;
         // CRM List
-        public static List<int> gn_CRM = new List<int>();
+        public static List<List<String>> gs_CRM = new List<List<String>>(); // list within a list
+
         public static bool blnOfficeWiped = false; // set with RPTDetail CboOffice_SelectionChanged()
 
     }

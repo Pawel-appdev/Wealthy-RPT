@@ -119,10 +119,6 @@ namespace Wealthy_RPT
 
             intOffset = 0;
 
-            Globals.gn_CRM.Insert(0, 0);
-            Globals.gn_CRM.Insert(1, 0);
-            Globals.gn_CRM.Insert(2, 0);
-
             GetdgCases(intYear, strOffice, strTeam, intPID, strPop, intOffset);
         }
 

@@ -13,8 +13,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-//using System.Windows.Forms;
-//using MessageBox = System.Windows.MessageBox;
 
 namespace Wealthy_RPT
 {
@@ -181,14 +179,14 @@ namespace Wealthy_RPT
 
             PopulateAndSetAllocationCombos();
 
-            if ((Globals.gn_CRM.ElementAt(1) == 0) || (Globals.gn_CRM.ElementAt(2) == 0))
+            if (Globals.gs_CRM.Count < 1) /*test for weightings*/
             {
                 RPT.RPT_Data rpt = new RPT.RPT_Data();
                 rpt.GetCRM();
             }
 
-            int iTest = Globals.gn_CRM.ElementAt(1);
-            
+            int iTest = Convert.ToInt16(Globals.gs_CRM.ElementAt(0)[1]);
+
             //TabFrames
             //this.Activated += AfterLoading;
 
@@ -900,25 +898,33 @@ namespace Wealthy_RPT
 
         private void ChkCRMDescretion_Checked(object sender, RoutedEventArgs e)
         {
-            if ((Globals.gn_CRM.ElementAt(1) == 0) || (Globals.gn_CRM.ElementAt(2) == 0))
+           if (Globals.gs_CRM.Count < 1) /*test for weightings*/
             {
                 RPT.RPT_Data rpt = new RPT.RPT_Data();
                 rpt.GetCRM();
             }
-            switch (cboPopCode.Text.ToUpper())
-            {
-                case "RPT10MILL":
-                    txtCRMScore.Text = Globals.gn_CRM.ElementAt(1).ToString();
-                    break;
-                case "RPT20MILL":
-                    txtCRMScore.Text = Globals.gn_CRM.ElementAt(2).ToString();
-                    break;
-                default:
-                    break;
-            }
+            int iWeighting = CRMWeighting(cboPopCode.SelectedValue.ToString().ToUpper());
+            txtCRMScore.Text = iWeighting.ToString();
             txtCRMExplanation.Text = "";
             txtCRMExplanation.IsEnabled = true;
             //RecalculateResults();
+        }
+
+        private int CRMWeighting(string sPop)
+        {
+            // return weighting, for given population
+            int iCRMWeighting = 0;
+            if (Globals.gs_CRM.Count > 0)
+            {
+                foreach (var crm in Globals.gs_CRM)
+                {
+                    if (crm.ElementAt(0).ToUpper() == sPop)
+                    {
+                        iCRMWeighting = Convert.ToInt16(crm.ElementAt(1));
+                    }
+                }
+            }
+            return iCRMWeighting;
         }
 
         private void ChkCRMDescretion_Unchecked(object sender, RoutedEventArgs e)

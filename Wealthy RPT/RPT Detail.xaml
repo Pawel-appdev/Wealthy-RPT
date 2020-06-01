@@ -148,7 +148,7 @@
                                         <TextBox x:Name="txtFirstName"  Margin="5.133,2,10.867,2" Grid.Row="1" Grid.Column="6" GotFocus="TxtFirstName_GotFocus" Text = "{Binding Firstname, Mode = TwoWay}" Grid.ColumnSpan="2"/>
                                         <TextBlock x:Name="lblUTR" Margin="8,2,9,2" Grid.Row="2"  Grid.Column="0" Grid.ColumnSpan="2">UTR</TextBlock>
                                         <TextBox x:Name="txtUTR" Height="23" Background="#50000003"  Margin="7,4,39,4" Grid.Row="2" Grid.Column="2" GotFocus="TxtUTR_GotFocus" Text = "{Binding UTR, Mode = TwoWay}"/>
-                                        <Button x:Name="cmdUTR" Grid.Row="2" Width="20" Height="23" Grid.Column="2"  Margin="107,3,16,2" RenderTransformOrigin="0.5,0.5" Click="CmdUTR_Click" Style="{StaticResource PressedButtonEffect}" BorderBrush="Transparent" BorderThickness="0" Background="Transparent">
+                                        <Button x:Name="cmdUTR" ToolTip="Copy UTR to Clipboard" Grid.Row="2" Width="20" Height="23" Grid.Column="2"  Margin="117,2,16,2" RenderTransformOrigin="0.5,0.5" Click="CmdUTR_Click" Style="{StaticResource PressedButtonEffect}" BorderBrush="Transparent" BorderThickness="0" Background="Transparent">
                                             <Button.RenderTransform>
                                                 <TransformGroup>
                                                     <ScaleTransform ScaleX="-1"/>

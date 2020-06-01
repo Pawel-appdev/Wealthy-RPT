@@ -1197,12 +1197,11 @@ namespace Wealthy_RPT
                 SqlConnection con = new SqlConnection(Global.ConnectionString);
                 try
                 {
-                    int iCRM_Weighting = 0;
                     string sPop = "";
-                    Globals.gn_CRM.Clear();
-                    Globals.gn_CRM.Insert(0, 0);
-                    Globals.gn_CRM.Insert(1, 0);
-                    Globals.gn_CRM.Insert(2, 0);
+                    string sCRM_Weighting = "";
+                    int iItem = 0;
+                    Globals.gs_CRM.Clear();
+
                     SqlCommand cmd = new SqlCommand("qryGetCRMWeighting", con);
                     cmd.Parameters.Clear();
                     cmd.CommandTimeout = Global.TimeOut;
@@ -1214,37 +1213,24 @@ namespace Wealthy_RPT
                     {
                         while (dr.Read())
                         {
-                            iCRM_Weighting = Convert.ToInt16(dr["CRM_Weighting"]);
                             sPop = dr["pop"].ToString().ToUpper();
-                            switch (sPop)
-                            {
-                                case "RPT10MILL":
-                                    Globals.gn_CRM.Insert(1, iCRM_Weighting);
-                                    break;
-                                case "RPT20MILL":
-                                    Globals.gn_CRM.Insert(2, iCRM_Weighting);
-                                    break;
-                                default:
-                                    break;
-                            }
+                            sCRM_Weighting = Convert.ToString(dr["CRM_Weighting"]);
+                            Globals.gs_CRM.Add(new System.Collections.Generic.List<String>());
+                            Globals.gs_CRM[iItem].Add(sPop);
+                            Globals.gs_CRM[iItem].Add(sCRM_Weighting);
+                            iItem++;
                         }
                     }
                     #endregion
                     else if (dr.HasRows == false)
                     {
-                        Globals.gn_CRM.Clear();
-                        Globals.gn_CRM.Insert(0, 0);
-                        Globals.gn_CRM.Insert(1, 0);
-                        Globals.gn_CRM.Insert(2, 0);
+                        Globals.gs_CRM.Clear(); /*no records, then clear the list*/
                     }
                     con.Close();
                 }
                 catch
                 {
-                    Globals.gn_CRM.Clear();
-                    Globals.gn_CRM.Insert(0, 0);
-                    Globals.gn_CRM.Insert(1, 0);
-                    Globals.gn_CRM.Insert(2, 0);
+                    Globals.gs_CRM.Clear(); /*on error, clear the list*/
                     con.Close();
                 }
                 
