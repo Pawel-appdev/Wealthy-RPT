@@ -127,17 +127,17 @@ namespace Wealthy_RPT
                 cboChange.SelectedValuePath = "Key";
 
                 // == Behaviors
-                
+
                 //cboCurrentSuspensions [yes/no/unknown]
                 cboCurrentSuspensions.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
                 cboCurrentSuspensions.DisplayMemberPath = "Options";
                 cboCurrentSuspensions.SelectedValuePath = "DecodedValue";
-                
+
                 //cboPrevSuspensions [yes/no/unknown]
                 cboPrevSuspensions.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
                 cboPrevSuspensions.DisplayMemberPath = "Options";
                 cboPrevSuspensions.SelectedValuePath = "DecodedValue";
-                
+
                 //cboFailures [yes/no/unknown]
                 cboFailures.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
                 cboFailures.DisplayMemberPath = "Options";
@@ -188,7 +188,7 @@ namespace Wealthy_RPT
             }
 
             int iTest = Globals.gn_CRM.ElementAt(1);
-            
+
             //TabFrames
             //this.Activated += AfterLoading;
 
@@ -328,7 +328,7 @@ namespace Wealthy_RPT
 
         private void TxtSurname_GotFocus(object sender, RoutedEventArgs e)
         {
-            if(Globals.blnAccess == true)
+            if (Globals.blnAccess == true)
             {
                 ShowActiveControl(txtSurname);
             }
@@ -840,7 +840,7 @@ namespace Wealthy_RPT
 
         private void CboPopFriendly_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if ((cboPopCode.SelectedIndex != cboPopFriendly.SelectedIndex)&&(bFormLoaded == true))
+            if ((cboPopCode.SelectedIndex != cboPopFriendly.SelectedIndex) && (bFormLoaded == true))
             {
                 if (System.Windows.Forms.MessageBox.Show
                             ("You are about to change the Records Population and you will also need to update the Office, Team and Allocation."
@@ -864,7 +864,7 @@ namespace Wealthy_RPT
                     bool blnTest = PopulateOfficeCombo();
                     foreach (var item in cboOffice.Items)
                     {
-                        if(item.ToString() == txtOffice.Text)
+                        if (item.ToString() == txtOffice.Text)
                         {
                             cboOffice.Text = txtOffice.Text;
                             break;
@@ -931,6 +931,10 @@ namespace Wealthy_RPT
 
         private void CmdSave_Click(object sender, RoutedEventArgs e)
         {
+            //Recaclualte Behaviours
+
+            //if needed Recalculate Priority Score
+
             BindingExpression obj = txtSecondaryAddress.GetBindingExpression(TextBox.TextProperty);
             obj.UpdateSource();
         }
@@ -952,12 +956,12 @@ namespace Wealthy_RPT
 
         private void CboOffice_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(cboOffice.Text == "")
+            if (cboOffice.Text == "")
             {
                 bool blnTest = PopulateTeamCombo();
                 cboTeam.Text = "";
                 blnTest = PopulateAllocatedToCombo();
-                cboAllocatedTo.Text = ""; 
+                cboAllocatedTo.Text = "";
                 Globals.blnOfficeWiped = true;
                 return;
             }
@@ -992,6 +996,86 @@ namespace Wealthy_RPT
             //Me.txtTeam.Text = Me.cboTeam.Text
 
             //Me.cboTeam.Enabled = True
+        }
+
+        private void RecalculateResults()
+        {
+            int PSScore = 0;
+
+
+            if (IsParseable(txtQSScore.Text.ToString()) == false)
+            {
+                return;
+            }
+            if (IsParseable(txtAVScore.Text.ToString()) == false)
+            {
+                return;
+            }
+            if (IsParseable(txtRSScore.Text.ToString()) == false)
+            {
+                return;
+            }
+            if (IsParseable(txtCGScore.Text.ToString()) == false)
+            {
+                return;
+            }
+            if (IsParseable(txtRESScore.Text.ToString()) == false)
+            {
+                return;
+            }
+            if (IsParseable(txtCRMScore.Text.ToString()) == false)
+            {
+                return;
+            }
+
+            PSScore = int.Parse(txtQSScore.Text.ToString()) + int.Parse(txtAVScore.Text.ToString()) + int.Parse(txtRSScore.Text.ToString()) + int.Parse(txtCGScore.Text.ToString()) + int.Parse(txtRESScore.Text.ToString()) + int.Parse(txtCRMScore.Text.ToString());
+
+            txtPRScore.Text = Convert.ToString(PSScore);
+        }
+
+        private bool IsParseable(string strText)
+        {
+            int number;
+
+            bool ParseableCheck = Int32.TryParse(strText, out number);
+
+            if (ParseableCheck)
+            {
+                return true;
+            }
+            else 
+            {
+                MessageBox.Show("Unable to calculate Priority Score.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+                return false;
+            }
+        }
+
+        private void TxtQSScore_LostFocus(object sender, RoutedEventArgs e)
+        {
+            RecalculateResults();
+
+            //if needed replot graph
+
+            //if needed Recalculate Priority Score
+        }
+
+        private void PgResults_GotFocus(object sender, RoutedEventArgs e)
+        {
+            //Recalculate Behaviours
+
+            //if needed replot graph
+
+            //if needed Recalculate Priority Score
+        }
+
+        private void CmdUpdateClose_Click(object sender, RoutedEventArgs e)
+        {
+            //Recalculate Behaviours
+
+            //Recalculate Priority Score
+
+            BindingExpression obj = txtSecondaryAddress.GetBindingExpression(TextBox.TextProperty);
+            obj.UpdateSource();
         }
     }
 
