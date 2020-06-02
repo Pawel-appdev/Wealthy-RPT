@@ -81,7 +81,7 @@
                                 <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
                             <TextBlock x:Name="lblStrand" Margin="8,2,0,2" Grid.Row="0"  Grid.Column="0" FontSize="16"><Bold>Strand</Bold></TextBlock>
-                            <ComboBox x:Name="cboStrand" Grid.Row="0"  Grid.Column="1" Margin="0,4,5,4" GotFocus="CboStrand_GotFocus" />
+                            <ComboBox x:Name="cboStrand" Grid.Row="0"  Grid.Column="1" Margin="0,4,5,4" GotFocus="CboStrand_GotFocus" SelectedValue="{Binding Strand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <TextBlock x:Name="lblCustomerSegment" Margin="0,2,0,2" Grid.Row="0"  Grid.Column="2" FontSize="16"><Bold>Customer Segment</Bold></TextBlock>
                             <ComboBox x:Name="cboSegment" Grid.Row="0"  Grid.Column="3" Margin="5,4,6,4" GotFocus="CboSegment_GotFocus" SelectedValue="{Binding Segment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <TextBlock x:Name="lblPopulation" Margin="8,2,9,2" Grid.Row="0"  Grid.Column="4" FontSize="16" HorizontalAlignment="Right"><Bold>Population</Bold></TextBlock>

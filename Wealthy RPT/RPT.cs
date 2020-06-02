@@ -13,6 +13,7 @@ namespace Wealthy_RPT
             #region propertydeclarations
             // Customer Data
             private Int32 _cuid;
+            private string _strand;
             private string _segment;
             //private string _fullname;
             private string _surname;
@@ -99,6 +100,18 @@ namespace Wealthy_RPT
                 set
                 {
                     _cuid = value;
+                }
+            }
+
+            public string Strand
+            {
+                get
+                {
+                    return _strand;
+                }
+                set
+                {
+                    _strand = value;
                 }
             }
 
@@ -955,6 +968,7 @@ namespace Wealthy_RPT
                         string sDate;
                         dr.Read();
                         CU_ID = Convert.ToInt32(dr["CU_ID"]);
+                        Strand = dr["Strand"].ToString();
                         Segment = dr["Segment"].ToString();
                         Surname = dr["Surname"].ToString();
                         Firstname = dr["FirstName"].ToString();
@@ -1234,6 +1248,147 @@ namespace Wealthy_RPT
                     con.Close();
                 }
                 
+            }
+
+            //public bool UpdateRPDData(string sStrand, string sSegment, string sSurname, string sFirstname, string sDOB, string sDeceased, string sDOD, string sDeselected, string sMarital, string sGender, string sMainAddress, string sMainPostCode, string sSecondAddress, string sResidence, string sDomicile, string sOffice, string sTeam, string sWealth, string sPathway, string sSource, string sSector, string sLongTerm, string sLifeEvents, string sNarrative, int iHMWU, double dUTR, string sPop, string sCRMName, string sCRMDA)
+            //{
+            public bool UpdateRPDData()
+            {
+
+                //if (UpdateCustomerData(sStrand, sSegment, sSurname, sFirstname, sDOB, sDeceased, sDOD, sDeselected, sMarital, sGender, sMainAddress, sMainPostCode, sSecondAddress, sResidence, sDomicile, sOffice, sTeam, sWealth, sPathway, sSource, sSector, sLongTerm, sLifeEvents, sNarrative, iHMWU, dUTR, sPop, sCRMName, sCRMDA) == false)
+                //{
+                //    return false;
+                //}
+                if (UpdateCustomerData() == false)
+                {
+                    return false;
+                }
+
+                //if (UpdateAgentData(dblUTR) == false)
+                //{
+                //    return false;
+                //}
+
+
+                //if (UpdateRPDScoresData(dblUTR, iYear, sPop) == false)
+                //{
+                //    return false;
+                //}
+
+                //if (UpdateRPDHistoricalData(dblUTR, iYear, dPercentile, sPop) == false)
+                //{
+                //    return false;
+                //}
+
+                return true;
+            }
+
+            //public bool UpdateCustomerData(string sStrand, string sSegment, string sSurname, string sFirstname, string sDOB, string sDeceased, string sDOD, string sDeselected, string sMarital, string sGender, string sMainAddress, string sMainPostCode, string sSecondAddress, string sResidence, string sDomicile, string sOffice, string sTeam, string sWealth, string sPathway, string sSource, string sSector, string sLongTerm, string sLifeEvents, string sNarrative, int iHMWU, double dUTR, string sPop, string sCRMName, string sCRMDA)
+            //{
+                public bool UpdateCustomerData()
+                {
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("qryUpdateCustomer", con);
+                    cmd.Parameters.Clear();
+                    SqlParameter prm01 = cmd.Parameters.Add("@nStrand", SqlDbType.NVarChar);
+                    prm01.Value = Strand;
+                    SqlParameter prm02 = cmd.Parameters.Add("@nSegment", SqlDbType.NVarChar);
+                    prm02.Value = Segment;
+                    SqlParameter prm03 = cmd.Parameters.Add("@nSurname", SqlDbType.NVarChar);
+                    prm03.Value = Surname;
+                    SqlParameter prm04 = cmd.Parameters.Add("@nFirstname", SqlDbType.NVarChar);
+                    prm04.Value = Firstname;
+                    SqlParameter prm05 = cmd.Parameters.Add("@nDOB", SqlDbType.DateTime);
+                    if (DOB == "")
+                    {
+                        prm05.Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        prm05.Value = DOB;
+                    }
+                    SqlParameter prm06 = cmd.Parameters.Add("@nDeceased", SqlDbType.Bit);
+                    prm06.Value = Deceased;
+                    SqlParameter prm07 = cmd.Parameters.Add("@nDOD", SqlDbType.DateTime);
+                    if (DOD == "")
+                    {
+                        prm07.Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        prm07.Value = DOD;
+                    }
+                    SqlParameter prm08 = cmd.Parameters.Add("@nDeselected", SqlDbType.DateTime);
+                    if (Deselected == "")
+                    {
+                        prm08.Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        prm08.Value = Deselected;
+                    }
+                    SqlParameter prm09 = cmd.Parameters.Add("@nMarital", SqlDbType.NVarChar);
+                    prm09.Value = Marital;
+                    SqlParameter prm10 = cmd.Parameters.Add("@nGender", SqlDbType.NVarChar);
+                    prm10.Value = Gender;
+                    SqlParameter prm11 = cmd.Parameters.Add("@nMainAddress", SqlDbType.NVarChar);
+                    prm11.Value = MainAdd;
+                    SqlParameter prm12 = cmd.Parameters.Add("@nMainPostCode", SqlDbType.NVarChar);
+                    prm12.Value = MainPC;
+                    SqlParameter prm13 = cmd.Parameters.Add("@nSecondAddress", SqlDbType.NVarChar);
+                    prm13.Value = SecAdd;
+                    SqlParameter prm14 = cmd.Parameters.Add("@nResidence", SqlDbType.NVarChar);
+                    prm14.Value = Residence;
+                    SqlParameter prm15 = cmd.Parameters.Add("@nDomicile", SqlDbType.NVarChar);
+                    prm15.Value = Domicile;
+                    SqlParameter prm16 = cmd.Parameters.Add("@nOffice", SqlDbType.NVarChar);
+                    prm16.Value = Office;
+                    SqlParameter prm17 = cmd.Parameters.Add("@nTeam", SqlDbType.NVarChar);
+                    prm17.Value = Team;
+                    SqlParameter prm18 = cmd.Parameters.Add("@nWealth", SqlDbType.NVarChar);
+                    prm18.Value = WealthLevel;
+                    SqlParameter prm19 = cmd.Parameters.Add("@nPathway", SqlDbType.NVarChar);
+                    prm19.Value = Pathway;
+                    SqlParameter prm20 = cmd.Parameters.Add("@nSource", SqlDbType.NVarChar);
+                    prm20.Value = Source;
+                    SqlParameter prm21 = cmd.Parameters.Add("@nSector", SqlDbType.NVarChar);
+                    prm21.Value = Sector;
+                    SqlParameter prm22 = cmd.Parameters.Add("@nLongTerm", SqlDbType.NVarChar);
+                    prm22.Value = LongTerm;
+                    SqlParameter prm23 = cmd.Parameters.Add("@nLifeEvents", SqlDbType.NVarChar);
+                    prm23.Value = LifeEvents;
+                    SqlParameter prm24 = cmd.Parameters.Add("@nNarrative", SqlDbType.NVarChar);
+                    prm24.Value = Narrative;
+                    SqlParameter prm25 = cmd.Parameters.Add("@nHNWU", SqlDbType.Int);
+                    prm25.Value = HNWUPID;
+                    SqlParameter prm26 = cmd.Parameters.Add("@oUTR", SqlDbType.Float);
+                    prm26.Value = UTR;
+                    SqlParameter prm27 = cmd.Parameters.Add("@nPop", SqlDbType.NVarChar);
+                    prm27.Value = Pop;
+                    SqlParameter prm28 = cmd.Parameters.Add("@nCRMName", SqlDbType.NVarChar);
+                    prm28.Value = CRM_Name;
+                    SqlParameter prm29 = cmd.Parameters.Add("@nCRMDA", SqlDbType.DateTime);
+                    if (CRM_Appointed == "")
+                    {
+                        prm29.Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        prm29.Value = CRM_Appointed;
+                    }
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    con.Close();
+                    return false;
+                }
+                return true;
             }
 
         }

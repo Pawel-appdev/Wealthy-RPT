@@ -937,8 +937,42 @@ namespace Wealthy_RPT
 
         private void CmdSave_Click(object sender, RoutedEventArgs e)
         {
-            BindingExpression obj = txtSecondaryAddress.GetBindingExpression(TextBox.TextProperty);
-            obj.UpdateSource();
+            RPT.RPT_Data rpt = new RPT.RPT_Data(); // initialise data
+            rpt.SecAdd = txtSecondaryAddress.Text;
+            rpt.Strand = cboStrand.Text;
+            rpt.Segment = cboSegment.Text;
+            rpt.Surname = txtSurname.Text;
+            rpt.Firstname = txtFirstName.Text;
+            rpt.DOB = txtDOB.Text;
+            rpt.Deceased = (cboDeceased.Text.ToLower() == "yes") == true? Convert.ToByte(1): Convert.ToByte(0); /*convert Yes/No to byte*/
+            rpt.DOD = txtDOD.Text;
+            rpt.Deselected = txtDeselected.Text;
+            rpt.Marital = cboMarital.Text;
+            rpt.Gender = cboGender.Text;
+            rpt.MainAdd = txtPrivateAddress.Text;
+            rpt.MainPC = txtPostcode.Text;
+            rpt.SecAdd = txtSecondaryAddress.Text;
+            rpt.Residence = cboResidence.Text;
+            rpt.Domicile = cboDomicile.Text;
+            rpt.Office = cboOffice.Text;
+            rpt.Team = cboTeam.Text;
+            rpt.WealthLevel = cboWealth.Text;
+            rpt.Pathway = cboPathway.Text;
+            rpt.Source = cboSource.Text;
+            rpt.Sector = cboSector.Text;
+            rpt.LongTerm = cboLongTerm.Text;
+            rpt.LifeEvents = cboLifeEvents.Text;
+            rpt.Narrative = txtNarrative.Text;
+            rpt.HNWUPID = Convert.ToInt32(Global.PID);
+            rpt.UTR = Convert.ToDouble(txtUTR.Text);
+            rpt.Pop = cboPopCode.Text;
+            rpt.CRM_Name = txtCRMName.Text;
+            rpt.CRM_Appointed = txtCRMDA.Text;
+
+            rpt.UpdateCustomerData();
+
+            //BindingExpression obj = txtSecondaryAddress.GetBindingExpression(TextBox.TextProperty);
+            //obj.UpdateSource();
         }
 
         private void CmdUTR_Click(object sender, RoutedEventArgs e)
