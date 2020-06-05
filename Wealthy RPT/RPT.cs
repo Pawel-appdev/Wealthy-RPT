@@ -77,6 +77,9 @@ namespace Wealthy_RPT
             private string _segmentrecorded;
             private string _rsdlu;
             private string _crmexplanation;
+            private DataTable _historicaldata;
+            private DataTable _griddata;
+            private DataTable _chartdata;
             // CRMM enquiry data
             private int _risksopen;
             private int _settledrisks;
@@ -908,6 +911,42 @@ namespace Wealthy_RPT
                     _crmmdateadded = value;
                 }
             }
+
+            public DataTable Historical_Data
+            {
+                get
+                {
+                    return _historicaldata;
+                }
+                set
+                {
+                    _historicaldata = value;
+                }
+            }
+
+            public DataTable Grid_Data
+            {
+                get
+                {
+                    return _griddata;
+                }
+                set
+                {
+                    _griddata = value;
+                }
+            }
+        
+            public DataTable Chart_Data
+            {
+                get
+                {
+                    return _chartdata;
+                }
+                set
+                {
+                    _chartdata = value;
+                }
+            }
             #endregion
 
             public bool GetRPDData(double dblUTR, int iYear, double dPercentile, string sPop)
@@ -1116,6 +1155,8 @@ namespace Wealthy_RPT
 
             public bool GetRPDHistoricalData(double dblUTR, int iYear, double dPercentile, string sPop)
             {
+                DataSet ds = new DataSet();
+                
                 SqlConnection con = new SqlConnection(Global.ConnectionString);
                 try
                 {
@@ -1127,30 +1168,45 @@ namespace Wealthy_RPT
                     prm02.Value = iYear;
                     cmd.CommandTimeout = Global.TimeOut;
                     cmd.CommandType = CommandType.StoredProcedure;
-                    con.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    #region Recordset
-                    if (dr.HasRows)
-                    {
-                        dr.Read();
-                        QSScore = Convert.ToInt16(dr["QSScore"]);
-                        RPTPRScore = Convert.ToInt16(dr["RPTPRScore"]);
-                        RPTAVScore = Convert.ToInt16(dr["RPTAVScore"]);
-                        CGScore = Convert.ToInt16(dr["CGScore"]);
-                        ResScore = Convert.ToInt16(dr["ResScore"]);
-                        CRMScore = Convert.ToInt16(dr["CRMScore"]);
-                        PriorityScore = Convert.ToInt16(dr["PriorityScore"]);
-                        Percentile = Convert.ToInt32(dr["Percentile"]);
-                        SegmentRecorded = dr["Segment_Recorded"].ToString();
-                        RSDLU = dr["RSDLU"].ToString();
-                        CRMExplanation = dr["CRM_Explanation"].ToString();
-                    }
-                    #endregion
-                    else if (dr.HasRows == false)
-                    {
-                        //MessageBox.Show("Behaviours scores data not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    }
-                    con.Close();
+
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+
+                    da.Fill(ds);
+
+                    //// second table
+                    //DataSet ds = new DataSet();
+                    //da.Fill(ds);
+                    //intTotalRows = Convert.ToInt32(ds.Tables[1].Rows[0]["NumberOfRows"]);
+
+                    Historical_Data = ds.Tables[0];
+                    Grid_Data = ds.Tables[1];
+                    Chart_Data = ds.Tables[2];
+
+                    //previously 01/06/2020
+                    //con.Open();
+                    //SqlDataReader dr = cmd.ExecuteReader();
+                    //#region Recordset
+                    //if (dr.HasRows)
+                    //{
+                    //    dr.Read();
+                    //    QSScore = Convert.ToInt16(dr["QSScore"]);
+                    //    RPTPRScore = Convert.ToInt16(dr["RPTPRScore"]);
+                    //    RPTAVScore = Convert.ToInt16(dr["RPTAVScore"]);
+                    //    CGScore = Convert.ToInt16(dr["CGScore"]);
+                    //    ResScore = Convert.ToInt16(dr["ResScore"]);
+                    //    CRMScore = Convert.ToInt16(dr["CRMScore"]);
+                    //    PriorityScore = Convert.ToInt16(dr["PriorityScore"]);
+                    //    Percentile = Convert.ToInt32(dr["Percentile"]);
+                    //    SegmentRecorded = dr["Segment_Recorded"].ToString();
+                    //    RSDLU = dr["RSDLU"].ToString();
+                    //    CRMExplanation = dr["CRM_Explanation"].ToString();
+                    //}
+                    //#endregion
+                    //else if (dr.HasRows == false)
+                    //{
+                    //    //MessageBox.Show("Behaviours scores data not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    //}
+                    //con.Close();
                 }
                 catch
                 {

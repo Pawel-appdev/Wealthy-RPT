@@ -354,9 +354,8 @@ namespace Wealthy_RPT
                 cmd.Parameters.Add("@nRows", SqlDbType.Int).Value = intPageSize ;
                 cmd.Parameters.Add("@nOffset", SqlDbType.Int).Value = intOffset;
 
-
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    da.Fill(dt);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
 
                 try//show My Cases
                 {
@@ -971,6 +970,7 @@ namespace Wealthy_RPT
             else
             {
                 rptDetail.DataContext = rpt;
+                rptDetail.mscHistory.ItemsSource = rpt.Chart_Data.DefaultView;
                 rptDetail.cboPopFriendly.SelectedIndex = this.cboPopulation.SelectedIndex;
                 rptDetail.cboPopCode.SelectedIndex = this.cboPopulation.SelectedIndex;
                 try { rptDetail.lblPopYear.Text = this.cboYear.SelectedValue.ToString(); } catch { DateTime.Now.Year.ToString(); }

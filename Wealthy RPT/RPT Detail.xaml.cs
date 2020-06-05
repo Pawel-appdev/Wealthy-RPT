@@ -783,13 +783,13 @@ namespace Wealthy_RPT
             }
         }
 
-        private void LvwPrevRes_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (Globals.blnAccess == true)
-            {
-                ShowActiveControl(lvwPrevRes);
-            }
-        }
+        //private void LvwPrevRes_GotFocus(object sender, RoutedEventArgs e)
+        //{
+        //    if (Globals.blnAccess == true)
+        //    {
+        //        ShowActiveControl(lvwPrevRes);
+        //    }
+        //}
 
         private void MscHistory_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -918,7 +918,7 @@ namespace Wealthy_RPT
             }
             txtCRMExplanation.Text = "";
             txtCRMExplanation.IsEnabled = true;
-            //RecalculateResults();
+            RecalculateResults();
         }
 
         private void ChkCRMDescretion_Unchecked(object sender, RoutedEventArgs e)
@@ -926,7 +926,7 @@ namespace Wealthy_RPT
             txtCRMScore.Text = "";
             txtCRMExplanation.Text = "";
             txtCRMExplanation.IsEnabled = false;
-            //RecalculateResults();
+            RecalculateResults();
         }
 
         private void CmdSave_Click(object sender, RoutedEventArgs e)
@@ -1003,27 +1003,27 @@ namespace Wealthy_RPT
             int PSScore = 0;
 
 
-            if (IsParseable(txtQSScore.Text.ToString()) == false)
+            if (IsParseable(txtQSScore.Text.ToString(), false) == false)
             {
                 return;
             }
-            if (IsParseable(txtAVScore.Text.ToString()) == false)
+            if (IsParseable(txtAVScore.Text.ToString(), false) == false)
             {
                 return;
             }
-            if (IsParseable(txtRSScore.Text.ToString()) == false)
+            if (IsParseable(txtRSScore.Text.ToString(), false) == false)
             {
                 return;
             }
-            if (IsParseable(txtCGScore.Text.ToString()) == false)
+            if (IsParseable(txtCGScore.Text.ToString(), false) == false)
             {
                 return;
             }
-            if (IsParseable(txtRESScore.Text.ToString()) == false)
+            if (IsParseable(txtRESScore.Text.ToString(), false) == false)
             {
                 return;
             }
-            if (IsParseable(txtCRMScore.Text.ToString()) == false)
+            if (IsParseable(txtCRMScore.Text.ToString(), true) == false)
             {
                 return;
             }
@@ -1033,7 +1033,7 @@ namespace Wealthy_RPT
             txtPRScore.Text = Convert.ToString(PSScore);
         }
 
-        private bool IsParseable(string strText)
+        private bool IsParseable(string strText, bool blnCRM)
         {
             int number;
 
@@ -1045,7 +1045,14 @@ namespace Wealthy_RPT
             }
             else 
             {
-                MessageBox.Show("Unable to calculate Priority Score.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+                if (blnCRM == true)
+                {
+                    txtCRMScore.Text = "0";
+                }
+                else
+                { 
+                    MessageBox.Show("Unable to calculate Priority Score.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+                }
                 return false;
             }
         }
@@ -1054,9 +1061,7 @@ namespace Wealthy_RPT
         {
             RecalculateResults();
 
-            //if needed replot graph
-
-            //if needed Recalculate Priority Score
+            // replot graph
         }
 
         private void PgResults_GotFocus(object sender, RoutedEventArgs e)
@@ -1076,6 +1081,11 @@ namespace Wealthy_RPT
 
             BindingExpression obj = txtSecondaryAddress.GetBindingExpression(TextBox.TextProperty);
             obj.UpdateSource();
+        }
+
+        private void ReplotChart()
+        {
+
         }
     }
 

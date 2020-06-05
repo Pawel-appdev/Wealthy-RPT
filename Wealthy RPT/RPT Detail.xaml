@@ -596,7 +596,7 @@
                                     <RowDefinition Height="400"/>
                                 </Grid.RowDefinitions>
                                 <GroupBox x:Name="grpPreviousScores" Header="Previous Scores" Grid.Row="0" Grid.Column="0">
-                                    <ListView x:Name="lvwPrevRes" GotFocus="LvwPrevRes_GotFocus">
+                                    <!--<ListView x:Name="lvwPrevRes" GotFocus="LvwPrevRes_GotFocus" Margin="0,0,0,97">
                                         <ListView.View>
                                             <GridView>
                                                 <GridViewColumn Header="Date" Width="60" DisplayMemberBinding="{Binding Date}" />
@@ -631,7 +631,12 @@
                                                 </GridViewColumn>
                                             </GridView>
                                         </ListView.View>
-                                    </ListView>
+                                    </ListView>-->
+                                    <DataGrid x:Name="dgHistorical" HorizontalAlignment="Left" Height="120" Margin="5,10,0,0" VerticalAlignment="Top" Width="470" ItemsSource="{Binding Grid_Data, Mode=TwoWay}">
+                                        <DataGrid.ItemBindingGroup>
+                                            <BindingGroup/>
+                                        </DataGrid.ItemBindingGroup>
+                                    </DataGrid>
                                 </GroupBox>
                                 <GroupBox x:Name="grpCurrentScores" Header="Current Scores" Grid.Row="0" Grid.Column="1">
                                     <Grid x:Name="grdCurrentScores" Width="460">
@@ -679,13 +684,44 @@
                                         <TextBox x:Name="txtPercentile" Grid.Row="5" Grid.Column="5" Margin="0,2,0,2" Text = "{Binding Percentile, Mode = TwoWay}"/>
                                     </Grid>
                                 </GroupBox>
-                                <chartingToolkit:Chart  Title="RPT History" x:Name="mscHistory" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" BorderThickness="2" Margin="0,0,10,10" GotFocus="MscHistory_GotFocus">
+                                <!--<chartingToolkit:Chart  Title="RPT History" x:Name="mscHistory" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" BorderThickness="2" Margin="0,0,10,10" GotFocus="MscHistory_GotFocus">
                                     <chartingToolkit:Chart.Axes>
                                         <chartingToolkit:LinearAxis Minimum="{Binding MinValue}" Orientation="X"></chartingToolkit:LinearAxis>
                                     </chartingToolkit:Chart.Axes>
-                                    <chartingToolkit:LineSeries IndependentValueBinding="{Binding Value1}" 
-                                        DependentValueBinding="{Binding Value2}" 
-                                        ItemsSource="{Binding Data}"/>
+                                    <chartingToolkit:LineSeries IndependentValueBinding="{Binding Key}" 
+                                        DependentValueBinding="{Binding Value}" 
+                                        ItemsSource="{Binding Chart_Data}"
+                                        Background="Transparent" Cursor="No">
+                                        <chartingToolkit:LineSeries.DataPointStyle>
+                <Style TargetType="{x:Type chartingToolkit:LineDataPoint}">
+                    <Setter Property="Height" Value="0"/>
+                    <Setter Property="Width" Value="0" />
+                    <Setter Property="Background" Value="Green"/>
+                </Style>
+            </chartingToolkit:LineSeries.DataPointStyle>
+        </chartingToolkit:LineSeries>
+                                </chartingToolkit:Chart>-->
+                                <!--<chartingToolkit:Chart  Title="RPT History" x:Name="mscHistory" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" BorderThickness="2" Margin="0,0,10,10" GotFocus="MscHistory_GotFocus">
+                                    <chartingToolkit:LineSeries Name="LineSeries1"
+                                        IndependentValuePath="Date"
+                                        DependentValuePath="Ranking" 
+                                        Title="Ranking">
+                                    </chartingToolkit:LineSeries>
+                                    <chartingToolkit:Chart.Axes>
+                                        --><!-- Shared axis --><!--
+                                        <chartingToolkit:LinearAxis
+                                Orientation="X"
+                                Title="Date"/>
+                                        <chartingToolkit:LinearAxis
+                                Orientation="Y"
+                                Title="Ranking"/>
+                                    </chartingToolkit:Chart.Axes>
+                                </chartingToolkit:Chart>-->
+                                <chartingToolkit:Chart Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" BorderThickness="2" Margin="0,0,10,10" GotFocus="MscHistory_GotFocus" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Background="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                    <chartingToolkit:Chart.Series>
+                                        <chartingToolkit:ColumnSeries x:Name="mscHistory" ItemsSource="{Binding Chart_Data}" IndependentValueBinding="{Binding Date}" DependentValueBinding="{Binding Ranking}">
+                                        </chartingToolkit:ColumnSeries>
+                                    </chartingToolkit:Chart.Series>
                                 </chartingToolkit:Chart>
                             </Grid>
                         </StackPanel>
