@@ -910,6 +910,18 @@ namespace Wealthy_RPT
                 }
             }
 
+            public int Highest_Percentage
+            {
+                get
+                {
+                    return _highestpercentage;
+                }
+                set
+                {
+                    _highestpercentage = value;
+                }
+            }
+
             public string CRMM_Date_Added
             {
                 get
@@ -921,6 +933,7 @@ namespace Wealthy_RPT
                     _crmmdateadded = value;
                 }
             }
+
             #endregion
 
             public bool GetRPDData(double dblUTR, int iYear, double dPercentile, string sPop)
@@ -1037,7 +1050,7 @@ namespace Wealthy_RPT
                     if (dr.HasRows)
                     {
                         dr.Read();
-                        AgentRecordID = Convert.ToInt32(dr["Agent_Record_ID"]);
+                        AgentRecordID = (dr["Agent_Record_ID"] is DBNull) ? 0 : Convert.ToInt32(dr["Agent_Record_ID"]);
                         Agent = dr["Agent"].ToString();
                         AgentCode = dr["AgentCode"].ToString();
                         bool blnAgent648Held = (dr["648_held"] is DBNull) ? false : Convert.ToBoolean(dr["648_held"]);
@@ -1085,13 +1098,15 @@ namespace Wealthy_RPT
                     if (dr.HasRows)
                     {
                         dr.Read();
+                        string sDate;
                         RPD_ID = Convert.ToInt32(dr["RPD_ID"]);
-                        UpdatedDate = dr["UpdatedDate"].ToString();
-                        UpdatedBy = Convert.ToInt32(dr["UpdatedBy"]);
-                        CalendarYear = Convert.ToInt16(dr["CalendarYear"]);
-                        LPOpen = Convert.ToInt16(dr["LPOpen"]);
-                        LPClosed = Convert.ToInt16(dr["LPClosed"]);
-                        HPPenalty = Convert.ToInt32(dr["HPPenalty"]);
+                        try { sDate = Convert.ToDateTime(dr["UpdatedDate"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
+                        UpdatedDate = sDate;
+                        UpdatedBy = dr["UpdatedBy"] == DBNull.Value ? 0 : Convert.ToInt32(dr["UpdatedBy"]);
+                        CalendarYear = dr["CalendarYear"] == DBNull.Value ? 0 : Convert.ToInt16(dr["CalendarYear"]);
+                        LPOpen = dr["LPOpen"] == DBNull.Value ? 0 : Convert.ToInt16(dr["LPOpen"]);
+                        LPClosed = dr["LPClosed"] == DBNull.Value ? 0 : Convert.ToInt16(dr["LPClosed"]);
+                        HPPenalty = dr["HPPenalty"] == DBNull.Value ? 0 : Convert.ToInt32(dr["HPPenalty"]);
                         byte MaxThreeWay = 2; /*Yes/No/Unknown*/
                         PSCurrent = (dr["PSCurrent"] is DBNull) ? MaxThreeWay : Convert.ToByte(dr["PSCurrent"]);
                         PSCurrent = (PSCurrent > MaxThreeWay) ? MaxThreeWay : PSCurrent;
@@ -1099,15 +1114,16 @@ namespace Wealthy_RPT
                         PSPrevious = (PSPrevious > MaxThreeWay) ? MaxThreeWay : PSPrevious;
                         PSFailures = (dr["PSFailures"] is DBNull) ? MaxThreeWay : Convert.ToByte(dr["PSFailures"]);
                         PSFailures = (PSFailures > MaxThreeWay) ? MaxThreeWay : PSFailures;
-                        QSScore = Convert.ToInt16(dr["QSScore"]);
-                        RPTPRScore = Convert.ToInt16(dr["RPTPRScore"]);
-                        RPTAVScore = Convert.ToInt16(dr["RPTAVScore"]);
-                        CGScore = Convert.ToInt16(dr["CGScore"]);
-                        ResScore = Convert.ToInt16(dr["ResScore"]);
-                        CRMScore = Convert.ToInt16(dr["CRMScore"]);
-                        PriorityScore = Convert.ToInt16(dr["PriorityScore"]);
-                        Percentile = Convert.ToInt32(dr["Percentile"]);
-                        SupecededDate = dr["SupecededDate"].ToString();
+                        QSScore = dr["QSScore"] == DBNull.Value ? 0 : Convert.ToInt16(dr["QSScore"]);
+                        RPTPRScore = dr["RPTPRScore"] == DBNull.Value ? 0 : Convert.ToInt16(dr["RPTPRScore"]);
+                        RPTAVScore = dr["RPTAVScore"] == DBNull.Value ? 0 : Convert.ToInt16(dr["RPTAVScore"]);
+                        CGScore = dr["CGScore"] == DBNull.Value ? 0 : Convert.ToInt16(dr["CGScore"]);
+                        ResScore = dr["ResScore"] == DBNull.Value ? 0 : Convert.ToInt16(dr["ResScore"]);
+                        CRMScore = dr["CRMScore"] == DBNull.Value ? 0 : Convert.ToInt16(dr["CRMScore"]);
+                        PriorityScore = dr["PriorityScore"] == DBNull.Value ? 0 : Convert.ToInt16(dr["PriorityScore"]);
+                        Percentile = dr["Percentile"] == DBNull.Value ? 0 : Convert.ToInt32(dr["Percentile"]);
+                        try { sDate = Convert.ToDateTime(dr["SupecededDate"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
+                        SupecededDate = sDate;
                         RiskingComplete = Convert.ToByte(dr["RiskingComplete"]);
                         //SegmentRecorded = dr["Segment_Recorded"].ToString();
                         //RSDLU = dr["RSDLU"].ToString();
@@ -1147,14 +1163,14 @@ namespace Wealthy_RPT
                     if (dr.HasRows)
                     {
                         dr.Read();
-                        QSScore = Convert.ToInt16(dr["QSScore"]);
-                        RPTPRScore = Convert.ToInt16(dr["RPTPRScore"]);
-                        RPTAVScore = Convert.ToInt16(dr["RPTAVScore"]);
-                        CGScore = Convert.ToInt16(dr["CGScore"]);
-                        ResScore = Convert.ToInt16(dr["ResScore"]);
-                        CRMScore = Convert.ToInt16(dr["CRMScore"]);
-                        PriorityScore = Convert.ToInt16(dr["PriorityScore"]);
-                        Percentile = Convert.ToInt32(dr["Percentile"]);
+                        QSScore = dr["QSScore"] == DBNull.Value ? 0 : Convert.ToInt16(dr["QSScore"]);
+                        RPTPRScore = dr["RPTPRScore"] == DBNull.Value ? 0 : Convert.ToInt16(dr["RPTPRScore"]);
+                        RPTAVScore = dr["RPTAVScore"] == DBNull.Value ? 0 : Convert.ToInt16(dr["RPTAVScore"]);
+                        CGScore = dr["CGScore"] == DBNull.Value ? 0 : Convert.ToInt16(dr["CGScore"]);
+                        ResScore = dr["ResScore"] == DBNull.Value ? 0 : Convert.ToInt16(dr["ResScore"]);
+                        CRMScore = dr["CRMScore"] == DBNull.Value ? 0 : Convert.ToInt16(dr["CRMScore"]);
+                        PriorityScore = dr["PriorityScore"] == DBNull.Value ? 0 : Convert.ToInt16(dr["PriorityScore"]);
+                        Percentile = dr["Percentile"] == DBNull.Value ? 0 : Convert.ToInt32(dr["Percentile"]);
                         SegmentRecorded = dr["Segment_Recorded"].ToString();
                         RSDLU = dr["RSDLU"].ToString();
                         CRMExplanation = dr["CRM_Explanation"].ToString();
@@ -1185,10 +1201,12 @@ namespace Wealthy_RPT
                     if (dr.HasRows)
                     {
                         dr.Read();
-                        Risks_Open = Convert.ToInt16(dr["Risks_Open"]);
-                        Settled_Risks = Convert.ToInt16(dr["Settled_Risks"]);
-                        Highest_Settlement = Convert.ToInt32(dr["Highest_Settlement"]);
-                        CRMM_Date_Added = dr["CRMM_Date_Added"].ToString();
+                        string sDate;
+                        Risks_Open = dr["Risks_Open"] == DBNull.Value ? 0 :  Convert.ToInt16(dr["Risks_Open"]);
+                        Settled_Risks = dr["Settled_Risks"] == DBNull.Value ? 0 : Convert.ToInt16(dr["Settled_Risks"]);
+                        Highest_Settlement = dr["Highest_Settlement"] == DBNull.Value ? 0 : Convert.ToInt32(dr["Highest_Settlement"]);
+                        try { sDate = Convert.ToDateTime(dr["CRMM_Date_Added"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
+                        CRMM_Date_Added = sDate;
                     }
                     #endregion
                     else if (dr.HasRows == false)
@@ -1250,8 +1268,76 @@ namespace Wealthy_RPT
                 
             }
 
-            //public bool UpdateRPDData(string sStrand, string sSegment, string sSurname, string sFirstname, string sDOB, string sDeceased, string sDOD, string sDeselected, string sMarital, string sGender, string sMainAddress, string sMainPostCode, string sSecondAddress, string sResidence, string sDomicile, string sOffice, string sTeam, string sWealth, string sPathway, string sSource, string sSector, string sLongTerm, string sLifeEvents, string sNarrative, int iHMWU, double dUTR, string sPop, string sCRMName, string sCRMDA)
-            //{
+            public bool CheckCustomer(double dUTR)
+            {
+                bool bRtn = false;
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("qryCheckCustomer", con);
+                    cmd.Parameters.Clear();
+                    SqlParameter prm01 = cmd.Parameters.Add("@nUTR", SqlDbType.Float);
+                    prm01.Value = dUTR;
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        bRtn = true;
+                    }
+                    con.Close();
+                }
+                catch
+                {
+                    con.Close();
+                }
+                return bRtn;
+            }
+
+            public bool GetCRMMEnquiryDataScore(double dUTR)
+            {
+                bool bRtn = false;
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("qryGetCRMMEnquiryDataScore", con);
+                    cmd.Parameters.Clear();
+                    SqlParameter prm01 = cmd.Parameters.Add("@nUTR", SqlDbType.Float);
+                    prm01.Value = dUTR;
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    #region Recordset
+                    if (dr.HasRows)
+                    {
+                        dr.Read();
+                        string sDate;
+                        Risks_Open = dr["Risks_Open"] == DBNull.Value ? 0 : Convert.ToInt16(dr["Risks_Open"]);
+                        Settled_Risks = dr["Settled_Risks"] == DBNull.Value ? 0 : Convert.ToInt16(dr["Settled_Risks"]);
+                        Highest_Settlement = dr["Highest_Settlement"] == DBNull.Value ? 0 : Convert.ToInt32(dr["Highest_Settlement"]);
+                        Highest_Percentage = dr["Highest_Percentage"] == DBNull.Value ? 0 : Convert.ToInt16(dr["Highest_Percentage"]);
+                        try { sDate = Convert.ToDateTime(dr["CRMM_Date_Added"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
+                        CRMM_Date_Added = sDate;
+                    }
+                    #endregion
+                    else if (dr.HasRows == false)
+                    {
+                        //MessageBox.Show("Behaviours scores data not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    }
+                    con.Close();
+                }
+                catch
+                {
+                    con.Close();
+                    return false;
+                }
+
+                return bRtn;
+            }
+
+
             public bool UpdateRPDData()
             {
 
@@ -1283,8 +1369,6 @@ namespace Wealthy_RPT
                 return true;
             }
 
-            //public bool UpdateCustomerData(string sStrand, string sSegment, string sSurname, string sFirstname, string sDOB, string sDeceased, string sDOD, string sDeselected, string sMarital, string sGender, string sMainAddress, string sMainPostCode, string sSecondAddress, string sResidence, string sDomicile, string sOffice, string sTeam, string sWealth, string sPathway, string sSource, string sSector, string sLongTerm, string sLifeEvents, string sNarrative, int iHMWU, double dUTR, string sPop, string sCRMName, string sCRMDA)
-            //{
                 public bool UpdateCustomerData()
                 {
                 SqlConnection con = new SqlConnection(Global.ConnectionString);

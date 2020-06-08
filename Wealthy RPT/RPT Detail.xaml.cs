@@ -23,6 +23,8 @@ namespace Wealthy_RPT
     {
         TextBoxDate tbd = new TextBoxDate();
         bool bFormLoaded = false;
+        public int WeightedScore { get; set; }
+
         public RPT_Detail()
         {
             this.DataContext = new RPT(); // set data context
@@ -937,14 +939,82 @@ namespace Wealthy_RPT
 
         private void CmdSave_Click(object sender, RoutedEventArgs e)
         {
+            this.cmdSave.IsEnabled = false;
+            Globals.blnUpdate = false;
+
+
             RPT.RPT_Data rpt = new RPT.RPT_Data(); // initialise data
+
+            if (txtHighestPercent.Text != "" && IsNumeric(txtHighestPercent.Text) == false)
+            {
+                if (Convert.ToInt16(txtHighestPercent.Text) > 500)
+                {
+                    System.Windows.MessageBox.Show("The highest percentage penalty value is too high.  Please check and re-enter.", "Highest Percentage", MessageBoxButton.OK, MessageBoxImage.Information);
+                    txtHighestPercent.Text = rpt.Highest_Percentage.ToString();
+                    cmdSave.IsEnabled = true;
+                    txtHighestPercent.Focus();
+                    return;
+                }
+            }
+
+            if((cboCRMName.Text.Trim() == "") || (txtCRMDA.Text.Trim() == ""))
+            {
+                System.Windows.MessageBox.Show("Please confirm the CRM for this case" + Environment.NewLine + "and/or the date of their appointment.", "CRM", MessageBoxButton.OK, MessageBoxImage.Information);
+                cmdSave.IsEnabled = true;
+                return;
+            }
+
+            // run through each element to check if it needs updating and then update relevant elements.
+            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
+
+            CheckQuestions(); // ensure questions are up to date with weights
+            //RecalculateResults();  // ensure scores are up to date
+
+            if(tcmdSave.Text == "Save")
+            {
+                if((cboOffice.Text.Trim() == "")|| (cboTeam.Text.Trim() == "")|| (cboPopFriendly.Text.Trim() == ""))
+                {
+                    System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+                    MessageBox.Show("Please assign a Population, an Office and a Team.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+                    cmdSave.IsEnabled = true;
+                    return;
+                }
+
+                if ((txtCRMExplanation.Text.Trim() == "") && (chkCRMDescretion.IsChecked == true))
+                {
+                    System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+                    MessageBox.Show("Please give an explanation of why CCM Discretion has been applied.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+                    cmdSave.IsEnabled = true;
+                    return;
+                }
+
+                //if (cRPD.CheckandUpdateRPD() = false)
+                //{
+                //    MessageBox.Show("Problem updating data.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+                //    cmdSave.IsEnabled = true;
+                //}
+                //else
+                //{
+                //    //cRPD.GetRPDDataFromForm
+
+                //    //If cRPD.GetRPDHistoricalData(cRPD.UTR, CInt(Trim(frmRPD.lblYear.Caption)), cRPD.Percentile, cRPD.Pop) = False Then
+                //    //    Screen.MousePointer = vbDefault
+                //    //    MsgBox "Data Saved but issue repopulating previous score data.", vbInformation, App.Title
+                //    //Else
+                //    //    Screen.MousePointer = vbDefault
+                //    //    MsgBox "Data saved.", vbInformation, App.Title
+                //    //End If
+                //}
+
+            }
+
             rpt.SecAdd = txtSecondaryAddress.Text;
             rpt.Strand = cboStrand.Text;
             rpt.Segment = cboSegment.Text;
             rpt.Surname = txtSurname.Text;
             rpt.Firstname = txtFirstName.Text;
             rpt.DOB = txtDOB.Text;
-            rpt.Deceased = (cboDeceased.Text.ToLower() == "yes") == true? Convert.ToByte(1): Convert.ToByte(0); /*convert Yes/No to byte*/
+            rpt.Deceased = (cboDeceased.Text.ToLower() == "yes") == true ? Convert.ToByte(1) : Convert.ToByte(0); /*convert Yes/No to byte*/
             rpt.DOD = txtDOD.Text;
             rpt.Deselected = txtDeselected.Text;
             rpt.Marital = cboMarital.Text;
@@ -971,8 +1041,8 @@ namespace Wealthy_RPT
 
             rpt.UpdateCustomerData();
 
-            //BindingExpression obj = txtSecondaryAddress.GetBindingExpression(TextBox.TextProperty);
-            //obj.UpdateSource();
+            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+
         }
 
         private void CmdUTR_Click(object sender, RoutedEventArgs e)
@@ -1033,6 +1103,197 @@ namespace Wealthy_RPT
 
             //Me.cboTeam.Enabled = True
         }
+
+        private void TxtUTR_LostFocus(object sender, RoutedEventArgs e)
+        {
+            bool bChecked = false;
+            if (txtUTR.Text ==  "")
+            {
+                return;
+            }
+
+            if (txtUTR.Text.Length != 10)
+            {
+                System.Windows.MessageBox.Show("UTR format appears to be invalid.  Please rectify." + Environment.NewLine + "(10 character numerical string required)", "UTR", MessageBoxButton.OK, MessageBoxImage.Information);
+                e.Handled = true;
+                return;
+            }
+
+            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
+            double dUTR = 0;
+            try { dUTR = double.Parse(txtUTR.Text); } catch { dUTR = 0; }; 
+            RPT.RPT_Data rpt = new RPT.RPT_Data();
+            bChecked =  rpt.CheckCustomer(dUTR);
+
+            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+            if (bChecked == true)
+            {
+                System.Windows.MessageBox.Show("A Customer Record already exists for this UTR.", "UTR", MessageBoxButton.OK, MessageBoxImage.Information);
+                txtUTR.Text = "";
+                return;
+            }
+
+            bChecked = rpt.GetCRMMEnquiryDataScore(dUTR);
+            if (bChecked == true)
+            {
+                txtOpenRisks.Text = rpt.Risks_Open.ToString();
+                txtSettledRisks.Text = rpt.Settled_Risks.ToString();
+                txtHighestSettled.Text = rpt.Highest_Settlement.ToString();
+                txtHighestPercent.Text = rpt.Highest_Percentage.ToString();
+                if(rpt.CRMM_Date_Added == "")
+                {
+                    grpCustomer.Header = "Enquiry Data - last updated "; 
+                }
+                else
+                {
+                    grpCustomer.Header = "Enquiry Data - last updated " + DateTime.Now.ToString("dd MMM yyyy"); 
+                }
+            }
+            else
+            {
+                txtOpenRisks.Text = "0";
+                txtSettledRisks.Text = "0";
+                txtHighestSettled.Text = "0";
+                txtHighestPercent.Text = "0";
+                grpCustomer.Header = "Enquiry Data - last updated " + DateTime.Now.ToString("dd MMM yyyy");
+            }
+
+            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+
+            System.Windows.MessageBox.Show("Error checking UTR for existing customer record.", "UTR", MessageBoxButton.OK, MessageBoxImage.Information);
+
+        }
+
+        private void CheckQuestions()
+        {
+            txtOpenIDMS.RaiseEvent(new RoutedEventArgs(LostFocusEvent, txtOpenIDMS));
+            txtClosedIDMS.RaiseEvent(new RoutedEventArgs(LostFocusEvent, txtClosedIDMS));
+            txtOpenRisks.RaiseEvent(new RoutedEventArgs(LostFocusEvent, txtOpenRisks));
+            txtSettledRisks.RaiseEvent(new RoutedEventArgs(LostFocusEvent, txtSettledRisks));
+            txtHighestPercent.RaiseEvent(new RoutedEventArgs(LostFocusEvent, txtHighestPercent));
+            txtHighestSettled.RaiseEvent(new RoutedEventArgs(LostFocusEvent, txtHighestSettled));
+            cboCurrentSuspensions.RaiseEvent(new RoutedEventArgs(LostFocusEvent, cboCurrentSuspensions));
+            cboPrevSuspensions.RaiseEvent(new RoutedEventArgs(LostFocusEvent, cboPrevSuspensions));
+            cboFailures.RaiseEvent(new RoutedEventArgs(LostFocusEvent, cboFailures));
+        }
+
+        private void TxtOpenIDMS_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if((txtOpenIDMS.Text != "")||(IsNumeric(txtOpenIDMS.Text)==true))
+            {
+                CheckWeight(txtOpenIDMS, txtOpenIDMSHD);
+            }
+        }
+
+        private void TxtClosedIDMS_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if ((txtClosedIDMS.Text != "") || (IsNumeric(txtClosedIDMS.Text) == true))
+            {
+                CheckWeight(txtClosedIDMS, txtClosedIDMSHD);
+            }
+        }
+
+        private void TxtOpenRisks_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if ((txtOpenRisks.Text != "") || (IsNumeric(txtOpenRisks.Text) == true))
+            {
+                CheckWeight(txtOpenRisks, txtOpenRisksHD);
+            }
+        }
+
+        private void TxtSettledRisks_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if ((txtSettledRisks.Text != "") || (IsNumeric(txtSettledRisks.Text) == true))
+            {
+                CheckWeight(txtSettledRisks, txtSettledHD);
+            }
+        }
+
+        private void TxtHighestPercent_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if ((txtHighestPercent.Text != "") || (IsNumeric(txtHighestPercent.Text) == true))
+            {
+                CheckWeight(txtHighestPercent, txtHighestPercentHD);
+            }
+        }
+
+        private void TxtHighestSettled_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if ((txtHighestSettled.Text != "") || (IsNumeric(txtHighestSettled.Text) == true))
+            {
+                CheckWeight(txtHighestSettled, txtHighestSettledHD);
+            }
+        }
+
+        private void CboCurrentSuspensions_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if ((cboCurrentSuspensions.Text != "") || (IsNumeric(cboCurrentSuspensions.Text) == true))
+            {
+                //CheckWeight(txtCurrentSuspensions, txtCurrentSuspensionsHD);
+            }
+        }
+
+        private void CboPrevSuspensions_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if ((cboPrevSuspensions.Text != "") || (IsNumeric(cboPrevSuspensions.Text) == true))
+            {
+                //CheckWeight(txtPrevSuspensions, txtPrevSuspensionsHD);
+            }
+        }
+
+        private void CboFailures_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if ((cboFailures.Text != "") || (IsNumeric(cboFailures.Text) == true))
+            {
+                //CheckWeight(txtFailures, txtFailuresHD);
+            }
+        }
+
+        public static bool IsNumeric(object Expression)
+        {
+            double retNum;
+
+            bool isNum = Double.TryParse(Convert.ToString(Expression), System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo, out retNum);
+            return isNum;
+        }
+
+        public void CheckWeight(TextBox tmpTextBox, TextBox tmpHDTextBox)
+        {
+            SqlConnection con = new SqlConnection(Global.ConnectionString);
+            try
+            {
+                User user = new User();
+                SqlCommand cmd = new SqlCommand("qryGetQuestionWeight", con);  // tblAgent_Details
+                cmd.Parameters.Clear();
+                SqlParameter prm01 = cmd.Parameters.Add("@txtName", SqlDbType.NVarChar);
+                prm01.Value = tmpTextBox.Name;
+                SqlParameter prm02 = cmd.Parameters.Add("@Score", SqlDbType.Int);
+                prm02.Value = Convert.ToInt16(tmpTextBox.Text);
+                SqlParameter prm03 = cmd.Parameters.Add("@nPop", SqlDbType.NVarChar);
+                prm03.Value = user.Pop_Code_Name.ToString(); 
+                cmd.CommandTimeout = Global.TimeOut;
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    dr.Read();
+                    WeightedScore = (dr["Weighted_Score"] is DBNull) ? 0 : Convert.ToInt32(dr["Weighted_Score"]);
+                    tmpHDTextBox.Text = WeightedScore.ToString();
+                }
+                else if (dr.HasRows == false)
+                {
+                    MessageBox.Show("No corresponding weighting found for this previously selected field." + Environment.NewLine + "Please notify appropriate person immediately.", "Weighting", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                con.Close();
+            }
+            catch
+            {
+                con.Close();
+            }
+        }
+
+
     }
 
 }
