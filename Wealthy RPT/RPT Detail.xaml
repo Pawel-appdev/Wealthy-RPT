@@ -302,7 +302,7 @@
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
                                             <TextBlock x:Name="lblReqd" Margin="0,7,10,2"  HorizontalAlignment="Right" Grid.Row="0"  Grid.Column="2" Grid.ColumnSpan="3" Width="97">Compulsory Fields</TextBlock>
-                                            <TextBox x:Name="txtReqd" Margin="10,4,0,0" Height="20" Width="64" Grid.Row="0"  Grid.Column="5" Background="#50000003" Grid.ColumnSpan="2"/>
+                                            <TextBox x:Name="txtReqd" Margin="10,4,0,0" Height="20" Width="64" Grid.Row="0"  Grid.Column="5" Background="#50000003" Grid.ColumnSpan="2" IsEnabled="False"/>
 
                                             <TextBlock x:Name="lblEmail" Grid.Row="2" Grid.Column="0" FontSize="16" Margin="0,0,10,0" Grid.ColumnSpan="2"><Run Text="Email Contacts"/><InlineUIContainer>
                                         </InlineUIContainer></TextBlock>

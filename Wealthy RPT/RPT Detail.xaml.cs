@@ -968,6 +968,7 @@ namespace Wealthy_RPT
             System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
 
             CheckQuestions(); // ensure questions are up to date with weights
+            
             //RecalculateResults();  // ensure scores are up to date
 
             if(tcmdSave.Text == "Save")
@@ -988,25 +989,35 @@ namespace Wealthy_RPT
                     return;
                 }
 
-                //if (cRPD.CheckandUpdateRPD() = false)
-                //{
-                //    MessageBox.Show("Problem updating data.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
-                //    cmdSave.IsEnabled = true;
-                //}
-                //else
-                //{
-                //    //cRPD.GetRPDDataFromForm
+                if(CheckandAddRPD()== false)
+                {
+                    System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+                    MessageBox.Show("Problem adding data. Please try again." + Environment.NewLine + Environment.NewLine + "If the problem persists, take screenshots of the" + Environment.NewLine + "record and error message, and report it to ICT.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+                    cmdSave.IsEnabled = true;
+                }
+                else
+                {
+                    // reload new updated cRPD Data
+                    GetRPDDataFromForm();
 
-                //    //If cRPD.GetRPDHistoricalData(cRPD.UTR, CInt(Trim(frmRPD.lblYear.Caption)), cRPD.Percentile, cRPD.Pop) = False Then
-                //    //    Screen.MousePointer = vbDefault
-                //    //    MsgBox "Data Saved but issue repopulating previous score data.", vbInformation, App.Title
-                //    //Else
-                //    //    Screen.MousePointer = vbDefault
-                //    //    MsgBox "Data saved.", vbInformation, App.Title
-                //    //End If
-                //}
+                    //    //If cRPD.GetRPDHistoricalData(cRPD.UTR, CInt(Trim(frmRPD.lblYear.Caption)), cRPD.Percentile, cRPD.Pop) = False Then
+                    //    //    Screen.MousePointer = vbDefault
+                    //    //    MsgBox "Data Saved but issue repopulating previous score data.", vbInformation, App.Title
+                    //    //Else
+                    //    //    Screen.MousePointer = vbDefault
+                    //    //    MsgBox "Data saved.", vbInformation, App.Title
+                    //    //End If
+                }
 
             }
+            else  // i.e. if(tcmdSave.Text != Save)
+            {
+                MessageBox.Show("here has been an error loading this form." + Environment.NewLine  + "Please notify the Support Team as this will need debugging.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
+            cmdSave.IsEnabled = true;
+            Globals.blnUpdate = true;
+            // ########################
 
             rpt.SecAdd = txtSecondaryAddress.Text;
             rpt.Strand = cboStrand.Text;
@@ -1293,6 +1304,283 @@ namespace Wealthy_RPT
             }
         }
 
+        public bool CheckandAddRPD()
+        {
+            bool blnRtn = true;
+
+            //try {if (CheckandSaveScoresData(true) == false) { blnRtn = false; } }  catch  { blnRtn = false; }
+
+            try { if (CheckandSaveCustomerData(true) == false) { blnRtn = false; } } catch { blnRtn = false; }
+
+            //try { if (CheckandSaveAgentData(true) == false) { blnRtn = false; } } catch { blnRtn = false; }
+
+            return blnRtn;
+        }
+
+            public bool CheckandSaveCustomerData(bool blnAdd)
+        {
+            bool blnCustomer = false;
+            string strQuery = "";
+            bool blnRtn = false;
+
+            if (blnAdd == true)
+            {
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                try
+                {
+                    User user = new User();
+                    SqlCommand cmd = new SqlCommand("qryCheckCustomer", con);  // tblAgent_Details
+                    cmd.Parameters.Clear();
+                    SqlParameter prm01 = cmd.Parameters.Add("@UTR", SqlDbType.Float);
+                    prm01.Value = Convert.ToDouble(txtUTR.Text.Trim());
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        strQuery = "qryUpdateCustomer";
+                        blnCustomer = true;
+
+                    }
+                    else if (dr.HasRows == false)
+                    {
+                        strQuery = "qryAddCustomer";
+                        blnCustomer = true;
+                    }
+                    con.Close();
+                }
+                catch
+                {
+                    con.Close();
+                }
+            }
+            else
+            {
+                strQuery = "qryUpdateCustomer";
+                
+                RPT.RPT_Data rpt = new RPT.RPT_Data(); // initialise data
+                
+                for (int j = 0; j < 27; j++)
+                {
+                    switch (j)
+                    {
+                        case 0:
+                            if (cboPopCode.Text != rpt.Pop){ blnCustomer = true; }
+                            break;
+                        case 1:
+                            if (cboSegment.Text != rpt.Segment) { blnCustomer = true; }
+                            break;
+                        case 2:
+                            if (txtSurname.Text != rpt.Surname) { blnCustomer = true; }
+                            break;
+                        case 3:
+                            if (txtFirstName.Text != rpt.Firstname) { blnCustomer = true; }
+                            break;
+                        case 4:
+                            if (txtDOB.Text != rpt.DOB) { blnCustomer = true; }
+                            break;
+                        case 5:
+                            if (txtDOD.Text != rpt.DOD) { blnCustomer = true; }
+                            break;
+                        case 6:
+                            if (Convert.ToBoolean(rpt.Deceased) == false) // looking for "No" response
+                            {
+                                if(cboDeceased.Text.ToUpper() != "NO")
+                                {
+                                    blnCustomer = true;
+                                }
+                            }
+                            else  // looking for "Yes" response
+                            {
+                                if (cboDeceased.Text.ToUpper() != "YES")
+                                {
+                                    blnCustomer = true;
+                                }
+                            }
+                            break;
+                        case 7:
+                            if (txtDeselected.Text != rpt.Deselected) { blnCustomer = true; }
+                            break;
+                        case 8:
+                            if (cboMarital.Text != rpt.Marital) { blnCustomer = true; }
+                            break;
+                        case 9:
+                            if (cboGender.Text != rpt.Gender) { blnCustomer = true; }
+                            break;
+                        case 10:
+                            if (txtPrivateAddress.Text != rpt.MainAdd) { blnCustomer = true; }
+                            break;
+                        case 11:
+                            if (txtPostcode.Text != rpt.MainPC) { blnCustomer = true; }
+                            break;
+                        case 12:
+                            if (txtSecondaryAddress.Text != rpt.SecAdd) { blnCustomer = true; }
+                            break;
+                        case 13:
+                            if (cboResidence.Text != rpt.Residence) { blnCustomer = true; }
+                            break;
+                        case 14:
+                            if (cboDomicile.Text != rpt.Domicile) { blnCustomer = true; }
+                            break;
+                        case 15:
+                            if (cboOffice.Text != rpt.Office) { blnCustomer = true; }
+                            break;
+                        case 16:
+                            if (cboTeam.Text != rpt.Team) { blnCustomer = true; }
+                            break;
+                        case 17:
+                            if (cboCRMName.Text != rpt.CRM_Name) { blnCustomer = true; }
+                            break;
+                        case 18:
+                            if (txtCRMDA.Text != rpt.CRM_Appointed) { blnCustomer = true; }
+                            break;
+                        case 19:
+                            if (cboWealth.Text != rpt.WealthLevel) { blnCustomer = true; }
+                            break;
+                        case 20:
+                            if (cboPathway.Text != rpt.Pathway) { blnCustomer = true; }
+                            break;
+                        case 21:
+                            if (cboSource.Text != rpt.Source) { blnCustomer = true; }
+                            break;
+                        case 22:
+                            if (cboSector.Text != rpt.Sector) { blnCustomer = true; }
+                            break;
+                        case 23:
+                            if (cboLongTerm.Text != rpt.LongTerm) { blnCustomer = true; }
+                            break;
+                        case 24:
+                            if (cboLifeEvents.Text != rpt.LifeEvents) { blnCustomer = true; }
+                            break;
+                        case 25:
+                            if (txtNarrative.Text != rpt.Narrative) { blnCustomer = true; }
+                            break;
+                        case 26:
+                            if (cboAllocatedTo.Text != rpt.HNWUPID.ToString())
+                            {
+                                blnCustomer = true;
+                                if(cboAllocatedTo.Text.Trim() == "")
+                                {
+                                    blnRtn = true; // case can't be left unallocated
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            } 
+                            break;
+                        default:
+                            break;
+                    }
+                    if (blnCustomer == true) { break;}
+                }
+
+                if(blnCustomer == true) // save case as something has changed
+                {
+                    // strQuery is qryAddCustomer or qryUpdateCustomer
+
+                }
+                else // don't save as nothing has changed
+                {
+                    //leave as it as checks found no changes so no point in resaving data.
+                }
+
+            }
+            return blnRtn ;
+        }
+
+        public bool GetRPDDataFromForm()
+        {
+            bool blnRtn = false;
+            RPT.RPT_Data rpt = new RPT.RPT_Data(); // initialise data
+            rpt.Segment = cboSegment.Text;
+            rpt.Surname = txtSurname.Text;
+            rpt.Firstname = txtFirstName.Text;
+            rpt.Gender = cboGender.Text;
+            rpt.UTR = Convert.ToDouble(txtUTR.Text);
+            rpt.Deceased = cboDeceased.Text.ToUpper() == "YES" ? Convert.ToByte(true) : Convert.ToByte(false);
+            rpt.DOB = txtDOB.Text;
+            rpt.DOD = txtDOD.Text;
+            rpt.Deselected = txtDeselected.Text;
+            rpt.Marital = cboMarital.Text;
+            rpt.MainAdd  = txtPrivateAddress.Text;
+            rpt.MainPC = txtPostcode.Text;
+            rpt.SecAdd = txtSecondaryAddress.Text;
+            rpt.Residence = cboResidence.Text;
+            rpt.Domicile = cboDomicile.Text;
+            rpt.Office = cboOffice.Text;
+            rpt.Team = cboTeam.Text;
+            rpt.HNWUPID = Convert.ToInt32(cboAllocatedTo.Text);
+            rpt.Agent = txtFirm.Text;
+            rpt.Agent648Held = cbo648.Text.ToUpper() == "YES" ? Convert.ToByte(true) : Convert.ToByte(false);
+            rpt.AgentCode = txtAgentCode.Text;
+            rpt.AgentAddress = txtAgentAddress.Text;
+            rpt.NamedAgent = txtNamedAgent.Text;
+            rpt.OtherContact = txtOtherContact.Text;
+            rpt.AgentTelNo = txtTelNo.Text;
+            rpt.Changed = cboChange.Text.ToUpper() == "YES" ? Convert.ToByte(true) : Convert.ToByte(false);
+            //rpt.OpenIDMS = Convert.ToInt16(txtOpenIDMS.Text);
+            //rpt.ClosedIDMS = Convert.ToInt16(txtClosedIDMS.Text);
+            rpt.Risks_Open = Convert.ToInt16(txtOpenRisks.Text);
+            rpt.Settled_Risks = Convert.ToInt16(txtSettledRisks.Text);
+            rpt.Highest_Settlement = Convert.ToInt32(txtHighestSettled.Text);
+            rpt.HPPenalty = Convert.ToInt16(txtHighestPercent.Text);
+            switch (cboCurrentSuspensions.Text.ToUpper())
+                {
+                case "YES":
+                    rpt.PSCurrent = 2;
+                    break;
+                case "NO":
+                    rpt.PSCurrent = 1;
+                    break;
+                default:
+                    rpt.PSCurrent = 0;
+                    break;
+                }
+            switch (cboPrevSuspensions.Text.ToUpper())
+            {
+                case "YES":
+                    rpt.PSPrevious = 2;
+                    break;
+                case "NO":
+                    rpt.PSPrevious = 1;
+                    break;
+                default:
+                    rpt.PSPrevious = 0;
+                    break;
+            }
+            switch (cboFailures.Text.ToUpper())
+            {
+                case "YES":
+                    rpt.PSFailures = 2;
+                    break;
+                case "NO":
+                    rpt.PSFailures = 1;
+                    break;
+                default:
+                    rpt.PSFailures = 0;
+                    break;
+            }
+            rpt.WealthLevel = cboWealth.Text;
+            rpt.Pathway = cboPathway.Text;
+            rpt.Source = cboSource.Text;
+            rpt.Sector = cboSector.Text;
+            rpt.LongTerm = cboLongTerm.Text;
+            rpt.LifeEvents = cboLifeEvents.Text;
+            rpt.Narrative = txtNarrative.Text;
+            rpt.QSScore = Convert.ToInt16(txtQSScore.Text);
+            rpt.RPTPRScore = Convert.ToInt16(txtRSScore.Text);
+            rpt.RPTAVScore = Convert.ToInt16(txtAVScore.Text);
+            rpt.CGScore = Convert.ToInt16(txtCGScore.Text);
+            rpt.ResScore = Convert.ToInt16(txtRESScore.Text);
+            rpt.CRMScore = Convert.ToInt16(txtCRMScore.Text);
+            rpt.PriorityScore = Convert.ToInt16(txtPRScore.Text);
+            rpt.Percentile = Convert.ToInt32(txtPercentile.Text);
+            rpt.Pop = cboPopCode.Text;
+            rpt.CRMExplanation = txtCRMExplanation.Text;
+            return blnRtn;
+        }
 
     }
 
