@@ -77,6 +77,7 @@ namespace Wealthy_RPT
         private static string _pid;
         private static string _fullname;
         private static string _accesslevel;
+        private static string _popcodename = "";
         private static string _displayRAG;
 
         public static string PID
@@ -112,6 +113,18 @@ namespace Wealthy_RPT
             set
             {
                 _accesslevel = value;
+            }
+        }
+
+        public static string Pop_Code_Name
+        {
+            get
+            {
+                return _popcodename;
+            }
+            set
+            {
+                _popcodename = value;
             }
         }
 

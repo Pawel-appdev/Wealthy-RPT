@@ -198,7 +198,7 @@ namespace Wealthy_RPT
                     Pop_Code_Name =  reader["Pop_Code_Name"].ToString();
                 }
             }
-            else
+            else 
             {
                 {
                     MessageBox.Show("You are not know by this application." + "\n" + "\n" + "The application will now close.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Exclamation);
