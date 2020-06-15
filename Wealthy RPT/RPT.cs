@@ -83,8 +83,8 @@ namespace Wealthy_RPT
             private int _settledrisks;
             private float _highestsettlement;
             private int _highestpercentage;
-            private string _crmmdata;
-            private float _crmmscore;
+            //private string _crmmdata;
+            //private float _crmmscore;
             private string _crmmdateadded;
 
             #endregion
@@ -1337,41 +1337,9 @@ namespace Wealthy_RPT
                 return bRtn;
             }
 
-
-            public bool UpdateRPDData()
+            public bool UpdateCustomerData()
             {
-
-                //if (UpdateCustomerData(sStrand, sSegment, sSurname, sFirstname, sDOB, sDeceased, sDOD, sDeselected, sMarital, sGender, sMainAddress, sMainPostCode, sSecondAddress, sResidence, sDomicile, sOffice, sTeam, sWealth, sPathway, sSource, sSector, sLongTerm, sLifeEvents, sNarrative, iHMWU, dUTR, sPop, sCRMName, sCRMDA) == false)
-                //{
-                //    return false;
-                //}
-                if (UpdateCustomerData() == false)
-                {
-                    return false;
-                }
-
-                //if (UpdateAgentData(dblUTR) == false)
-                //{
-                //    return false;
-                //}
-
-
-                //if (UpdateRPDScoresData(dblUTR, iYear, sPop) == false)
-                //{
-                //    return false;
-                //}
-
-                //if (UpdateRPDHistoricalData(dblUTR, iYear, dPercentile, sPop) == false)
-                //{
-                //    return false;
-                //}
-
-                return true;
-            }
-
-                public bool UpdateCustomerData()
-                {
-                SqlConnection con = new SqlConnection(Global.ConnectionString);
+            SqlConnection con = new SqlConnection(Global.ConnectionString);
                 try
                 {
                     SqlCommand cmd = new SqlCommand("qryUpdateCustomer", con);
@@ -1469,6 +1437,67 @@ namespace Wealthy_RPT
                 }
                 catch
                 {
+                    con.Close();
+                    return false;
+                }
+                return true;
+            }
+
+            public bool ResetAgent()
+            {
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("qryResetAgent", con);
+                    cmd.Parameters.Clear();
+                    SqlParameter prm01 = cmd.Parameters.Add("@fUTR", SqlDbType.Float);
+                    prm01.Value = UTR;
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    con.Close();
+                    return false;
+                }
+                return true;
+            }
+
+            public bool UpdateAgentData(double fUTR)
+            {
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("qryUpdateAgent", con);
+                    cmd.Parameters.Clear();
+                    SqlParameter prm01 = cmd.Parameters.Add("@fUTR", SqlDbType.Float);
+                    prm01.Value = fUTR;
+                    SqlParameter prm02 = cmd.Parameters.Add("@nAgent", SqlDbType.NVarChar);
+                    prm02.Value = Agent;
+                    SqlParameter prm03 = cmd.Parameters.Add("@nAgentCode", SqlDbType.NVarChar);
+                    prm03.Value = AgentCode;
+                    SqlParameter prm04 = cmd.Parameters.Add("@b648held", SqlDbType.Bit);
+                    prm04.Value = Agent648Held;
+                    SqlParameter prm05 = cmd.Parameters.Add("@nAgentAddress", SqlDbType.NVarChar);
+                    prm05.Value = AgentAddress;
+                    SqlParameter prm06 = cmd.Parameters.Add("@nNamedAgent", SqlDbType.NVarChar);
+                    prm06.Value = NamedAgent;
+                    SqlParameter prm07 = cmd.Parameters.Add("@nOtherContact", SqlDbType.NVarChar);
+                    prm07.Value = OtherContact;
+                    SqlParameter prm08 = cmd.Parameters.Add("@nAgentTelNo", SqlDbType.NVarChar);
+                    prm08.Value = AgentTelNo;
+                    SqlParameter prm09 = cmd.Parameters.Add("@bChanged", SqlDbType.Bit);
+                    prm09.Value = Changed;
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.Write("SQL error: " + ex.Message);
                     con.Close();
                     return false;
                 }

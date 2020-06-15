@@ -218,7 +218,7 @@
                                             <TextBox x:Name="txtTeam"  Margin="6,2,4,2" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Visibility="Hidden"/>
                                             <TextBlock x:Name="lblOffice" Margin="8,2,9,2" Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2">Office</TextBlock>
                                             <ComboBox x:Name="cboOffice" Height="22" Margin="4,2,1,2" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="CboOffice_GotFocus" SelectedValue="{Binding Office, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="CboOffice_SelectionChanged" />
-                                            <ComboBox x:Name="cboTeam" Height="22" Margin="6,2,4,2" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="2" GotFocus="CboTeam_GotFocus" SelectedValue="{Binding Team, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            <ComboBox x:Name="cboTeam" Height="22" Margin="6,2,4,2" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="2" GotFocus="CboTeam_GotFocus" SelectedValue="{Binding Team, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="CboTeam_SelectionChanged" />
                                             <TextBlock x:Name="lblAllocatedTo" Margin="8,2,9,2" Grid.Row="2"  Grid.Column="0" Grid.ColumnSpan="2">Allocated To</TextBlock>
                                             <ComboBox x:Name="cboAllocatedTo" Height="22" Margin="4,2,4,2" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="6" GotFocus="CboAllocatedTo_GotFocus" SelectedValue="{Binding 'Team Identifer', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                             <TextBlock x:Name="lblCRMName" Margin="8,2,9,2" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">CCM Name</TextBlock>
@@ -718,7 +718,7 @@
                 <Button x:Name="cmdSave" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,0,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdSave_GotFocus" Click="CmdSave_Click">
                     <TextBlock x:Name="tcmdSave" Text="Save Changes" VerticalAlignment="Top" ToolTip="Save Changes" Margin="2,2,2,0" />
                 </Button>
-                <Button x:Name="cmdUpdateClose" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,0,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdUpdateClose_GotFocus">
+                <Button x:Name="cmdUpdateClose" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,0,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdUpdateClose_GotFocus" Click="CmdUpdateClose_Click">
                     <TextBlock x:Name="tcmdUpdateClose" Text="Save &amp; Close" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Save &amp; Close"/>
                 </Button>
                 <Button x:Name="cmdCancel" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,0,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdCancel_GotFocus" Click="CmdCancel_Click">
