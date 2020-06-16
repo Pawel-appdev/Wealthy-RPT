@@ -32,7 +32,6 @@ namespace Wealthy_RPT
         public int intTotalRows;
         public int intLastPage;
 
-
         #region menu items
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
@@ -75,18 +74,18 @@ namespace Wealthy_RPT
 
                 rPT_Detail.cboPopCode.SelectedValue = user.Pop_Code_Name.ToString();
                 rPT_Detail.cboPopFriendly.SelectedIndex = rPT_Detail.cboPopCode.SelectedIndex;
-                if (rPT_Detail.cboPopCode.Text.ToUpper() == "RPT10MILL")
-                {
-                    rPT_Detail.cboSegment.IsReadOnly = false;
-                    rPT_Detail.cboSegment.IsEnabled = true;
-                    rPT_Detail.cboSegment.IsTabStop = true;
-                }
-                else
-                {
-                    rPT_Detail.cboSegment.IsReadOnly = true;
-                    rPT_Detail.cboSegment.IsEnabled = false;
-                    rPT_Detail.cboSegment.IsTabStop = false;
-                }
+                //if (rPT_Detail.cboPopCode.Text.ToUpper() == "RPT10MILL")
+                //{
+                //    rPT_Detail.cboSegment.IsReadOnly = false;
+                //    rPT_Detail.cboSegment.IsEnabled = true;
+                //    rPT_Detail.cboSegment.IsTabStop = true;
+                //}
+                //else
+                //{
+                //    rPT_Detail.cboSegment.IsReadOnly = true;
+                //    rPT_Detail.cboSegment.IsEnabled = false;
+                //    rPT_Detail.cboSegment.IsTabStop = false;
+                //}
 
                 Globals.blnIgnoreEvents = false;
                 rPT_Detail.lblPopYear.Text = DateTime.Now.Year.ToString();
@@ -126,7 +125,6 @@ namespace Wealthy_RPT
         public MainWindow()
         {
             InitializeComponent();
-
             PopulateCombos();
 
             RAG.GetRAGBreaks();
@@ -1009,5 +1007,6 @@ namespace Wealthy_RPT
                 rptDetail.Show();
             }
         }
+
     }
 }

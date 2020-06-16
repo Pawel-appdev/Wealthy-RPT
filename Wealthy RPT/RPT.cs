@@ -32,6 +32,7 @@ namespace Wealthy_RPT
             private string _domicile;
             private string _office;
             private string _team;
+            private string _allocatedto;
             private string _wealthlevel;
             private string _pathway;
             private string _source;
@@ -336,6 +337,18 @@ namespace Wealthy_RPT
                 set
                 {
                     _team = value;
+                }
+            }
+
+            public string AllocatedTo
+            {
+                get
+                {
+                    return _allocatedto;
+                }
+                set
+                {
+                    _allocatedto = value;
                 }
             }
 
@@ -1003,6 +1016,7 @@ namespace Wealthy_RPT
                         Domicile = dr["Domicile"].ToString();
                         Office = dr["Office"].ToString();
                         Team = dr["Team"].ToString();
+                        AllocatedTo = "";
                         WealthLevel = dr["WealthLevel"].ToString();
                         Pathway = dr["Pathway"].ToString();
                         Source = dr["Source"].ToString();

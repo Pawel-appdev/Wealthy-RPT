@@ -974,8 +974,8 @@ namespace Wealthy_RPT
 
             //RecalculateResults();  // ensure scores are up to date
 
-            if (tcmdSave.Text.IndexOf("save", StringComparison.CurrentCultureIgnoreCase) >= 0)
-            {
+            //if (tcmdSave.Text.IndexOf("save", StringComparison.CurrentCultureIgnoreCase) >= 0)
+            //{
                 if ((cboOffice.Text.Trim() == "") || (cboTeam.Text.Trim() == "") || (cboPopFriendly.Text.Trim() == ""))
                 {
                     System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
@@ -1023,11 +1023,11 @@ namespace Wealthy_RPT
                     }
                 }
 
-            }
-            else  // i.e. if(tcmdSave.Text != Save)
-            {
-                MessageBox.Show("There has been an error loading this form." + Environment.NewLine + "Please notify the Support Team as this will need debugging.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
-            }
+            //}
+            //else  // i.e. if(tcmdSave.Text != Save)
+            //{
+            //    MessageBox.Show("There has been an error loading this form." + Environment.NewLine + "Please notify the Support Team as this will need debugging.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+            //}
 
             cmdSave.IsEnabled = true;
             Globals.blnUpdate = true;
@@ -1052,7 +1052,7 @@ namespace Wealthy_RPT
 
         private void CboOffice_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if((cboOffice.Text == "")&&(bFormLoaded == true))
+            if((bFormLoaded == true))
             {
                 bool blnTest = PopulateTeamCombo();
                 cboTeam.Text = "";
@@ -1476,6 +1476,7 @@ namespace Wealthy_RPT
         {
             bool blnAgent = false;
             bool blnRtn = false;
+            string strTest = "";
 
             RPT.RPT_Data rpt = new RPT.RPT_Data(); // initialise data
             for (int j = 0; j < 8; j++)
@@ -1483,29 +1484,36 @@ namespace Wealthy_RPT
                 switch (j)
                 {
                     case 0:
-                        if (txtFirm.Text != GetDataContextValue("Agent").ToString()) { blnAgent = true; }
+                        strTest = GetDataContextValue("Agent") == null ? "" : GetDataContextValue("Agent").ToString();
+                        if (txtFirm.Text != strTest) { blnAgent = true; }
                         break;
                     case 1:
                         if (cbo648.Text.ToUpper() != "NO") { blnAgent = true; }
                         break;
                     case 2:
-                        if (txtSurname.Text != GetDataContextValue("Surname").ToString()) { blnAgent = true; }
+                        strTest = GetDataContextValue("Surname") == null ? "" : GetDataContextValue("Surname").ToString();
+                        if (txtSurname.Text != strTest) { blnAgent = true; }
                         break;
                     case 3:
-                        if (txtAgentCode.Text != GetDataContextValue("AgentCode").ToString()) { blnAgent = true; }
+                        strTest = GetDataContextValue("AgentCode") == null ? "" : GetDataContextValue("AgentCode").ToString();
+                        if (txtAgentCode.Text != strTest) { blnAgent = true; }
                         break;
                     case 4:
-                        if (txtNamedAgent.Text != GetDataContextValue("NamedAgent").ToString()) { blnAgent = true; }
+                        strTest = GetDataContextValue("NamedAgent") == null ? "" : GetDataContextValue("NamedAgent").ToString();
+                        if (txtNamedAgent.Text != strTest) { blnAgent = true; }
                         break;
                     case 5:
-                        if (txtOtherContact.Text != GetDataContextValue("OtherContact").ToString()) { blnAgent = true; }
+                        strTest = GetDataContextValue("OtherContact") == null ? "" : GetDataContextValue("OtherContact").ToString();
+                        if (txtOtherContact.Text != strTest) { blnAgent = true; }
                         break;
 
                     case 6:
-                        if (txtTelNo.Text != GetDataContextValue("AgentTelNo").ToString()) { blnAgent = true; }
+                        strTest = GetDataContextValue("AgentTelNo") == null ? "" : GetDataContextValue("AgentTelNo").ToString();
+                        if (txtTelNo.Text != strTest) { blnAgent = true; }
                         break;
                     case 7:
-                        if (cboChange.Text != GetDataContextValue("HNWUPID").ToString())
+                        strTest = GetDataContextValue("HNWUPID") == null ? "" : GetDataContextValue("HNWUPID").ToString();
+                        if (cboChange.Text != strTest)
                         {
                             blnAgent = true;
                             if (cboAllocatedTo.Text.Trim() == "")
@@ -1526,7 +1534,13 @@ namespace Wealthy_RPT
             if (blnAgent == true) // save agent details as something has changed
             {
                 // check no existing null record as crpd agent fields could already holds data if a record had been previosuly added but subsequently blanked out 
-                if ((GetDataContextValue("Agent").ToString() == "") && (GetDataContextValue("AgentCode").ToString() == "") && (GetDataContextValue("AgentAddress").ToString() == "") && (GetDataContextValue("NamedAgent").ToString() == "") && (GetDataContextValue("OtherContact").ToString() == "") && (GetDataContextValue("AgentTelNo").ToString() == "") && (GetDataContextValue("Changed") == 0))
+                string strA = GetDataContextValue("Agent") == null ? "" : GetDataContextValue("Agent").ToString();
+                string strAC = GetDataContextValue("AgentCode") == null ? "" : GetDataContextValue("AgentCode").ToString();
+                string strAA = GetDataContextValue("AgentAddress") == null ? "" : GetDataContextValue("AgentAddress").ToString();
+                string strNA = GetDataContextValue("NamedAgent") == null ? "" : GetDataContextValue("NamedAgent").ToString();
+                string strOC = GetDataContextValue("OtherContact") == null ? "" : GetDataContextValue("OtherContact").ToString();
+                string strAT = GetDataContextValue("AgentTelNo") == null ? "" : GetDataContextValue("AgentTelNo").ToString();
+                if ((strA == "") && (strAC == "") && (strAA == "") && (strNA == "") && (strOC == "") && (strAT == "") && (GetDataContextValue("Changed") == 0))
                 {
                     rpt.ResetAgent();
                 }
@@ -1579,7 +1593,7 @@ namespace Wealthy_RPT
             rpt.Domicile = cboDomicile.Text;
             rpt.Office = cboOffice.Text;
             rpt.Team = cboTeam.Text;
-            rpt.HNWUPID = cboAllocatedTo.Text == "" ? 0 : Convert.ToInt32(cboAllocatedTo.Text);
+            rpt.HNWUPID = cboAllocatedTo.Text == "" ? 0 : Convert.ToInt32(System.Text.RegularExpressions.Regex.Match(cboAllocatedTo.Text, @"\d+").Value); 
             rpt.Agent = txtFirm.Text;
             rpt.Agent648Held = cbo648.Text.ToUpper() == "YES" ? Convert.ToByte(true) : Convert.ToByte(false);
             rpt.AgentCode = txtAgentCode.Text;
@@ -1637,14 +1651,14 @@ namespace Wealthy_RPT
             rpt.LongTerm = cboLongTerm.Text;
             rpt.LifeEvents = cboLifeEvents.Text;
             rpt.Narrative = txtNarrative.Text;
-            rpt.QSScore = Convert.ToInt16(txtQSScore.Text);
-            rpt.RPTPRScore = Convert.ToInt16(txtRSScore.Text);
-            rpt.RPTAVScore = Convert.ToInt16(txtAVScore.Text);
-            rpt.CGScore = Convert.ToInt16(txtCGScore.Text);
-            rpt.ResScore = Convert.ToInt16(txtRESScore.Text);
-            rpt.CRMScore = Convert.ToInt16(txtCRMScore.Text);
-            rpt.PriorityScore = Convert.ToInt16(txtPRScore.Text);
-            rpt.Percentile = Convert.ToInt32(txtPercentile.Text);
+            try { rpt.QSScore = Convert.ToInt16(txtQSScore.Text); } catch { rpt.QSScore =  0; };
+            try { rpt.RPTPRScore = Convert.ToInt16(txtRSScore.Text); } catch { rpt.RPTPRScore = 0; };
+            try { rpt.RPTAVScore = Convert.ToInt16(txtAVScore.Text); } catch { rpt.RPTAVScore = 0; };
+            try { rpt.CGScore = Convert.ToInt16(txtCGScore.Text); } catch { rpt.CGScore = 0; };
+            try { rpt.ResScore = Convert.ToInt16(txtRESScore.Text); } catch { rpt.ResScore = 0; };
+            try { rpt.CRMScore = Convert.ToInt16(txtCRMScore.Text); } catch { rpt.CRMScore = 0; };
+            try { rpt.PriorityScore = Convert.ToInt16(txtPRScore.Text); } catch { rpt.PriorityScore = 0; };
+            try { rpt.Percentile = Convert.ToInt32(txtPercentile.Text); } catch { rpt.Percentile = 0; };
             rpt.Pop = cboPopCode.Text;
             rpt.CRMExplanation = txtCRMExplanation.Text;
             return blnRtn;
@@ -1652,53 +1666,70 @@ namespace Wealthy_RPT
 
         public dynamic GetDataContextValue(string sPropertyName)
         {
-            var vRtn = this.DataContext.GetType().GetProperty(sPropertyName).GetValue(this.DataContext, null);
+            dynamic vRtn = 0;
+            try
+            {
+                vRtn = this.DataContext.GetType().GetProperty(sPropertyName).GetValue(this.DataContext, null);
+            }
+            catch
+            {
+                vRtn = 0;
+            }
             return vRtn;
         }
 
         private void CboTeam_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //bool blnKeepCRMDA = false;
-            //if (cboTeam.Text == "")
-            //{
-            //    //cboAllocatedTo.Claer;
-            //    cboAllocatedTo.Text = "";
-            //    return;
-            //}
+            if ((bFormLoaded == true))
+            {
+                bool blnTest = PopulateAllocatedToCombo();
+                cboAllocatedTo.Text = "";
+                return;
+            }
+            else
+            {
+            }
+                //bool blnKeepCRMDA = false;
+                //if (cboTeam.Text == "")
+                //{
+                //    //cboAllocatedTo.Claer;
+                //    cboAllocatedTo.Text = "";
+                //    return;
+                //}
 
-            //if(txtTeam.Text == "")
-            //{
-            //    if(txtTeam.Text == cboTeam.Text)
-            //    {
-            //        return;
-            //    }
-            //}
+                //if(txtTeam.Text == "")
+                //{
+                //    if(txtTeam.Text == cboTeam.Text)
+                //    {
+                //        return;
+                //    }
+                //}
 
-            //PopulateAllocatedToCombo();
-            //PopulateCRMCombo();
- 
-            //blnKeepCRMDA = false;
+                //PopulateAllocatedToCombo();
+                //PopulateCRMCombo();
 
-            //bool itemExists = false;
-            //foreach (ComboBoxItem cbi in cboCRMName.Items)
-            //{
-            //    itemExists = cbi.Content.Equals(txtCRMName.Text);
-            //    if (itemExists)
-            //    {
-            //        blnKeepCRMDA = true;
-            //        break;
-            //    }
-            //}
+                //blnKeepCRMDA = false;
 
-            //if(blnKeepCRMDA == false)
-            //{
-            //    txtCRMDA.Text = "";
-            //}
+                //bool itemExists = false;
+                //foreach (ComboBoxItem cbi in cboCRMName.Items)
+                //{
+                //    itemExists = cbi.Content.Equals(txtCRMName.Text);
+                //    if (itemExists)
+                //    {
+                //        blnKeepCRMDA = true;
+                //        break;
+                //    }
+                //}
 
-            //txtTeam.Text = cboTeam.Text;
-            //cboAllocatedTo.IsEnabled = true;
+                //if(blnKeepCRMDA == false)
+                //{
+                //    txtCRMDA.Text = "";
+                //}
 
-        }
+                //txtTeam.Text = cboTeam.Text;
+                //cboAllocatedTo.IsEnabled = true;
+
+            }
 
         private void CmdUpdateClose_Click(object sender, RoutedEventArgs e)
         {

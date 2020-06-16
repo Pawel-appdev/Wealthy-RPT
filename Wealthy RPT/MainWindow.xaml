@@ -25,8 +25,11 @@
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Margin="0,0,0,0">
         <Grid.ColumnDefinitions>
 
+            <ColumnDefinition Width="329*"/>
+            <ColumnDefinition Width="963*"/>
+
         </Grid.ColumnDefinitions>
-        <GroupBox x:Name="groupOfficeTeam" Header="" Margin="354,76,556,0" Padding="10" Height="65" VerticalAlignment="Top" Foreground="{x:Null}" BorderThickness="0" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}">
+        <GroupBox x:Name="groupOfficeTeam" Header="" Margin="25,76,556,0" Padding="10" Height="65" VerticalAlignment="Top" Foreground="{x:Null}" BorderThickness="0" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Grid.Column="1">
             <Canvas Margin="-9,-8,8,-10" Height="40" VerticalAlignment="Bottom">
                 <Label x:Name="lblOffice" Content="Office" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="50" Canvas.Left="6" Canvas.Top="10"/>
                 <ComboBox x:Name="cboOffice" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="113" Canvas.Left="51" Canvas.Top="10" ItemsSource="{Binding}"  DropDownClosed="cboOffice_DropDownClosed"  />
@@ -36,7 +39,7 @@
         </GroupBox>
 
 
-        <Menu x:Name="menu" HorizontalAlignment="Stretch" Height="24" VerticalAlignment="Top" Grid.ColumnSpan="3">
+        <Menu x:Name="menu" HorizontalAlignment="Stretch" Height="24" VerticalAlignment="Top" Grid.ColumnSpan="2">
             <MenuItem x:Name="mnuNewCase" Header="Add New Case" Height="24" Width="93" Click="MnuNewCase_Click"/>
             <MenuItem x:Name="mnuRefresh" Header="Refresh" Height="24" Width="54"/>
             <MenuItem x:Name="mnuReports" Header="Reports" Height="24" Width="58" RenderTransformOrigin="-1.254,0.53">
@@ -57,37 +60,37 @@
             <MenuItem x:Name="mnuKey" Header="Key" Height="24" Width="41" Click="MnuKey_Click"/>
             <MenuItem x:Name="mnuExit" Header="Close" Height="24" Width="63" Click="MnuExit_Click" RenderTransformOrigin="1.703,0.48"/>
         </Menu>
-        <StatusBar x:Name="stbCore" HorizontalAlignment="Stretch" Height="26" VerticalAlignment="Bottom" Margin="0,0,0,-4" Grid.ColumnSpan="3">
+        <StatusBar x:Name="stbCore" HorizontalAlignment="Stretch" Height="26" VerticalAlignment="Bottom" Margin="0,0,0,-4" Grid.ColumnSpan="2">
             <StatusBarItem x:Name="sbiPID" Content="PID : " Height="26"  VerticalAlignment="Top" Width="93"/>
             <StatusBarItem x:Name="sbiName" Content="Name : " Height="26" VerticalAlignment="Top" Width="270"/>
             <StatusBarItem x:Name="sbiAccessLevel" Content="Access Level :" Height="26" VerticalAlignment="Top" Width="170"/>
             <StatusBarItem x:Name="sbiVersion" Content="Version : " Height="26" VerticalAlignment="Top" Width="170"/>
         </StatusBar>
-        <GroupBox x:Name="groupPickCase" Header="" HorizontalAlignment="Left" Height="46" Margin="32,38,0,0" VerticalAlignment="Top" Width="675" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
+        <GroupBox x:Name="groupPickCase" Header="" HorizontalAlignment="Left" Height="46" Margin="32,38,0,0" VerticalAlignment="Top" Width="675" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Grid.ColumnSpan="2">
             <Grid Margin="440,47,-157,-2"/>
         </GroupBox>
         <RadioButton x:Name="rbMyCases" Content="My Cases" HorizontalAlignment="Left" Height="17" Margin="58,58,0,0" VerticalAlignment="Top" Width="100" GroupName="Cases" IsChecked="True" Checked="rbMyCases_Checked"/>
         <RadioButton x:Name="rbOtherCases" Content="Other Cases" HorizontalAlignment="Left" Height="17" Margin="209,58,0,0" VerticalAlignment="Top" Width="100" GroupName="Cases" Checked="rbOtherCases_Checked"/>
-        <Label x:Name="lblKeyword" Content="Keyword" HorizontalAlignment="Left" Height="26" Margin="370,52,0,0" VerticalAlignment="Top" Width="64"/>
-        <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Height="26" Margin="431,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="151" VerticalContentAlignment="Center" ToolTip="Enter at least 3 characters."/>
-        <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Left" Height="26" Margin="593,53,0,0" VerticalAlignment="Top" Width="95" IsCancel="True" Click="btnSearch_Click"/>
-        <Label x:Name="lblRows" Content="Rows per page" HorizontalAlignment="Right" Height="26" Margin="0,52,285,0" VerticalAlignment="Top" Width="98"/>
-        <TextBox x:Name="txtRows" HorizontalAlignment="Right" Height="26" Margin="0,52,251,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38" VerticalContentAlignment="Center"/>
-        <Button x:Name="btnRows" Content="Update" HorizontalAlignment="Right" Height="25" Margin="0,52,197,0" VerticalAlignment="Top" Width="49"  ToolTip="Update" Click="btnRows_Click" />
-        <Label x:Name="lblGoTo" Content="Go to page" HorizontalAlignment="Right" Height="26" Margin="0,52,105,0" VerticalAlignment="Top" Width="76"/>
-        <TextBox x:Name="txtGoTo" HorizontalAlignment="Right" Height="26" Margin="0,52,73,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38" VerticalContentAlignment="Center"/>
-        <Button x:Name="btnGoTo" Content="&gt;&gt;&gt;" HorizontalAlignment="Right" Height="25" Margin="0,52,26,0" VerticalAlignment="Top" Width="43" FontSize="16" FontFamily="Microsoft Sans Serif" ToolTip="Go to page" Click="btnGoTo_Click" />
+        <Label x:Name="lblKeyword" Content="Keyword" HorizontalAlignment="Left" Height="26" Margin="41,52,0,0" VerticalAlignment="Top" Width="64" Grid.Column="1"/>
+        <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Height="26" Margin="102,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="151" VerticalContentAlignment="Center" ToolTip="Enter at least 3 characters." Grid.Column="1"/>
+        <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Left" Height="26" Margin="264,53,0,0" VerticalAlignment="Top" Width="95" IsCancel="True" Click="btnSearch_Click" Grid.Column="1"/>
+        <Label x:Name="lblRows" Content="Rows per page" HorizontalAlignment="Right" Height="26" Margin="0,52,285,0" VerticalAlignment="Top" Width="98" Grid.Column="1"/>
+        <TextBox x:Name="txtRows" HorizontalAlignment="Right" Height="26" Margin="0,52,251,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38" VerticalContentAlignment="Center" Grid.Column="1"/>
+        <Button x:Name="btnRows" Content="Update" HorizontalAlignment="Right" Height="25" Margin="0,52,197,0" VerticalAlignment="Top" Width="49"  ToolTip="Update" Click="btnRows_Click" Grid.Column="1" />
+        <Label x:Name="lblGoTo" Content="Go to page" HorizontalAlignment="Right" Height="26" Margin="0,52,105,0" VerticalAlignment="Top" Width="76" Grid.Column="1"/>
+        <TextBox x:Name="txtGoTo" HorizontalAlignment="Right" Height="26" Margin="0,52,73,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38" VerticalContentAlignment="Center" Grid.Column="1"/>
+        <Button x:Name="btnGoTo" Content="&gt;&gt;&gt;" HorizontalAlignment="Right" Height="25" Margin="0,52,26,0" VerticalAlignment="Top" Width="43" FontSize="16" FontFamily="Microsoft Sans Serif" ToolTip="Go to page" Click="btnGoTo_Click" Grid.Column="1" />
         <Label x:Name="lblPopulation" Content="Population" HorizontalAlignment="Left" Height="25" Margin="144,105,0,0" VerticalAlignment="Top" Width="74"/>
         <ComboBox x:Name="cboYear" HorizontalAlignment="Left" Height="25" Margin="70,105,0,0" VerticalAlignment="Top" Width="59" SelectionChanged="cboYear_SelectionChanged"/>
-        <ComboBox x:Name="cboPopulation" HorizontalAlignment="Left" Height="25" Margin="216,105,0,0" VerticalAlignment="Top" Width="126" SelectionChanged="cboPopulation_SelectionChanged">
+        <ComboBox x:Name="cboPopulation" HorizontalAlignment="Left" Height="25" Margin="216,105,0,0" VerticalAlignment="Top" Width="126" SelectionChanged="cboPopulation_SelectionChanged" Grid.ColumnSpan="2">
         </ComboBox>
         <Label x:Name="lblYear" Content="Year" HorizontalAlignment="Left" Height="25" Margin="32,105,0,0" VerticalAlignment="Top" Width="48"/>
-        <Button x:Name="btnFirstPage" Content="&lt;&lt;" HorizontalAlignment="Right" Height="25" Margin="0,105,350,0" VerticalAlignment="Top" Width="25" FontSize="16" FontFamily="Microsoft Sans Serif" ToolTip="First Page" Click="btnFirstPage_Click"/>
-        <Button x:Name="btnPreviousPage" Content="&lt;" HorizontalAlignment="Right" Margin="0,105,320,0" VerticalAlignment="Top" Width="25" Height="25" FontSize="16" FontFamily="Microsoft Sans Serif" ToolTip="Previous Page" Click="btnPreviousPage_Click"/>
-        <TextBox x:Name="txtPage" HorizontalAlignment="Right" Height="25" Margin="0,105,88,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="227" UndoLimit="98" TextAlignment="Center" VerticalContentAlignment="Center" IsEnabled="False"/>
-        <Button x:Name="btnNext" Content="&gt;" HorizontalAlignment="Right" Height="25" Margin="0,105,56,0" VerticalAlignment="Top" Width="25" FontSize="16" FontFamily="Microsoft Sans Serif" ToolTip="Next Page" Grid.Column="2" Click="btnNext_Click"/>
-        <Button x:Name="btnLastPage" Content="&gt;&gt;" HorizontalAlignment="Right" Height="25" Margin="0,105,26,0" VerticalAlignment="Top" Width="25" FontSize="16" FontFamily="Microsoft Sans Serif" ToolTip="Last Page" Grid.Column="2" Click="btnLastPage_Click"/>
-        <DataGrid x:Name="dgCases" HorizontalAlignment="Stretch"  Margin="32,163,25,38" VerticalAlignment="Stretch" Style="{DynamicResource headerStyle}" FontWeight="Normal" AutoGenerateColumns="False" VerticalGridLinesBrush="#FFD1D1D1" HorizontalGridLinesBrush="#FFD1D1D1" AlternatingRowBackground="WhiteSmoke"  AlternationCount="2" IsReadOnly="True" MouseDoubleClick="DgCases_MouseDoubleClick">
+        <Button x:Name="btnFirstPage" Content="&lt;&lt;" HorizontalAlignment="Right" Height="25" Margin="0,105,350,0" VerticalAlignment="Top" Width="25" FontSize="16" FontFamily="Microsoft Sans Serif" ToolTip="First Page" Click="btnFirstPage_Click" Grid.Column="1"/>
+        <Button x:Name="btnPreviousPage" Content="&lt;" HorizontalAlignment="Right" Margin="0,105,320,0" VerticalAlignment="Top" Width="25" Height="25" FontSize="16" FontFamily="Microsoft Sans Serif" ToolTip="Previous Page" Click="btnPreviousPage_Click" Grid.Column="1"/>
+        <TextBox x:Name="txtPage" HorizontalAlignment="Right" Height="25" Margin="0,105,88,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="227" UndoLimit="98" TextAlignment="Center" VerticalContentAlignment="Center" IsEnabled="False" Grid.Column="1"/>
+        <Button x:Name="btnNext" Content="&gt;" HorizontalAlignment="Right" Height="25" Margin="0,105,56,0" VerticalAlignment="Top" Width="25" FontSize="16" FontFamily="Microsoft Sans Serif" ToolTip="Next Page" Grid.Column="1" Click="btnNext_Click"/>
+        <Button x:Name="btnLastPage" Content="&gt;&gt;" HorizontalAlignment="Right" Height="25" Margin="0,105,26,0" VerticalAlignment="Top" Width="25" FontSize="16" FontFamily="Microsoft Sans Serif" ToolTip="Last Page" Grid.Column="1" Click="btnLastPage_Click"/>
+        <DataGrid x:Name="dgCases" HorizontalAlignment="Stretch"  Margin="32,163,25,38" VerticalAlignment="Stretch" Style="{DynamicResource headerStyle}" FontWeight="Normal" AutoGenerateColumns="False" VerticalGridLinesBrush="#FFD1D1D1" HorizontalGridLinesBrush="#FFD1D1D1" AlternatingRowBackground="WhiteSmoke"  AlternationCount="2" IsReadOnly="True" MouseDoubleClick="DgCases_MouseDoubleClick" Grid.ColumnSpan="2">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#D1D1D1" />
                 <!--color of selected row-->
