@@ -32,7 +32,6 @@ namespace Wealthy_RPT
         public int intTotalRows;
         public int intLastPage;
 
-
         #region menu items
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
@@ -65,8 +64,43 @@ namespace Wealthy_RPT
 
         private void MnuNewCase_Click(object sender, RoutedEventArgs e)
         {
-            RPT_Detail rPT_Detail = new RPT_Detail();
-            rPT_Detail.Show();
+            try
+            {
+                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
+
+                RPT_Detail rPT_Detail = new RPT_Detail();
+                User user = new User();
+                Globals.blnIgnoreEvents = true;
+
+                rPT_Detail.cboPopCode.SelectedValue = user.Pop_Code_Name.ToString();
+                rPT_Detail.cboPopFriendly.SelectedIndex = rPT_Detail.cboPopCode.SelectedIndex;
+                //if (rPT_Detail.cboPopCode.Text.ToUpper() == "RPT10MILL")
+                //{
+                //    rPT_Detail.cboSegment.IsReadOnly = false;
+                //    rPT_Detail.cboSegment.IsEnabled = true;
+                //    rPT_Detail.cboSegment.IsTabStop = true;
+                //}
+                //else
+                //{
+                //    rPT_Detail.cboSegment.IsReadOnly = true;
+                //    rPT_Detail.cboSegment.IsEnabled = false;
+                //    rPT_Detail.cboSegment.IsTabStop = false;
+                //}
+
+                Globals.blnIgnoreEvents = false;
+                rPT_Detail.lblPopYear.Text = DateTime.Now.Year.ToString();
+                rPT_Detail.tcmdSave.Text = "Add";
+                rPT_Detail.tcmdSave.HorizontalAlignment = HorizontalAlignment.Center;
+                rPT_Detail.tcmdSave.ToolTip = "Add";
+                rPT_Detail.cmdUpdateClose.Visibility = Visibility.Hidden;
+
+                rPT_Detail.Show();
+            }
+            catch
+            {
+
+            }
+            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
         }
 
         private void mnuStandardReports_Click(object sender, RoutedEventArgs e)
@@ -91,7 +125,6 @@ namespace Wealthy_RPT
         public MainWindow()
         {
             InitializeComponent();
-
             PopulateCombos();
 
             RAG.GetRAGBreaks();
@@ -118,10 +151,6 @@ namespace Wealthy_RPT
             }
 
             intOffset = 0;
-
-            Globals.gn_CRM.Insert(0, 0);
-            Globals.gn_CRM.Insert(1, 0);
-            Globals.gn_CRM.Insert(2, 0);
 
             GetdgCases(intYear, strOffice, strTeam, intPID, strPop, intOffset);
         }
@@ -979,5 +1008,6 @@ namespace Wealthy_RPT
                 rptDetail.Show();
             }
         }
+
     }
 }

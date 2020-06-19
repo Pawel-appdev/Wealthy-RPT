@@ -14,9 +14,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-//using System.Windows.Forms;
-//using MessageBox = System.Windows.MessageBox;
-
 namespace Wealthy_RPT
 {
     /// <summary>
@@ -26,6 +23,8 @@ namespace Wealthy_RPT
     {
         TextBoxDate tbd = new TextBoxDate();
         bool bFormLoaded = false;
+        public int WeightedScore { get; set; }
+
         public RPT_Detail()
         {
             this.DataContext = new RPT(); // set data context
@@ -182,20 +181,19 @@ namespace Wealthy_RPT
 
             PopulateAndSetAllocationCombos();
 
-            if ((Globals.gn_CRM.ElementAt(1) == 0) || (Globals.gn_CRM.ElementAt(2) == 0))
+            if (Globals.gs_CRM.Count < 1) /*test for weightings*/
             {
                 RPT.RPT_Data rpt = new RPT.RPT_Data();
                 rpt.GetCRM();
             }
 
-            int iTest = Globals.gn_CRM.ElementAt(1);
+            int iTest = Convert.ToInt16(Globals.gs_CRM.ElementAt(0)[1]);
 
             //TabFrames
             //this.Activated += AfterLoading;
 
             bFormLoaded = true;
         }
-
 
         private void PopulateAndSetAllocationCombos()
         {
@@ -632,11 +630,11 @@ namespace Wealthy_RPT
             }
         }
 
-        private void TxtSettledRisks_GotFocus(object sender, RoutedEventArgs e)
+        private void TxtSettled_GotFocus(object sender, RoutedEventArgs e)
         {
             if (Globals.blnAccess == true)
             {
-                ShowActiveControl(txtSettledRisks);
+                ShowActiveControl(txtSettled);
             }
         }
 
@@ -784,13 +782,13 @@ namespace Wealthy_RPT
             }
         }
 
-        //private void LvwPrevRes_GotFocus(object sender, RoutedEventArgs e)
-        //{
-        //    if (Globals.blnAccess == true)
-        //    {
-        //        ShowActiveControl(lvwPrevRes);
-        //    }
-        //}
+        private void LvwPrevRes_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (Globals.blnAccess == true)
+            {
+                ShowActiveControl(lvwPrevRes);
+            }
+        }
 
         private void MscHistory_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -901,7 +899,7 @@ namespace Wealthy_RPT
 
         private void ChkCRMDescretion_Checked(object sender, RoutedEventArgs e)
         {
-            if ((Globals.gn_CRM.ElementAt(1) == 0) || (Globals.gn_CRM.ElementAt(2) == 0))
+           if (Globals.gs_CRM.Count < 1) /*test for weightings*/
             {
                 RPT.RPT_Data rpt = new RPT.RPT_Data();
                 rpt.GetCRM();
@@ -923,6 +921,23 @@ namespace Wealthy_RPT
             //RecalculateResults();
         }
 
+        private int CRMWeighting(string sPop)
+        {
+            // return weighting, for given population
+            int iCRMWeighting = 0;
+            if (Globals.gs_CRM.Count > 0)
+            {
+                foreach (var crm in Globals.gs_CRM)
+                {
+                    if (crm.ElementAt(0).ToUpper() == sPop)
+                    {
+                        iCRMWeighting = Convert.ToInt16(crm.ElementAt(1));
+                    }
+                }
+            }
+            return iCRMWeighting;
+        }
+
         private void ChkCRMDescretion_Unchecked(object sender, RoutedEventArgs e)
         {
             txtCRMScore.Text = "";
@@ -938,9 +953,104 @@ namespace Wealthy_RPT
 
             BindingExpression obj = txtSecondaryAddress.GetBindingExpression(TextBox.TextProperty);
             obj.UpdateSource();
+            SaveRecord();
         }
 
-        private void CmdUTR_Click(object sender, RoutedEventArgs e)
+        private void SaveRecord()
+        {
+            this.cmdSave.IsEnabled = false;
+            Globals.blnUpdate = false;
+
+            RPT.RPT_Data rpt = new RPT.RPT_Data(); // initialise data
+
+            if (txtHighestPercent.Text != "" && IsNumeric(txtHighestPercent.Text) == false)
+            {
+                if (Convert.ToInt16(txtHighestPercent.Text) > 500)
+                {
+                    System.Windows.MessageBox.Show("The highest percentage penalty value is too high.  Please check and re-enter.", "Highest Percentage", MessageBoxButton.OK, MessageBoxImage.Information);
+                    txtHighestPercent.Text = rpt.Highest_Percentage.ToString();
+                    cmdSave.IsEnabled = true;
+                    txtHighestPercent.Focus();
+                    return;
+                }
+            }
+
+            if ((cboCRMName.Text.Trim() == "") || (txtCRMDA.Text.Trim() == ""))
+            {
+                System.Windows.MessageBox.Show("Please confirm the CRM for this case" + Environment.NewLine + "and/or the date of their appointment.", "CRM", MessageBoxButton.OK, MessageBoxImage.Information);
+                cmdSave.IsEnabled = true;
+                return;
+            }
+
+            // run through each element to check if it needs updating and then update relevant elements.
+            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
+
+            CheckQuestions(); // ensure questions are up to date with weights
+
+            //RecalculateResults();  // ensure scores are up to date
+
+            //if (tcmdSave.Text.IndexOf("save", StringComparison.CurrentCultureIgnoreCase) >= 0)
+            //{
+                if ((cboOffice.Text.Trim() == "") || (cboTeam.Text.Trim() == "") || (cboPopFriendly.Text.Trim() == ""))
+                {
+                    System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+                    MessageBox.Show("Please assign a Population, an Office and a Team.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+                    cmdSave.IsEnabled = true;
+                    return;
+                }
+
+                if ((txtCRMExplanation.Text.Trim() == "") && (chkCRMDescretion.IsChecked == true))
+                {
+                    System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+                    MessageBox.Show("Please give an explanation of why CCM Discretion has been applied.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+                    cmdSave.IsEnabled = true;
+                    return;
+                }
+
+                if (CheckandAddRPD() == false)
+                {
+                    System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+                    MessageBox.Show("Problem adding data. Please try again." + Environment.NewLine + Environment.NewLine + "If the problem persists, take screenshots of the" + Environment.NewLine + "record and error message, and report it to ICT.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+                    cmdSave.IsEnabled = true;
+                }
+                else
+                {
+                    // reload new updated cRPD Data
+                    GetRPDDataFromForm();
+
+                    double dUTR = 0;
+                    try { dUTR = double.Parse(txtUTR.Text); } catch { dUTR = 0; };
+                    int iYear = 2000;
+                    try { iYear = Convert.ToInt16(lblPopYear.Text); } catch { }
+                    double dPercentile = 0;
+                    try { dPercentile = Convert.ToDouble(txtPercentile.Text.ToString()); } catch { dPercentile = 0; } // text can be 'N/A'
+                    string sPop = "";
+                    try { sPop = cboPopCode.SelectedValue.ToString(); } catch { }
+                    if (rpt.GetRPDHistoricalData(dUTR, iYear, dPercentile, sPop) == false)
+                    {
+                        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+                        MessageBox.Show("Data Saved but issue repopulating previous score data.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+                        MessageBox.Show("Data saved.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
+
+            //}
+            //else  // i.e. if(tcmdSave.Text != Save)
+            //{
+            //    MessageBox.Show("There has been an error loading this form." + Environment.NewLine + "Please notify the Support Team as this will need debugging.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+            //}
+
+            cmdSave.IsEnabled = true;
+            Globals.blnUpdate = true;
+
+            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+        }
+
+            private void CmdUTR_Click(object sender, RoutedEventArgs e)
         {
             string sUTR = txtUTR.Text.ToString().Trim();
             if ((sUTR == "") || (sUTR.Length != 10)) /*UTR is blank or not 10 characters long*/
@@ -957,7 +1067,7 @@ namespace Wealthy_RPT
 
         private void CboOffice_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cboOffice.Text == "")
+            if((bFormLoaded == true))
             {
                 bool blnTest = PopulateTeamCombo();
                 cboTeam.Text = "";
@@ -997,6 +1107,661 @@ namespace Wealthy_RPT
             //Me.txtTeam.Text = Me.cboTeam.Text
 
             //Me.cboTeam.Enabled = True
+        }
+
+        private void TxtUTR_LostFocus(object sender, RoutedEventArgs e)
+        {
+            bool bChecked = false;
+            if (txtUTR.Text ==  "")
+            {
+                return;
+            }
+
+            if (txtUTR.Text.Length != 10)
+            {
+                System.Windows.MessageBox.Show("UTR format appears to be invalid.  Please rectify." + Environment.NewLine + "(10 character numerical string required)", "UTR", MessageBoxButton.OK, MessageBoxImage.Information);
+                e.Handled = true;
+                return;
+            }
+
+            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
+            double dUTR = 0;
+            try { dUTR = double.Parse(txtUTR.Text); } catch { dUTR = 0; }; 
+            RPT.RPT_Data rpt = new RPT.RPT_Data();
+            bChecked =  rpt.CheckCustomer(dUTR);
+
+            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+            if (bChecked == true)
+            {
+                System.Windows.MessageBox.Show("A Customer Record already exists for this UTR.", "UTR", MessageBoxButton.OK, MessageBoxImage.Information);
+                txtUTR.Text = "";
+                return;
+            }
+
+            bChecked = rpt.GetCRMMEnquiryDataScore(dUTR);
+            if (bChecked == true)
+            {
+                txtOpenRisks.Text = rpt.Risks_Open.ToString();
+                txtSettled.Text = rpt.Settled_Risks.ToString();
+                txtHighestSettled.Text = rpt.Highest_Settlement.ToString();
+                txtHighestPercent.Text = rpt.Highest_Percentage.ToString();
+                if(rpt.CRMM_Date_Added == "")
+                {
+                    grpCustomer.Header = "Enquiry Data - last updated "; 
+                }
+                else
+                {
+                    grpCustomer.Header = "Enquiry Data - last updated " + DateTime.Now.ToString("dd MMM yyyy"); 
+                }
+            }
+            else
+            {
+                txtOpenRisks.Text = "0";
+                txtSettled.Text = "0";
+                txtHighestSettled.Text = "0";
+                txtHighestPercent.Text = "0";
+                grpCustomer.Header = "Enquiry Data - last updated " + DateTime.Now.ToString("dd MMM yyyy");
+            }
+
+            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+
+            System.Windows.MessageBox.Show("Error checking UTR for existing customer record.", "UTR", MessageBoxButton.OK, MessageBoxImage.Information);
+
+        }
+
+        private void CheckQuestions()
+        {
+            txtOpenIDMS.RaiseEvent(new RoutedEventArgs(LostFocusEvent, txtOpenIDMS));
+            txtClosedIDMS.RaiseEvent(new RoutedEventArgs(LostFocusEvent, txtClosedIDMS));
+            txtOpenRisks.RaiseEvent(new RoutedEventArgs(LostFocusEvent, txtOpenRisks));
+            txtSettled.RaiseEvent(new RoutedEventArgs(LostFocusEvent, txtSettled));
+            txtHighestPercent.RaiseEvent(new RoutedEventArgs(LostFocusEvent, txtHighestPercent));
+            txtHighestSettled.RaiseEvent(new RoutedEventArgs(LostFocusEvent, txtHighestSettled));
+            cboCurrentSuspensions.RaiseEvent(new RoutedEventArgs(LostFocusEvent, cboCurrentSuspensions));
+            cboPrevSuspensions.RaiseEvent(new RoutedEventArgs(LostFocusEvent, cboPrevSuspensions));
+            cboFailures.RaiseEvent(new RoutedEventArgs(LostFocusEvent, cboFailures));
+        }
+
+        private void TxtOpenIDMS_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if((txtOpenIDMS.Text != "")||(IsNumeric(txtOpenIDMS.Text)==true))
+            {
+                CheckWeight(txtOpenIDMS, txtOpenIDMSHD);
+            }
+        }
+
+        private void TxtClosedIDMS_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if ((txtClosedIDMS.Text != "") || (IsNumeric(txtClosedIDMS.Text) == true))
+            {
+                CheckWeight(txtClosedIDMS, txtClosedIDMSHD);
+            }
+        }
+
+        private void TxtOpenRisks_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if ((txtOpenRisks.Text != "") || (IsNumeric(txtOpenRisks.Text) == true))
+            {
+                CheckWeight(txtOpenRisks, txtOpenRisksHD);
+            }
+        }
+
+        private void TxtSettled_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if ((txtSettled.Text != "") || (IsNumeric(txtSettled.Text) == true))
+            {
+                CheckWeight(txtSettled, txtSettledHD);
+            }
+        }
+
+        private void TxtHighestPercent_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if ((txtHighestPercent.Text != "") || (IsNumeric(txtHighestPercent.Text) == true))
+            {
+                CheckWeight(txtHighestPercent, txtHighestPercentHD);
+            }
+        }
+
+        private void TxtHighestSettled_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if ((txtHighestSettled.Text != "") || (IsNumeric(txtHighestSettled.Text) == true))
+            {
+                CheckWeight(txtHighestSettled, txtHighestSettledHD);
+            }
+        }
+
+        private void CboCurrentSuspensions_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if ((cboCurrentSuspensions.Text != "") || (IsNumeric(cboCurrentSuspensions.Text) == true))
+            {
+                //CheckWeight(txtCurrentSuspensions, txtCurrentSuspensionsHD);
+            }
+        }
+
+        private void CboPrevSuspensions_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if ((cboPrevSuspensions.Text != "") || (IsNumeric(cboPrevSuspensions.Text) == true))
+            {
+                //CheckWeight(txtPrevSuspensions, txtPrevSuspensionsHD);
+            }
+        }
+
+        private void CboFailures_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if ((cboFailures.Text != "") || (IsNumeric(cboFailures.Text) == true))
+            {
+                //CheckWeight(txtFailures, txtFailuresHD);
+            }
+        }
+
+        public static bool IsNumeric(object Expression)
+        {
+            double retNum;
+
+            bool isNum = Double.TryParse(Convert.ToString(Expression), System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo, out retNum);
+            return isNum;
+        }
+
+        public void CheckWeight(TextBox tmpTextBox, TextBox tmpHDTextBox)
+        {
+            string sWeight = "";
+            try { sWeight = tmpTextBox.Name.Replace("txt", ""); } catch { sWeight = ""; }
+
+            SqlConnection con = new SqlConnection(Global.ConnectionString);
+            try
+            {
+                SqlCommand cmd = new SqlCommand("qryGetQuestionWeight", con);  // tblQuestion_Weighting
+                cmd.Parameters.Clear();
+                SqlParameter prm01 = cmd.Parameters.Add("@txtName", SqlDbType.NVarChar);
+                prm01.Value = tmpTextBox.Name;
+                SqlParameter prm02 = cmd.Parameters.Add("@Score", SqlDbType.Int);
+                prm02.Value = Convert.ToInt16(tmpTextBox.Text);
+                SqlParameter prm03 = cmd.Parameters.Add("@nPop", SqlDbType.NVarChar);
+                prm03.Value = Global.Pop_Code_Name;
+                cmd.CommandTimeout = Global.TimeOut;
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    dr.Read();
+                    WeightedScore = (dr["Weighted_Score"] is DBNull) ? 0 : Convert.ToInt32(dr["Weighted_Score"]);
+                    tmpHDTextBox.Text = WeightedScore.ToString();
+                }
+                else if (dr.HasRows == false)
+                {
+                    MessageBox.Show("No corresponding weighting found for this previously selected field [" + sWeight + "]." + Environment.NewLine + "Please notify appropriate person immediately.", "Weighting", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                con.Close();
+            }
+            catch
+            {
+                con.Close();
+            }
+        }
+
+        public bool CheckandAddRPD()
+        {
+            bool blnRtn = true;
+
+            //blnRtn = CheckandSaveScoresData();
+
+            blnRtn = CheckandSaveCustomerData();
+
+            blnRtn = CheckandSaveAgentData();
+
+            return blnRtn;
+        }
+
+        public bool CheckandSaveCustomerData()
+        {
+            bool blnCustomer = false;
+            bool blnRtn = false;
+                
+            for (int j = 0; j < 27; j++)
+            {
+                switch (j)
+                {
+                    case 0:
+                        if (cboPopCode.SelectedValue != GetDataContextValue("Pop").ToString()){ blnCustomer = true; }
+                        break;
+                    case 1:
+                        if (cboSegment.Text != GetDataContextValue("Segment").ToString()) { blnCustomer = true; }
+                        break;
+                    case 2:
+                        if (txtSurname.Text != GetDataContextValue("Surname").ToString()) { blnCustomer = true; }
+                        break;
+                    case 3:
+                        if (txtFirstName.Text != GetDataContextValue("Firstname").ToString()) { blnCustomer = true; }
+                        break;
+                    case 4:
+                        if (txtDOB.Text != GetDataContextValue("DOB").ToString()) { blnCustomer = true; }
+                        break;
+                    case 5:
+                        if (txtDOD.Text != GetDataContextValue("DOD").ToString()) { blnCustomer = true; }
+                        break;
+                    case 6:
+                        if (Convert.ToBoolean(GetDataContextValue("Deceased")) == false) // looking for "No" response
+                        {
+                            if(cboDeceased.Text.ToUpper() != "NO")
+                            {
+                                blnCustomer = true;
+                            }
+                        }
+                        else  // looking for "Yes" response
+                        {
+                            if (cboDeceased.Text.ToUpper() != "YES")
+                            {
+                                blnCustomer = true;
+                            }
+                        }
+                        break;
+                    case 7:
+                        if (txtDeselected.Text != GetDataContextValue("Deselected").ToString()) { blnCustomer = true; }
+                        break;
+                    case 8:
+                        if (cboMarital.Text != GetDataContextValue("Marital").ToString()) { blnCustomer = true; }
+                        break;
+                    case 9:
+                        if (cboGender.Text != GetDataContextValue("Gender").ToString()) { blnCustomer = true; }
+                        break;
+                    case 10:
+                        if (txtPrivateAddress.Text != GetDataContextValue("MainAdd").ToString()) { blnCustomer = true; }
+                        break;
+                    case 11:
+                        if (txtPostcode.Text != GetDataContextValue("MainPC").ToString()) { blnCustomer = true; }
+                        break;
+                    case 12:
+                        if (txtSecondaryAddress.Text != GetDataContextValue("SecAdd").ToString()) { blnCustomer = true; }
+                        break;
+                    case 13:
+                        if (cboResidence.Text != GetDataContextValue("Residence").ToString()) { blnCustomer = true; }
+                        break;
+                    case 14:
+                        if (cboDomicile.Text != GetDataContextValue("Domicile").ToString()) { blnCustomer = true; }
+                        break;
+                    case 15:
+                        if (cboOffice.Text != GetDataContextValue("Office").ToString()) { blnCustomer = true; }
+                        break;
+                    case 16:
+                        if (cboTeam.Text != GetDataContextValue("Team").ToString()) { blnCustomer = true; }
+                        break;
+                    case 17:
+                        if (cboCRMName.Text != GetDataContextValue("CRM_Name").ToString()) { blnCustomer = true; }
+                        break;
+                    case 18:
+                        if (txtCRMDA.Text != GetDataContextValue("CRM_Appointed").ToString()) { blnCustomer = true; }
+                        break;
+                    case 19:
+                        if (cboWealth.Text != GetDataContextValue("WealthLevel").ToString()) { blnCustomer = true; }
+                        break;
+                    case 20:
+                        if (cboPathway.Text != GetDataContextValue("Pathway").ToString()) { blnCustomer = true; }
+                        break;
+                    case 21:
+                        if (cboSource.Text != GetDataContextValue("Source").ToString()) { blnCustomer = true; }
+                        break;
+                    case 22:
+                        if (cboSector.Text != GetDataContextValue("Sector").ToString()) { blnCustomer = true; }
+                        break;
+                    case 23:
+                        if (cboLongTerm.Text != GetDataContextValue("LongTerm").ToString()) { blnCustomer = true; }
+                        break;
+                    case 24:
+                        if (cboLifeEvents.Text != GetDataContextValue("LifeEvents").ToString()) { blnCustomer = true; }
+                        break;
+                    case 25:
+                        if (txtNarrative.Text != GetDataContextValue("Narrative").ToString()) { blnCustomer = true; }
+                        break;
+                    case 26:
+                        if (cboAllocatedTo.Text != GetDataContextValue("HNWUPID").ToString())
+                        {
+                            blnCustomer = true;
+                            if(cboAllocatedTo.Text.Trim() == "")
+                            {
+                                blnRtn = true; // case can't be left unallocated
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        } 
+                        break;
+                    default:
+                        break;
+                }
+                if (blnCustomer == true) { break;}
+            }
+
+            if (blnCustomer == true) // save case as something has changed
+            {
+                // strQuery is qryAddCustomer or qryUpdateCustomer [qryUpdateCustomer now performs either] 
+                try
+                {
+                    RPT.RPT_Data rpt = new RPT.RPT_Data(); // initialise data
+                    rpt.SecAdd = txtSecondaryAddress.Text;
+                    rpt.Strand = cboStrand.Text;
+                    rpt.Segment = cboSegment.Text;
+                    rpt.Surname = txtSurname.Text;
+                    rpt.Firstname = txtFirstName.Text;
+                    rpt.DOB = txtDOB.Text;
+                    rpt.Deceased = (cboDeceased.Text.ToLower() == "yes") == true ? Convert.ToByte(1) : Convert.ToByte(0); /*convert Yes/No to byte*/
+                    rpt.DOD = txtDOD.Text;
+                    rpt.Deselected = txtDeselected.Text;
+                    rpt.Marital = cboMarital.Text;
+                    rpt.Gender = cboGender.Text;
+                    rpt.MainAdd = txtPrivateAddress.Text;
+                    rpt.MainPC = txtPostcode.Text;
+                    rpt.SecAdd = txtSecondaryAddress.Text;
+                    rpt.Residence = cboResidence.Text;
+                    rpt.Domicile = cboDomicile.Text;
+                    rpt.Office = cboOffice.Text;
+                    rpt.Team = cboTeam.Text;
+                    rpt.WealthLevel = cboWealth.Text;
+                    rpt.Pathway = cboPathway.Text;
+                    rpt.Source = cboSource.Text;
+                    rpt.Sector = cboSector.Text;
+                    rpt.LongTerm = cboLongTerm.Text;
+                    rpt.LifeEvents = cboLifeEvents.Text;
+                    rpt.Narrative = txtNarrative.Text;
+                    rpt.HNWUPID = Convert.ToInt32(Global.PID);
+                    rpt.UTR = Convert.ToDouble(txtUTR.Text);
+                    rpt.Pop = cboPopCode.Text;
+                    rpt.CRM_Name = cboCRMName.Text;
+                    rpt.CRM_Appointed = txtCRMDA.Text;
+
+                    rpt.UpdateCustomerData();
+                    blnRtn = true;
+                }
+                catch
+                {
+                    blnRtn = false;
+                }
+            }
+            else // don't save as nothing has changed
+            {
+                //leave as it as checks found no changes so no point in resaving data.
+                blnRtn = true;
+            }
+
+            return blnRtn ;
+        }
+
+        public bool CheckandSaveAgentData()
+        {
+            bool blnAgent = false;
+            bool blnRtn = false;
+            string strTest = "";
+
+            RPT.RPT_Data rpt = new RPT.RPT_Data(); // initialise data
+            for (int j = 0; j < 8; j++)
+            {
+                switch (j)
+                {
+                    case 0:
+                        strTest = GetDataContextValue("Agent") == null ? "" : GetDataContextValue("Agent").ToString();
+                        if (txtFirm.Text != strTest) { blnAgent = true; }
+                        break;
+                    case 1:
+                        if (cbo648.Text.ToUpper() != "NO") { blnAgent = true; }
+                        break;
+                    case 2:
+                        strTest = GetDataContextValue("Surname") == null ? "" : GetDataContextValue("Surname").ToString();
+                        if (txtSurname.Text != strTest) { blnAgent = true; }
+                        break;
+                    case 3:
+                        strTest = GetDataContextValue("AgentCode") == null ? "" : GetDataContextValue("AgentCode").ToString();
+                        if (txtAgentCode.Text != strTest) { blnAgent = true; }
+                        break;
+                    case 4:
+                        strTest = GetDataContextValue("NamedAgent") == null ? "" : GetDataContextValue("NamedAgent").ToString();
+                        if (txtNamedAgent.Text != strTest) { blnAgent = true; }
+                        break;
+                    case 5:
+                        strTest = GetDataContextValue("OtherContact") == null ? "" : GetDataContextValue("OtherContact").ToString();
+                        if (txtOtherContact.Text != strTest) { blnAgent = true; }
+                        break;
+
+                    case 6:
+                        strTest = GetDataContextValue("AgentTelNo") == null ? "" : GetDataContextValue("AgentTelNo").ToString();
+                        if (txtTelNo.Text != strTest) { blnAgent = true; }
+                        break;
+                    case 7:
+                        strTest = GetDataContextValue("HNWUPID") == null ? "" : GetDataContextValue("HNWUPID").ToString();
+                        if (cboChange.Text != strTest)
+                        {
+                            blnAgent = true;
+                            if (cboAllocatedTo.Text.Trim() == "")
+                            {
+                                blnRtn = true; // case can't be left unallocated
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if (blnAgent == true) // save agent details as something has changed
+            {
+                // check no existing null record as crpd agent fields could already holds data if a record had been previosuly added but subsequently blanked out 
+                string strA = GetDataContextValue("Agent") == null ? "" : GetDataContextValue("Agent").ToString();
+                string strAC = GetDataContextValue("AgentCode") == null ? "" : GetDataContextValue("AgentCode").ToString();
+                string strAA = GetDataContextValue("AgentAddress") == null ? "" : GetDataContextValue("AgentAddress").ToString();
+                string strNA = GetDataContextValue("NamedAgent") == null ? "" : GetDataContextValue("NamedAgent").ToString();
+                string strOC = GetDataContextValue("OtherContact") == null ? "" : GetDataContextValue("OtherContact").ToString();
+                string strAT = GetDataContextValue("AgentTelNo") == null ? "" : GetDataContextValue("AgentTelNo").ToString();
+                if ((strA == "") && (strAC == "") && (strAA == "") && (strNA == "") && (strOC == "") && (strAT == "") && (GetDataContextValue("Changed") == 0))
+                {
+                    rpt.ResetAgent();
+                }
+                try
+                {
+                    rpt.Agent = txtFirm.Text;
+                    rpt.AgentCode = txtAgentCode.Text;
+                    rpt.Agent648Held = (cbo648.Text.ToLower() == "yes") == true ? Convert.ToByte(1) : Convert.ToByte(0); /*convert Yes/No to byte*/
+                    rpt.AgentAddress = txtAgentAddress.Text;
+                    rpt.NamedAgent = txtNamedAgent.Text;
+                    rpt.OtherContact = txtOtherContact.Text;
+                    rpt.AgentTelNo = txtTelNo.Text;
+                    rpt.Changed = (cboChange.Text.ToLower() == "yes") == true ? Convert.ToByte(1) : Convert.ToByte(0); /*convert Yes/No to byte*/
+                    double dblUTR = Convert.ToDouble(txtUTR.Text.Trim());
+                    rpt.UpdateAgentData(dblUTR);
+                    blnRtn = true;
+                }
+                catch
+                {
+                    blnRtn = false;
+                }
+            }
+            else // don't save as nothing has changed
+            {
+                //leave as it as checks found no changes so no point in resaving data.
+                blnRtn = true;
+            }
+
+            return blnRtn;
+        }
+
+        public bool GetRPDDataFromForm()
+        {
+            bool blnRtn = false;
+            RPT.RPT_Data rpt = new RPT.RPT_Data(); // initialise data
+            rpt.Segment = cboSegment.Text;
+            rpt.Surname = txtSurname.Text;
+            rpt.Firstname = txtFirstName.Text;
+            rpt.Gender = cboGender.Text;
+            rpt.UTR = Convert.ToDouble(txtUTR.Text);
+            rpt.Deceased = cboDeceased.Text.ToUpper() == "YES" ? Convert.ToByte(true) : Convert.ToByte(false);
+            rpt.DOB = txtDOB.Text;
+            rpt.DOD = txtDOD.Text;
+            rpt.Deselected = txtDeselected.Text;
+            rpt.Marital = cboMarital.Text;
+            rpt.MainAdd  = txtPrivateAddress.Text;
+            rpt.MainPC = txtPostcode.Text;
+            rpt.SecAdd = txtSecondaryAddress.Text;
+            rpt.Residence = cboResidence.Text;
+            rpt.Domicile = cboDomicile.Text;
+            rpt.Office = cboOffice.Text;
+            rpt.Team = cboTeam.Text;
+            rpt.HNWUPID = cboAllocatedTo.Text == "" ? 0 : Convert.ToInt32(System.Text.RegularExpressions.Regex.Match(cboAllocatedTo.Text, @"\d+").Value); 
+            rpt.Agent = txtFirm.Text;
+            rpt.Agent648Held = cbo648.Text.ToUpper() == "YES" ? Convert.ToByte(true) : Convert.ToByte(false);
+            rpt.AgentCode = txtAgentCode.Text;
+            rpt.AgentAddress = txtAgentAddress.Text;
+            rpt.NamedAgent = txtNamedAgent.Text;
+            rpt.OtherContact = txtOtherContact.Text;
+            rpt.AgentTelNo = txtTelNo.Text;
+            rpt.Changed = cboChange.Text.ToUpper() == "YES" ? Convert.ToByte(true) : Convert.ToByte(false);
+            //rpt.OpenIDMS = Convert.ToInt16(txtOpenIDMS.Text);
+            //rpt.ClosedIDMS = Convert.ToInt16(txtClosedIDMS.Text);
+            rpt.Risks_Open = Convert.ToInt16(txtOpenRisks.Text);
+            rpt.Settled_Risks = Convert.ToInt16(txtSettled.Text);
+            rpt.Highest_Settlement = Convert.ToInt32(txtHighestSettled.Text);
+            rpt.HPPenalty = Convert.ToInt16(txtHighestPercent.Text);
+            switch (cboCurrentSuspensions.Text.ToUpper())
+                {
+                case "YES":
+                    rpt.PSCurrent = 2;
+                    break;
+                case "NO":
+                    rpt.PSCurrent = 1;
+                    break;
+                default:
+                    rpt.PSCurrent = 0;
+                    break;
+                }
+            switch (cboPrevSuspensions.Text.ToUpper())
+            {
+                case "YES":
+                    rpt.PSPrevious = 2;
+                    break;
+                case "NO":
+                    rpt.PSPrevious = 1;
+                    break;
+                default:
+                    rpt.PSPrevious = 0;
+                    break;
+            }
+            switch (cboFailures.Text.ToUpper())
+            {
+                case "YES":
+                    rpt.PSFailures = 2;
+                    break;
+                case "NO":
+                    rpt.PSFailures = 1;
+                    break;
+                default:
+                    rpt.PSFailures = 0;
+                    break;
+            }
+            rpt.WealthLevel = cboWealth.Text;
+            rpt.Pathway = cboPathway.Text;
+            rpt.Source = cboSource.Text;
+            rpt.Sector = cboSector.Text;
+            rpt.LongTerm = cboLongTerm.Text;
+            rpt.LifeEvents = cboLifeEvents.Text;
+            rpt.Narrative = txtNarrative.Text;
+            try { rpt.QSScore = Convert.ToInt16(txtQSScore.Text); } catch { rpt.QSScore =  0; };
+            try { rpt.RPTPRScore = Convert.ToInt16(txtRSScore.Text); } catch { rpt.RPTPRScore = 0; };
+            try { rpt.RPTAVScore = Convert.ToInt16(txtAVScore.Text); } catch { rpt.RPTAVScore = 0; };
+            try { rpt.CGScore = Convert.ToInt16(txtCGScore.Text); } catch { rpt.CGScore = 0; };
+            try { rpt.ResScore = Convert.ToInt16(txtRESScore.Text); } catch { rpt.ResScore = 0; };
+            try { rpt.CRMScore = Convert.ToInt16(txtCRMScore.Text); } catch { rpt.CRMScore = 0; };
+            try { rpt.PriorityScore = Convert.ToInt16(txtPRScore.Text); } catch { rpt.PriorityScore = 0; };
+            try { rpt.Percentile = Convert.ToInt32(txtPercentile.Text); } catch { rpt.Percentile = 0; };
+            rpt.Pop = cboPopCode.Text;
+            rpt.CRMExplanation = txtCRMExplanation.Text;
+            return blnRtn;
+        }
+
+        public dynamic GetDataContextValue(string sPropertyName)
+        {
+            dynamic vRtn = 0;
+            try
+            {
+                vRtn = this.DataContext.GetType().GetProperty(sPropertyName).GetValue(this.DataContext, null);
+            }
+            catch
+            {
+                vRtn = 0;
+            }
+            return vRtn;
+        }
+
+        private void CboTeam_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if ((bFormLoaded == true))
+            {
+                bool blnTest = PopulateAllocatedToCombo();
+                cboAllocatedTo.Text = "";
+                return;
+            }
+            else
+            {
+            }
+                //bool blnKeepCRMDA = false;
+                //if (cboTeam.Text == "")
+                //{
+                //    //cboAllocatedTo.Claer;
+                //    cboAllocatedTo.Text = "";
+                //    return;
+                //}
+
+                //if(txtTeam.Text == "")
+                //{
+                //    if(txtTeam.Text == cboTeam.Text)
+                //    {
+                //        return;
+                //    }
+                //}
+
+                //PopulateAllocatedToCombo();
+                //PopulateCRMCombo();
+
+                //blnKeepCRMDA = false;
+
+                //bool itemExists = false;
+                //foreach (ComboBoxItem cbi in cboCRMName.Items)
+                //{
+                //    itemExists = cbi.Content.Equals(txtCRMName.Text);
+                //    if (itemExists)
+                //    {
+                //        blnKeepCRMDA = true;
+                //        break;
+                //    }
+                //}
+
+                //if(blnKeepCRMDA == false)
+                //{
+                //    txtCRMDA.Text = "";
+                //}
+
+                //txtTeam.Text = cboTeam.Text;
+                //cboAllocatedTo.IsEnabled = true;
+
+            }
+
+        private void CmdUpdateClose_Click(object sender, RoutedEventArgs e)
+        {
+
+            cmdUpdateClose.IsEnabled = false;
+            Globals.blnUpdate = false;
+            SaveRecord();
+
+            if(Globals.blnUpdate == true)
+            {
+                CmdCancel_Click(sender, e);
+            }
+            else
+            {
+                cmdUpdateClose.IsEnabled = true;
+            }
+
         }
 
         private void RecalculateResults()
