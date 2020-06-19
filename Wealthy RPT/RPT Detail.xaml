@@ -632,7 +632,7 @@
                                             </GridView>
                                         </ListView.View>
                                     </ListView>-->
-                                    <DataGrid x:Name="dgHistorical" HorizontalAlignment="Left" Height="120" Margin="5,10,0,0" VerticalAlignment="Top" Width="470" ItemsSource="{Binding Grid_Data, Mode=TwoWay}">
+                                    <DataGrid x:Name="dgHistorical" HorizontalAlignment="Left" Height="120" Margin="5,10,0,0" VerticalAlignment="Top" Width="470"> <!--ItemsSource="{Binding Grid_Data, Mode=TwoWay}">-->
                                         <DataGrid.ItemBindingGroup>
                                             <BindingGroup/>
                                         </DataGrid.ItemBindingGroup>
@@ -678,7 +678,7 @@
                                         <TextBox x:Name="txtCRMScore" Grid.Row="0" Grid.Column="5" Margin="0,0,0,0" Text = "{Binding CRMScore, Mode = TwoWay}"/>
                                         <TextBox x:Name="txtCRMExplanation" Grid.Row="1" Grid.Column="3" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.ColumnSpan="3" Grid.RowSpan="2" Margin="0,2,0,2" Text = "{Binding CRMExplanation, Mode = TwoWay}"/>
                                         <TextBox x:Name="txtPRScore" Grid.Row="3" Grid.Column="5" Margin="0,2,0,2" Text = "{Binding PriorityScore, Mode = TwoWay}"/>
-                                        <Button x:Name="cmdPercentile" Grid.Row="3" Grid.Column="3" Margin="0,13,0,2" Grid.RowSpan="2" Style="{StaticResource 3DButtonStyle}">
+                                        <Button x:Name="cmdPercentile" Grid.Row="3" Grid.Column="3" Margin="0,13,0,2" Grid.RowSpan="2" Style="{StaticResource 3DButtonStyle}" Click="cmdPercentile_Click">
                                             <TextBlock TextWrapping="Wrap" Text="Re-Check Ranking" TextAlignment="Center" ToolTip="Re-Check Ranking"/>
                                         </Button>
                                         <TextBox x:Name="txtPercentile" Grid.Row="5" Grid.Column="5" Margin="0,2,0,2" Text = "{Binding Percentile, Mode = TwoWay}"/>
@@ -717,11 +717,15 @@
                                 Title="Ranking"/>
                                     </chartingToolkit:Chart.Axes>
                                 </chartingToolkit:Chart>-->
-                                <chartingToolkit:Chart Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" BorderThickness="2" Margin="0,0,10,10" GotFocus="MscHistory_GotFocus" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Background="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                <chartingToolkit:Chart Title ="Rank History" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" BorderThickness="2" Margin="0,0,10,10" GotFocus="MscHistory_GotFocus" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Background="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                                     <chartingToolkit:Chart.Series>
-                                        <chartingToolkit:ColumnSeries x:Name="mscHistory" ItemsSource="{Binding Chart_Data}" IndependentValueBinding="{Binding Date}" DependentValueBinding="{Binding Ranking}">
-                                        </chartingToolkit:ColumnSeries>
+                                        <chartingToolkit:LineSeries x:Name="mscHistory" Title="Rank" ItemsSource="{Binding Chart_Data}" IndependentValueBinding="{Binding DateRecorded}" DependentValueBinding="{Binding Ranking}">
+                                        </chartingToolkit:LineSeries>
                                     </chartingToolkit:Chart.Series>
+                                    <chartingToolkit:Chart.Axes>
+                                        <chartingToolkit:LinearAxis Orientation="Y" Minimum="0" Maximum="100" Title="Ranking"/>
+                                        <chartingToolkit:CategoryAxis Orientation="X" Title="Date Recorded" />
+                                    </chartingToolkit:Chart.Axes>
                                 </chartingToolkit:Chart>
                             </Grid>
                         </StackPanel>

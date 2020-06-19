@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace Wealthy_RPT
         // CRM List
         public static List<int> gn_CRM = new List<int>();
         public static bool blnOfficeWiped = false; // set with RPTDetail CboOffice_SelectionChanged()
-
+        public static DataTable dtGraph;
+        public static DataTable dtGrid;
     }
 }

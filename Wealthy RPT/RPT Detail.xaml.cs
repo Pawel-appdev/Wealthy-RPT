@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+
 //using System.Windows.Forms;
 //using MessageBox = System.Windows.MessageBox;
 
@@ -918,7 +919,8 @@ namespace Wealthy_RPT
             }
             txtCRMExplanation.Text = "";
             txtCRMExplanation.IsEnabled = true;
-            RecalculateResults();
+            RecalculateBehaviours();
+            //RecalculateResults();
         }
 
         private void ChkCRMDescretion_Unchecked(object sender, RoutedEventArgs e)
@@ -926,14 +928,13 @@ namespace Wealthy_RPT
             txtCRMScore.Text = "";
             txtCRMExplanation.Text = "";
             txtCRMExplanation.IsEnabled = false;
-            RecalculateResults();
+            RecalculateBehaviours();
+            //RecalculateResults();
         }
 
         private void CmdSave_Click(object sender, RoutedEventArgs e)
         {
-            //Recaclualte Behaviours
-
-            //if needed Recalculate Priority Score
+            RecalculateBehaviours();
 
             BindingExpression obj = txtSecondaryAddress.GetBindingExpression(TextBox.TextProperty);
             obj.UpdateSource();
@@ -1066,18 +1067,12 @@ namespace Wealthy_RPT
 
         private void PgResults_GotFocus(object sender, RoutedEventArgs e)
         {
-            //Recalculate Behaviours
-
-            //if needed replot graph
-
-            //if needed Recalculate Priority Score
+            RecalculateBehaviours();
         }
 
         private void CmdUpdateClose_Click(object sender, RoutedEventArgs e)
         {
-            //Recalculate Behaviours
-
-            //Recalculate Priority Score
+            RecalculateBehaviours();
 
             BindingExpression obj = txtSecondaryAddress.GetBindingExpression(TextBox.TextProperty);
             obj.UpdateSource();
@@ -1085,7 +1080,130 @@ namespace Wealthy_RPT
 
         private void ReplotChart()
         {
+            
+        }
 
+        private void RecalculateBehaviours()
+        {
+            int iCSuspensions;
+            int iPSuspensions;
+            int iFailures;
+            int iCRMBoost;
+            int iYear = 2000;
+            var vSegment = "";
+            int iChartPoints;
+
+            if (this.cboCurrentSuspensions.SelectedItem == null)
+            {
+                iCSuspensions = 0;
+            }
+            else
+            {
+                iCSuspensions = Convert.ToInt16(this.cboCurrentSuspensions.SelectedItem.ToString());
+            }
+
+            if (this.cboPrevSuspensions.SelectedItem == null)
+            {
+                iPSuspensions = 0;
+            }
+            else
+            {
+                iPSuspensions = Convert.ToInt16(this.cboPrevSuspensions.SelectedItem.ToString());
+            }
+
+            if (this.cboFailures.SelectedItem == null)
+            {
+                iFailures = 0;
+            }
+            else
+            {
+                iFailures = Convert.ToInt16(this.cboFailures.SelectedItem.ToString());
+            }
+
+            if (this.txtCRMScore.Text == "")
+            {
+                iCRMBoost = 0;
+            }
+            else
+            {
+                iCRMBoost = Convert.ToInt16(this.txtCRMScore.Text.ToString());
+            }
+
+            try { iYear = Convert.ToInt16(this.lblPopYear.Text); } catch { }
+
+            DataTable dt = new DataTable("dgRank");
+
+            try
+            {
+                // Connecting the SQL Server
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                con.Open();
+                // Calling the Stored Procedure
+                SqlCommand cmd = new SqlCommand("qryGetBehaviourScoresandRank", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@nOpenRisks", SqlDbType.Int).Value = Convert.ToInt16(this.txtOpenRisks.Text.ToString());
+                cmd.Parameters.Add("@nClosedRisks", SqlDbType.Int).Value = Convert.ToInt16(this.txtSettledRisks.Text.ToString());
+                cmd.Parameters.Add("@nHighestSettlement", SqlDbType.Float).Value = Convert.ToDouble(this.txtHighestSettled.Text.ToString());
+                cmd.Parameters.Add("@nHPPenalty", SqlDbType.Float).Value = Convert.ToDouble(this.txtHighestPercent.Text.ToString());
+                cmd.Parameters.Add("@nCurrentSuspensions", SqlDbType.Int).Value = iCSuspensions;
+                cmd.Parameters.Add("@nPreviousSuspensions", SqlDbType.Int).Value = iPSuspensions;
+                cmd.Parameters.Add("@nSuspensionFailures", SqlDbType.Int).Value = iFailures;
+                cmd.Parameters.Add("@nOpenIDMS", SqlDbType.Int).Value = Convert.ToInt16(this.txtOpenIDMS.Text.ToString());
+                cmd.Parameters.Add("@nClosedIDMS", SqlDbType.Int).Value = Convert.ToInt16(this.txtClosedIDMS.Text.ToString());
+                cmd.Parameters.Add("@nAvoidanceScore", SqlDbType.Int).Value = Convert.ToInt16(this.txtAVScore.Text.ToString());
+                cmd.Parameters.Add("@nRiskScore", SqlDbType.Int).Value = Convert.ToInt16(this.txtRSScore.Text.ToString());
+                cmd.Parameters.Add("@nCGScore", SqlDbType.Int).Value = Convert.ToInt16(this.txtCGScore.Text.ToString());
+                cmd.Parameters.Add("@nResScore", SqlDbType.Int).Value = Convert.ToInt16(this.txtRESScore.Text.ToString());
+                cmd.Parameters.Add("@nCRMScore", SqlDbType.Int).Value = iCRMBoost;
+                cmd.Parameters.Add("@nCurrentPSScore", SqlDbType.Int).Value = Convert.ToInt16(this.txtPRScore.Text.ToString());
+                cmd.Parameters.Add("@nCurrentRank", SqlDbType.Float).Value = Convert.ToDouble(this.txtPercentile.Text.ToString());
+                cmd.Parameters.Add("@nCalendarYear", SqlDbType.Int).Value = iYear;
+                cmd.Parameters.Add("@nUTR", SqlDbType.Int).Value = Convert.ToInt32(this.txtUTR.Text.ToString());
+                cmd.Parameters.Add("@nPop", SqlDbType.Text).Value = this.cboPopCode.SelectedValue.ToString();
+
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+
+                this.txtQSScore.Text = dt.Rows[0]["NewQSScore"].ToString();
+                this.txtPRScore.Text = dt.Rows[0]["NewPSScore"].ToString();
+                this.txtPercentile.Text = dt.Rows[0]["NewRank"].ToString();
+                vSegment = dt.Rows[0]["NewSegment"].ToString();
+                if (vSegment == "")
+                {
+                    vSegment = "High Risk";
+                }
+                this.cboSegment.SelectedValue = vSegment.Trim();
+
+                try  //Update Graph
+                {
+                    iChartPoints = Globals.dtGraph.Rows.Count - 1;
+                    Globals.dtGraph.Rows[iChartPoints]["Ranking"] = dt.Rows[0]["NewRank"].ToString();
+                    this.mscHistory.ItemsSource = null;
+                    this.mscHistory.ItemsSource = Globals.dtGraph.DefaultView;
+
+                    //Update Grid
+                    Globals.dtGrid.Rows[0]["Priority Score"] = dt.Rows[0]["NewPSScore"].ToString();
+                    Globals.dtGrid.Rows[0]["Ranking"] = dt.Rows[0]["NewRank"].ToString();
+                    Globals.dtGrid.Rows[0]["Segment"] = dt.Rows[0]["NewSegment"].ToString();
+                    this.dgHistorical.ItemsSource = null;
+                    this.dgHistorical.ItemsSource = Globals.dtGrid.DefaultView;
+                }
+                catch
+                {
+
+                }
+            }
+            catch
+            {
+                System.Windows.MessageBox.Show("Unable to recalculate score.  Press ReCheck Ranking Button to try again.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void cmdPercentile_Click(object sender, RoutedEventArgs e)
+        {
+            RecalculateBehaviours();
         }
     }
 

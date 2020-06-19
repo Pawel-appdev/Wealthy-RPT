@@ -970,7 +970,8 @@ namespace Wealthy_RPT
             else
             {
                 rptDetail.DataContext = rpt;
-                rptDetail.mscHistory.ItemsSource = rpt.Chart_Data.DefaultView;
+                rptDetail.mscHistory.ItemsSource = Globals.dtGraph.DefaultView;
+                rptDetail.dgHistorical.ItemsSource = Globals.dtGrid.DefaultView;
                 rptDetail.cboPopFriendly.SelectedIndex = this.cboPopulation.SelectedIndex;
                 rptDetail.cboPopCode.SelectedIndex = this.cboPopulation.SelectedIndex;
                 try { rptDetail.lblPopYear.Text = this.cboYear.SelectedValue.ToString(); } catch { DateTime.Now.Year.ToString(); }
