@@ -14,6 +14,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+//using System.Windows.Forms;
+//using MessageBox = System.Windows.MessageBox;
+
 namespace Wealthy_RPT
 {
     /// <summary>
@@ -22,8 +25,10 @@ namespace Wealthy_RPT
     public partial class RPT_Detail : Window
     {
         TextBoxDate tbd = new TextBoxDate();
+        bool bFormLoaded = false;
         public RPT_Detail()
         {
+            this.DataContext = new RPT(); // set data context
             InitializeComponent();
             PopulateCombos();
 
@@ -34,6 +39,10 @@ namespace Wealthy_RPT
 
         private void PopulateCombos()
         {
+            Dictionary<int, string> yesnodictionary = new Dictionary<int, string>();
+            yesnodictionary.Add(0, "No");
+            yesnodictionary.Add(1, "Yes");
+
             try
             {
                 Lookups lu = new Lookups();
@@ -42,6 +51,11 @@ namespace Wealthy_RPT
                 //lu.GetOfficeCRMs();
 
                 // == Customer Segment
+
+                // cboSegment
+                cboStrand.ItemsSource = lu.dsRPTDetailCombo.Tables[13].DefaultView;
+                cboStrand.DisplayMemberPath = "Options";
+                cboStrand.SelectedValuePath = "DecodedValue";
 
                 // cboSegment
                 cboSegment.ItemsSource = lu.dsRPTDetailCombo.Tables[0].DefaultView;
@@ -66,9 +80,9 @@ namespace Wealthy_RPT
                 //cboUTR.SelectedValuePath = "DecodedValue";
 
                 // cboDeceased [yes/no]
-                cboDeceased.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
-                cboDeceased.DisplayMemberPath = "Options";
-                cboDeceased.SelectedValuePath = "DecodedValue";
+                cboDeceased.ItemsSource = new System.Windows.Forms.BindingSource(yesnodictionary, null);
+                cboDeceased.DisplayMemberPath = "Value";
+                cboDeceased.SelectedValuePath = "Key";
 
                 // cboMarital
                 cboMarital.ItemsSource = lu.dsRPTDetailCombo.Tables[2].DefaultView;
@@ -92,14 +106,9 @@ namespace Wealthy_RPT
 
                 // == Customer Team
 
-                // cboOffice populated on Window_Loaded() in order to pass selected PopCode
-
-                // cboTeam  populated on Window_Loaded() in order to pass selected Office and PopCode
-
-                // cboAllocatedTo: qryGetOfficeTeamStaff @nOffice @nTeam GetOfficeTeamStaff(string strOffice, string strTeam)
-                //cboAllocatedTo.ItemsSource = lu.dsOfficeTeams.Tables[0].DefaultView;
-                //cboAllocatedTo.DisplayMemberPath = "Team Identifier";
-                //cboAllocatedTo.SelectedValuePath = "Team Identifier";
+                // cboOffice populated on Window_Loaded() / PopulateAndSetAllocationCombos() in order to pass selected PopCode
+                // cboTeam  populated on Window_Loaded() / PopulateAndSetAllocationCombos()  in order to pass selected Office and PopCode
+                // cboAllocatedTo: populated on Window_Loaded() / PopulateAndSetAllocationCombos()  in order to pass selected Office and Team
 
                 //cboCRMName
                 cboCRMName.ItemsSource = lu.dsRPTDetailOfficeCRMs.Tables[0].DefaultView;
@@ -107,25 +116,30 @@ namespace Wealthy_RPT
                 cboCRMName.SelectedValuePath = "CRM_Name";
 
                 // == Appointed Agent
+
                 //cbo648 [yes/no]
-                cbo648.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
-                cbo648.DisplayMemberPath = "Options";
-                cbo648.SelectedValuePath = "DecodedValue";
+                cbo648.ItemsSource = new System.Windows.Forms.BindingSource(yesnodictionary, null);
+                cbo648.DisplayMemberPath = "Value";
+                cbo648.SelectedValuePath = "Key";
+
                 //cboChange [yes/no]
-                cboChange.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
-                cboChange.DisplayMemberPath = "Options";
-                cboChange.SelectedValuePath = "DecodedValue";
+                cboChange.ItemsSource = new System.Windows.Forms.BindingSource(yesnodictionary, null);
+                cboChange.DisplayMemberPath = "Value";
+                cboChange.SelectedValuePath = "Key";
 
                 // == Behaviors
-                //cboCurrentSuspensions [yes/no]
+
+                //cboCurrentSuspensions [yes/no/unknown]
                 cboCurrentSuspensions.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
                 cboCurrentSuspensions.DisplayMemberPath = "Options";
                 cboCurrentSuspensions.SelectedValuePath = "DecodedValue";
-                //cboPrevSuspensions [yes/no]
+
+                //cboPrevSuspensions [yes/no/unknown]
                 cboPrevSuspensions.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
                 cboPrevSuspensions.DisplayMemberPath = "Options";
                 cboPrevSuspensions.SelectedValuePath = "DecodedValue";
-                //cboFailures [yes/no]
+
+                //cboFailures [yes/no/unknown]
                 cboFailures.ItemsSource = lu.dsRPTDetailCombo.Tables[12].DefaultView;
                 cboFailures.DisplayMemberPath = "Options";
                 cboFailures.SelectedValuePath = "DecodedValue";
@@ -158,7 +172,7 @@ namespace Wealthy_RPT
             }
             catch
             {
-                MessageBox.Show("Unable to load combo box data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("Unable to load combo box data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
@@ -166,40 +180,92 @@ namespace Wealthy_RPT
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-            Lookups lu = new Lookups();
-            string strPopCode = this.cboPopCode.SelectedValue.ToString();
-            lu.GetOffices(strPopCode);
-            cboOffice.ItemsSource = lu.dsOffices.Tables[0].DefaultView;
-            cboOffice.DisplayMemberPath = "Office";
-            cboOffice.SelectedValuePath = "Office";
+            PopulateAndSetAllocationCombos();
 
-            string strOffice = this.cboOffice.SelectedValue.ToString();
-            lu.GetOfficeCRMs(strOffice, strPopCode); // "rPt20Mill"
-            cboTeam.ItemsSource = lu.dsOfficeTeams.Tables[0].DefaultView;
-            cboTeam.DisplayMemberPath = "Team Identifier";
-            cboTeam.SelectedValuePath = "Team Identifier";
+            if ((Globals.gn_CRM.ElementAt(1) == 0) || (Globals.gn_CRM.ElementAt(2) == 0))
+            {
+                RPT.RPT_Data rpt = new RPT.RPT_Data();
+                rpt.GetCRM();
+            }
 
-            //' questionnaire scores     [behaviours]
-            //Me.txtOpenIDMS.Text = 0
-            //Me.txtClosedIDMS.Text = 0
-            //Me.txtOpenRisks.Text = 0
-            //Me.txtSettled.Text = 0
-            //Me.txtHighestSettled.Text = 0
-            //Me.txtHighestPercent.Text = 0
-
-            //## frmRPD  chkCRMDescretion_Click()
-
-            //## modGetData  GetCRM
-
-            //## modGlobal
-            //## Public gs_CRM(2) As Integer
-
-            // If gs_CRM(1) = 0 Or gs_CRM(2) = 0 Then
-            //  GetCRM
-            // End If
+            int iTest = Globals.gn_CRM.ElementAt(1);
 
             //TabFrames
+            //this.Activated += AfterLoading;
 
+            bFormLoaded = true;
+        }
+
+
+        private void PopulateAndSetAllocationCombos()
+        {
+            bool blnTest = PopulateOfficeCombo();
+            blnTest = PopulateTeamCombo();
+            blnTest = PopulateAllocatedToCombo();
+        }
+
+        private bool PopulateOfficeCombo()
+        {
+            string strPopCode = "";
+            Lookups lu = new Lookups();
+            try
+            {
+                // populate cboOffice, based on PopCode
+                strPopCode = this.cboPopCode.SelectedValue.ToString();
+                lu.GetOffices(strPopCode);
+                cboOffice.ItemsSource = lu.dsOffices.Tables[0].DefaultView;
+                cboOffice.DisplayMemberPath = "Office";
+                cboOffice.SelectedValuePath = "Office";
+                return true;
+            }
+            catch
+            {
+                return false;
+            };
+        }
+
+        private bool PopulateTeamCombo()
+        {
+            string strPopCode = "";
+            string strOffice = "";
+            Lookups lu = new Lookups();
+            try
+            {
+                // populate cboTeam, based on Office and PopCode
+                strOffice = this.cboOffice.SelectedValue.ToString();
+                strPopCode = this.cboPopCode.SelectedValue.ToString();
+                lu.GetOfficeCRMs(strOffice, strPopCode); // "rPt20Mill"
+                cboTeam.ItemsSource = lu.dsOfficeTeams.Tables[0].DefaultView;
+                cboTeam.DisplayMemberPath = "Team Identifier";
+                cboTeam.SelectedValuePath = "Team Identifier";
+                return true;
+            }
+            catch
+            {
+                return false;
+            };
+        }
+
+        private bool PopulateAllocatedToCombo()
+        {
+            string strOffice = "";
+            string strTeam = "";
+            Lookups lu = new Lookups();
+            try
+            {
+                // populate cboAllocatedTo, based on Office and Team
+                strOffice = this.cboOffice.SelectedValue.ToString();
+                strTeam = this.cboTeam.SelectedValue.ToString();
+                lu.GetOfficeTeamStaff(strOffice, strTeam);
+                cboAllocatedTo.ItemsSource = lu.dsOfficeTeamStaff.Tables[0].DefaultView;
+                cboAllocatedTo.DisplayMemberPath = "AllocatedTo";
+                cboAllocatedTo.SelectedValuePath = "AllocatedTo";
+                return true;
+            }
+            catch
+            {
+                return false;
+            };
         }
 
         private void TxtDOB_KeyDown(object sender, KeyEventArgs e)
@@ -253,9 +319,17 @@ namespace Wealthy_RPT
             ((TabItem)tabRPD.Items[tabRPD.SelectedIndex]).Header = strName;
         }
 
+        private void CboStrand_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (Globals.blnAccess == true)
+            {
+                ShowActiveControl(cboStrand);
+            }
+        }
+
         private void TxtSurname_GotFocus(object sender, RoutedEventArgs e)
         {
-            if(Globals.blnAccess == true)
+            if (Globals.blnAccess == true)
             {
                 ShowActiveControl(txtSurname);
             }
@@ -710,13 +784,13 @@ namespace Wealthy_RPT
             }
         }
 
-        private void LvwPrevRes_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (Globals.blnAccess == true)
-            {
-                ShowActiveControl(lvwPrevRes);
-            }
-        }
+        //private void LvwPrevRes_GotFocus(object sender, RoutedEventArgs e)
+        //{
+        //    if (Globals.blnAccess == true)
+        //    {
+        //        ShowActiveControl(lvwPrevRes);
+        //    }
+        //}
 
         private void MscHistory_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -763,6 +837,373 @@ namespace Wealthy_RPT
         private void CmdCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void CboPopFriendly_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if ((cboPopCode.SelectedIndex != cboPopFriendly.SelectedIndex) && (bFormLoaded == true))
+            {
+                if (System.Windows.Forms.MessageBox.Show
+                            ("You are about to change the Records Population and you will also need to update the Office, Team and Allocation."
+                    + Environment.NewLine + Environment.NewLine
+                    + "You may also need to consider changing the CCM."
+                    + Environment.NewLine + Environment.NewLine
+                    + "Select Yes to Proceed", "Population", System.Windows.Forms.MessageBoxButtons.YesNo,
+                            System.Windows.Forms.MessageBoxIcon.Exclamation, System.Windows.Forms.MessageBoxDefaultButton.Button2)
+                            == System.Windows.Forms.DialogResult.No)
+                {
+                    // aborted so reset population
+                    cboPopFriendly.SelectedIndex = cboPopCode.SelectedIndex;
+                }
+                else
+                {
+                    // user confirmed yes so change population
+                    cboPopCode.SelectedIndex = cboPopFriendly.SelectedIndex;
+                    txtPopFriendly.Text = cboPopFriendly.Text;
+                    // update Office options as not all populations may have same office locations
+                    // ##########cboOffice.Items.Clear();
+                    bool blnTest = PopulateOfficeCombo();
+                    foreach (var item in cboOffice.Items)
+                    {
+                        if (item.ToString() == txtOffice.Text)
+                        {
+                            cboOffice.Text = txtOffice.Text;
+                            break;
+                        }
+                    }
+                    // ###########cboTeam.Items.Clear();
+                }
+            }
+        }
+
+
+        private void ChkDeselected_Checked(object sender, RoutedEventArgs e)
+        {
+            if (System.Windows.Forms.MessageBox.Show
+                        ("Please confirm that you wish to deselect this case.", "Deselection", System.Windows.Forms.MessageBoxButtons.YesNo,
+                        System.Windows.Forms.MessageBoxIcon.Exclamation, System.Windows.Forms.MessageBoxDefaultButton.Button2)
+                        == System.Windows.Forms.DialogResult.No)
+            {
+                chkDeselected.IsChecked = false;
+            }
+            else
+            {
+                txtDeselected.Text = DateTime.Now.ToString("dd/MM/yyyy");
+            }
+
+        }
+
+        private void ChkDeselected_Unchecked(object sender, RoutedEventArgs e)
+        {
+            txtDeselected.Tag = txtDeselected.Text; /*store for possible recall*/
+            txtDeselected.Text = "";
+        }
+
+        private void ChkCRMDescretion_Checked(object sender, RoutedEventArgs e)
+        {
+            if ((Globals.gn_CRM.ElementAt(1) == 0) || (Globals.gn_CRM.ElementAt(2) == 0))
+            {
+                RPT.RPT_Data rpt = new RPT.RPT_Data();
+                rpt.GetCRM();
+            }
+            switch (cboPopCode.Text.ToUpper())
+            {
+                case "RPT10MILL":
+                    txtCRMScore.Text = Globals.gn_CRM.ElementAt(1).ToString();
+                    break;
+                case "RPT20MILL":
+                    txtCRMScore.Text = Globals.gn_CRM.ElementAt(2).ToString();
+                    break;
+                default:
+                    break;
+            }
+            txtCRMExplanation.Text = "";
+            txtCRMExplanation.IsEnabled = true;
+            RecalculateBehaviours();
+            //RecalculateResults();
+        }
+
+        private void ChkCRMDescretion_Unchecked(object sender, RoutedEventArgs e)
+        {
+            txtCRMScore.Text = "";
+            txtCRMExplanation.Text = "";
+            txtCRMExplanation.IsEnabled = false;
+            RecalculateBehaviours();
+            //RecalculateResults();
+        }
+
+        private void CmdSave_Click(object sender, RoutedEventArgs e)
+        {
+            RecalculateBehaviours();
+
+            BindingExpression obj = txtSecondaryAddress.GetBindingExpression(TextBox.TextProperty);
+            obj.UpdateSource();
+        }
+
+        private void CmdUTR_Click(object sender, RoutedEventArgs e)
+        {
+            string sUTR = txtUTR.Text.ToString().Trim();
+            if ((sUTR == "") || (sUTR.Length != 10)) /*UTR is blank or not 10 characters long*/
+            {
+                return; /*do nothing*/
+            }
+            else
+            {
+                /*copy UTR to Clipboard*/
+                Clipboard.Clear();
+                Clipboard.SetText(sUTR);
+            }
+        }
+
+        private void CboOffice_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cboOffice.Text == "")
+            {
+                bool blnTest = PopulateTeamCombo();
+                cboTeam.Text = "";
+                blnTest = PopulateAllocatedToCombo();
+                cboAllocatedTo.Text = "";
+                Globals.blnOfficeWiped = true;
+                return;
+            }
+            else
+            {
+                if (Globals.blnOfficeWiped == true)
+                {
+                    Globals.blnOfficeWiped = false;
+                }
+                else
+                {
+                    if (txtOffice.Text == cboOffice.Text)
+                    {
+                        return;
+                    }
+                }
+            }
+
+            if (cboPopFriendly.Text == "")
+            {
+                MessageBox.Show("Please confirm the Record Population first.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+                cboPopFriendly.Focus();
+                cboPopFriendly.IsDropDownOpen = true;
+                return;
+            }
+
+            //PopulateCombo Me.cboTeam, "qryGetOfficeTeams", "Team Identifier", Me.cboOffice.Text, True, cUser.Pop
+            //Me.cboAllocatedTo.Clear
+            //Me.cboAllocatedTo.Text = ""
+
+            //Me.txtOffice.Text = Me.cboOffice.Text
+            //Me.txtTeam.Text = Me.cboTeam.Text
+
+            //Me.cboTeam.Enabled = True
+        }
+
+        private void RecalculateResults()
+        {
+            int PSScore = 0;
+
+
+            if (IsParseable(txtQSScore.Text.ToString(), false) == false)
+            {
+                return;
+            }
+            if (IsParseable(txtAVScore.Text.ToString(), false) == false)
+            {
+                return;
+            }
+            if (IsParseable(txtRSScore.Text.ToString(), false) == false)
+            {
+                return;
+            }
+            if (IsParseable(txtCGScore.Text.ToString(), false) == false)
+            {
+                return;
+            }
+            if (IsParseable(txtRESScore.Text.ToString(), false) == false)
+            {
+                return;
+            }
+            if (IsParseable(txtCRMScore.Text.ToString(), true) == false)
+            {
+                return;
+            }
+
+            PSScore = int.Parse(txtQSScore.Text.ToString()) + int.Parse(txtAVScore.Text.ToString()) + int.Parse(txtRSScore.Text.ToString()) + int.Parse(txtCGScore.Text.ToString()) + int.Parse(txtRESScore.Text.ToString()) + int.Parse(txtCRMScore.Text.ToString());
+
+            txtPRScore.Text = Convert.ToString(PSScore);
+        }
+
+        private bool IsParseable(string strText, bool blnCRM)
+        {
+            int number;
+
+            bool ParseableCheck = Int32.TryParse(strText, out number);
+
+            if (ParseableCheck)
+            {
+                return true;
+            }
+            else 
+            {
+                if (blnCRM == true)
+                {
+                    txtCRMScore.Text = "0";
+                }
+                else
+                { 
+                    MessageBox.Show("Unable to calculate Priority Score.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                return false;
+            }
+        }
+
+        private void TxtQSScore_LostFocus(object sender, RoutedEventArgs e)
+        {
+            RecalculateResults();
+
+            // replot graph
+        }
+
+        private void PgResults_GotFocus(object sender, RoutedEventArgs e)
+        {
+            RecalculateBehaviours();
+        }
+
+        private void CmdUpdateClose_Click(object sender, RoutedEventArgs e)
+        {
+            RecalculateBehaviours();
+
+            BindingExpression obj = txtSecondaryAddress.GetBindingExpression(TextBox.TextProperty);
+            obj.UpdateSource();
+        }
+
+        private void ReplotChart()
+        {
+            
+        }
+
+        private void RecalculateBehaviours()
+        {
+            int iCSuspensions;
+            int iPSuspensions;
+            int iFailures;
+            int iCRMBoost;
+            int iYear = 2000;
+            var vSegment = "";
+            int iChartPoints;
+
+            if (this.cboCurrentSuspensions.SelectedItem == null)
+            {
+                iCSuspensions = 0;
+            }
+            else
+            {
+                iCSuspensions = Convert.ToInt16(this.cboCurrentSuspensions.SelectedItem.ToString());
+            }
+
+            if (this.cboPrevSuspensions.SelectedItem == null)
+            {
+                iPSuspensions = 0;
+            }
+            else
+            {
+                iPSuspensions = Convert.ToInt16(this.cboPrevSuspensions.SelectedItem.ToString());
+            }
+
+            if (this.cboFailures.SelectedItem == null)
+            {
+                iFailures = 0;
+            }
+            else
+            {
+                iFailures = Convert.ToInt16(this.cboFailures.SelectedItem.ToString());
+            }
+
+            if (this.txtCRMScore.Text == "")
+            {
+                iCRMBoost = 0;
+            }
+            else
+            {
+                iCRMBoost = Convert.ToInt16(this.txtCRMScore.Text.ToString());
+            }
+
+            try { iYear = Convert.ToInt16(this.lblPopYear.Text); } catch { }
+
+            DataTable dt = new DataTable("dgRank");
+
+            try
+            {
+                // Connecting the SQL Server
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                con.Open();
+                // Calling the Stored Procedure
+                SqlCommand cmd = new SqlCommand("qryGetBehaviourScoresandRank", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@nOpenRisks", SqlDbType.Int).Value = Convert.ToInt16(this.txtOpenRisks.Text.ToString());
+                cmd.Parameters.Add("@nClosedRisks", SqlDbType.Int).Value = Convert.ToInt16(this.txtSettledRisks.Text.ToString());
+                cmd.Parameters.Add("@nHighestSettlement", SqlDbType.Float).Value = Convert.ToDouble(this.txtHighestSettled.Text.ToString());
+                cmd.Parameters.Add("@nHPPenalty", SqlDbType.Float).Value = Convert.ToDouble(this.txtHighestPercent.Text.ToString());
+                cmd.Parameters.Add("@nCurrentSuspensions", SqlDbType.Int).Value = iCSuspensions;
+                cmd.Parameters.Add("@nPreviousSuspensions", SqlDbType.Int).Value = iPSuspensions;
+                cmd.Parameters.Add("@nSuspensionFailures", SqlDbType.Int).Value = iFailures;
+                cmd.Parameters.Add("@nOpenIDMS", SqlDbType.Int).Value = Convert.ToInt16(this.txtOpenIDMS.Text.ToString());
+                cmd.Parameters.Add("@nClosedIDMS", SqlDbType.Int).Value = Convert.ToInt16(this.txtClosedIDMS.Text.ToString());
+                cmd.Parameters.Add("@nAvoidanceScore", SqlDbType.Int).Value = Convert.ToInt16(this.txtAVScore.Text.ToString());
+                cmd.Parameters.Add("@nRiskScore", SqlDbType.Int).Value = Convert.ToInt16(this.txtRSScore.Text.ToString());
+                cmd.Parameters.Add("@nCGScore", SqlDbType.Int).Value = Convert.ToInt16(this.txtCGScore.Text.ToString());
+                cmd.Parameters.Add("@nResScore", SqlDbType.Int).Value = Convert.ToInt16(this.txtRESScore.Text.ToString());
+                cmd.Parameters.Add("@nCRMScore", SqlDbType.Int).Value = iCRMBoost;
+                cmd.Parameters.Add("@nCurrentPSScore", SqlDbType.Int).Value = Convert.ToInt16(this.txtPRScore.Text.ToString());
+                cmd.Parameters.Add("@nCurrentRank", SqlDbType.Float).Value = Convert.ToDouble(this.txtPercentile.Text.ToString());
+                cmd.Parameters.Add("@nCalendarYear", SqlDbType.Int).Value = iYear;
+                cmd.Parameters.Add("@nUTR", SqlDbType.Int).Value = Convert.ToInt32(this.txtUTR.Text.ToString());
+                cmd.Parameters.Add("@nPop", SqlDbType.Text).Value = this.cboPopCode.SelectedValue.ToString();
+
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+
+                this.txtQSScore.Text = dt.Rows[0]["NewQSScore"].ToString();
+                this.txtPRScore.Text = dt.Rows[0]["NewPSScore"].ToString();
+                this.txtPercentile.Text = dt.Rows[0]["NewRank"].ToString();
+                vSegment = dt.Rows[0]["NewSegment"].ToString();
+                if (vSegment == "")
+                {
+                    vSegment = "High Risk";
+                }
+                this.cboSegment.SelectedValue = vSegment.Trim();
+
+                try  //Update Graph
+                {
+                    iChartPoints = Globals.dtGraph.Rows.Count - 1;
+                    Globals.dtGraph.Rows[iChartPoints]["Ranking"] = dt.Rows[0]["NewRank"].ToString();
+                    this.mscHistory.ItemsSource = null;
+                    this.mscHistory.ItemsSource = Globals.dtGraph.DefaultView;
+
+                    //Update Grid
+                    Globals.dtGrid.Rows[0]["Priority Score"] = dt.Rows[0]["NewPSScore"].ToString();
+                    Globals.dtGrid.Rows[0]["Ranking"] = dt.Rows[0]["NewRank"].ToString();
+                    Globals.dtGrid.Rows[0]["Segment"] = dt.Rows[0]["NewSegment"].ToString();
+                    this.dgHistorical.ItemsSource = null;
+                    this.dgHistorical.ItemsSource = Globals.dtGrid.DefaultView;
+                }
+                catch
+                {
+
+                }
+            }
+            catch
+            {
+                System.Windows.MessageBox.Show("Unable to recalculate score.  Press ReCheck Ranking Button to try again.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void cmdPercentile_Click(object sender, RoutedEventArgs e)
+        {
+            RecalculateBehaviours();
         }
     }
 

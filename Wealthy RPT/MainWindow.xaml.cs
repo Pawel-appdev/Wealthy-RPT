@@ -119,6 +119,10 @@ namespace Wealthy_RPT
 
             intOffset = 0;
 
+            Globals.gn_CRM.Insert(0, 0);
+            Globals.gn_CRM.Insert(1, 0);
+            Globals.gn_CRM.Insert(2, 0);
+
             GetdgCases(intYear, strOffice, strTeam, intPID, strPop, intOffset);
         }
 
@@ -350,9 +354,8 @@ namespace Wealthy_RPT
                 cmd.Parameters.Add("@nRows", SqlDbType.Int).Value = intPageSize ;
                 cmd.Parameters.Add("@nOffset", SqlDbType.Int).Value = intOffset;
 
-
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    da.Fill(dt);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
 
                 try//show My Cases
                 {
@@ -689,6 +692,7 @@ namespace Wealthy_RPT
                 MessageBox.Show("Unable to connect to database.");
             }
         }
+
         private void clearOtherCasesCombos()
         {
             cboOffice.Text = "";
@@ -938,7 +942,7 @@ namespace Wealthy_RPT
            IniFile GlobalFile = new IniFile(LoadAppVariables.GlobalFile);
 
 
-            GlobalFile.IniWriteValue("System", "DailyRecalc", DateTime.Now.ToString("dd/mm/yyyy"));
+            GlobalFile.IniWriteValue("System", "DailyRecalc", DateTime.Now.ToString("dd/MM/yyyy"));
             
         }
 
@@ -948,14 +952,32 @@ namespace Wealthy_RPT
             RPT_Detail rptDetail = new RPT_Detail();  // initialise form
             RPT.RPT_Data rpt = new RPT.RPT_Data(); // initialise data
             // get data for selected UTR
-            double dUTR = Convert.ToDouble((dgCases.Columns[1].GetCellContent(dgCases.CurrentCell.Item) as TextBlock).Text);
-            rpt.GetRPDData(dUTR);
-            rptDetail.DataContext = rpt;
-            rptDetail.cboPopFriendly.SelectedIndex = this.cboPopulation.SelectedIndex;
-            rptDetail.cboPopCode.SelectedIndex = this.cboPopulation.SelectedIndex;
-            try { rptDetail.lblPopYear.Text = this.cboYear.SelectedValue.ToString(); } catch { DateTime.Now.Year.ToString(); }
-            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
-            rptDetail.Show();
+            double dUTR = 0;
+            try { dUTR = Convert.ToDouble((dgCases.Columns[1].GetCellContent(dgCases.CurrentCell.Item) as TextBlock).Text); } catch { }
+            int iYear = 2000;
+            try { iYear = Convert.ToInt16(cboYear.SelectedValue); } catch { }
+            double dPercentile = 0;
+            int iPercentileIndex = dgCases.Columns.IndexOf(dgCases.Columns.FirstOrDefault(c => c.Header.ToString() == "Daily Ranking"));
+            try { dPercentile = Convert.ToDouble((dgCases.Columns[iPercentileIndex].GetCellContent(dgCases.CurrentCell.Item) as TextBlock).Text); } catch { dPercentile = 0; } // text can be 'N/A'
+            string sPop = "";
+            try { sPop = this.cboPopulation.SelectedValue.ToString(); } catch {}
+            if (rpt.GetRPDData(dUTR, iYear, dPercentile, sPop) == false)
+            {
+                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+                rptDetail.Close();
+                MessageBox.Show("Problem loading RPT Data.", "RPT Data", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                rptDetail.DataContext = rpt;
+                rptDetail.mscHistory.ItemsSource = Globals.dtGraph.DefaultView;
+                rptDetail.dgHistorical.ItemsSource = Globals.dtGrid.DefaultView;
+                rptDetail.cboPopFriendly.SelectedIndex = this.cboPopulation.SelectedIndex;
+                rptDetail.cboPopCode.SelectedIndex = this.cboPopulation.SelectedIndex;
+                try { rptDetail.lblPopYear.Text = this.cboYear.SelectedValue.ToString(); } catch { DateTime.Now.Year.ToString(); }
+                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+                rptDetail.Show();
+            }
         }
     }
 }
