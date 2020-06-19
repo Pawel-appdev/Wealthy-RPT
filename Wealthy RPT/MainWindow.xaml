@@ -49,8 +49,7 @@
                 <MenuItem x:Name="mnuUpdateDBTables" Header="Update DB Tables" HorizontalAlignment="Left" Height="24" Width="211" Margin="0,0,0,0"/>
             </MenuItem>
             <MenuItem x:Name="mnuUpdates" Header="Updates" Height="24" Width="62" RenderTransformOrigin="-1.114,0.58">
-                <MenuItem Header="Monthly Update" HorizontalAlignment="Left" Height="24" Width="182" Margin="0,0,0,0"/>
-                <MenuItem Header="Quartelly Update" HorizontalAlignment="Left" Height="24" Width="182" Margin="0,0,0,0"/>
+                <MenuItem x:Name="mnuQuarterlyUpdate" Header="Quarterly Update" HorizontalAlignment="Left" Height="24" Width="182" Margin="0,0,0,0" Click="mnuQuarterlyUpdate_Click"/>
             </MenuItem>
             <MenuItem x:Name="mnuAbout" Header="About" Height="24" Width="52" Click="MnuAbout_Click"/>
             <MenuItem x:Name="mnuGuidance" Header="Guidance" Height="24" Width="71"/>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using System.Windows;
 using System.Windows.Threading;
 using System.Reflection;
 using System.Diagnostics;
+using Ini;
 
 namespace Wealthy_RPT
 {
@@ -70,6 +72,31 @@ namespace Wealthy_RPT
             Global.AccessLevel = user.AccessLevel;
             Thread.Sleep(1500);
 
+            splashWindow.SetProgress("Checking Annual Update");
+            Thread.Sleep(1000);
+            if (Global.AnnualUpdate != DateTime.Now.Year.ToString())
+            {
+                splashWindow.SetProgress("Performing Annual Update");
+                if (PerformAnnualUpdate() == false)
+                {
+                    MessageBox.Show("Failure to perform annual update.  Please report to ICT.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                Thread.Sleep(1000);
+            }
+
+            splashWindow.SetProgress("Checking Daily Recalculation");
+            Thread.Sleep(1000);
+            if (Global.DailyRecalc != DateTime.Now.ToString("dd/MM/yyyy"))
+            {
+                //MessageBox.Show( Global.DailyRecalc + ":" + DateTime.Now.ToString("dd/MM/yyyy"), Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+                splashWindow.SetProgress("Performing Daily Recalculation");
+                if (PerformDailyRecalc()==false)
+                {
+                    MessageBox.Show("Failure to perform daily recalculation.  Please report to ICT.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                Thread.Sleep(1000);
+            }
+
             splashWindow.SetProgress("Loading Application");
             Thread.Sleep(1500);
 
@@ -87,5 +114,73 @@ namespace Wealthy_RPT
             });
         }
 
+        public bool PerformDailyRecalc()
+        {
+            IniFile GlobalFile = new IniFile(LoadAppVariables.GlobalFile);
+
+            GlobalFile.IniWriteValue("System", "DailyRecalc", DateTime.Now.ToString("dd/MM/yyyy"));
+
+            // check how many Data populations we have and perform recalculate for each population
+
+            try 
+            {
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                SqlCommand cmd = new SqlCommand("qryNewDailyPercentileRecalculation", con);
+                cmd.CommandTimeout = Global.TimeOut;
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                con.Open();
+
+                cmd.CommandText = "qryNewDailyPercentileRecalculation";
+                cmd.CommandType = CommandType.StoredProcedure;
+             
+                cmd.ExecuteNonQuery();
+
+                con.Close();
+                cmd.Dispose();
+
+                return true;
+            }
+            catch 
+            {
+                return false;
+            }
+        }
+
+        public bool PerformAnnualUpdate()
+        {
+            IniFile GlobalFile = new IniFile(LoadAppVariables.GlobalFile);
+
+            GlobalFile.IniWriteValue("System", "LastAnnualUpdate", DateTime.Now.Year.ToString());
+
+            try
+            {
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                SqlCommand cmd = new SqlCommand("qryAnnualUpdate", con);
+                cmd.CommandTimeout = Global.TimeOut;
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                con.Open();
+
+                cmd.Parameters.Clear();
+                cmd.CommandText = "qryAnnualUpdate";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@nYear", DateTime.Now.Year.ToString());
+
+                cmd.ExecuteNonQuery();
+
+                con.Close();
+                cmd.Dispose();
+                cmd.Parameters.Clear();
+
+                return true;
+            }
+            catch
+            {
+                GlobalFile.IniWriteValue("System", "LastAnnualUpdate", Global.AnnualUpdate.ToString());
+
+                return false;
+            }
+        }
     }
 }
