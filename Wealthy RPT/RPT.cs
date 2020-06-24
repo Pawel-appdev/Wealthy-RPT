@@ -13,6 +13,7 @@ namespace Wealthy_RPT
             #region propertydeclarations
             // Customer Data
             private Int32 _cuid;
+            private string _strand;
             private string _segment;
             //private string _fullname;
             private string _surname;
@@ -31,6 +32,7 @@ namespace Wealthy_RPT
             private string _domicile;
             private string _office;
             private string _team;
+            private string _allocatedto;
             private string _wealthlevel;
             private string _pathway;
             private string _source;
@@ -85,8 +87,8 @@ namespace Wealthy_RPT
             private int _settledrisks;
             private float _highestsettlement;
             private int _highestpercentage;
-            private string _crmmdata;
-            private float _crmmscore;
+            //private string _crmmdata;
+            //private float _crmmscore;
             private string _crmmdateadded;
 
             #endregion
@@ -102,6 +104,18 @@ namespace Wealthy_RPT
                 set
                 {
                     _cuid = value;
+                }
+            }
+
+            public string Strand
+            {
+                get
+                {
+                    return _strand;
+                }
+                set
+                {
+                    _strand = value;
                 }
             }
 
@@ -326,6 +340,18 @@ namespace Wealthy_RPT
                 set
                 {
                     _team = value;
+                }
+            }
+
+            public string AllocatedTo
+            {
+                get
+                {
+                    return _allocatedto;
+                }
+                set
+                {
+                    _allocatedto = value;
                 }
             }
 
@@ -900,6 +926,18 @@ namespace Wealthy_RPT
                 }
             }
 
+            public int Highest_Percentage
+            {
+                get
+                {
+                    return _highestpercentage;
+                }
+                set
+                {
+                    _highestpercentage = value;
+                }
+            }
+
             public string CRMM_Date_Added
             {
                 get
@@ -994,6 +1032,7 @@ namespace Wealthy_RPT
                         string sDate;
                         dr.Read();
                         CU_ID = Convert.ToInt32(dr["CU_ID"]);
+                        Strand = dr["Strand"].ToString();
                         Segment = dr["Segment"].ToString();
                         Surname = dr["Surname"].ToString();
                         Firstname = dr["FirstName"].ToString();
@@ -1015,6 +1054,7 @@ namespace Wealthy_RPT
                         Domicile = dr["Domicile"].ToString();
                         Office = dr["Office"].ToString();
                         Team = dr["Team"].ToString();
+                        AllocatedTo = "";
                         WealthLevel = dr["WealthLevel"].ToString();
                         Pathway = dr["Pathway"].ToString();
                         Source = dr["Source"].ToString();
@@ -1062,7 +1102,7 @@ namespace Wealthy_RPT
                     if (dr.HasRows)
                     {
                         dr.Read();
-                        AgentRecordID = Convert.ToInt32(dr["Agent_Record_ID"]);
+                        AgentRecordID = (dr["Agent_Record_ID"] is DBNull) ? 0 : Convert.ToInt32(dr["Agent_Record_ID"]);
                         Agent = dr["Agent"].ToString();
                         AgentCode = dr["AgentCode"].ToString();
                         bool blnAgent648Held = (dr["648_held"] is DBNull) ? false : Convert.ToBoolean(dr["648_held"]);
@@ -1110,13 +1150,15 @@ namespace Wealthy_RPT
                     if (dr.HasRows)
                     {
                         dr.Read();
+                        string sDate;
                         RPD_ID = Convert.ToInt32(dr["RPD_ID"]);
-                        UpdatedDate = dr["UpdatedDate"].ToString();
-                        UpdatedBy = Convert.ToInt32(dr["UpdatedBy"]);
-                        CalendarYear = Convert.ToInt16(dr["CalendarYear"]);
-                        LPOpen = Convert.ToInt16(dr["LPOpen"]);
-                        LPClosed = Convert.ToInt16(dr["LPClosed"]);
-                        HPPenalty = Convert.ToInt32(dr["HPPenalty"]);
+                        try { sDate = Convert.ToDateTime(dr["UpdatedDate"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
+                        UpdatedDate = sDate;
+                        UpdatedBy = dr["UpdatedBy"] == DBNull.Value ? 0 : Convert.ToInt32(dr["UpdatedBy"]);
+                        CalendarYear = dr["CalendarYear"] == DBNull.Value ? 0 : Convert.ToInt16(dr["CalendarYear"]);
+                        LPOpen = dr["LPOpen"] == DBNull.Value ? 0 : Convert.ToInt16(dr["LPOpen"]);
+                        LPClosed = dr["LPClosed"] == DBNull.Value ? 0 : Convert.ToInt16(dr["LPClosed"]);
+                        HPPenalty = dr["HPPenalty"] == DBNull.Value ? 0 : Convert.ToInt32(dr["HPPenalty"]);
                         byte MaxThreeWay = 2; /*Yes/No/Unknown*/
                         PSCurrent = (dr["PSCurrent"] is DBNull) ? MaxThreeWay : Convert.ToByte(dr["PSCurrent"]);
                         PSCurrent = (PSCurrent > MaxThreeWay) ? MaxThreeWay : PSCurrent;
@@ -1124,15 +1166,16 @@ namespace Wealthy_RPT
                         PSPrevious = (PSPrevious > MaxThreeWay) ? MaxThreeWay : PSPrevious;
                         PSFailures = (dr["PSFailures"] is DBNull) ? MaxThreeWay : Convert.ToByte(dr["PSFailures"]);
                         PSFailures = (PSFailures > MaxThreeWay) ? MaxThreeWay : PSFailures;
-                        QSScore = Convert.ToInt16(dr["QSScore"]);
-                        RPTPRScore = Convert.ToInt16(dr["RPTPRScore"]);
-                        RPTAVScore = Convert.ToInt16(dr["RPTAVScore"]);
-                        CGScore = Convert.ToInt16(dr["CGScore"]);
-                        ResScore = Convert.ToInt16(dr["ResScore"]);
-                        CRMScore = Convert.ToInt16(dr["CRMScore"]);
-                        PriorityScore = Convert.ToInt16(dr["PriorityScore"]);
-                        Percentile = Convert.ToInt32(dr["Percentile"]);
-                        SupecededDate = dr["SupecededDate"].ToString();
+                        QSScore = dr["QSScore"] == DBNull.Value ? 0 : Convert.ToInt16(dr["QSScore"]);
+                        RPTPRScore = dr["RPTPRScore"] == DBNull.Value ? 0 : Convert.ToInt16(dr["RPTPRScore"]);
+                        RPTAVScore = dr["RPTAVScore"] == DBNull.Value ? 0 : Convert.ToInt16(dr["RPTAVScore"]);
+                        CGScore = dr["CGScore"] == DBNull.Value ? 0 : Convert.ToInt16(dr["CGScore"]);
+                        ResScore = dr["ResScore"] == DBNull.Value ? 0 : Convert.ToInt16(dr["ResScore"]);
+                        CRMScore = dr["CRMScore"] == DBNull.Value ? 0 : Convert.ToInt16(dr["CRMScore"]);
+                        PriorityScore = dr["PriorityScore"] == DBNull.Value ? 0 : Convert.ToInt16(dr["PriorityScore"]);
+                        Percentile = dr["Percentile"] == DBNull.Value ? 0 : Convert.ToInt32(dr["Percentile"]);
+                        try { sDate = Convert.ToDateTime(dr["SupecededDate"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
+                        SupecededDate = sDate;
                         RiskingComplete = Convert.ToByte(dr["RiskingComplete"]);
                         //SegmentRecorded = dr["Segment_Recorded"].ToString();
                         //RSDLU = dr["RSDLU"].ToString();
@@ -1229,10 +1272,12 @@ namespace Wealthy_RPT
                     if (dr.HasRows)
                     {
                         dr.Read();
-                        Risks_Open = Convert.ToInt16(dr["Risks_Open"]);
-                        Settled_Risks = Convert.ToInt16(dr["Settled_Risks"]);
-                        Highest_Settlement = Convert.ToInt32(dr["Highest_Settlement"]);
-                        CRMM_Date_Added = dr["CRMM_Date_Added"].ToString();
+                        string sDate;
+                        Risks_Open = dr["Risks_Open"] == DBNull.Value ? 0 :  Convert.ToInt16(dr["Risks_Open"]);
+                        Settled_Risks = dr["Settled_Risks"] == DBNull.Value ? 0 : Convert.ToInt16(dr["Settled_Risks"]);
+                        Highest_Settlement = dr["Highest_Settlement"] == DBNull.Value ? 0 : Convert.ToInt32(dr["Highest_Settlement"]);
+                        try { sDate = Convert.ToDateTime(dr["CRMM_Date_Added"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
+                        CRMM_Date_Added = sDate;
                     }
                     #endregion
                     else if (dr.HasRows == false)
@@ -1255,12 +1300,11 @@ namespace Wealthy_RPT
                 SqlConnection con = new SqlConnection(Global.ConnectionString);
                 try
                 {
-                    int iCRM_Weighting = 0;
                     string sPop = "";
-                    Globals.gn_CRM.Clear();
-                    Globals.gn_CRM.Insert(0, 0);
-                    Globals.gn_CRM.Insert(1, 0);
-                    Globals.gn_CRM.Insert(2, 0);
+                    string sCRM_Weighting = "";
+                    int iItem = 0;
+                    Globals.gs_CRM.Clear();
+
                     SqlCommand cmd = new SqlCommand("qryGetCRMWeighting", con);
                     cmd.Parameters.Clear();
                     cmd.CommandTimeout = Global.TimeOut;
@@ -1272,44 +1316,266 @@ namespace Wealthy_RPT
                     {
                         while (dr.Read())
                         {
-                            iCRM_Weighting = Convert.ToInt16(dr["CRM_Weighting"]);
                             sPop = dr["pop"].ToString().ToUpper();
-                            switch (sPop)
-                            {
-                                case "RPT10MILL":
-                                    Globals.gn_CRM.Insert(1, iCRM_Weighting);
-                                    break;
-                                case "RPT20MILL":
-                                    Globals.gn_CRM.Insert(2, iCRM_Weighting);
-                                    break;
-                                default:
-                                    break;
-                            }
+                            sCRM_Weighting = Convert.ToString(dr["CRM_Weighting"]);
+                            Globals.gs_CRM.Add(new System.Collections.Generic.List<String>());
+                            Globals.gs_CRM[iItem].Add(sPop);
+                            Globals.gs_CRM[iItem].Add(sCRM_Weighting);
+                            iItem++;
                         }
                     }
                     #endregion
                     else if (dr.HasRows == false)
                     {
-                        Globals.gn_CRM.Clear();
-                        Globals.gn_CRM.Insert(0, 0);
-                        Globals.gn_CRM.Insert(1, 0);
-                        Globals.gn_CRM.Insert(2, 0);
+                        Globals.gs_CRM.Clear(); /*no records, then clear the list*/
                     }
                     con.Close();
                 }
                 catch
                 {
-                    Globals.gn_CRM.Clear();
-                    Globals.gn_CRM.Insert(0, 0);
-                    Globals.gn_CRM.Insert(1, 0);
-                    Globals.gn_CRM.Insert(2, 0);
+                    Globals.gs_CRM.Clear(); /*on error, clear the list*/
                     con.Close();
-                }           
+                }
+                
             }
-            public void UpdateGridandChart()
-            {
 
+            public bool CheckCustomer(double dUTR)
+            {
+                bool bRtn = false;
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("qryCheckCustomer", con);
+                    cmd.Parameters.Clear();
+                    SqlParameter prm01 = cmd.Parameters.Add("@nUTR", SqlDbType.Float);
+                    prm01.Value = dUTR;
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        bRtn = true;
+                    }
+                    con.Close();
+                }
+                catch
+                {
+                    con.Close();
+                }
+                return bRtn;
             }
+
+            public bool GetCRMMEnquiryDataScore(double dUTR)
+            {
+                bool bRtn = false;
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("qryGetCRMMEnquiryDataScore", con);
+                    cmd.Parameters.Clear();
+                    SqlParameter prm01 = cmd.Parameters.Add("@nUTR", SqlDbType.Float);
+                    prm01.Value = dUTR;
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    #region Recordset
+                    if (dr.HasRows)
+                    {
+                        dr.Read();
+                        string sDate;
+                        Risks_Open = dr["Risks_Open"] == DBNull.Value ? 0 : Convert.ToInt16(dr["Risks_Open"]);
+                        Settled_Risks = dr["Settled_Risks"] == DBNull.Value ? 0 : Convert.ToInt16(dr["Settled_Risks"]);
+                        Highest_Settlement = dr["Highest_Settlement"] == DBNull.Value ? 0 : Convert.ToInt32(dr["Highest_Settlement"]);
+                        Highest_Percentage = dr["Highest_Percentage"] == DBNull.Value ? 0 : Convert.ToInt16(dr["Highest_Percentage"]);
+                        try { sDate = Convert.ToDateTime(dr["CRMM_Date_Added"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
+                        CRMM_Date_Added = sDate;
+                    }
+                    #endregion
+                    else if (dr.HasRows == false)
+                    {
+                        //MessageBox.Show("Behaviours scores data not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    }
+                    con.Close();
+                }
+                catch
+                {
+                    con.Close();
+                    return false;
+                }
+
+                return bRtn;
+            }
+
+            public bool UpdateCustomerData()
+            {
+            SqlConnection con = new SqlConnection(Global.ConnectionString);
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("qryUpdateCustomer", con);
+                    cmd.Parameters.Clear();
+                    SqlParameter prm01 = cmd.Parameters.Add("@nStrand", SqlDbType.NVarChar);
+                    prm01.Value = Strand;
+                    SqlParameter prm02 = cmd.Parameters.Add("@nSegment", SqlDbType.NVarChar);
+                    prm02.Value = Segment;
+                    SqlParameter prm03 = cmd.Parameters.Add("@nSurname", SqlDbType.NVarChar);
+                    prm03.Value = Surname;
+                    SqlParameter prm04 = cmd.Parameters.Add("@nFirstname", SqlDbType.NVarChar);
+                    prm04.Value = Firstname;
+                    SqlParameter prm05 = cmd.Parameters.Add("@nDOB", SqlDbType.DateTime);
+                    if (DOB == "")
+                    {
+                        prm05.Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        prm05.Value = DOB;
+                    }
+                    SqlParameter prm06 = cmd.Parameters.Add("@nDeceased", SqlDbType.Bit);
+                    prm06.Value = Deceased;
+                    SqlParameter prm07 = cmd.Parameters.Add("@nDOD", SqlDbType.DateTime);
+                    if (DOD == "")
+                    {
+                        prm07.Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        prm07.Value = DOD;
+                    }
+                    SqlParameter prm08 = cmd.Parameters.Add("@nDeselected", SqlDbType.DateTime);
+                    if (Deselected == "")
+                    {
+                        prm08.Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        prm08.Value = Deselected;
+                    }
+                    SqlParameter prm09 = cmd.Parameters.Add("@nMarital", SqlDbType.NVarChar);
+                    prm09.Value = Marital;
+                    SqlParameter prm10 = cmd.Parameters.Add("@nGender", SqlDbType.NVarChar);
+                    prm10.Value = Gender;
+                    SqlParameter prm11 = cmd.Parameters.Add("@nMainAddress", SqlDbType.NVarChar);
+                    prm11.Value = MainAdd;
+                    SqlParameter prm12 = cmd.Parameters.Add("@nMainPostCode", SqlDbType.NVarChar);
+                    prm12.Value = MainPC;
+                    SqlParameter prm13 = cmd.Parameters.Add("@nSecondAddress", SqlDbType.NVarChar);
+                    prm13.Value = SecAdd;
+                    SqlParameter prm14 = cmd.Parameters.Add("@nResidence", SqlDbType.NVarChar);
+                    prm14.Value = Residence;
+                    SqlParameter prm15 = cmd.Parameters.Add("@nDomicile", SqlDbType.NVarChar);
+                    prm15.Value = Domicile;
+                    SqlParameter prm16 = cmd.Parameters.Add("@nOffice", SqlDbType.NVarChar);
+                    prm16.Value = Office;
+                    SqlParameter prm17 = cmd.Parameters.Add("@nTeam", SqlDbType.NVarChar);
+                    prm17.Value = Team;
+                    SqlParameter prm18 = cmd.Parameters.Add("@nWealth", SqlDbType.NVarChar);
+                    prm18.Value = WealthLevel;
+                    SqlParameter prm19 = cmd.Parameters.Add("@nPathway", SqlDbType.NVarChar);
+                    prm19.Value = Pathway;
+                    SqlParameter prm20 = cmd.Parameters.Add("@nSource", SqlDbType.NVarChar);
+                    prm20.Value = Source;
+                    SqlParameter prm21 = cmd.Parameters.Add("@nSector", SqlDbType.NVarChar);
+                    prm21.Value = Sector;
+                    SqlParameter prm22 = cmd.Parameters.Add("@nLongTerm", SqlDbType.NVarChar);
+                    prm22.Value = LongTerm;
+                    SqlParameter prm23 = cmd.Parameters.Add("@nLifeEvents", SqlDbType.NVarChar);
+                    prm23.Value = LifeEvents;
+                    SqlParameter prm24 = cmd.Parameters.Add("@nNarrative", SqlDbType.NVarChar);
+                    prm24.Value = Narrative;
+                    SqlParameter prm25 = cmd.Parameters.Add("@nHNWU", SqlDbType.Int);
+                    prm25.Value = HNWUPID;
+                    SqlParameter prm26 = cmd.Parameters.Add("@oUTR", SqlDbType.Float);
+                    prm26.Value = UTR;
+                    SqlParameter prm27 = cmd.Parameters.Add("@nPop", SqlDbType.NVarChar);
+                    prm27.Value = Pop;
+                    SqlParameter prm28 = cmd.Parameters.Add("@nCRMName", SqlDbType.NVarChar);
+                    prm28.Value = CRM_Name;
+                    SqlParameter prm29 = cmd.Parameters.Add("@nCRMDA", SqlDbType.DateTime);
+                    if (CRM_Appointed == "")
+                    {
+                        prm29.Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        prm29.Value = CRM_Appointed;
+                    }
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    con.Close();
+                    return false;
+                }
+                return true;
+            }
+
+            public bool ResetAgent()
+            {
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("qryResetAgent", con);
+                    cmd.Parameters.Clear();
+                    SqlParameter prm01 = cmd.Parameters.Add("@fUTR", SqlDbType.Float);
+                    prm01.Value = UTR;
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    con.Close();
+                    return false;
+                }
+                return true;
+            }
+
+            public bool UpdateAgentData(double fUTR)
+            {
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("qryUpdateAgent", con);
+                    cmd.Parameters.Clear();
+                    SqlParameter prm01 = cmd.Parameters.Add("@fUTR", SqlDbType.Float);
+                    prm01.Value = fUTR;
+                    SqlParameter prm02 = cmd.Parameters.Add("@nAgent", SqlDbType.NVarChar);
+                    prm02.Value = Agent;
+                    SqlParameter prm03 = cmd.Parameters.Add("@nAgentCode", SqlDbType.NVarChar);
+                    prm03.Value = AgentCode;
+                    SqlParameter prm04 = cmd.Parameters.Add("@b648held", SqlDbType.Bit);
+                    prm04.Value = Agent648Held;
+                    SqlParameter prm05 = cmd.Parameters.Add("@nAgentAddress", SqlDbType.NVarChar);
+                    prm05.Value = AgentAddress;
+                    SqlParameter prm06 = cmd.Parameters.Add("@nNamedAgent", SqlDbType.NVarChar);
+                    prm06.Value = NamedAgent;
+                    SqlParameter prm07 = cmd.Parameters.Add("@nOtherContact", SqlDbType.NVarChar);
+                    prm07.Value = OtherContact;
+                    SqlParameter prm08 = cmd.Parameters.Add("@nAgentTelNo", SqlDbType.NVarChar);
+                    prm08.Value = AgentTelNo;
+                    SqlParameter prm09 = cmd.Parameters.Add("@bChanged", SqlDbType.Bit);
+                    prm09.Value = Changed;
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.Write("SQL error: " + ex.Message);
+                    con.Close();
+                    return false;
+                }
+                return true;
+            }
+
         }
+
     }
 }

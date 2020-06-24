@@ -59,360 +59,362 @@
 
 
     <Grid>
-        <TabControl x:Name="tabRPD" HorizontalAlignment="Stretch" Margin="10,0,10,50">
+        <TabControl x:Name="tabRPD" HorizontalAlignment="Stretch" Margin="10,0,10,39">
             <!--#region Tab 01 : Customer-->
             <TabItem  x:Name="pgCustomer" Header="Customer">
-                <StackPanel x:Name="pnlCustomer00" Margin="0,0,0,0">
-                    <!--#region Customer Segment header row-->
-                    <StackPanel x:Name="pnlCustomer01" Width="970" Margin="10,0,0,0" HorizontalAlignment="Left" Orientation="Horizontal">
-                        <Grid Width="970">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="137*"/>
-                                <ColumnDefinition Width="155*"/>
-                                <ColumnDefinition Width="137*"/>
-                                <ColumnDefinition Width="125*"/>
-                                <ColumnDefinition Width="165*"/>
-                                <ColumnDefinition Width="130*"/>
-                                <ColumnDefinition Width="0*"/>
-                                <ColumnDefinition Width="0*"/>
-                                <ColumnDefinition Width="80*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="30"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock x:Name="lblStrand" Margin="8,2,0,2" Grid.Row="0"  Grid.Column="0" FontSize="16"><Bold>Strand</Bold></TextBlock>
-                            <ComboBox x:Name="cboStrand" Grid.Row="0"  Grid.Column="1" Margin="0,4,5,4" GotFocus="CboStrand_GotFocus" />
-                            <TextBlock x:Name="lblCustomerSegment" Margin="0,2,0,2" Grid.Row="0"  Grid.Column="2" FontSize="16"><Bold>Customer Segment</Bold></TextBlock>
-                            <ComboBox x:Name="cboSegment" Grid.Row="0"  Grid.Column="3" Margin="5,4,6,4" GotFocus="CboSegment_GotFocus" SelectedValue="{Binding Segment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <TextBlock x:Name="lblPopulation" Margin="8,2,9,2" Grid.Row="0"  Grid.Column="4" FontSize="16" HorizontalAlignment="Right"><Bold>Population</Bold></TextBlock>
-                            <ComboBox x:Name="cboPopFriendly" Grid.Row="0"  Grid.Column="5" Background="LightGray" IsEnabled="True" Margin="11,4,2,4" GotFocus="CboPopFriendly_GotFocus" SelectionChanged="CboPopFriendly_SelectionChanged"/>
-                            <ComboBox x:Name="cboPopCode" Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="3" Margin="0,4,121,4" SelectedValue="{Binding Pop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <TextBlock x:Name="txtPopFriendly" Grid.Row="0"  Grid.Column="7" Grid.ColumnSpan="2" Margin="0,4,121,4"/>
-                            <TextBlock x:Name="lblPopYear" Margin="29,2,10,2" Grid.Row="0"  Grid.Column="8" FontSize="16" FontWeight="Bold" HorizontalAlignment="Right"/>
-                            <!--<TextBlock x:Name="lblReqd" Margin="0,7,10,2"  HorizontalAlignment="Right" Grid.Row="0"  Grid.Column="7" Width="97">Compulsory Fields</TextBlock>
+                <GroupBox x:Name="grpCustomer" Header="Customer" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Height="650" Width="995">
+                    <StackPanel x:Name="pnlCustomer00" Margin="0,0,0,0">
+                        <!--#region Customer Segment header row-->
+                        <StackPanel x:Name="pnlCustomer01" Width="970" Margin="10,0,0,0" HorizontalAlignment="Left" Orientation="Horizontal">
+                            <Grid Width="970">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="137*"/>
+                                    <ColumnDefinition Width="155*"/>
+                                    <ColumnDefinition Width="137*"/>
+                                    <ColumnDefinition Width="125*"/>
+                                    <ColumnDefinition Width="165*"/>
+                                    <ColumnDefinition Width="130*"/>
+                                    <ColumnDefinition Width="0*"/>
+                                    <ColumnDefinition Width="0*"/>
+                                    <ColumnDefinition Width="80*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock x:Name="lblStrand" Margin="8,2,0,2" Grid.Row="0"  Grid.Column="0" FontSize="16"><Bold>Strand</Bold></TextBlock>
+                                <ComboBox x:Name="cboStrand" Grid.Row="0"  Grid.Column="1" Margin="0,4,5,4" GotFocus="CboStrand_GotFocus" SelectedValue="{Binding Strand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock x:Name="lblCustomerSegment" Margin="0,2,0,2" Grid.Row="0"  Grid.Column="2" FontSize="16"><Bold>Customer Segment</Bold></TextBlock>
+                                <ComboBox x:Name="cboSegment" Grid.Row="0"  Grid.Column="3" Margin="5,4,6,4" GotFocus="CboSegment_GotFocus" SelectedValue="{Binding Segment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock x:Name="lblPopulation" Margin="8,2,9,2" Grid.Row="0"  Grid.Column="4" FontSize="16" HorizontalAlignment="Right"><Bold>Population</Bold></TextBlock>
+                                <ComboBox x:Name="cboPopFriendly" Grid.Row="0"  Grid.Column="5" Background="LightGray" IsEnabled="True" Margin="11,4,2,4" GotFocus="CboPopFriendly_GotFocus" SelectionChanged="CboPopFriendly_SelectionChanged"/>
+                                <ComboBox x:Name="cboPopCode" Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="3" Margin="0,4,121,4" SelectedValue="{Binding Pop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock x:Name="txtPopFriendly" Grid.Row="0"  Grid.Column="7" Grid.ColumnSpan="2" Margin="0,4,121,4"/>
+                                <TextBlock x:Name="lblPopYear" Margin="29,2,10,2" Grid.Row="0"  Grid.Column="8" FontSize="16" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                <!--<TextBlock x:Name="lblReqd" Margin="0,7,10,2"  HorizontalAlignment="Right" Grid.Row="0"  Grid.Column="7" Width="97">Compulsory Fields</TextBlock>
                             <TextBox x:Name="txtReqd" Margin="20,4,0,0" Height="20" Width="64" Grid.Row="0"  Grid.Column="8" Background="#50000003" Grid.ColumnSpan="2"/>-->
-                        </Grid>
-                    </StackPanel>
-                    <!--#endregion-->
-                    <!--panel: Customer Details header row -->
-                    <StackPanel x:Name="pnlCustomer02" Width="980" Margin="10,0,0,0" HorizontalAlignment="Left" Orientation="Horizontal">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="553*"/>
-                                <RowDefinition Height="2*"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="50"/>
-                            </Grid.ColumnDefinitions>
-                            <!--panel end: Customer Details header row-->
-                            <!--panel: main - with two columns-->
-                            <StackPanel x:Name="pnlCustomer03" Grid.Column="0" Grid.RowSpan="2">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                </Grid>
-                                <!--#region Customer personal details -->
-                                <StackPanel x:Name="pnlCustomer04" Orientation="Horizontal">
+                            </Grid>
+                        </StackPanel>
+                        <!--#endregion-->
+                        <!--panel: Customer Details header row -->
+                        <StackPanel x:Name="pnlCustomer02" Width="980" Margin="10,0,0,0" HorizontalAlignment="Left" Orientation="Horizontal">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="553*"/>
+                                    <RowDefinition Height="2*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+                                <!--panel end: Customer Details header row-->
+                                <!--panel: main - with two columns-->
+                                <StackPanel x:Name="pnlCustomer03" Grid.Column="0" Grid.RowSpan="2">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="69*"/>
-                                            <ColumnDefinition Width="68*"/>
-                                            <ColumnDefinition Width="143*"/>
-                                            <ColumnDefinition Width="31*"/>
-                                            <ColumnDefinition Width="3*"/>
-                                            <ColumnDefinition Width="97*"/>
-                                            <ColumnDefinition Width="135*"/>
-                                            <ColumnDefinition Width="41*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="27"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="27"/>
-                                            <RowDefinition Height="27"/>
-                                            <RowDefinition Height="50"/>
-                                            <RowDefinition Height="27"/>
-                                            <RowDefinition Height="50"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock x:Name="lblCustomerDetails" Margin="8,2,9,2" Grid.Row="0" Grid.Column="0" FontSize="16" Grid.ColumnSpan="2">Customer Details</TextBlock>
-                                        <TextBlock x:Name="lblSurname" Margin="8,2,9,2" Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2">Surname</TextBlock>
-                                        <TextBox x:Name="txtSurname"  Margin="5,2,8,2" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="TxtSurname_GotFocus" Text = "{Binding Surname, Mode = TwoWay}"/>
-                                        <TextBlock x:Name="lblFirstName" Margin="5,2,9.867,2" Grid.Row="1"  Grid.Column="5">First Name(s)</TextBlock>
-                                        <TextBox x:Name="txtFirstName"  Margin="5.133,2,10.867,2" Grid.Row="1" Grid.Column="6" GotFocus="TxtFirstName_GotFocus" Text = "{Binding Firstname, Mode = TwoWay}" Grid.ColumnSpan="2"/>
-                                        <TextBlock x:Name="lblUTR" Margin="8,2,9,2" Grid.Row="2"  Grid.Column="0" Grid.ColumnSpan="2">UTR</TextBlock>
-                                        <TextBox x:Name="txtUTR" Height="23" Background="#50000003"  Margin="7,4,39,4" Grid.Row="2" Grid.Column="2" GotFocus="TxtUTR_GotFocus" Text = "{Binding UTR, Mode = TwoWay}"/>
-                                        <Button x:Name="cmdUTR" Grid.Row="2" Width="20" Height="23" Grid.Column="2"  Margin="107,3,16,2" RenderTransformOrigin="0.5,0.5" Click="CmdUTR_Click" Style="{StaticResource PressedButtonEffect}" BorderBrush="Transparent" BorderThickness="0" Background="Transparent">
-                                            <Button.RenderTransform>
-                                                <TransformGroup>
-                                                    <ScaleTransform ScaleX="-1"/>
-                                                    <SkewTransform/>
-                                                    <RotateTransform/>
-                                                    <TranslateTransform/>
-                                                </TransformGroup>
-                                            </Button.RenderTransform>
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image Source="Resources/images/Copy.ico" Width="20" Height="20" VerticalAlignment="Top"/>
-                                                <TextBlock Text="" VerticalAlignment="Center" ToolTip="Check UTR" />
-                                            </StackPanel>
-                                        </Button>
-                                        <TextBlock x:Name="lblDeceased" Margin="5,2,9.867,2" Grid.Row="2"  Grid.Column="5">Deceased</TextBlock>
-                                        <ComboBox x:Name="cboDeceased" Height="22" Margin="5.133,4,10.867,4" Grid.Row="2" Grid.Column="6" GotFocus="CboDeceased_GotFocus" SelectedValue="{Binding Deceased, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" />
-                                        <TextBlock x:Name="lblDOB" Margin="8,2,9,2" Grid.Row="3"  Grid.Column="0" Grid.ColumnSpan="2">Date of Birth</TextBlock>
-                                        <TextBox x:Name="txtDOB" Margin="5,2,8,2" Grid.Row="3"  Grid.Column="2" Grid.ColumnSpan="2" MaxLength="10" LostFocus="TxtDOB_LostFocus" KeyDown="TxtDOB_KeyDown" Tag="Date of Birth" GotFocus="TxtDOB_GotFocus" Text = "{Binding DOB, StringFormat=dd/MM/yyyy, Mode = TwoWay}"/>
-                                        <TextBox x:Name="txtDOD" Margin="5.133,2,10.867,2" Grid.Row="3"  Grid.Column="6" KeyDown="TxtDOD_KeyDown" LostFocus="TxtDOD_LostFocus" Tag="Date of Death" GotFocus="TxtDOD_GotFocus" Text = "{Binding DOD, StringFormat=dd/MM/yyyy, Mode = TwoWay}" Grid.ColumnSpan="2"/>
-                                        <TextBlock x:Name="lblMarital" Margin="8,2,9,2" Grid.Row="4"  Grid.Column="0" Grid.ColumnSpan="2">Marital Status</TextBlock>
-                                        <ComboBox x:Name="cboMarital" Height="22" Width="160" Margin="7,3,7,2" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="CboMarital_GotFocus" SelectedValue="{Binding Marital, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBlock x:Name="lblGender" Margin="5,2,9.867,2" Grid.Row="4"  Grid.Column="5">Gender</TextBlock>
-                                        <ComboBox x:Name="cboGender" Height="22" Margin="5.133,3,10.867,2" Grid.Row="4" Grid.Column="6" GotFocus="CboGender_GotFocus" SelectedValue="{Binding Gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" />
-                                        <TextBlock x:Name="lblPrivateAddress" Margin="8,2,9,2" Grid.Row="5"  Grid.Column="0" Grid.ColumnSpan="2">Private Address</TextBlock>
-                                        <TextBox x:Name="txtPrivateAddress" Margin="5,2,9.867,2" Grid.Row="5"  Grid.Column="2" Grid.ColumnSpan="6" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" GotFocus="TxtPrivateAddress_GotFocus" Text = "{Binding MainAdd, Mode = TwoWay}"/>
-                                        <TextBlock x:Name="lblPostcode" Margin="8,2,9,2" Grid.Row="6"  Grid.Column="0" Grid.ColumnSpan="2">Postcode</TextBlock>
-                                        <TextBox x:Name="txtPostcode" Margin="5,2,9,2" HorizontalAlignment="Left" Width="100" Grid.Row="6"  Grid.Column="2" GotFocus="TxtPostcode_GotFocus" Text = "{Binding MainPC, Mode = TwoWay}"/>
-                                        <CheckBox x:Name="chkDeselected" FlowDirection="RightToLeft"  Margin="6,6,10.867,6" Grid.Row="6"  Grid.Column="5" VerticalAlignment="Center" GotFocus="ChkDeselected_GotFocus" IsChecked = "{Binding DeselectedTF, Mode = OneWay}" Checked="ChkDeselected_Checked" Unchecked="ChkDeselected_Unchecked">
-                                            <CheckBox.Resources>
-                                                <Style TargetType="{x:Type Path}">
-                                                    <Setter Property="FlowDirection" Value="LeftToRight"/>
-                                                </Style>
-                                            </CheckBox.Resources> Deselected
-                                        </CheckBox>
-                                        <TextBox x:Name="txtDeselected" Margin="5.133,2,10.867,2" Grid.Row="6"  Grid.Column="6" GotFocus="TxtDeselected_GotFocus" Text = "{Binding Deselected, Mode = TwoWay}" Grid.ColumnSpan="2"/>
-                                        <TextBlock x:Name="lblSecondaryAddress" Margin="8,2" Grid.Row="7"  Grid.Column="0" Grid.ColumnSpan="2">Secondary Address</TextBlock>
-                                        <TextBox x:Name="txtSecondaryAddress" Margin="6,2,8.867,2" Grid.Row="7"  Grid.Column="2" Grid.ColumnSpan="6" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" GotFocus="TxtSecondaryAddress_GotFocus" Text = "{Binding SecAdd, Mode = TwoWay}"/>
-                                        <TextBlock x:Name="lblResidence" Margin="8,2" Grid.Row="8"  Grid.Column="0" Grid.ColumnSpan="2">Residence Status</TextBlock>
-                                        <ComboBox x:Name="cboResidence" Height="22" Margin="7,2,6,2" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="CboResidence_GotFocus" SelectedValue="{Binding Residence, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBlock x:Name="lblDomicile" Margin="7,2,7.867,2" Grid.Row="8"  Grid.Column="5">Domicile Status</TextBlock>
-                                        <ComboBox x:Name="cboDomicile" Height="22" Width="160" Margin="8.133,2,7.867,2" Grid.Row="8" Grid.Column="6" GotFocus="CboDomicile_GotFocus" SelectedValue="{Binding Domicile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" />
                                     </Grid>
+                                    <!--#region Customer personal details -->
+                                    <StackPanel x:Name="pnlCustomer04" Orientation="Horizontal">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="69*"/>
+                                                <ColumnDefinition Width="68*"/>
+                                                <ColumnDefinition Width="143*"/>
+                                                <ColumnDefinition Width="31*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="97*"/>
+                                                <ColumnDefinition Width="135*"/>
+                                                <ColumnDefinition Width="41*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="22"/>
+                                                <RowDefinition Height="27"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="27"/>
+                                                <RowDefinition Height="27"/>
+                                                <RowDefinition Height="50"/>
+                                                <RowDefinition Height="27"/>
+                                                <RowDefinition Height="50"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock x:Name="lblCustomerDetails" Margin="8,2,9,2" Grid.Row="0" Grid.Column="0" FontSize="16" Grid.ColumnSpan="2">Customer Details</TextBlock>
+                                            <TextBlock x:Name="lblSurname" Margin="8,2,9,2" Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2">Surname</TextBlock>
+                                            <TextBox x:Name="txtSurname"  Margin="5,2,8,2" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="TxtSurname_GotFocus" Text = "{Binding Surname, Mode = TwoWay}"/>
+                                            <TextBlock x:Name="lblFirstName" Margin="5,2,9.867,2" Grid.Row="1"  Grid.Column="5">First Name(s)</TextBlock>
+                                            <TextBox x:Name="txtFirstName"  Margin="5.133,2,10.867,2" Grid.Row="1" Grid.Column="6" GotFocus="TxtFirstName_GotFocus" Text = "{Binding Firstname, Mode = TwoWay}" Grid.ColumnSpan="2"/>
+                                            <TextBlock x:Name="lblUTR" Margin="8,2,9,2" Grid.Row="2"  Grid.Column="0" Grid.ColumnSpan="2">UTR</TextBlock>
+                                            <TextBox x:Name="txtUTR" Height="23" Background="#50000003"  Margin="7,4,39,4" Grid.Row="2" Grid.Column="2" GotFocus="TxtUTR_GotFocus" Text = "{Binding UTR, Mode = TwoWay}" LostFocus="TxtUTR_LostFocus"/>
+                                            <Button x:Name="cmdUTR" ToolTip="Copy UTR to Clipboard" Grid.Row="2" Width="20" Height="23" Grid.Column="2"  Margin="117,2,16,2" RenderTransformOrigin="0.5,0.5" Click="CmdUTR_Click" Style="{StaticResource PressedButtonEffect}" BorderBrush="Transparent" BorderThickness="0" Background="Transparent">
+                                                <Button.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="-1"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Button.RenderTransform>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="Resources/images/Copy.ico" Width="20" Height="20" VerticalAlignment="Top"/>
+                                                    <TextBlock Text="" VerticalAlignment="Center" ToolTip="Check UTR" />
+                                                </StackPanel>
+                                            </Button>
+                                            <TextBlock x:Name="lblDeceased" Margin="5,2,9.867,2" Grid.Row="2"  Grid.Column="5">Deceased</TextBlock>
+                                            <ComboBox x:Name="cboDeceased" Height="22" Margin="5.133,4,10.867,4" Grid.Row="2" Grid.Column="6" GotFocus="CboDeceased_GotFocus" SelectedValue="{Binding Deceased, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" />
+                                            <TextBlock x:Name="lblDOB" Margin="8,2,9,2" Grid.Row="3"  Grid.Column="0" Grid.ColumnSpan="2">Date of Birth</TextBlock>
+                                            <TextBox x:Name="txtDOB" Margin="5,2,8,2" Grid.Row="3"  Grid.Column="2" Grid.ColumnSpan="2" MaxLength="10" LostFocus="TxtDOB_LostFocus" KeyDown="TxtDOB_KeyDown" Tag="Date of Birth" GotFocus="TxtDOB_GotFocus" Text = "{Binding DOB, StringFormat=dd/MM/yyyy, Mode = TwoWay}"/>
+                                            <TextBox x:Name="txtDOD" Margin="5.133,2,10.867,2" Grid.Row="3"  Grid.Column="6" KeyDown="TxtDOD_KeyDown" LostFocus="TxtDOD_LostFocus" Tag="Date of Death" GotFocus="TxtDOD_GotFocus" Text = "{Binding DOD, StringFormat=dd/MM/yyyy, Mode = TwoWay}" Grid.ColumnSpan="2"/>
+                                            <TextBlock x:Name="lblMarital" Margin="8,2,9,2" Grid.Row="4"  Grid.Column="0" Grid.ColumnSpan="2">Marital Status</TextBlock>
+                                            <ComboBox x:Name="cboMarital" Height="22" Width="160" Margin="7,3,7,2" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="CboMarital_GotFocus" SelectedValue="{Binding Marital, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            <TextBlock x:Name="lblGender" Margin="5,2,9.867,2" Grid.Row="4"  Grid.Column="5">Gender</TextBlock>
+                                            <ComboBox x:Name="cboGender" Height="22" Margin="5.133,3,10.867,2" Grid.Row="4" Grid.Column="6" GotFocus="CboGender_GotFocus" SelectedValue="{Binding Gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" />
+                                            <TextBlock x:Name="lblPrivateAddress" Margin="8,2,9,2" Grid.Row="5"  Grid.Column="0" Grid.ColumnSpan="2">Private Address</TextBlock>
+                                            <TextBox x:Name="txtPrivateAddress" Margin="5,2,9.867,2" Grid.Row="5"  Grid.Column="2" Grid.ColumnSpan="6" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" GotFocus="TxtPrivateAddress_GotFocus" Text = "{Binding MainAdd, Mode = TwoWay}"/>
+                                            <TextBlock x:Name="lblPostcode" Margin="8,2,9,2" Grid.Row="6"  Grid.Column="0" Grid.ColumnSpan="2">Postcode</TextBlock>
+                                            <TextBox x:Name="txtPostcode" Margin="5,2,9,2" HorizontalAlignment="Left" Width="100" Grid.Row="6"  Grid.Column="2" GotFocus="TxtPostcode_GotFocus" Text = "{Binding MainPC, Mode = TwoWay}"/>
+                                            <CheckBox x:Name="chkDeselected" FlowDirection="RightToLeft"  Margin="6,6,10.867,6" Grid.Row="6"  Grid.Column="5" VerticalAlignment="Center" GotFocus="ChkDeselected_GotFocus" IsChecked = "{Binding DeselectedTF, Mode = OneWay}" Checked="ChkDeselected_Checked" Unchecked="ChkDeselected_Unchecked">
+                                                <CheckBox.Resources>
+                                                    <Style TargetType="{x:Type Path}">
+                                                        <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                                    </Style>
+                                                </CheckBox.Resources> Deselected
+                                            </CheckBox>
+                                            <TextBox x:Name="txtDeselected" Margin="5.133,2,10.867,2" Grid.Row="6"  Grid.Column="6" GotFocus="TxtDeselected_GotFocus" Text = "{Binding Deselected, Mode = TwoWay}" Grid.ColumnSpan="2"/>
+                                            <TextBlock x:Name="lblSecondaryAddress" Margin="8,2" Grid.Row="7"  Grid.Column="0" Grid.ColumnSpan="2">Secondary Address</TextBlock>
+                                            <TextBox x:Name="txtSecondaryAddress" Margin="6,2,8.867,2" Grid.Row="7"  Grid.Column="2" Grid.ColumnSpan="6" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" GotFocus="TxtSecondaryAddress_GotFocus" Text = "{Binding SecAdd, Mode = TwoWay}"/>
+                                            <TextBlock x:Name="lblResidence" Margin="8,2" Grid.Row="8"  Grid.Column="0" Grid.ColumnSpan="2">Residence Status</TextBlock>
+                                            <ComboBox x:Name="cboResidence" Height="22" Margin="7,2,6,2" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="CboResidence_GotFocus" SelectedValue="{Binding Residence, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            <TextBlock x:Name="lblDomicile" Margin="7,2,7.867,2" Grid.Row="8"  Grid.Column="5">Domicile Status</TextBlock>
+                                            <ComboBox x:Name="cboDomicile" Height="22" Width="160" Margin="8.133,2,7.867,2" Grid.Row="8" Grid.Column="6" GotFocus="CboDomicile_GotFocus" SelectedValue="{Binding Domicile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" />
+                                        </Grid>
+                                    </StackPanel>
+                                    <!--#endregion-->
+                                    <!--#region Customer Team-->
+                                    <StackPanel x:Name="pnlCustomerTeam" Orientation="Horizontal">
+                                        <Grid Width="580">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="80*"/>
+                                                <ColumnDefinition Width="60*"/>
+                                                <ColumnDefinition Width="61*"/>
+                                                <ColumnDefinition Width="106*"/>
+                                                <ColumnDefinition Width="18*"/>
+                                                <ColumnDefinition Width="86*"/>
+                                                <ColumnDefinition Width="42*"/>
+                                                <ColumnDefinition Width="127*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="22"/>
+                                                <RowDefinition Height="27"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="27"/>
+                                                <RowDefinition Height="0"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock x:Name="lblCustomerTeam" Margin="8,2,9,2" Grid.Row="0" Grid.Column="0" FontSize="16" Grid.ColumnSpan="2">Customer Team</TextBlock>
+                                            <TextBox x:Name="txtOffice"  Margin="6,2,4,2" Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="2" Visibility="Hidden"/>
+                                            <TextBox x:Name="txtTeam"  Margin="6,2,4,2" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Visibility="Hidden"/>
+                                            <TextBlock x:Name="lblOffice" Margin="8,2,9,2" Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2">Office</TextBlock>
+                                            <ComboBox x:Name="cboOffice" Height="22" Margin="4,2,1,2" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="CboOffice_GotFocus" SelectedValue="{Binding Office, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="CboOffice_SelectionChanged" />
+                                            <ComboBox x:Name="cboTeam" Height="22" Margin="6,2,4,2" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="2" GotFocus="CboTeam_GotFocus" SelectedValue="{Binding Team, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="CboTeam_SelectionChanged" />
+                                            <TextBlock x:Name="lblAllocatedTo" Margin="8,2,9,2" Grid.Row="2"  Grid.Column="0" Grid.ColumnSpan="2">Allocated To</TextBlock>
+                                            <ComboBox x:Name="cboAllocatedTo" Height="22" Margin="4,2,4,2" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="6" GotFocus="CboAllocatedTo_GotFocus" SelectedValue="{Binding 'AllocatedTo', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            <TextBlock x:Name="lblCRMName" Margin="8,2,9,2" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">CCM Name</TextBlock>
+                                            <TextBlock x:Name="lblCRMDA" Margin="8,2,9,2" Grid.Row="3"  Grid.Column="4" Grid.ColumnSpan="2">Date Appointed</TextBlock>
+                                            <ComboBox x:Name="cboCRMName" Margin="4,2,1,2" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="CboCRMName_GotFocus" SelectedValue="{Binding CRM_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            <TextBox x:Name="txtCRMDA"  Margin="6,2,4,2" Grid.Row="3" Grid.Column="6" Grid.ColumnSpan="2" Background="LightGray" GotFocus="TxtCRMDA_GotFocus" Text = "{Binding CRM_Appointed, StringFormat=dd/MM/yyyy, Mode = TwoWay}"/>
+                                            <TextBox x:Name="txtCRMName"  Margin="6,0,4,0" Grid.Row="4" Grid.Column="0"/>
+                                        </Grid>
+                                    </StackPanel>
+                                    <!--#endregion-->
+                                    <!--#region Appointed Agent-->
+                                    <StackPanel x:Name="pnlAppointedAgent" Orientation="Horizontal">
+                                        <Grid Width="580">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="80*"/>
+                                                <ColumnDefinition Width="60*"/>
+                                                <ColumnDefinition Width="61*"/>
+                                                <ColumnDefinition Width="106*"/>
+                                                <ColumnDefinition Width="18*"/>
+                                                <ColumnDefinition Width="86*"/>
+                                                <ColumnDefinition Width="42*"/>
+                                                <ColumnDefinition Width="127*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="22"/>
+                                                <RowDefinition Height="27"/>
+                                                <RowDefinition Height="27"/>
+                                                <RowDefinition Height="27"/>
+                                                <RowDefinition Height="27"/>
+                                                <RowDefinition Height="27"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock x:Name="lblAppointedAgent" Margin="8,2,9,2" Grid.Row="0" Grid.Column="0" FontSize="16" Grid.ColumnSpan="2">Appointed Agent</TextBlock>
+                                            <TextBlock x:Name="lblFirm" Margin="8,2,9,2" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" >Name of Firm</TextBlock>
+                                            <TextBox x:Name="txtFirm"  Margin="6,2,4,2" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="6" Text = "{Binding Agent, Mode = TwoWay}" GotFocus="TxtFirm_GotFocus"/>
+                                            <TextBlock x:Name="lblTelNo" Margin="8,2,9,2" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">Telephone number</TextBlock>
+                                            <TextBox x:Name="txtTelNo"  Margin="6,2,4,2" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Text = "{Binding AgentTelNo, Mode = TwoWay}" GotFocus="TxtTelNo_GotFocus"/>
+                                            <TextBlock x:Name="lblAgentCode" Margin="8,2,9,2" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" >Agent Code</TextBlock>
+                                            <TextBox x:Name="txtAgentCode"  Margin="6,2,4,2" Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="2" Text = "{Binding AgentCode, Mode = TwoWay}" GotFocus="TxtAgentCode_GotFocus"/>
+                                            <TextBlock x:Name="lblAgentAddress" Margin="8,2,9,2" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" >Agent Address</TextBlock>
+                                            <TextBox x:Name="txtAgentAddress"  Margin="6,2,4,2" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="6" Text = "{Binding AgentAddress, Mode = TwoWay}" GotFocus="TxtAgentAddress_GotFocus"/>
+                                            <TextBlock x:Name="lblNamedAgent" Margin="8,2,9,2" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">Named Agent(s)</TextBlock>
+                                            <TextBox x:Name="txtNamedAgent"  Margin="6,2,4,2" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Text = "{Binding NamedAgent, Mode = TwoWay}" GotFocus="TxtNamedAgent_GotFocus"/>
+                                            <TextBox x:Name="txtOtherContact"  Margin="6,2,4,2" Grid.Row="4" Grid.Column="6" Grid.ColumnSpan="2" Text = "{Binding OtherContact, Mode = TwoWay}" GotFocus="TxtOtherContact_GotFocus"/>
+                                            <TextBlock x:Name="lbl648" Margin="8,2,9,2" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">64-8 held?</TextBlock>
+                                            <ComboBox x:Name="cbo648" Height="22" Margin="6,2,4,2" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" SelectedValue="{Binding 'Agent648Held', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="Cbo648_GotFocus"/>
+                                            <TextBlock x:Name="lblChange" Margin="8,2,9,2" Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" >Changed in past year?</TextBlock>
+                                            <ComboBox x:Name="cboChange" Height="22" Margin="6,2,4,2" Grid.Row="5" Grid.Column="6" Grid.ColumnSpan="2" SelectedValue="{Binding 'Changed', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="CboChange_GotFocus"/>
+                                        </Grid>
+                                    </StackPanel>
+                                    <!--#endregion-->
                                 </StackPanel>
-                                <!--#endregion-->
-                                <!--#region Customer Team-->
-                                <StackPanel x:Name="pnlCustomerTeam" Orientation="Horizontal">
-                                    <Grid Width="580">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="80*"/>
-                                            <ColumnDefinition Width="60*"/>
-                                            <ColumnDefinition Width="61*"/>
-                                            <ColumnDefinition Width="106*"/>
-                                            <ColumnDefinition Width="18*"/>
-                                            <ColumnDefinition Width="86*"/>
-                                            <ColumnDefinition Width="42*"/>
-                                            <ColumnDefinition Width="127*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="27"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="27"/>
-                                            <RowDefinition Height="0"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock x:Name="lblCustomerTeam" Margin="8,2,9,2" Grid.Row="0" Grid.Column="0" FontSize="16" Grid.ColumnSpan="2">Customer Team</TextBlock>
-                                        <TextBox x:Name="txtOffice"  Margin="6,2,4,2" Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="2" Visibility="Hidden"/>
-                                        <TextBox x:Name="txtTeam"  Margin="6,2,4,2" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Visibility="Hidden"/>
-                                        <TextBlock x:Name="lblOffice" Margin="8,2,9,2" Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2">Office</TextBlock>
-                                        <ComboBox x:Name="cboOffice" Height="22" Margin="4,2,1,2" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="CboOffice_GotFocus" SelectedValue="{Binding Office, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="CboOffice_SelectionChanged" />
-                                        <ComboBox x:Name="cboTeam" Height="22" Margin="6,2,4,2" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="2" GotFocus="CboTeam_GotFocus" SelectedValue="{Binding Team, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBlock x:Name="lblAllocatedTo" Margin="8,2,9,2" Grid.Row="2"  Grid.Column="0" Grid.ColumnSpan="2">Allocated To</TextBlock>
-                                        <ComboBox x:Name="cboAllocatedTo" Height="22" Margin="4,2,4,2" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="6" GotFocus="CboAllocatedTo_GotFocus" SelectedValue="{Binding 'TeamIdentifer', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBlock x:Name="lblCRMName" Margin="8,2,9,2" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">CCM Name</TextBlock>
-                                        <TextBlock x:Name="lblCRMDA" Margin="8,2,9,2" Grid.Row="3"  Grid.Column="4" Grid.ColumnSpan="2">Date Appointed</TextBlock>
-                                        <ComboBox x:Name="cboCRMName" Margin="4,2,1,2" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="CboCRMName_GotFocus" SelectedValue="{Binding CRM_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBox x:Name="txtCRMDA"  Margin="6,2,4,2" Grid.Row="3" Grid.Column="6" Grid.ColumnSpan="2" Background="LightGray" GotFocus="TxtCRMDA_GotFocus" Text = "{Binding CRM_Appointed, StringFormat=dd/MM/yyyy, Mode = TwoWay}"/>
-                                        <TextBox x:Name="txtCRMName"  Margin="6,0,4,0" Grid.Row="4" Grid.Column="0"/>
-                                    </Grid>
-                                </StackPanel>
-                                <!--#endregion-->
-                                <!--#region Appointed Agent-->
-                                <StackPanel x:Name="pnlAppointedAgent" Orientation="Horizontal">
-                                    <Grid Width="580">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="80*"/>
-                                            <ColumnDefinition Width="60*"/>
-                                            <ColumnDefinition Width="61*"/>
-                                            <ColumnDefinition Width="106*"/>
-                                            <ColumnDefinition Width="18*"/>
-                                            <ColumnDefinition Width="86*"/>
-                                            <ColumnDefinition Width="42*"/>
-                                            <ColumnDefinition Width="127*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="27"/>
-                                            <RowDefinition Height="27"/>
-                                            <RowDefinition Height="27"/>
-                                            <RowDefinition Height="27"/>
-                                            <RowDefinition Height="27"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock x:Name="lblAppointedAgent" Margin="8,2,9,2" Grid.Row="0" Grid.Column="0" FontSize="16" Grid.ColumnSpan="2">Appointed Agent</TextBlock>
-                                        <TextBlock x:Name="lblFirm" Margin="8,2,9,2" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" >Name of Firm</TextBlock>
-                                        <TextBox x:Name="txtFirm"  Margin="6,2,4,2" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="6" Text = "{Binding Agent, Mode = TwoWay}" GotFocus="TxtFirm_GotFocus"/>
-                                        <TextBlock x:Name="lblTelNo" Margin="8,2,9,2" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">Telephone number</TextBlock>
-                                        <TextBox x:Name="txtTelNo"  Margin="6,2,4,2" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Text = "{Binding AgentTelNo, Mode = TwoWay}" GotFocus="TxtTelNo_GotFocus"/>
-                                        <TextBlock x:Name="lblAgentCode" Margin="8,2,9,2" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" >Agent Code</TextBlock>
-                                        <TextBox x:Name="txtAgentCode"  Margin="6,2,4,2" Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="2" Text = "{Binding AgentCode, Mode = TwoWay}" GotFocus="TxtAgentCode_GotFocus"/>
-                                        <TextBlock x:Name="lblAgentAddress" Margin="8,2,9,2" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" >Agent Address</TextBlock>
-                                        <TextBox x:Name="txtAgentAddress"  Margin="6,2,4,2" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="6" Text = "{Binding AgentAddress, Mode = TwoWay}" GotFocus="TxtAgentAddress_GotFocus"/>
-                                        <TextBlock x:Name="lblNamedAgent" Margin="8,2,9,2" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">Named Agent(s)</TextBlock>
-                                        <TextBox x:Name="txtNamedAgent"  Margin="6,2,4,2" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Text = "{Binding NamedAgent, Mode = TwoWay}" GotFocus="TxtNamedAgent_GotFocus"/>
-                                        <TextBox x:Name="txtOtherContact"  Margin="6,2,4,2" Grid.Row="4" Grid.Column="6" Grid.ColumnSpan="2" Text = "{Binding OtherContact, Mode = TwoWay}" GotFocus="TxtOtherContact_GotFocus"/>
-                                        <TextBlock x:Name="lbl648" Margin="8,2,9,2" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">64-8 held?</TextBlock>
-                                        <ComboBox x:Name="cbo648" Height="22" Margin="6,2,4,2" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" SelectedValue="{Binding 'Agent648Held', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="Cbo648_GotFocus"/>
-                                        <TextBlock x:Name="lblChange" Margin="8,2,9,2" Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" >Changed in past year?</TextBlock>
-                                        <ComboBox x:Name="cboChange" Height="22" Margin="6,2,4,2" Grid.Row="5" Grid.Column="6" Grid.ColumnSpan="2" SelectedValue="{Binding 'Changed', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="CboChange_GotFocus"/>
-                                    </Grid>
-                                </StackPanel>
-                                <!--#endregion-->
-                            </StackPanel>
-                            <!--panel end: main -->
+                                <!--panel end: main -->
 
-                            <!--panel: main2 - with two columns-->
-                            <StackPanel x:Name="pnlEmailContacts01" Grid.Column="1" Grid.RowSpan="2">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                </Grid>
-                                <!--#region Email Contacts-->
-                                <StackPanel x:Name="pnlEmailContacts02" Orientation="Horizontal">
-                                    <Grid x:Name="grdEmailContacts" Width="430">
+                                <!--panel: main2 - with two columns-->
+                                <StackPanel x:Name="pnlEmailContacts01" Grid.Column="1" Grid.RowSpan="2">
+                                    <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="90*"/>
-                                            <ColumnDefinition Width="54*"/>
-                                            <ColumnDefinition Width="90*"/>
-                                            <ColumnDefinition Width="22*"/>
-                                            <ColumnDefinition Width="54*"/>
-                                            <ColumnDefinition Width="30*"/>
-                                            <ColumnDefinition Width="46*"/>
-                                            <ColumnDefinition Width="45*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock x:Name="lblReqd" Margin="0,7,10,2"  HorizontalAlignment="Right" Grid.Row="0"  Grid.Column="2" Grid.ColumnSpan="3" Width="97">Compulsory Fields</TextBlock>
-                                        <TextBox x:Name="txtReqd" Margin="10,4,0,0" Height="20" Width="64" Grid.Row="0"  Grid.Column="5" Background="#50000003" Grid.ColumnSpan="2"/>
+                                    </Grid>
+                                    <!--#region Email Contacts-->
+                                    <StackPanel x:Name="pnlEmailContacts02" Orientation="Horizontal">
+                                        <Grid x:Name="grdEmailContacts" Width="430">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="90*"/>
+                                                <ColumnDefinition Width="54*"/>
+                                                <ColumnDefinition Width="90*"/>
+                                                <ColumnDefinition Width="22*"/>
+                                                <ColumnDefinition Width="54*"/>
+                                                <ColumnDefinition Width="30*"/>
+                                                <ColumnDefinition Width="46*"/>
+                                                <ColumnDefinition Width="45*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock x:Name="lblReqd" Margin="0,7,10,2"  HorizontalAlignment="Right" Grid.Row="0"  Grid.Column="2" Grid.ColumnSpan="3" Width="97">Compulsory Fields</TextBlock>
+                                            <TextBox x:Name="txtReqd" Margin="10,4,0,0" Height="20" Width="64" Grid.Row="0"  Grid.Column="5" Background="#50000003" Grid.ColumnSpan="2" IsEnabled="False"/>
 
-                                        <TextBlock x:Name="lblEmail" Grid.Row="2" Grid.Column="0" FontSize="16" Margin="0,0,10,0" Grid.ColumnSpan="2"><Run Text="Email Contacts"/><InlineUIContainer>
+                                            <TextBlock x:Name="lblEmail" Grid.Row="2" Grid.Column="0" FontSize="16" Margin="0,0,10,0" Grid.ColumnSpan="2"><Run Text="Email Contacts"/><InlineUIContainer>
                                         </InlineUIContainer></TextBlock>
-                                        <TextBlock x:Name="lblPopFields" Margin="0,5,10,0" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="2" Width="118" Grid.ColumnSpan="3">R &amp; I Populated Fields</TextBlock>
-                                        <TextBox x:Name="txtPopFields" Margin="10,1,0,0" Grid.Row="1" Grid.Column="5" Background="#339966" IsEnabled="False" Grid.ColumnSpan="2" />
-                                        <Button x:Name="cmdEmailAdd" Grid.Row="3" Grid.Column="0" Width="60" Height="30" Margin="13,5,17,5" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailAdd_GotFocus">
-                                            <TextBlock Text="Add" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Add" />
-                                        </Button>
-                                        <Button x:Name="cmdEmailUpdate" Grid.Row="4"  Grid.Column="0" Width="60" Height="30" Margin="13,5,17,5" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailUpdate_GotFocus">
-                                            <TextBlock Text="Update" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Update" />
-                                        </Button>
-                                        <Button x:Name="cmdEmailDelete" Grid.Row="5"  Grid.Column="0" Width="60" Height="30" Margin="13,5,17,11" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailDelete_GotFocus">
-                                            <TextBlock Text="Delete" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Delete" />
-                                        </Button>
-                                        <ListView x:Name="lvwEmail" Grid.Row="3"  Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="6" Margin="0,5,0,3" GotFocus="lvwEmail_GotFocus">
-                                            <ListView.View>
-                                                <GridView>
-                                                    <GridViewColumn Header="Contact" Width="50" DisplayMemberBinding="{Binding Contact}"/>
-                                                    <GridViewColumn Header="Email Address &amp; Tel. No." Width="110" DisplayMemberBinding="{Binding Email}" />
-                                                    <GridViewColumn Header="Role" Width="50" DisplayMemberBinding="{Binding Role}" />
-                                                    <GridViewColumn Header="Date Added" Width="68" DisplayMemberBinding="{Binding Date}" />
-                                                    <GridViewColumn Header="Email_ID" Width="0" DisplayMemberBinding="{Binding Email_ID}" />
-                                                </GridView>
-                                            </ListView.View>
-                                        </ListView>
-                                    </Grid>
+                                            <TextBlock x:Name="lblPopFields" Margin="0,5,10,0" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="2" Width="118" Grid.ColumnSpan="3">R &amp; I Populated Fields</TextBlock>
+                                            <TextBox x:Name="txtPopFields" Margin="10,1,0,0" Grid.Row="1" Grid.Column="5" Background="#339966" IsEnabled="False" Grid.ColumnSpan="2" />
+                                            <Button x:Name="cmdEmailAdd" Grid.Row="3" Grid.Column="0" Width="60" Height="30" Margin="13,5,17,5" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailAdd_GotFocus">
+                                                <TextBlock Text="Add" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Add" />
+                                            </Button>
+                                            <Button x:Name="cmdEmailUpdate" Grid.Row="4"  Grid.Column="0" Width="60" Height="30" Margin="13,5,17,5" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailUpdate_GotFocus">
+                                                <TextBlock Text="Update" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Update" />
+                                            </Button>
+                                            <Button x:Name="cmdEmailDelete" Grid.Row="5"  Grid.Column="0" Width="60" Height="30" Margin="13,5,17,11" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailDelete_GotFocus">
+                                                <TextBlock Text="Delete" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Delete" />
+                                            </Button>
+                                            <ListView x:Name="lvwEmail" Grid.Row="3"  Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="6" Margin="0,5,0,3" GotFocus="lvwEmail_GotFocus">
+                                                <ListView.View>
+                                                    <GridView>
+                                                        <GridViewColumn Header="Contact" Width="50" DisplayMemberBinding="{Binding Contact}"/>
+                                                        <GridViewColumn Header="Email Address &amp; Tel. No." Width="110" DisplayMemberBinding="{Binding Email}" />
+                                                        <GridViewColumn Header="Role" Width="50" DisplayMemberBinding="{Binding Role}" />
+                                                        <GridViewColumn Header="Date Added" Width="68" DisplayMemberBinding="{Binding Date}" />
+                                                        <GridViewColumn Header="Email_ID" Width="0" DisplayMemberBinding="{Binding Email_ID}" />
+                                                    </GridView>
+                                                </ListView.View>
+                                            </ListView>
+                                        </Grid>
+                                    </StackPanel>
+                                    <!--#endregion-->
+                                    <!--#region Behaviours-->
+                                    <TextBlock x:Name="lblBehaviours" FontSize="18"><Bold>Behaviours</Bold></TextBlock>
+                                    <GroupBox x:Name="grpBehaviours" Header="CRMM / Caseflow Data - last updated" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Height="106" Width="384">
+                                        <Grid x:Name="grdBehaviours">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="227*"/>
+                                                <ColumnDefinition Width="132*"/>
+                                                <ColumnDefinition Width="13*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock x:Name="lblOpenRisks" Padding="0,10,0,0" Grid.Row="1" Grid.Column="0">Open Risks</TextBlock>
+                                            <TextBox x:Name="txtOpenRisks"  Grid.Row="1" Grid.Column="1" Background="#339966" IsEnabled="False" Margin="0,3,0,4" GotFocus="TxtOpenRisks_GotFocus" Text = "{Binding Risks_Open, Mode = TwoWay}" HorizontalContentAlignment="Right" LostFocus="TxtOpenRisks_LostFocus"/>
+                                            <TextBox x:Name="txtOpenRisksHD" Visibility="Collapsed" Grid.Row="1" Grid.Column="2"/>
+                                            <TextBlock x:Name="lblSettledRisks" Padding="0,10,0,0" Grid.Row="2" Grid.Column="0">Settled Risks</TextBlock>
+                                            <TextBox x:Name="txtSettled" Grid.Row="2" Grid.Column="1" Background="#339966" IsEnabled="False" Margin="0,4,0,3" Text = "{Binding Settled_Risks, Mode = TwoWay}" HorizontalContentAlignment="Right" GotFocus="TxtSettled_GotFocus" LostFocus="TxtSettled_LostFocus"/>
+                                            <TextBox x:Name="txtSettledHD" Visibility="Collapsed" Grid.Row="2" Grid.Column="2"/>
+                                            <TextBlock x:Name="lblHighestSettled"  Padding="0,10,0,0" Grid.Row="3" Grid.Column="0">Highest settlement recorded</TextBlock>
+                                            <TextBox x:Name="txtHighestSettled" Grid.Row="3" Grid.Column="1" Background="#339966" IsEnabled="False" Margin="0,3,0,4" GotFocus="TxtHighestSettled_GotFocus" Text = "{Binding Highest_Settlement, Mode = TwoWay}" HorizontalContentAlignment="Right" LostFocus="TxtHighestSettled_LostFocus"/>
+                                            <TextBox x:Name="txtHighestSettledHD" Visibility="Collapsed" Grid.Row="3" Grid.Column="2"/>
+                                        </Grid>
+                                    </GroupBox>
+                                    <!--#endregion-->
+                                    <!--#region Behaviours2-->
+                                    <StackPanel x:Name="pnlBehaviours2" Orientation="Horizontal">
+                                        <Grid  Width="384">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="23*"/>
+                                                <ColumnDefinition Width="204"/>
+                                                <ColumnDefinition Width="134*"/>
+                                                <ColumnDefinition Width="23*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="25"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="30"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="25"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="30"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="30"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock x:Name="lblHighestPercent" Padding="5,10,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" >Highest percentage penalty charged*</TextBlock>
+                                            <TextBox x:Name="txtHighestPercent" Margin="6,3,20,3"  Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="TxtHighestPercent_GotFocus" Text = "{Binding HPPenalty, Mode = TwoWay}" HorizontalContentAlignment="Right" LostFocus="TxtHighestPercent_LostFocus"/>
+                                            <TextBox x:Name="txtHighestPercentHD" Visibility="Collapsed" Grid.Row="0" Grid.Column="3" Margin="0,3"/>
+                                            <TextBlock x:Name="lblPenalty" Padding="5,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ><Bold>Penalty suspensions</Bold></TextBlock>
+                                            <TextBlock x:Name="lblCurrentSuspensions" Padding="5,10,0,0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" >Any current suspension periods</TextBlock>
+                                            <ComboBox x:Name="cboCurrentSuspensions"  Grid.Row="2" Grid.Column="2" Margin="6,3,20,3" Grid.ColumnSpan="2" GotFocus="CboCurrentSuspensions_GotFocus" SelectedValue="{Binding PSCurrent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" LostFocus="CboCurrentSuspensions_LostFocus"/>
+                                            <TextBox x:Name="txtCurrentSuspensionsHD" Visibility="Collapsed" Grid.Row="2" Grid.Column="3" Margin="0,3"/>
+                                            <TextBlock x:Name="lblPrevSuspensions" Padding="5,10,0,0" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" >Any previous suspensions</TextBlock>
+                                            <ComboBox x:Name="cboPrevSuspensions"  Grid.Row="3" Grid.Column="2" Margin="6,5,20,5" Grid.ColumnSpan="2" GotFocus="CboPrevSuspensions_GotFocus" SelectedValue="{Binding PSPrevious, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" LostFocus="CboPrevSuspensions_LostFocus"/>
+                                            <TextBox x:Name="txtPrevSuspensionsHD" Visibility="Collapsed" Grid.Row="3" Grid.Column="3" Margin="0,5"/>
+                                            <TextBlock x:Name="lblFailures" Padding="5,10,0,0" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" >Any failure to meet suspension conditions</TextBlock>
+                                            <ComboBox x:Name="cboFailures"  Grid.Row="4" Grid.Column="2" Margin="6,3,20,3" Grid.ColumnSpan="2" GotFocus="CboFailures_GotFocus" SelectedValue="{Binding PSFailures, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" LostFocus="CboFailures_LostFocus"/>
+                                            <TextBox x:Name="txtFailuresHD" Visibility="Collapsed" Grid.Row="4" Grid.Column="3" Margin="0,3"/>
+                                            <TextBlock x:Name="lblLateFiling" Padding="5,10,0,0" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" ><Bold>Late filing / payment history</Bold></TextBlock>
+                                            <TextBlock x:Name="lblOpenIDMS" Padding="5,10,0,0" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" >Number of open work items on IDMS</TextBlock>
+                                            <TextBox x:Name="txtOpenIDMS"  Grid.Row="6" Grid.Column="2" Margin="6,3,20,3" Grid.ColumnSpan="2" Text = "{Binding LPOpen, Mode = TwoWay}" GotFocus="TxtOpenIDMS_GotFocus" HorizontalContentAlignment="Right" LostFocus="TxtOpenIDMS_LostFocus"/>
+                                            <TextBox x:Name="txtOpenIDMSHD" Visibility="Collapsed" Grid.Row="6" Grid.Column="3" Margin="0,3"/>
+                                            <TextBlock x:Name="lblClosedIDMS" Padding="5,10,0,0" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" >Number of closed work items on IDMS</TextBlock>
+                                            <TextBox x:Name="txtClosedIDMS"  Grid.Row="7" Grid.Column="2" Margin="6,5,20,5" Grid.ColumnSpan="2" Text = "{Binding LPClosed, Mode = TwoWay}" GotFocus="TxtClosedIDMS_GotFocus" HorizontalContentAlignment="Right" LostFocus="TxtClosedIDMS_LostFocus"/>
+                                            <TextBox x:Name="txtClosedIDMSHD" Visibility="Collapsed" Grid.Row="7" Grid.Column="3" Margin="0,5"/>
+                                            <TextBox x:Name="txtPSCalc" Visibility="Collapsed" Grid.Row="8" Grid.Column="3" Margin="0,0,0,10" Grid.RowSpan="2"/>
+                                            <TextBox x:Name="txtPFCalc" Visibility="Collapsed" Grid.Row="9" Grid.Column="3" Margin="0,5"/>
+                                        </Grid>
+                                    </StackPanel>
+                                    <!--#endregion-->
                                 </StackPanel>
-                                <!--#endregion-->
-                                <!--#region Behaviours-->
-                                <TextBlock x:Name="lblBehaviours" FontSize="18"><Bold>Behaviours</Bold></TextBlock>
-                                <GroupBox x:Name="grpBehaviours" Header="CRMM / Caseflow Data - last updated" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Height="106" Width="384">
-                                    <Grid x:Name="grdBehaviours">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="227*"/>
-                                            <ColumnDefinition Width="132*"/>
-                                            <ColumnDefinition Width="13*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock x:Name="lblOpenRisks" Padding="0,10,0,0" Grid.Row="1" Grid.Column="0">Open Risks</TextBlock>
-                                        <TextBox x:Name="txtOpenRisks"  Grid.Row="1" Grid.Column="1" Background="#339966" IsEnabled="False" Margin="0,3,0,4" GotFocus="TxtOpenRisks_GotFocus" Text = "{Binding Risks_Open, Mode = TwoWay}" HorizontalContentAlignment="Right"/>
-                                        <TextBox x:Name="txtOpenRisksHD" Visibility="Collapsed" Grid.Row="1" Grid.Column="2"/>
-                                        <TextBlock x:Name="lblSettledRisks" Padding="0,10,0,0" Grid.Row="2" Grid.Column="0">Settled Risks</TextBlock>
-                                        <TextBox x:Name="txtSettledRisks" Grid.Row="2" Grid.Column="1" Background="#339966" IsEnabled="False" Margin="0,4,0,3" GotFocus="TxtSettledRisks_GotFocus" Text = "{Binding Settled_Risks, Mode = TwoWay}" HorizontalContentAlignment="Right"/>
-                                        <TextBox x:Name="txtSettledHD" Visibility="Collapsed" Grid.Row="2" Grid.Column="2"/>
-                                        <TextBlock x:Name="lblHighestSettled"  Padding="0,10,0,0" Grid.Row="3" Grid.Column="0">Highest settlement recorded</TextBlock>
-                                        <TextBox x:Name="txtHighestSettled" Grid.Row="3" Grid.Column="1" Background="#339966" IsEnabled="False" Margin="0,3,0,4" GotFocus="TxtHighestSettled_GotFocus" Text = "{Binding Highest_Settlement, Mode = TwoWay}" HorizontalContentAlignment="Right"/>
-                                        <TextBox x:Name="txtHighestSettledHD" Visibility="Collapsed" Grid.Row="3" Grid.Column="2"/>
-                                    </Grid>
-                                </GroupBox>
-                                <!--#endregion-->
-                                <!--#region Behaviours2-->
-                                <StackPanel x:Name="pnlBehaviours2" Orientation="Horizontal">
-                                    <Grid  Width="384">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="23*"/>
-                                            <ColumnDefinition Width="204"/>
-                                            <ColumnDefinition Width="134*"/>
-                                            <ColumnDefinition Width="23*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="30"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="30"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="30"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="30"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock x:Name="lblHighestPercent" Padding="5,10,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" >Highest percentage penalty charged*</TextBlock>
-                                        <TextBox x:Name="txtHighestPercent" Margin="6,3,20,3"  Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="TxtHighestPercent_GotFocus" Text = "{Binding HPPenalty, Mode = TwoWay}" HorizontalContentAlignment="Right"/>
-                                        <TextBox x:Name="txtHighestPercentHD" Visibility="Collapsed" Grid.Row="0" Grid.Column="3" Margin="0,3"/>
-                                        <TextBlock x:Name="lblPenalty" Padding="5,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ><Bold>Penalty suspensions</Bold></TextBlock>
-                                        <TextBlock x:Name="lblCurrentSuspensions" Padding="5,10,0,0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" >Any current suspension periods</TextBlock>
-                                        <ComboBox x:Name="cboCurrentSuspensions"  Grid.Row="2" Grid.Column="2" Margin="6,3,20,3" Grid.ColumnSpan="2" GotFocus="CboCurrentSuspensions_GotFocus" SelectedValue="{Binding PSCurrent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        <TextBox x:Name="txtCurrentSuspensionsHD" Visibility="Collapsed" Grid.Row="2" Grid.Column="3" Margin="0,3"/>
-                                        <TextBlock x:Name="lblPrevSuspensions" Padding="5,10,0,0" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" >Any previous suspensions</TextBlock>
-                                        <ComboBox x:Name="cboPrevSuspensions"  Grid.Row="3" Grid.Column="2" Margin="6,5,20,5" Grid.ColumnSpan="2" GotFocus="CboPrevSuspensions_GotFocus" SelectedValue="{Binding PSPrevious, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        <TextBox x:Name="txtPrevSuspensionsHD" Visibility="Collapsed" Grid.Row="3" Grid.Column="3" Margin="0,5"/>
-                                        <TextBlock x:Name="lblFailures" Padding="5,10,0,0" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" >Any failure to meet suspension conditions</TextBlock>
-                                        <ComboBox x:Name="cboFailures"  Grid.Row="4" Grid.Column="2" Margin="6,3,20,3" Grid.ColumnSpan="2" GotFocus="CboFailures_GotFocus" SelectedValue="{Binding PSFailures, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        <TextBox x:Name="txtFailuresHD" Visibility="Collapsed" Grid.Row="4" Grid.Column="3" Margin="0,3"/>
-                                        <TextBlock x:Name="lblLateFiling" Padding="5,10,0,0" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" ><Bold>Late filing / payment history</Bold></TextBlock>
-                                        <TextBlock x:Name="lblOpenIDMS" Padding="5,10,0,0" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" >Number of open work items on IDMS</TextBlock>
-                                        <TextBox x:Name="txtOpenIDMS"  Grid.Row="6" Grid.Column="2" Margin="6,3,20,0" Grid.ColumnSpan="2" Text = "{Binding LPOpen, Mode = TwoWay}" GotFocus="TxtOpenIDMS_GotFocus" HorizontalContentAlignment="Right" Height="20" VerticalAlignment="Top"/>
-                                        <TextBox x:Name="txtOpenIDMSHD" Visibility="Collapsed" Grid.Row="6" Grid.Column="3" Margin="0,3"/>
-                                        <TextBlock x:Name="lblClosedIDMS" Padding="5,10,0,0" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" >Number of closed work items on IDMS</TextBlock>
-                                        <TextBox x:Name="txtClosedIDMS"  Grid.Row="7" Grid.Column="2" Margin="6,5,20,5" Grid.ColumnSpan="2" Text = "{Binding LPClosed, Mode = TwoWay}" GotFocus="TxtClosedIDMS_GotFocus" HorizontalContentAlignment="Right"/>
-                                        <TextBox x:Name="txtClosedIDMSHD" Visibility="Collapsed" Grid.Row="7" Grid.Column="3" Margin="0,5"/>
-                                        <TextBox x:Name="txtPSCalc" Visibility="Collapsed" Grid.Row="8" Grid.Column="3" Margin="0,0,0,10" Grid.RowSpan="2"/>
-                                        <TextBox x:Name="txtPFCalc" Visibility="Collapsed" Grid.Row="9" Grid.Column="3" Margin="0,5"/>
-                                    </Grid>
-                                </StackPanel>
-                                <!--#endregion-->
-                            </StackPanel>
-                            <!--panel end: main2 - with two columns-->
-                        </Grid>
+                                <!--panel end: main2 - with two columns-->
+                            </Grid>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
+                </GroupBox>
             </TabItem>
             <!--#endregion-->
             <!--#region Tab 02 : Case Overview-->
             <TabItem x:Name="pgCaseOverview" Header="Case Overview">
-                <GroupBox x:Name="grpCaseOverview" Header="Case Overview" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Height="556" Width="1018">
+                <GroupBox x:Name="grpCaseOverview" Header="Case Overview" HorizontalAlignment="Left" Margin="0,4,-2,0" VerticalAlignment="Top" Height="566" Width="995">
                     <StackPanel x:Name="pnlOverview00" Margin="0,0,0,0">
                         <!--#region panel: Case Overview-->
                         <StackPanel x:Name="pnlOverview01" Width="970" Margin="10,0,0,0" HorizontalAlignment="Left" Orientation="Horizontal">
@@ -740,23 +742,27 @@
         <StackPanel x:Name="pnlFormFooter" Orientation="Horizontal">
             <Grid Width="850">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30*"/>
-                    <ColumnDefinition Width="14*"/>
-                    <ColumnDefinition Width="14*"/>
-                    <ColumnDefinition Width="27*"/>
+                    <ColumnDefinition Width="300*"/>
+                    <ColumnDefinition Width="159*"/>
+                    <ColumnDefinition Width="159*"/>
+                    <ColumnDefinition Width="251*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="cmdGuidance"  Grid.Column="0"  HorizontalAlignment="Left" Margin="10,0,205,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdGuidance_GotFocus">
-                    <TextBlock Text="Guidance" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Guidance" />
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="600"/>
+                    <RowDefinition Height="80"/>
+                </Grid.RowDefinitions>
+                <Button x:Name="cmdGuidance"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Margin="35,0,0,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.118,1.232" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdGuidance_GotFocus">
+                    <TextBlock Text="Guidance" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Guidance" Margin="0,2,13,2" />
 
                 </Button>
-                <Button x:Name="cmdSave" Grid.Column="1" HorizontalAlignment="Left" Margin="0,10,0,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdSave_GotFocus" Click="CmdSave_Click">
-                    <TextBlock Text="Save Changes" VerticalAlignment="Top" ToolTip="Save Changes" Margin="2,2,2,0" />
+                <Button x:Name="cmdSave" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,0,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdSave_GotFocus" Click="CmdSave_Click">
+                    <TextBlock x:Name="tcmdSave" Text="Save Changes" VerticalAlignment="Top" ToolTip="Save Changes" Margin="2,2,2,0" />
                 </Button>
-                <Button x:Name="cmdUpdateClose" Grid.Column="2" HorizontalAlignment="Left" Margin="0,10,0,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdUpdateClose_GotFocus" Click="CmdUpdateClose_Click">
-                    <TextBlock Text="Save &amp; Close" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Save &amp; Close"/>
+                <Button x:Name="cmdUpdateClose" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,0,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdUpdateClose_GotFocus" Click="CmdUpdateClose_Click">
+                    <TextBlock x:Name="tcmdUpdateClose" Text="Save &amp; Close" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Save &amp; Close"/>
                 </Button>
-                <Button x:Name="cmdCancel" Grid.Column="3" HorizontalAlignment="Left" Margin="0,10,0,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdCancel_GotFocus" Click="CmdCancel_Click">
-                    <TextBlock Text="Close" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Close"/>
+                <Button x:Name="cmdCancel" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,0,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdCancel_GotFocus" Click="CmdCancel_Click">
+                    <TextBlock x:Name="tcmdCancel" Text="Close" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Close"/>
                 </Button>
             </Grid>
         </StackPanel>

@@ -72,6 +72,7 @@ namespace Wealthy_RPT
         private bool _aladmin = false; // 0 = No, 1 = Yes
         private string _baadmin = "";
         private string _accesslevel = "";
+        private string _popcodename = "";
 
         public string PID
         {
@@ -145,6 +146,32 @@ namespace Wealthy_RPT
             }
         }
 
+        //public int POP_ID
+        //{
+        //    get
+        //    {
+        //        return _popid;
+        //    }
+        //    set
+        //    {
+        //        _popid = value;
+        //    }
+        //}
+
+        public string Pop_Code_Name
+        {
+            get
+            {
+                return _popcodename;
+            }
+            set
+            {
+                _popcodename = value;
+            }
+        }
+        
+
+
         public void GetUserInfo()
         {
 
@@ -167,10 +194,11 @@ namespace Wealthy_RPT
             {
                 reader.Read();
                 {
-                    FullName = reader["Full Name"].ToString();              
+                    FullName = reader["Full Name"].ToString();
+                    Pop_Code_Name =  reader["Pop_Code_Name"].ToString();
                 }
             }
-            else
+            else 
             {
                 {
                     MessageBox.Show("You are not know by this application." + "\n" + "\n" + "The application will now close.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Exclamation);
