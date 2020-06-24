@@ -598,7 +598,7 @@
                                     <RowDefinition Height="400"/>
                                 </Grid.RowDefinitions>
                                 <GroupBox x:Name="grpPreviousScores" Header="Previous Scores" Grid.Row="0" Grid.Column="0">
-                                    <!--<ListView x:Name="lvwPrevRes" GotFocus="LvwPrevRes_GotFocus" Margin="0,0,0,97">
+                                    <ListView x:Name="lvwPrevRes" GotFocus="LvwPrevRes_GotFocus">
                                         <ListView.View>
                                             <GridView>
                                                 <GridViewColumn Header="Date" Width="60" DisplayMemberBinding="{Binding Date}" />

@@ -1391,6 +1391,7 @@ namespace Wealthy_RPT
                         Highest_Percentage = dr["Highest_Percentage"] == DBNull.Value ? 0 : Convert.ToInt16(dr["Highest_Percentage"]);
                         try { sDate = Convert.ToDateTime(dr["CRMM_Date_Added"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
                         CRMM_Date_Added = sDate;
+
                     }
                     #endregion
                     else if (dr.HasRows == false)
@@ -1574,8 +1575,6 @@ namespace Wealthy_RPT
                 }
                 return true;
             }
-
         }
-
     }
 }

@@ -783,13 +783,13 @@ namespace Wealthy_RPT
             }
         }
 
-        //private void LvwPrevRes_GotFocus(object sender, RoutedEventArgs e)
-        //{
-        //    if (Globals.blnAccess == true)
-        //    {
-        //        ShowActiveControl(lvwPrevRes);
-        //    }
-        //}
+        private void LvwPrevRes_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (Globals.blnAccess == true)
+            {
+                ShowActiveControl(lvwPrevRes);
+            }
+        }
 
         private void MscHistory_GotFocus(object sender, RoutedEventArgs e)
         {
