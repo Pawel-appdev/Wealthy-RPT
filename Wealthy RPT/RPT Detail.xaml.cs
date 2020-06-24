@@ -1743,6 +1743,7 @@ namespace Wealthy_RPT
 
             cmdUpdateClose.IsEnabled = false;
             Globals.blnUpdate = false;
+            RecalculateBehaviours();
             SaveRecord();
 
             if(Globals.blnUpdate == true)
@@ -1827,13 +1828,13 @@ namespace Wealthy_RPT
             RecalculateBehaviours();
         }
 
-        private void CmdUpdateClose_Click(object sender, RoutedEventArgs e)
-        {
-            RecalculateBehaviours();
+        //private void CmdUpdateClose_Click(object sender, RoutedEventArgs e)
+        //{
+        //    RecalculateBehaviours();
 
-            BindingExpression obj = txtSecondaryAddress.GetBindingExpression(TextBox.TextProperty);
-            obj.UpdateSource();
-        }
+        //    BindingExpression obj = txtSecondaryAddress.GetBindingExpression(TextBox.TextProperty);
+        //    obj.UpdateSource();
+        //}
 
         private void ReplotChart()
         {
@@ -1900,7 +1901,7 @@ namespace Wealthy_RPT
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add("@nOpenRisks", SqlDbType.Int).Value = Convert.ToInt16(this.txtOpenRisks.Text.ToString());
-                cmd.Parameters.Add("@nClosedRisks", SqlDbType.Int).Value = Convert.ToInt16(this.txtSettledRisks.Text.ToString());
+                cmd.Parameters.Add("@nClosedRisks", SqlDbType.Int).Value = Convert.ToInt16(this.txtSettled.Text.ToString());
                 cmd.Parameters.Add("@nHighestSettlement", SqlDbType.Float).Value = Convert.ToDouble(this.txtHighestSettled.Text.ToString());
                 cmd.Parameters.Add("@nHPPenalty", SqlDbType.Float).Value = Convert.ToDouble(this.txtHighestPercent.Text.ToString());
                 cmd.Parameters.Add("@nCurrentSuspensions", SqlDbType.Int).Value = iCSuspensions;
