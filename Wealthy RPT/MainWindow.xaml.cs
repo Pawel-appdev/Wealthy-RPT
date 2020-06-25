@@ -136,6 +136,19 @@ namespace Wealthy_RPT
             this.sbiVersion.Content = "Version : " + Global.CurrentVersion;
             this.sbiAccessLevel.Content = "Access Level : " + Global.AccessLevel;
 
+            HideMenuItems();
+            PopulateCases();
+        }
+
+        private void HideMenuItems()
+        {
+            if (Global.Admin != true)
+            {
+                mnuAdmin.IsEnabled = false;
+            }
+        }
+        private void PopulateCases()
+        {
             int intYear = Convert.ToInt32(cboYear.SelectedValue);
             string strOffice = (cboOffice.SelectedIndex == -1) ? "All" : cboOffice.SelectedValue.ToString();
             string strTeam = (cboTeam.SelectedIndex == -1) ? "All" : cboTeam.SelectedValue.ToString();
@@ -143,7 +156,7 @@ namespace Wealthy_RPT
             string strPop = "";
             try
             {
-            strPop = this.cboPopulation.SelectedValue.ToString();
+                strPop = this.cboPopulation.SelectedValue.ToString();
             }
             catch
             {
@@ -1014,5 +1027,11 @@ namespace Wealthy_RPT
             PeriodImport periodImport = new PeriodImport();
             periodImport.Show();
         }
+
+    private void mnuUpdateDBTables_Click(object sender, RoutedEventArgs e)
+    {
+        Admin ctr_Admin = new Admin();
+        ctr_Admin.ShowDialog();
     }
+}
 }

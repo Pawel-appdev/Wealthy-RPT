@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Navigation;
 
 namespace Wealthy_RPT
 {
@@ -21,6 +22,9 @@ namespace Wealthy_RPT
     /// </summary>
     public partial class RPT_Detail : Window
     {
+        
+        public double dblUTR;
+
         TextBoxDate tbd = new TextBoxDate();
         bool bFormLoaded = false;
         public int WeightedScore { get; set; }
@@ -180,6 +184,10 @@ namespace Wealthy_RPT
         {
 
             PopulateAndSetAllocationCombos();
+
+            dblUTR = Convert.ToDouble(txtUTR.Text);
+            GetEmails(dblUTR);
+            GetAssociates(dblUTR);
 
             if (Globals.gs_CRM.Count < 1) /*test for weightings*/
             {
@@ -607,21 +615,21 @@ namespace Wealthy_RPT
             }
         }
 
-        private void LvwAssociates_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (Globals.blnAccess == true)
-            {
-                ShowActiveControl(lvwAssociates);
-            }
-        }
+        //private void LvwAssociates_GotFocus(object sender, RoutedEventArgs e)
+        //{
+        //    if (Globals.blnAccess == true)
+        //    {
+        //        //ShowActiveControl(lvwAssociates);
+        //    }
+        //}
 
-        private void lvwEmail_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (Globals.blnAccess == true)
-            {
-                ShowActiveControl(lvwEmail);
-            }
-        }
+        //private void lvwEmail_GotFocus(object sender, RoutedEventArgs e)
+        //{
+        //    if (Globals.blnAccess == true)
+        //    {
+        //        ShowActiveControl(lvwEmail);
+        //    }
+        //}
 
         private void TxtOpenRisks_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -795,7 +803,7 @@ namespace Wealthy_RPT
         {
             if (Globals.blnAccess == true)
             {
-                ShowActiveControl(mscHistory);
+                //ShowActiveControl(mscHistory);
             }
         }
 
@@ -1962,6 +1970,230 @@ namespace Wealthy_RPT
         private void cmdPercentile_Click(object sender, RoutedEventArgs e)
         {
             RecalculateBehaviours();
+        }
+
+
+        private void GetEmails(double UTR)
+        {
+
+            SqlConnection con = new SqlConnection(Global.ConnectionString);
+            SqlCommand cmd = new SqlCommand("qryGetEmailAddresses", con);
+            cmd.Parameters.Clear();
+            SqlParameter prm = cmd.Parameters.Add("@nUTR", SqlDbType.Float);
+            prm.Value = UTR;
+            cmd.CommandTimeout = Global.TimeOut;
+            cmd.CommandType = CommandType.StoredProcedure;
+            con.Open();
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+
+            DataTable dt = new DataTable("dgEmail");
+
+            da.Fill(dt);
+
+            //dgEmail.ItemsSource = null;
+
+            //dgEmail.Items.Refresh();
+            //dgEmail.UpdateLayout();
+            dgEmail.ItemsSource = dt.DefaultView;
+
+            con.Close();
+        }
+
+        private void cmdEmailAdd_Click(object sender, RoutedEventArgs e)
+        {
+            if(txtUTR.Text.Length != 10)
+            {
+                MessageBox.Show("Please ensure you have input a UTR and added the " + "\n" + "Customer Record before adding an Email address.","Email address", MessageBoxButton.OK ,MessageBoxImage.Information);
+                return;
+            }
+
+
+            dblUTR = Convert.ToDouble(txtUTR.Text);
+            string strEmailID = "";
+            string strContact = "";
+            string strEmail = "";
+            string strRole = "";
+            string strDateAdded = "";
+
+            Email email = new Email(dblUTR,strEmailID, strContact, strEmail, strRole, strDateAdded);
+            email.Title = "Add Email Address";
+            email.btnAction.Content = "Add";
+    
+            email.ShowDialog();
+
+        }
+
+        private void cmdEmailUpdate_Click(object sender, RoutedEventArgs e)
+        {
+
+            try
+            {
+                DataRowView selectedRow = (DataRowView)dgEmail.SelectedItem;
+
+                double dUTR = Convert.ToDouble(txtUTR.Text);
+                string strEmailID = selectedRow["Email_ID"].ToString();
+                string strContact = selectedRow["Contact"].ToString();
+                string strEmail = selectedRow["Email_Address"].ToString();
+                string strRole = selectedRow["Contact_Role"].ToString();
+                string strDateAddded = selectedRow["Contact_Date_Added"].ToString();
+
+                Email email = new Email(dblUTR,strEmailID, strContact, strEmail, strRole, strDateAddded  );
+                email.Title = "Update Email Address";
+                email.btnAction.Content = "Update";
+                email.ShowDialog();
+        }
+            catch
+            {
+                MessageBox.Show("Contact details have not been selected.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
+}
+
+        private void cmdEmailDelete_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                DataRowView selectedRow = (DataRowView)dgEmail.SelectedItem;
+
+            MessageBoxResult answer = MessageBox.Show("Do you want to delete " + selectedRow["Email_Address"] + " permanently?", "Wealthy RPT", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (answer == MessageBoxResult.Yes)
+            {
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                con.Open();
+                SqlCommand cmd = new SqlCommand("qryDeleteEmailAddress", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@nEmailID", SqlDbType.Int).Value = selectedRow["Email_ID"];
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                this.Close();
+
+                double dUTR = Convert.ToDouble(txtUTR.Text);
+                    int intTab = 0;
+                Forms.reloadForm(dUTR, intTab);
+            }
+
+            }
+            catch
+            {
+                MessageBox.Show("Contact details have not been selected.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void GetAssociates(double UTR)
+        {
+            SqlConnection con = new SqlConnection(Global.ConnectionString);
+            SqlCommand cmd = new SqlCommand("qryGetAssociates", con);
+            cmd.Parameters.Clear();
+            SqlParameter prm = cmd.Parameters.Add("@nUTR", SqlDbType.Float);
+            prm.Value = UTR;
+            cmd.CommandTimeout = Global.TimeOut;
+            cmd.CommandType = CommandType.StoredProcedure;
+            con.Open();
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+
+            DataTable dt = new DataTable("dgAssociates");
+
+            da.Fill(dt);
+
+            //add column to DataTable
+            dt.Columns.Add("HNWU?", typeof(string)).SetOrdinal(1);
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (dr["HNWU"].ToString() == "True")
+                {
+                    dr["HNWU?"] = "Yes";
+                }
+            }
+
+            dgAssociates.ItemsSource = dt.DefaultView;
+
+            con.Close();
+        }
+
+        private void cmdAddAssociate_Click(object sender, RoutedEventArgs e)
+        {
+            dblUTR = Convert.ToDouble(txtUTR.Text);
+            string strAssociate_ID = "";
+            string strNature_of_Association = "";
+            string strAssociate_Name = "";
+            string strAssociate_UTR = "";
+            string strHNWU = "";
+            string strContact_Info = "";
+
+            Associates Assoc = new Associates(dblUTR, strAssociate_ID, strNature_of_Association, strAssociate_Name, strAssociate_UTR, strHNWU, strContact_Info);
+            Assoc.Title = "Add Associate";
+            Assoc.btnAction.Content = "Add";
+            Assoc.Show();
+
+        }
+
+        private void cmdUpdateAssociate_Click(object sender, RoutedEventArgs e)
+        {
+            try 
+            { 
+                DataRowView selectedRow = (DataRowView)dgAssociates.SelectedItem;
+
+                double dUTR = Convert.ToDouble(txtUTR.Text);
+                string strAssociate_ID = selectedRow["Associate_ID"].ToString();
+                string strNature_of_Association = selectedRow["Nature_of_Association"].ToString();
+                string strAssociate_Name = selectedRow["Associate_Name"].ToString();
+                string strAssociate_UTR = selectedRow["Associate_UTR"].ToString();
+                string strHNWU = selectedRow["HNWU"].ToString();
+                string strContact_Info = selectedRow["Contact_Info"].ToString();
+
+
+
+                Associates Assoc = new Associates(dblUTR, strAssociate_ID, strNature_of_Association, strAssociate_Name, strAssociate_UTR,strHNWU, strContact_Info);
+                Assoc.Title = "Update Associate";
+                Assoc.btnAction.Content = "Update";
+                Assoc.Show();
+            }
+            catch
+            {
+                MessageBox.Show("Associate's details have not been selected.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
+        }
+
+        private void cmdDeleteAssociate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                DataRowView selectedRow = (DataRowView)dgAssociates.SelectedItem;
+
+                MessageBoxResult answer = MessageBox.Show("Do you want to delete " + selectedRow["Associate_Name"] + " permanently?", "Wealthy RPT", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (answer == MessageBoxResult.Yes)
+                {
+                    SqlConnection con = new SqlConnection(Global.ConnectionString);
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand("qryDeleteAssociate", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@nAssociateID", SqlDbType.Int).Value = selectedRow["Associate_ID"];
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+
+                    this.Close();
+
+                    double dUTR = Convert.ToDouble(txtUTR.Text);
+                    int intTab = 1;
+                    Forms.reloadForm(dUTR, intTab);
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("Associate's details have not been selected.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
 

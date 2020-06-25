@@ -50,7 +50,7 @@ namespace Wealthy_RPT
             // PID for dev purposes only
             if ((System.Diagnostics.Debugger.IsAttached == true) && (PID == "0000000"))
             {
-                    PID = "1234567";
+                PID = "1234567";
             }
 
 
@@ -64,13 +64,14 @@ namespace Wealthy_RPT
         {
             PID = _pid;
             GetUserInfo();
+            IsUserAdmin();
         }
 
         private string _pid = "1234567";
         private string _fullname = "";
         private bool _active = false; // 0 = No, 1 = Yes
-        private bool _aladmin = false; // 0 = No, 1 = Yes
-        private string _baadmin = "";
+        private bool _admin = false; // 0 = No, 1 = Yes
+        private bool _baadmin = false;// 0 = No, 1 = Yes
         private string _accesslevel = "";
         private string _popcodename = "";
 
@@ -98,19 +99,19 @@ namespace Wealthy_RPT
             }
         }
 
-        public bool AL_Admin
+        public bool Admin
         {
             get
             {
-                return _aladmin;
+                return _admin;
             }
             set
             {
-                _aladmin = value;
+                _admin = value;
             }
         }
 
-        public string BA_Admin
+        public bool BA_Admin
         {
             get
             {
@@ -197,12 +198,44 @@ namespace Wealthy_RPT
                     FullName = reader["Full Name"].ToString();
                     Pop_Code_Name =  reader["Pop_Code_Name"].ToString();
                 }
+
+                IsUserAdmin();
             }
             else 
             {
                 {
                     MessageBox.Show("You are not know by this application." + "\n" + "\n" + "The application will now close.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     Environment.Exit(0);
+                }
+            }
+
+            #endregion
+
+        }
+
+        public void IsUserAdmin()
+        {
+            SqlConnection con = new SqlConnection(Global.ConnectionString);
+            SqlCommand cmd = new SqlCommand("qryGetUsersInfo", con);
+            cmd.CommandTimeout = Global.TimeOut;
+            cmd.CommandType = CommandType.StoredProcedure;
+
+
+            SqlParameter prmPID = cmd.Parameters.Add("@PID", SqlDbType.Int);
+
+            prmPID.Value = PID;
+
+            con.Open();
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            #region Recordset
+            if (reader.HasRows)
+            {
+                reader.Read();
+                {
+                    Admin = reader.GetBoolean(0);
+                    BA_Admin = reader.GetBoolean(1);
                 }
             }
 

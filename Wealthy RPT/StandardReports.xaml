@@ -5,8 +5,65 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wealthy_RPT"
         mc:Ignorable="d"
-        Title="RPT Standard Reports" Height="450" Width="800" Icon="RPT16V1.ico">
-    <Grid>
-        
+        Title="RPT Standard Reports" Height="470" Width="700" Icon="RPT16V1.ico">
+    <Window.Resources>
+        <!--data grid column header style-->
+        <Style x:Key="CenterGridHeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <!-- data grid text center style-->
+        <Style x:Key="TextCenter" TargetType="{x:Type TextBlock}" >
+            <Setter Property="TextAlignment" Value="Center" />
+        </Style>
+    </Window.Resources>
+    <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}">
+        <Label Content="Population:" HorizontalAlignment="Left" Height="28" Margin="32,27,0,0" VerticalAlignment="Top" Width="85"/>
+        <Label Content="Office:" HorizontalAlignment="Left" Height="28" Margin="32,67,0,0" VerticalAlignment="Top" Width="85"/>
+        <Label Content="Office Team:" HorizontalAlignment="Left" Height="28" Margin="347,64,0,0" VerticalAlignment="Top" Width="85"/>
+        <ComboBox x:Name="cboPop" HorizontalAlignment="Left" Height="25" Margin="130,27,0,0" VerticalAlignment="Top" Width="140"/>
+        <ComboBox x:Name="cboOffice" HorizontalAlignment="Left" Height="25" Margin="130,67,0,0" VerticalAlignment="Top" Width="140" DropDownClosed="cboOffice_DropDownClosed" />
+        <ComboBox x:Name="cboTeam" HorizontalAlignment="Left" Height="25" Margin="437,67,0,0" VerticalAlignment="Top" Width="140"/>
+        <DataGrid x:Name="dgStReports" HorizontalAlignment="Left" Height="271" Margin="32,116,0,0" VerticalAlignment="Top" Width="628" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid.Resources>
+            <!--color of selected row-->
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="White" />
+            </DataGrid.Resources>
+            <DataGrid.CellStyle>
+                <Style TargetType="{x:Type DataGridCell}">
+                <!--font color of selected row-->
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
+
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox Click="CheckBox_Click"/>
+                            <!--<CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding Path=IsSelected, UpdateSourceTrigger=PropertyChanged}" />-->
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="ReportID" Binding="{Binding ReportID}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="Report Name" Binding="{Binding ReportName}" Width="500"/>
+                <DataGridTextColumn Header="Run" Binding="{Binding RunReport}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="ReportYear" Binding="{Binding Year}" Width="120" Visibility="Hidden"/>
+                <DataGridTextColumn Header="Report Year" Binding="{Binding ReportYear}" Width="120" HeaderStyle="{StaticResource CenterGridHeaderStyle}"  ElementStyle="{StaticResource TextCenter}"/>
+                <!--<DataGridTextColumn Header="FromYear" Binding="{Binding PrevYears}" Width="120" Visibility="Hidden"/>-->
+                <!--<DataGridTextColumn Header="From Year" Binding="{Binding Prev_Years}" Width="120" HeaderStyle="{StaticResource CenterGridHeaderStyle}" ElementStyle="{StaticResource TextCenter}"/>-->
+                <DataGridTextColumn Header="SQL" Binding="{Binding SQL}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="Summary SQL" Binding="{Binding SummarySQL}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="Layout" Binding="{Binding Layout}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="Template" Binding="{Binding Template}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="Excel Report Name" Binding="{Binding ExcelReportName}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="Range" Binding="{Binding CopyRange}" Visibility="Hidden"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="btnReports" Content="Run" HorizontalAlignment="Left" Height="28" Margin="130,398,0,0" VerticalAlignment="Top" Width="100" Click="btnReports_Click"/>
+        <Button x:Name="btnClose" Content="Close" HorizontalAlignment="Left" Height="28" Margin="430,398,0,0" VerticalAlignment="Top" Width="100" Click="btnClose_Click"/>
     </Grid>
 </Window>

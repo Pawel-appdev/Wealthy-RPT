@@ -82,6 +82,8 @@ namespace Wealthy_RPT
         private static string _dailyRecalc;
         private static string _annualUpdate;
         private static string _defaultImportFolder;
+        private static bool _admin;
+        private static bool _baadmin;
 
         public static string PID
         {
@@ -116,6 +118,30 @@ namespace Wealthy_RPT
             set
             {
                 _accesslevel = value;
+            }
+        }
+
+        public static bool Admin
+        {
+            get
+            {
+                return _admin;
+            }
+            set
+            {
+                _admin = value;
+            }
+        }
+
+        public static bool BA_Admin
+        {
+            get
+            {
+                return _baadmin;
+            }
+            set
+            {
+                _baadmin = value;
             }
         }
 

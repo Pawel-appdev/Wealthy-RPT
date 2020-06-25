@@ -1,0 +1,19 @@
+﻿<Window x:Name="frmAdmin" x:Class="Wealthy_RPT.Admin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wealthy_RPT"
+        mc:Ignorable="d"
+        Title="Control Admin" Height="600" Width="1200" WindowStartupLocation="CenterScreen" Icon="RPT16V1.ico">
+    <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Margin="0,0,0,0">
+        <Label x:Name="lblLookUp" Content="Select Lookup Table from list" HorizontalAlignment="Left" Height="26" Margin="40,20,0,0" VerticalAlignment="Top" Width="392"/>
+        <ComboBox x:Name="cboTableName" HorizontalAlignment="Left" Height="25" Margin="40,50,0,0" VerticalAlignment="Top" Width="286" DropDownClosed="cboTableName_DropDownClosed"/>
+        <DataGrid x:Name="dgQueries" HorizontalAlignment="Left" Height="25" Margin="464,50,0,0" VerticalAlignment="Top" Width="691" Visibility="Hidden"/>
+        <DataGrid x:Name="dgTables" HorizontalAlignment="Left" Height="398" Margin="40,105,0,0" VerticalAlignment="Top" Width="1115"/>
+        <Button x:Name="btnRefresh" Content="Update" HorizontalAlignment="Left" Height="35" Margin="757,45,0,0" VerticalAlignment="Top" Width="98" Click="btnRefresh_Click"/>
+        <Button x:Name="btnHelp" Content="Admin Helpcard" HorizontalAlignment="Left" Height ="35" Margin="885,45,0,0" VerticalAlignment="Top" Width="98"/>
+        <Button x:Name="btnClose" Content="Close" HorizontalAlignment="Left" Height="35" Margin="1053,45,0,0" VerticalAlignment="Top" Width="98" Click="btnClose_Click"/>
+
+    </Grid>
+</Window>
