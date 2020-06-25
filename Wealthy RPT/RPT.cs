@@ -1404,6 +1404,7 @@ namespace Wealthy_RPT
                         //MessageBox.Show("Behaviours scores data not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     }
                     con.Close();
+                    return true;
                 }
                 catch
                 {

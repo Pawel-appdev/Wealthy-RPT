@@ -24,13 +24,18 @@ namespace Wealthy_RPT
     {
         public double dUTR;
         public string Email_ID;
+        public double dPercentile;
+        public string sPop;
 
-        public Email(double dblUTR,string EmailID, string strContact, string strEmail, string strRole, string strDateAdded)
+        public Email(double dblUTR,string EmailID, string strContact, string strEmail, string strRole, string strDateAdded, double dblPercentile, String strPop)
         {
             InitializeComponent();
             //testAction();
             dUTR = dblUTR;
             Email_ID = EmailID;
+            dPercentile = dblPercentile;
+            sPop = strPop;
+
             this.txtContact.Text = strContact;
             this.txtEmailAddr.Text = strEmail;
             this.txtRole.Text = strRole;
@@ -72,7 +77,7 @@ namespace Wealthy_RPT
 
                 this.Close();
                 int intTab = 0;
-                Forms.reloadForm(dUTR, intTab);
+                Forms.reloadForm(dUTR, intTab, dPercentile, sPop);
 
         }
             catch
@@ -98,7 +103,7 @@ namespace Wealthy_RPT
 
                 this.Close();
                 int intTab = 0;
-                Forms.reloadForm(dUTR, intTab);
+                Forms.reloadForm(dUTR, intTab, dPercentile, sPop);
         }
             catch
             {

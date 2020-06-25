@@ -23,12 +23,17 @@ namespace Wealthy_RPT
     {
         public double dUTR;
         public string Associate_ID;
+        public double dPercentile;
+        public string sPop;
 
-        public Associates(double dblUTR, string strAssociate_ID, string strNature_of_Association, string strAssociate_Name, string strAssociate_UTR, string strHNWU, string strContact_Info)
+        public Associates(double dblUTR, string strAssociate_ID, string strNature_of_Association, string strAssociate_Name, string strAssociate_UTR, string strHNWU, string strContact_Info, double dblPercentile, String strPop)
         {
             InitializeComponent();
             dUTR = dblUTR;
             Associate_ID = strAssociate_ID;
+            dPercentile = dblPercentile;
+            sPop = strPop;
+
             PopulateCombo();
 
             this.txtName.Text = strAssociate_Name;
@@ -107,7 +112,7 @@ namespace Wealthy_RPT
 
             this.Close();
             int intTab = 1;
-            Forms.reloadForm(dUTR, intTab);
+            Forms.reloadForm(dUTR, intTab, dPercentile, sPop);
 
         }
             catch
@@ -147,7 +152,7 @@ namespace Wealthy_RPT
 
             this.Close();
             int intTab = 1;
-            Forms.reloadForm(dUTR, intTab);
+            Forms.reloadForm(dUTR, intTab, dPercentile, sPop);
 
             }
             catch

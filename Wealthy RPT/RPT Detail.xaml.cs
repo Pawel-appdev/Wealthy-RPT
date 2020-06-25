@@ -1854,7 +1854,7 @@ namespace Wealthy_RPT
             int iCSuspensions;
             int iPSuspensions;
             int iFailures;
-            int iCRMBoost;
+            int iCRMBoost = 0;
             int iYear = 2000;
             var vSegment = "";
             int iChartPoints;
@@ -2018,8 +2018,11 @@ namespace Wealthy_RPT
             string strEmail = "";
             string strRole = "";
             string strDateAdded = "";
+            double dblPercentile = Convert.ToDouble(txtPercentile.Text);
+            string strPop = cboPopCode.SelectedItem.ToString();
 
-            Email email = new Email(dblUTR,strEmailID, strContact, strEmail, strRole, strDateAdded);
+
+            Email email = new Email(dblUTR,strEmailID, strContact, strEmail, strRole, strDateAdded, dblPercentile, strPop);
             email.Title = "Add Email Address";
             email.btnAction.Content = "Add";
     
@@ -2039,9 +2042,12 @@ namespace Wealthy_RPT
                 string strContact = selectedRow["Contact"].ToString();
                 string strEmail = selectedRow["Email_Address"].ToString();
                 string strRole = selectedRow["Contact_Role"].ToString();
-                string strDateAddded = selectedRow["Contact_Date_Added"].ToString();
+                string strDateAdded = selectedRow["Contact_Date_Added"].ToString();
+                double dblPercentile = Convert.ToDouble(txtPercentile.Text);
+                string strPop = cboPopCode.SelectedItem.ToString();
 
-                Email email = new Email(dblUTR,strEmailID, strContact, strEmail, strRole, strDateAddded  );
+
+                Email email = new Email(dblUTR, strEmailID, strContact, strEmail, strRole, strDateAdded, dblPercentile, strPop);
                 email.Title = "Update Email Address";
                 email.btnAction.Content = "Update";
                 email.ShowDialog();
@@ -2073,8 +2079,11 @@ namespace Wealthy_RPT
                 this.Close();
 
                 double dUTR = Convert.ToDouble(txtUTR.Text);
-                    int intTab = 0;
-                Forms.reloadForm(dUTR, intTab);
+                int intTab = 0;
+                double dblPercentile = Convert.ToDouble(txtPercentile.Text);
+                string strPop = cboPopCode.SelectedItem.ToString();
+
+                Forms.reloadForm(dUTR, intTab, dblPercentile, strPop);
             }
 
             }
@@ -2129,8 +2138,10 @@ namespace Wealthy_RPT
             string strAssociate_UTR = "";
             string strHNWU = "";
             string strContact_Info = "";
+            double dblPercentile = Convert.ToDouble(txtPercentile.Text);
+            string strPop = cboPopCode.SelectedItem.ToString();
 
-            Associates Assoc = new Associates(dblUTR, strAssociate_ID, strNature_of_Association, strAssociate_Name, strAssociate_UTR, strHNWU, strContact_Info);
+            Associates Assoc = new Associates(dblUTR, strAssociate_ID, strNature_of_Association, strAssociate_Name, strAssociate_UTR, strHNWU, strContact_Info, dblPercentile, strPop);
             Assoc.Title = "Add Associate";
             Assoc.btnAction.Content = "Add";
             Assoc.Show();
@@ -2150,10 +2161,12 @@ namespace Wealthy_RPT
                 string strAssociate_UTR = selectedRow["Associate_UTR"].ToString();
                 string strHNWU = selectedRow["HNWU"].ToString();
                 string strContact_Info = selectedRow["Contact_Info"].ToString();
+                double dblPercentile = Convert.ToDouble(txtPercentile.Text);
+                string strPop = cboPopCode.SelectedItem.ToString();
 
 
 
-                Associates Assoc = new Associates(dblUTR, strAssociate_ID, strNature_of_Association, strAssociate_Name, strAssociate_UTR,strHNWU, strContact_Info);
+                Associates Assoc = new Associates(dblUTR, strAssociate_ID, strNature_of_Association, strAssociate_Name, strAssociate_UTR,strHNWU, strContact_Info, dblPercentile, strPop);
                 Assoc.Title = "Update Associate";
                 Assoc.btnAction.Content = "Update";
                 Assoc.Show();
@@ -2186,7 +2199,10 @@ namespace Wealthy_RPT
 
                     double dUTR = Convert.ToDouble(txtUTR.Text);
                     int intTab = 1;
-                    Forms.reloadForm(dUTR, intTab);
+                    double dblPercentile = Convert.ToDouble(txtPercentile.Text);
+                    string strPop = cboPopCode.SelectedItem.ToString();
+
+                    Forms.reloadForm(dUTR, intTab, dblPercentile, strPop);
                 }
 
             }

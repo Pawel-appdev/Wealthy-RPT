@@ -59,7 +59,7 @@
 
 
     <Grid>
-        <TabControl x:Name="tabRPD" HorizontalAlignment="Stretch" Margin="10,0,10,39">
+        <TabControl x:Name="tabRPD" HorizontalAlignment="Stretch" Margin="10,0,10,49">
             <!--#region Tab 01 : Customer-->
             <TabItem  x:Name="pgCustomer" Header="Customer">
                 <GroupBox x:Name="grpCustomer" Header="Customer" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Height="650" Width="995">
@@ -272,77 +272,77 @@
                                 </StackPanel>
                                 <!--panel end: main -->
 
-                            <!--panel: main2 - with two columns-->
-                            <StackPanel x:Name="pnlEmailContacts01" Grid.Column="1" Grid.RowSpan="2">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                </Grid>
-                                <!--#region Email Contacts-->
-                                <StackPanel x:Name="pnlEmailContacts02" Orientation="Horizontal" RenderTransformOrigin="0.197,0.526">
-                                    <DataGrid x:Name="dgEmail" Height="108" Margin="70,29,-163,0" VerticalAlignment="Top" RenderTransformOrigin="-0.3,0.785" AutoGenerateColumns="False" VerticalGridLinesBrush="#FFD1D1D1" HorizontalGridLinesBrush="#FFD1D1D1" SelectionMode="Single" IsReadOnly="True" RowHeaderWidth="0" Width="310" >
-                                        <DataGrid.Resources>
-                                            <!--color of selected row-->
-                                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#8080FF" />
-                                        </DataGrid.Resources>
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Header="EmailID" Binding="{Binding Email_ID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="Hidden"/>
-                                            <DataGridTextColumn Header="Contact" Binding="{Binding Contact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <DataGridTextColumn Header="Address / Tel. No" Binding="{Binding Email_Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <DataGridTextColumn Header="Role" Binding="{Binding Contact_Role, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <DataGridTextColumn Header="Date Added" Binding="{Binding Contact_Date_Added, Mode=TwoWay, StringFormat=dd MMM yyy, UpdateSourceTrigger=PropertyChanged}" Width="90"/>
-                                        </DataGrid.Columns>
-
-                                    </DataGrid>
-                                    <Grid x:Name="grdEmailContacts" Width="460" Margin=" -220,0,0,0">
+                                <!--panel: main2 - with two columns-->
+                                <StackPanel x:Name="pnlEmailContacts01" Grid.Column="1" Grid.RowSpan="2">
+                                    <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="120*"/>
-                                            <ColumnDefinition Width="355*"/>
-                                            <ColumnDefinition Width="75*"/>
-                                            <ColumnDefinition Width="18*"/>
-                                            <ColumnDefinition Width="155*"/>
-                                            <ColumnDefinition Width="90*"/>
-                                            <ColumnDefinition Width="38*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock x:Name="lblEmail" Grid.Row="0" Grid.Column="0" FontSize="16" Margin="0,0,10,0" Grid.ColumnSpan="2"><Run Text="Email Contacts"/><InlineUIContainer/></TextBlock>
-                                        <TextBlock x:Name="lblPopFields" Margin="0,5,19,0" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" Width="107" Grid.ColumnSpan="3"><Run Text="ICT Populated Fields"/></TextBlock>
-                                        <TextBox x:Name="txtPopFields" Margin="10,1,0,0" Grid.Row="0" Grid.Column="4" Background="#339966" IsEnabled="False" />
-                                        <Button x:Name="cmdEmailAdd" Grid.Row="1" Grid.Column="0" Width="60" Height="30" Margin="0,5,4,5" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailAdd_GotFocus" Click="cmdEmailAdd_Click">
-                                            <TextBlock Text="Add" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Add" />
-                                        </Button>
-                                        <Button x:Name="cmdEmailUpdate" Grid.Row="2"  Grid.Column="0" Width="60" Height="30" Margin="0,5,4,5" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailUpdate_GotFocus" Click="cmdEmailUpdate_Click">
-                                            <TextBlock Text="Update" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Update" />
-                                        </Button>
-                                        <Button x:Name="cmdEmailDelete" Grid.Row="3"  Grid.Column="0" Width="60" Height="30" Margin="0,5,4,11" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailDelete_GotFocus" Click="cmdEmailDelete_Click">
-                                            <TextBlock Text="Delete" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Delete" />
-                                        </Button>
                                     </Grid>
-                                </StackPanel>
-                                <!--#endregion-->
-                                <!--#region Behaviours-->
-                                <TextBlock x:Name="lblBehaviours" FontSize="18"><Bold>Behaviours</Bold></TextBlock>
-                                <GroupBox x:Name="grpBehaviours" Header="CRMM Data - last updated" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Height="106" Width="384">
-                                    <Grid x:Name="grdBehaviours">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="227*"/>
-                                            <ColumnDefinition Width="132*"/>
-                                            <ColumnDefinition Width="13*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock x:Name="lblOpenRisks" Padding="0,10,0,0" Grid.Row="1" Grid.Column="0">Open Risks</TextBlock>
+                                    <!--#region Email Contacts-->
+                                    <StackPanel x:Name="pnlEmailContacts02" Orientation="Horizontal" RenderTransformOrigin="0.197,0.526">
+                                        <DataGrid x:Name="dgEmail" Height="108" Margin="70,29,-163,0" VerticalAlignment="Top" RenderTransformOrigin="-0.3,0.785" AutoGenerateColumns="False" VerticalGridLinesBrush="#FFD1D1D1" HorizontalGridLinesBrush="#FFD1D1D1" SelectionMode="Single" IsReadOnly="True" RowHeaderWidth="0" Width="310" >
+                                            <DataGrid.Resources>
+                                                <!--color of selected row-->
+                                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#8080FF" />
+                                            </DataGrid.Resources>
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="EmailID" Binding="{Binding Email_ID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="Hidden"/>
+                                                <DataGridTextColumn Header="Contact" Binding="{Binding Contact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                <DataGridTextColumn Header="Address / Tel. No" Binding="{Binding Email_Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                <DataGridTextColumn Header="Role" Binding="{Binding Contact_Role, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                <DataGridTextColumn Header="Date Added" Binding="{Binding Contact_Date_Added, Mode=TwoWay, StringFormat=dd MMM yyy, UpdateSourceTrigger=PropertyChanged}" Width="90"/>
+                                            </DataGrid.Columns>
+
+                                        </DataGrid>
+                                        <Grid x:Name="grdEmailContacts" Width="460" Margin=" -220,0,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="120*"/>
+                                                <ColumnDefinition Width="355*"/>
+                                                <ColumnDefinition Width="75*"/>
+                                                <ColumnDefinition Width="18*"/>
+                                                <ColumnDefinition Width="155*"/>
+                                                <ColumnDefinition Width="90*"/>
+                                                <ColumnDefinition Width="38*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock x:Name="lblEmail" Grid.Row="0" Grid.Column="0" FontSize="16" Margin="0,0,10,0" Grid.ColumnSpan="2"><Run Text="Email Contacts"/><InlineUIContainer/></TextBlock>
+                                            <TextBlock x:Name="lblPopFields" Margin="0,5,19,0" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" Width="107" Grid.ColumnSpan="3"><Run Text="ICT Populated Fields"/></TextBlock>
+                                            <TextBox x:Name="txtPopFields" Margin="10,1,0,0" Grid.Row="0" Grid.Column="4" Background="#339966" IsEnabled="False" />
+                                            <Button x:Name="cmdEmailAdd" Grid.Row="1" Grid.Column="0" Width="60" Height="30" Margin="0,5,4,5" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailAdd_GotFocus" Click="cmdEmailAdd_Click">
+                                                <TextBlock Text="Add" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Add" />
+                                            </Button>
+                                            <Button x:Name="cmdEmailUpdate" Grid.Row="2"  Grid.Column="0" Width="60" Height="30" Margin="0,5,4,5" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailUpdate_GotFocus" Click="cmdEmailUpdate_Click">
+                                                <TextBlock Text="Update" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Update" />
+                                            </Button>
+                                            <Button x:Name="cmdEmailDelete" Grid.Row="3"  Grid.Column="0" Width="60" Height="30" Margin="0,5,4,11" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailDelete_GotFocus" Click="cmdEmailDelete_Click">
+                                                <TextBlock Text="Delete" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Delete" />
+                                            </Button>
+                                        </Grid>
+                                    </StackPanel>
+                                    <!--#endregion-->
+                                    <!--#region Behaviours-->
+                                    <TextBlock x:Name="lblBehaviours" FontSize="18"><Bold>Behaviours</Bold></TextBlock>
+                                    <GroupBox x:Name="grpBehaviours" Header="CRMM Data - last updated" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Height="106" Width="384">
+                                        <Grid x:Name="grdBehaviours">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="227*"/>
+                                                <ColumnDefinition Width="132*"/>
+                                                <ColumnDefinition Width="13*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock x:Name="lblOpenRisks" Padding="0,10,0,0" Grid.Row="1" Grid.Column="0">Open Risks</TextBlock>
                                             <TextBox x:Name="txtOpenRisks"  Grid.Row="1" Grid.Column="1" Background="#339966" IsEnabled="False" Margin="0,3,0,4" GotFocus="TxtOpenRisks_GotFocus" Text = "{Binding Risks_Open, Mode = TwoWay}" HorizontalContentAlignment="Right" LostFocus="TxtOpenRisks_LostFocus"/>
                                             <TextBox x:Name="txtOpenRisksHD" Visibility="Collapsed" Grid.Row="1" Grid.Column="2"/>
                                             <TextBlock x:Name="lblSettledRisks" Padding="0,10,0,0" Grid.Row="2" Grid.Column="0">Settled Risks</TextBlock>
@@ -352,30 +352,30 @@
                                             <TextBox x:Name="txtHighestSettled" Grid.Row="3" Grid.Column="1" Background="#339966" IsEnabled="False" Margin="0,3,0,4" GotFocus="TxtHighestSettled_GotFocus" Text = "{Binding Highest_Settlement, Mode = TwoWay}" HorizontalContentAlignment="Right" LostFocus="TxtHighestSettled_LostFocus"/>
                                             <TextBox x:Name="txtHighestSettledHD" Visibility="Collapsed" Grid.Row="3" Grid.Column="2"/>
                                         </Grid>
-                                </GroupBox>
-                                <!--#endregion-->
-                                <!--#region Behaviours2-->
-                                <StackPanel x:Name="pnlBehaviours2" Orientation="Horizontal">
-                                    <Grid  Width="384">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="23*"/>
-                                            <ColumnDefinition Width="204"/>
-                                            <ColumnDefinition Width="134*"/>
-                                            <ColumnDefinition Width="23*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="30"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="30"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="30"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="30"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="30"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock x:Name="lblHighestPercent" Padding="5,10,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" >Highest percentage penalty charged*</TextBlock>
+                                    </GroupBox>
+                                    <!--#endregion-->
+                                    <!--#region Behaviours2-->
+                                    <StackPanel x:Name="pnlBehaviours2" Orientation="Horizontal">
+                                        <Grid  Width="384">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="23*"/>
+                                                <ColumnDefinition Width="204"/>
+                                                <ColumnDefinition Width="134*"/>
+                                                <ColumnDefinition Width="23*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="30"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="30"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="30"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="30"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="30"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock x:Name="lblHighestPercent" Padding="5,10,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" >Highest percentage penalty charged*</TextBlock>
                                             <TextBox x:Name="txtHighestPercent" Margin="6,3,20,3"  Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="TxtHighestPercent_GotFocus" Text = "{Binding HPPenalty, Mode = TwoWay}" HorizontalContentAlignment="Right" LostFocus="TxtHighestPercent_LostFocus"/>
                                             <TextBox x:Name="txtHighestPercentHD" Visibility="Collapsed" Grid.Row="0" Grid.Column="3" Margin="0,3"/>
                                             <TextBlock x:Name="lblPenalty" Padding="5,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ><Bold>Penalty suspensions</Bold></TextBlock>
@@ -398,13 +398,14 @@
                                             <TextBox x:Name="txtPSCalc" Visibility="Collapsed" Grid.Row="8" Grid.Column="3" Margin="0,0,0,10" Grid.RowSpan="2"/>
                                             <TextBox x:Name="txtPFCalc" Visibility="Collapsed" Grid.Row="9" Grid.Column="3" Margin="0,5"/>
                                         </Grid>
+                                    </StackPanel>
+                                    <!--#endregion-->
                                 </StackPanel>
-                                <!--#endregion-->
-                            </StackPanel>
-                            <!--panel end: main2 - with two columns-->
-                        </Grid>
+                                <!--panel end: main2 - with two columns-->
+                            </Grid>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
+                </GroupBox>
             </TabItem>
             <!--#endregion-->
             <!--#region Tab 02 : Case Overview-->
@@ -665,7 +666,7 @@
                                         <TextBox x:Name="txtPercentile" Grid.Row="5" Grid.Column="5" Margin="0,2,0,2" Text = "{Binding Percentile, Mode = TwoWay}"/>
                                     </Grid>
                                 </GroupBox>
-                                <chartingToolkit:Chart  Title="RPT History" x:Name="mscHistory" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" BorderThickness="2" Margin="0,0,10,10" GotFocus="MscHistory_GotFocus">
+                                <!--<chartingToolkit:Chart  Title="RPT History" x:Name="mscHistory" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" BorderThickness="2" Margin="0,0,10,10" GotFocus="MscHistory_GotFocus">
                                     <chartingToolkit:Chart.Axes>
                                         <chartingToolkit:LinearAxis Minimum="{Binding MinValue}" Orientation="X"></chartingToolkit:LinearAxis>
                                     </chartingToolkit:Chart.Axes>
@@ -689,7 +690,7 @@
                                         Title="Ranking">
                                     </chartingToolkit:LineSeries>
                                     <chartingToolkit:Chart.Axes>
-                                        --><!-- Shared axis --><!--
+                                         Shared axis 
                                         <chartingToolkit:LinearAxis
                                 Orientation="X"
                                 Title="Date"/>
@@ -727,17 +728,17 @@
                     <ColumnDefinition Width="14*"/>
                     <ColumnDefinition Width="27*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="cmdGuidance"  Grid.Column="0"  HorizontalAlignment="Left" Margin="10,0,205,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdGuidance_GotFocus">
+                <Button x:Name="cmdGuidance"  Grid.Column="0"  HorizontalAlignment="Left" Margin="10,0,205,10" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdGuidance_GotFocus">
                     <TextBlock Text="Guidance" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Guidance" />
 
                 </Button>
-                <Button x:Name="cmdSave" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,0,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdSave_GotFocus" Click="CmdSave_Click">
+                <Button x:Name="cmdSave" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdSave_GotFocus" Click="CmdSave_Click">
                     <TextBlock x:Name="tcmdSave" Text="Save Changes" VerticalAlignment="Top" ToolTip="Save Changes" Margin="2,2,2,0" />
                 </Button>
-                <Button x:Name="cmdUpdateClose" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,0,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdUpdateClose_GotFocus" Click="CmdUpdateClose_Click">
+                <Button x:Name="cmdUpdateClose" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdUpdateClose_GotFocus" Click="CmdUpdateClose_Click">
                     <TextBlock x:Name="tcmdUpdateClose" Text="Save &amp; Close" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Save &amp; Close"/>
                 </Button>
-                <Button x:Name="cmdCancel" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,0,20" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdCancel_GotFocus" Click="CmdCancel_Click">
+                <Button x:Name="cmdCancel" Grid.Column="3" HorizontalAlignment="Left" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdCancel_GotFocus" Click="CmdCancel_Click">
                     <TextBlock x:Name="tcmdCancel" Text="Close" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Close"/>
                 </Button>
 
