@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Wealthy_RPT"
         mc:Ignorable="d"
         Title="Wealthy RPT" Height="700" MinHeight="300" Width="1300" MinWidth="1100" WindowStartupLocation="CenterScreen" Icon="RPT16V1.ico"
-        KeyDown="MainWindow_KeyDown">
+        KeyDown="MainWindow_KeyDown" Closing="Refresh_Cases">
 
     <Window.Background>
         <ImageBrush/>

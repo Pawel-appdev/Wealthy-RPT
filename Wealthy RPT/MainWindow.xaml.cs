@@ -25,7 +25,7 @@ namespace Wealthy_RPT
     /// </summary>
     public partial class MainWindow : Window
     {
-        public int intPageSize = 5;//default number of rows shown on datagrid page
+        public int intPageSize = LoadAppVariables.MainPageSize;// number of rows shown on datagrid page
         public int intOffset;
         public int intCurrentPage = 1;
         public string strMove;
@@ -898,6 +898,7 @@ namespace Wealthy_RPT
 
                     intOffset = 0;
 
+                    SaveMainPageSize(intPageSize);
                     GetdgCases(intYear, strOffice, strTeam, intPID, strPop, intOffset);
                 }
 
@@ -915,7 +916,13 @@ namespace Wealthy_RPT
 
         }
 
-        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        private void SaveMainPageSize(int intPageSize)
+        {
+            IniFile LocalFile = new IniFile(LoadAppVariables.LocalFile);
+            LocalFile.IniWriteValue("UserSettings", "MainPageSize", Convert.ToString(intPageSize));
+        }
+
+            private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             if(txtSearch.Text.Length > 2)
             {
@@ -1012,14 +1019,22 @@ namespace Wealthy_RPT
             else
             {
                 rptDetail.DataContext = rpt;
-                rptDetail.mscHistory.ItemsSource = Globals.dtGraph.DefaultView;
-                rptDetail.dgHistorical.ItemsSource = Globals.dtGrid.DefaultView;
+                //rptDetail.mscHistory.ItemsSource = Globals.dtGraph.DefaultView;
+                //rptDetail.dgHistorical.ItemsSource = Globals.dtGrid.DefaultView;
                 rptDetail.cboPopFriendly.SelectedIndex = this.cboPopulation.SelectedIndex;
                 rptDetail.cboPopCode.SelectedIndex = this.cboPopulation.SelectedIndex;
                 try { rptDetail.lblPopYear.Text = this.cboYear.SelectedValue.ToString(); } catch { DateTime.Now.Year.ToString(); }
+                rptDetail.Closing += new System.ComponentModel.CancelEventHandler(Refresh_Cases); /*grab child form closing event for parent refesh */
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
                 rptDetail.Show();
             }
+        }
+
+        public void Refresh_Cases(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
+            PopulateCases();
+            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
         }
 
         private void mnuQuarterlyUpdate_Click(object sender, RoutedEventArgs e)
@@ -1028,10 +1043,11 @@ namespace Wealthy_RPT
             periodImport.Show();
         }
 
-    private void mnuUpdateDBTables_Click(object sender, RoutedEventArgs e)
-    {
-        Admin ctr_Admin = new Admin();
-        ctr_Admin.ShowDialog();
+        private void mnuUpdateDBTables_Click(object sender, RoutedEventArgs e)
+        {
+            Admin ctr_Admin = new Admin();
+            ctr_Admin.ShowDialog();
+        }
+
     }
-}
 }

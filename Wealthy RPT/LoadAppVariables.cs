@@ -9,16 +9,26 @@ namespace Wealthy_RPT
     class LoadAppVariables
     {
         public static string GlobalFile;
+        public static string LocalFile;
+        public static int MainPageSize;
         public void LoadApplication()
         {
 
             // get path to local file
             #region Local FIle
-            IniFile iniLocal = new IniFile(AppDomain.CurrentDomain.BaseDirectory + "lclRPT.ini");
+            LocalFile = AppDomain.CurrentDomain.BaseDirectory + "lclRPT.ini";
+            IniFile iniLocal = new IniFile(LocalFile);
             GlobalFile = iniLocal.IniReadValue("Paths", "GlobalFile");
             if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "lclRPT.ini"))
             {
-                // Do nothing;
+                try
+                {
+                    MainPageSize = Convert.ToInt16(iniLocal.IniReadValue("UserSettings", "MainPageSize"));
+                }
+                catch
+                {
+                    MainPageSize = 100;
+                }
             }
             else
             {

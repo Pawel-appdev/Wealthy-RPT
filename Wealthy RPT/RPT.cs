@@ -1227,9 +1227,9 @@ namespace Wealthy_RPT
                     //intTotalRows = Convert.ToInt32(ds.Tables[1].Rows[0]["NumberOfRows"]);
 
                     Historical_Data = ds.Tables[0];
-                    Globals.dtGrid = ds.Tables[1];
-                    //Grid_Data = ds.Tables[1];
-                    Globals.dtGraph = ds.Tables[2];
+                    //Globals.dtGrid = ds.Tables[1];
+                    ////Grid_Data = ds.Tables[1];
+                    //Globals.dtGraph = ds.Tables[2];
                     //Chart_Data = ds.Tables[2];
 
                     //previously 01/06/2020
@@ -1373,7 +1373,7 @@ namespace Wealthy_RPT
 
             public bool GetCRMMEnquiryDataScore(double dUTR)
             {
-                bool bRtn = false;
+                
                 SqlConnection con = new SqlConnection(Global.ConnectionString);
                 try
                 {
@@ -1580,6 +1580,79 @@ namespace Wealthy_RPT
                 }
                 return true;
             }
+
+            public bool UpdateRiskData()
+            {
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("qryUpdateAgent", con);
+                    cmd.Parameters.Clear();
+                    SqlParameter prm01 = cmd.Parameters.Add("@nLPOpen", SqlDbType.Int);
+                    prm01.Value = LPOpen;
+                    SqlParameter prm02 = cmd.Parameters.Add("@nLPClosed", SqlDbType.Int);
+                    prm02.Value = LPClosed;
+                    SqlParameter prm03 = cmd.Parameters.Add("@nHPPenalty", SqlDbType.Float);
+                    prm03.Value = HPPenalty;
+                    SqlParameter prm04 = cmd.Parameters.Add("@nPSCurrent", SqlDbType.Int);
+                    prm04.Value = PSCurrent;
+                    SqlParameter prm05 = cmd.Parameters.Add("@nPSPrevious", SqlDbType.Int);
+                    prm05.Value = PSPrevious;
+                    SqlParameter prm06 = cmd.Parameters.Add("@nPSFailures", SqlDbType.Int);
+                    prm06.Value = PSFailures;
+                    SqlParameter prm07 = cmd.Parameters.Add("@nQSScore", SqlDbType.Int);
+                    prm07.Value = QSScore;
+                    SqlParameter prm08 = cmd.Parameters.Add("@nRPTPRScore", SqlDbType.Int);
+                    prm08.Value = RPTPRScore;
+                    SqlParameter prm09 = cmd.Parameters.Add("@nRPTAVScore", SqlDbType.Int);
+                    prm09.Value = RPTAVScore;
+                    SqlParameter prm10 = cmd.Parameters.Add("@nCGScore", SqlDbType.Int);
+                    prm10.Value = CGScore;
+                    SqlParameter prm11 = cmd.Parameters.Add("@nResScore", SqlDbType.Int);
+                    prm11.Value = ResScore;
+                    SqlParameter prm12 = cmd.Parameters.Add("@nCRMScore", SqlDbType.Int);
+                    prm12.Value = CRMScore;
+                    SqlParameter prm13 = cmd.Parameters.Add("@nPriorityScore", SqlDbType.Int);
+                    prm13.Value = PriorityScore;
+                    SqlParameter prm14 = cmd.Parameters.Add("@nPercentile", SqlDbType.Float);
+                    prm14.Value = Percentile;
+                    SqlParameter prm15 = cmd.Parameters.Add("@nRiskingComplete", SqlDbType.Bit);
+                    prm15.Value = 0; // ###########################################
+                    SqlParameter prm16 = cmd.Parameters.Add("@nUpdatedBy", SqlDbType.Int);
+                    prm16.Value = Global.PID;
+                    SqlParameter prm17 = cmd.Parameters.Add("@nUpdatedDate", SqlDbType.DateTime);
+                    if (Deselected == "")
+                    {
+                        prm17.Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        prm17.Value = DateTime.Now.ToShortDateString();
+                    }
+                    SqlParameter prm18 = cmd.Parameters.Add("@nCalendarYear", SqlDbType.Int);
+                    prm18.Value = CalendarYear;
+                    SqlParameter prm19 = cmd.Parameters.Add("@fUTR", SqlDbType.Float);
+                    prm19.Value = UTR;
+                    SqlParameter prm20 = cmd.Parameters.Add("@nPop", SqlDbType.NVarChar);
+                    prm20.Value = Pop;
+                    SqlParameter prm21 = cmd.Parameters.Add("@nSegment", SqlDbType.NVarChar);
+                    prm21.Value = Segment;
+                    SqlParameter prm22 = cmd.Parameters.Add("@nCRMExplanation", SqlDbType.NVarChar);
+                    prm22.Value = CRMExplanation;
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.Write("SQL error: " + ex.Message);
+                    con.Close();
+                    return false;
+                }
+                return true;
+            }
+
 
             public void GetEmailAddress(double dblUTR)
             {

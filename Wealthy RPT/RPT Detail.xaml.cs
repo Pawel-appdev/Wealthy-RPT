@@ -940,7 +940,7 @@ namespace Wealthy_RPT
 
         private void ChkCRMDescretion_Unchecked(object sender, RoutedEventArgs e)
         {
-            txtCRMScore.Text = "";
+            txtCRMScore.Text = "0";
             txtCRMExplanation.Text = "";
             txtCRMExplanation.IsEnabled = false;
             RecalculateBehaviours();
@@ -1304,7 +1304,7 @@ namespace Wealthy_RPT
         {
             bool blnRtn = true;
 
-            //blnRtn = CheckandSaveScoresData();
+            blnRtn = CheckandSaveScoresData();
 
             blnRtn = CheckandSaveCustomerData();
 
@@ -1571,6 +1571,243 @@ namespace Wealthy_RPT
                     rpt.Changed = (cboChange.Text.ToLower() == "yes") == true ? Convert.ToByte(1) : Convert.ToByte(0); /*convert Yes/No to byte*/
                     double dblUTR = Convert.ToDouble(txtUTR.Text.Trim());
                     rpt.UpdateAgentData(dblUTR);
+                    blnRtn = true;
+                }
+                catch
+                {
+                    blnRtn = false;
+                }
+            }
+            else // don't save as nothing has changed
+            {
+                //leave as it as checks found no changes so no point in resaving data.
+                blnRtn = true;
+            }
+
+            return blnRtn;
+        }
+
+        public bool CheckandSaveScoresData()
+        {
+            bool blnScores = false;
+            bool blnRtn = false;
+            string strTest = "";
+            var varSegment = "";
+
+            RPT.RPT_Data rpt = new RPT.RPT_Data(); // initialise data
+            for (int j = 0; j < 8; j++)
+            {
+                switch (j)
+                {
+                    // Customer tab
+                    case 0:
+                        strTest = GetDataContextValue("LPOpen") == null ? "" : GetDataContextValue("LPOpen").ToString();
+                        if (txtOpenIDMS.Text != strTest) { blnScores = true; }
+                        break;
+                    case 1:
+                        strTest = GetDataContextValue("LPClosed") == null ? "" : GetDataContextValue("LPClosed").ToString();
+                        if (txtClosedIDMS.Text != strTest) { blnScores = true; }
+                        break;
+                    case 2:
+                        strTest = GetDataContextValue("HPPenalty") == null ? "" : GetDataContextValue("HPPenalty").ToString();
+                        if (txtHighestPercent.Text != strTest) { blnScores = true; }
+                        break;
+                    case 3:
+                        int iPSCurrent = Convert.ToInt16(GetDataContextValue("PSCurrent"));
+                        switch (iPSCurrent)
+                        {
+                            case 0:
+                                if (cboCurrentSuspensions.Text.ToUpper() != "NO")
+                                {
+                                    blnScores = true;
+                                }
+                                break;
+                            case 1:
+                                if (cboCurrentSuspensions.Text.ToUpper() != "YES")
+                                {
+                                    blnScores = true;
+                                }
+                                break;
+                            case 2:
+                                if (cboCurrentSuspensions.Text.ToUpper() != "UNKNOWN")
+                                {
+                                    blnScores = true;
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+
+                    case 4:
+                        int iPSPrevious = Convert.ToInt16(GetDataContextValue("PSPrevious"));
+                        switch (iPSPrevious)
+                        {
+                            case 0:
+                                if (cboPrevSuspensions.Text.ToUpper() != "NO")
+                                {
+                                    blnScores = true;
+                                }
+                                break;
+                            case 1:
+                                if (cboPrevSuspensions.Text.ToUpper() != "YES")
+                                {
+                                    blnScores = true;
+                                }
+                                break;
+                            case 2:
+                                if (cboPrevSuspensions.Text.ToUpper() != "UNKNOWN")
+                                {
+                                    blnScores = true;
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+
+                    case 5:
+                        int iPSFailures = Convert.ToInt16(GetDataContextValue("PSFailures"));
+                        switch (iPSFailures)
+                        {
+                            case 0:
+                                if (cboFailures.Text.ToUpper() != "NO")
+                                {
+                                    blnScores = true;
+                                }
+                                break;
+                            case 1:
+                                if (cboFailures.Text.ToUpper() != "YES")
+                                {
+                                    blnScores = true;
+                                }
+                                break;
+                            case 2:
+                                if (cboFailures.Text.ToUpper() != "UNKNOWN")
+                                {
+                                    blnScores = true;
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    // Results tab
+                    case 6:
+                        strTest = GetDataContextValue("QSScore") == null ? "" : GetDataContextValue("QSScore").ToString();
+                        if (txtQSScore.Text != strTest) { blnScores = true; }
+                        break;
+                    case 7:
+                        strTest = GetDataContextValue("RPTPRScore") == null ? "" : GetDataContextValue("RPTPRScore").ToString();
+                        if (txtRSScore.Text != strTest) { blnScores = true; }
+                        break;
+                    case 8:
+                        strTest = GetDataContextValue("RPTAVScore") == null ? "" : GetDataContextValue("RPTAVScore").ToString();
+                        if (txtAVScore.Text != strTest) { blnScores = true; }
+                        break;
+                    case 9:
+                        strTest = GetDataContextValue("CGScore") == null ? "" : GetDataContextValue("CGScore").ToString();
+                        if (txtCGScore.Text != strTest) { blnScores = true; }
+                        break;
+                    case 10:
+                        strTest = GetDataContextValue("ResScore") == null ? "" : GetDataContextValue("ResScore").ToString();
+                        if (txtRESScore.Text != strTest) { blnScores = true; }
+                        break;
+                    case 11:
+                        strTest = GetDataContextValue("CRMScore") == null ? "" : GetDataContextValue("CRMScore").ToString();
+                        if (txtCRMScore.Text != strTest) { blnScores = true; }
+                        break;
+                    case 12:
+                        strTest = GetDataContextValue("PriorityScore") == null ? "" : GetDataContextValue("PriorityScore").ToString();
+                        if (txtPRScore.Text != strTest) { blnScores = true; }
+                        break;
+                    case 13:
+                        strTest = GetDataContextValue("Percentile") == null ? "" : GetDataContextValue("Percentile").ToString();
+                        if (txtPercentile.Text != strTest) { blnScores = true; }
+                        break;
+                    case 14:
+                        strTest = GetDataContextValue("CRMExplanation") == null ? "" : GetDataContextValue("CRMExplanation").ToString();
+                        if (txtCRMExplanation.Text != strTest) { blnScores = true; }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if (blnScores == true) // save scores data as something has changed
+            {
+                // DEVELOPER NOTE - following adapted from legacy system due to time constraints.
+                // Process need flexibility around pop, i.e. not just 10 / 20 Mill and RAG.RAG10M_1 etc.
+
+                if ((cboPopCode.Text.Trim().ToUpper() == "RPT10MILL") && (Global.DisplayRAG == "True"))
+                {
+                    switch (cboPopCode.Text.Trim().ToUpper())
+                    {
+                        case "CERT":
+                            varSegment = "Cert";
+                            break;
+                        case "HIGH":
+                            varSegment = "High";
+                            break;
+                        case "RESO":
+                            varSegment = "Res";
+                            break;
+                        default:
+                            varSegment = "NYR";
+                            break;
+                    }
+                }
+
+                if ((cboPopCode.Text.Trim().ToUpper() == "RPT10MILL") && (Global.DisplayRAG == "False"))
+                {
+                    varSegment = "Res";
+                    if (Convert.ToDouble(txtPercentile.Text) <= RAG.RAG10M_1)
+                    {
+                        varSegment = "Cert";
+                    }
+                    if (Convert.ToDouble(txtPercentile.Text) > RAG.RAG10M_2)
+                    {
+                        varSegment = "High";
+                    }
+                }
+                else
+                {
+                    varSegment = "Res";
+                    if (Convert.ToDouble(txtPercentile.Text) <= RAG.RAG20M_1)
+                    {
+                        varSegment = "Cert";
+                    }
+                    if (Convert.ToDouble(txtPercentile.Text) > RAG.RAG20M_2)
+                    {
+                        varSegment = "High";
+                    }
+                }
+
+                try
+                {
+                    // open database table - get previous entry
+                    // use new qryUpdateRiskData rather than SQL string 
+
+                    rpt.HPPenalty = float.Parse(txtHighestPercent.Text);
+                    rpt.LPOpen = int.Parse(txtOpenIDMS.Text);
+                    rpt.LPClosed = int.Parse(txtClosedIDMS.Text);
+                    rpt.HPPenalty = float.Parse(txtHighestPercent.Text);
+                    /* following are Yes/No/Unknown. Last is default = 2*/
+                    try { rpt.PSCurrent = byte.Parse(cboCurrentSuspensions.SelectedValue.ToString()); } catch { rpt.PSCurrent = 2; }
+                    try { rpt.PSPrevious = byte.Parse(cboPrevSuspensions.SelectedValue.ToString()); } catch { rpt.PSPrevious = 2; }
+                    try { rpt.PSFailures = byte.Parse(cboFailures.SelectedValue.ToString()); } catch { rpt.PSFailures = 2; }
+                    rpt.QSScore = int.Parse(txtQSScore.Text);
+                    rpt.RPTPRScore = int.Parse(txtRSScore.Text);
+                    rpt.RPTAVScore = int.Parse(txtAVScore.Text);
+                    rpt.CGScore = int.Parse(txtCGScore.Text);
+                    rpt.ResScore = int.Parse(txtRESScore.Text);
+                    rpt.CRMScore = int.Parse(txtCRMScore.Text);
+                    rpt.PriorityScore = int.Parse(txtPRScore.Text);
+                    rpt.Percentile = float.Parse(txtPercentile.Text);
+                    rpt.CRMExplanation = txtCRMExplanation.Text;
+
+                    //// etc ...
+                    rpt.UpdateRiskData();
                     blnRtn = true;
                 }
                 catch
@@ -1865,7 +2102,8 @@ namespace Wealthy_RPT
             }
             else
             {
-                iCSuspensions = Convert.ToInt16(this.cboCurrentSuspensions.SelectedItem.ToString());
+                //iCSuspensions = Convert.ToInt16(this.cboCurrentSuspensions.SelectedItem.ToString());
+                iCSuspensions = Convert.ToInt16(this.cboCurrentSuspensions.SelectedValue.ToString());
             }
 
             if (this.cboPrevSuspensions.SelectedItem == null)
@@ -1874,7 +2112,8 @@ namespace Wealthy_RPT
             }
             else
             {
-                iPSuspensions = Convert.ToInt16(this.cboPrevSuspensions.SelectedItem.ToString());
+                //iPSuspensions = Convert.ToInt16(this.cboPrevSuspensions.SelectedItem.ToString());
+                iPSuspensions = Convert.ToInt16(this.cboPrevSuspensions.SelectedValue.ToString());
             }
 
             if (this.cboFailures.SelectedItem == null)
@@ -1883,7 +2122,8 @@ namespace Wealthy_RPT
             }
             else
             {
-                iFailures = Convert.ToInt16(this.cboFailures.SelectedItem.ToString());
+                //iFailures = Convert.ToInt16(this.cboFailures.SelectedItem.ToString());
+                iFailures = Convert.ToInt16(this.cboFailures.SelectedValue.ToString());
             }
 
             if (this.txtCRMScore.Text == "")
