@@ -2165,9 +2165,9 @@ namespace Wealthy_RPT
                 cmd.Parameters.Add("@nCurrentPSScore", SqlDbType.Int).Value = Convert.ToInt16(this.txtPRScore.Text.ToString());
                 cmd.Parameters.Add("@nCurrentRank", SqlDbType.Float).Value = Convert.ToDouble(this.txtPercentile.Text.ToString());
                 cmd.Parameters.Add("@nCalendarYear", SqlDbType.Int).Value = iYear;
-                cmd.Parameters.Add("@nUTR", SqlDbType.Int).Value = Convert.ToInt32(this.txtUTR.Text.ToString());
+                //cmd.Parameters.Add("@nUTR", SqlDbType.Int).Value = Convert.ToInt32(this.txtUTR.Text.ToString());
+                cmd.Parameters.Add("@nUTR", SqlDbType.Float).Value = Convert.ToInt64(this.txtUTR.Text.ToString());
                 cmd.Parameters.Add("@nPop", SqlDbType.Text).Value = this.cboPopCode.SelectedValue.ToString();
-
 
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 da.Fill(dt);

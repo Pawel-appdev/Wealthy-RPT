@@ -1227,9 +1227,9 @@ namespace Wealthy_RPT
                     //intTotalRows = Convert.ToInt32(ds.Tables[1].Rows[0]["NumberOfRows"]);
 
                     Historical_Data = ds.Tables[0];
-                    //Globals.dtGrid = ds.Tables[1];
-                    ////Grid_Data = ds.Tables[1];
-                    //Globals.dtGraph = ds.Tables[2];
+                    Globals.dtGrid = ds.Tables[1];
+                    //Grid_Data = ds.Tables[1];
+                    Globals.dtGraph = ds.Tables[2];
                     //Chart_Data = ds.Tables[2];
 
                     //previously 01/06/2020
