@@ -1586,7 +1586,7 @@ namespace Wealthy_RPT
                 SqlConnection con = new SqlConnection(Global.ConnectionString);
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("qryUpdateAgent", con);
+                    SqlCommand cmd = new SqlCommand("qryUpdateRiskScores", con);
                     cmd.Parameters.Clear();
                     SqlParameter prm01 = cmd.Parameters.Add("@nLPOpen", SqlDbType.Int);
                     prm01.Value = LPOpen;
@@ -1617,7 +1617,7 @@ namespace Wealthy_RPT
                     SqlParameter prm14 = cmd.Parameters.Add("@nPercentile", SqlDbType.Float);
                     prm14.Value = Percentile;
                     SqlParameter prm15 = cmd.Parameters.Add("@nRiskingComplete", SqlDbType.Bit);
-                    prm15.Value = 0; // ###########################################
+                    prm15.Value = 0; // Not in use yet so set as false
                     SqlParameter prm16 = cmd.Parameters.Add("@nUpdatedBy", SqlDbType.Int);
                     prm16.Value = Global.PID;
                     SqlParameter prm17 = cmd.Parameters.Add("@nUpdatedDate", SqlDbType.DateTime);
@@ -1631,7 +1631,7 @@ namespace Wealthy_RPT
                     }
                     SqlParameter prm18 = cmd.Parameters.Add("@nCalendarYear", SqlDbType.Int);
                     prm18.Value = CalendarYear;
-                    SqlParameter prm19 = cmd.Parameters.Add("@fUTR", SqlDbType.Float);
+                    SqlParameter prm19 = cmd.Parameters.Add("@nUTR", SqlDbType.Float);
                     prm19.Value = UTR;
                     SqlParameter prm20 = cmd.Parameters.Add("@nPop", SqlDbType.NVarChar);
                     prm20.Value = Pop;

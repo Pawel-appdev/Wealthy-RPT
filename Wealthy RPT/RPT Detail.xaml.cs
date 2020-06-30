@@ -1470,8 +1470,7 @@ namespace Wealthy_RPT
                     rpt.CRM_Name = cboCRMName.Text;
                     rpt.CRM_Appointed = txtCRMDA.Text;
 
-                    rpt.UpdateCustomerData();
-                    blnRtn = true;
+                    blnRtn = rpt.UpdateCustomerData();
                 }
                 catch
                 {
@@ -1570,8 +1569,7 @@ namespace Wealthy_RPT
                     rpt.AgentTelNo = txtTelNo.Text;
                     rpt.Changed = (cboChange.Text.ToLower() == "yes") == true ? Convert.ToByte(1) : Convert.ToByte(0); /*convert Yes/No to byte*/
                     double dblUTR = Convert.ToDouble(txtUTR.Text.Trim());
-                    rpt.UpdateAgentData(dblUTR);
-                    blnRtn = true;
+                    blnRtn = rpt.UpdateAgentData(dblUTR);
                 }
                 catch
                 {
@@ -1595,7 +1593,7 @@ namespace Wealthy_RPT
             var varSegment = "";
 
             RPT.RPT_Data rpt = new RPT.RPT_Data(); // initialise data
-            for (int j = 0; j < 8; j++)
+            for (int j = 0; j < 15; j++)
             {
                 switch (j)
                 {
@@ -1788,6 +1786,10 @@ namespace Wealthy_RPT
                     // open database table - get previous entry
                     // use new qryUpdateRiskData rather than SQL string 
 
+                    rpt.UTR = dblUTR;
+                    rpt.Pop = cboPopFriendly.SelectedValue.ToString();
+                    try { rpt.CalendarYear = Convert.ToInt16(this.lblPopYear.Text); } catch { rpt.CalendarYear = 2000; }
+                    rpt.Segment = varSegment;
                     rpt.HPPenalty = float.Parse(txtHighestPercent.Text);
                     rpt.LPOpen = int.Parse(txtOpenIDMS.Text);
                     rpt.LPClosed = int.Parse(txtClosedIDMS.Text);
@@ -1806,9 +1808,7 @@ namespace Wealthy_RPT
                     rpt.Percentile = float.Parse(txtPercentile.Text);
                     rpt.CRMExplanation = txtCRMExplanation.Text;
 
-                    //// etc ...
-                    rpt.UpdateRiskData();
-                    blnRtn = true;
+                    blnRtn = rpt.UpdateRiskData();
                 }
                 catch
                 {
