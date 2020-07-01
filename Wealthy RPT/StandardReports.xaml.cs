@@ -174,6 +174,8 @@ namespace Wealthy_RPT
                     //    row["Template"].ToString() +"\n"+
                     //    row["ExcelReportName"].ToString());
 
+                    System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
+
                     System.Data.DataTable dt = new System.Data.DataTable("Report");
 
                     string StoredProcedureName = "qry" + row["ExcelReportName"].ToString(); //Main SQL Stored Procedure
@@ -269,6 +271,8 @@ namespace Wealthy_RPT
                     //releaseObject(oexcel);
 
                     GC.Collect();
+
+                    System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
 
                 }
             }

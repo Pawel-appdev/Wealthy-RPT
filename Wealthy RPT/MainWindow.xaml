@@ -152,7 +152,7 @@
                 <DataGridTextColumn Header="CG" Binding="{Binding CGScore}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Res" Binding="{Binding ResScore}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Priority" Binding="{Binding PriorityScore}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Daily Ranking" Binding="{Binding DailyRank}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Daily Ranking" Binding="{Binding DailyRank, StringFormat=F4}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Seg" Binding="{Binding Segment}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
                 <DataGridTextColumn Header="SegNo" Binding="{Binding SegNo}" Visibility="Hidden" ></DataGridTextColumn>
                 <DataGridTextColumn Header="ProSegNo" Binding="{Binding ProSegNo}" Visibility="Hidden"></DataGridTextColumn>
