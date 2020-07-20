@@ -1466,7 +1466,7 @@ namespace Wealthy_RPT
                     rpt.Narrative = txtNarrative.Text;
                     rpt.HNWUPID = Convert.ToInt32(Global.PID);
                     rpt.UTR = Convert.ToDouble(txtUTR.Text);
-                    rpt.Pop = cboPopCode.Text;
+                    rpt.Pop = cboPopCode.SelectedValue.ToString();
                     rpt.CRM_Name = cboCRMName.Text;
                     rpt.CRM_Appointed = txtCRMDA.Text;
 

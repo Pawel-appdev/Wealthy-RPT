@@ -88,3 +88,48 @@ C:\Users\guser\source\repos\Wealthy-RPT Liam 20200625\Wealthy RPT\obj\Debug\Weal
 C:\Users\guser\source\repos\Wealthy-RPT Liam 20200625\Wealthy RPT\obj\Debug\Wealthy RPT.csproj.CopyComplete
 C:\Users\guser\source\repos\Wealthy-RPT Liam 20200625\Wealthy RPT\obj\Debug\Wealthy RPT.exe
 C:\Users\guser\source\repos\Wealthy-RPT Liam 20200625\Wealthy RPT\obj\Debug\Wealthy RPT.pdb
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\bin\Debug\Wealthy RPT.exe.config
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\bin\Debug\Wealthy RPT.exe
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\bin\Debug\Wealthy RPT.pdb
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\bin\Debug\System.Windows.Controls.DataVisualization.Toolkit.dll
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\bin\Debug\WPFToolkit.dll
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Wealthy RPT.csprojAssemblyReference.cache
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Wealthy RPT.csproj.ResolveComReference.cache
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\About.g.cs
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Admin.g.cs
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Associates.g.cs
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\DeleteYear.g.cs
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Email.g.cs
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\ImportData.g.cs
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Key Legend.g.cs
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\MainWindow.g.cs
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\PeriodImport.g.cs
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\RPT Detail.g.cs
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\SimpleReports.g.cs
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\SplashScreen.g.cs
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\StandardReports.g.cs
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Year.g.cs
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\App.g.cs
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Wealthy RPT_MarkupCompile.cache
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Wealthy RPT_MarkupCompile.lref
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\About.baml
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Admin.baml
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Associates.baml
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\DeleteYear.baml
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Email.baml
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\ImportData.baml
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Key Legend.baml
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\MainWindow.baml
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\PeriodImport.baml
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\RPT Detail.baml
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\SimpleReports.baml
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\SplashScreen.baml
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\StandardReports.baml
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Year.baml
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Wealthy RPT.g.resources
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Wealthy_RPT.Properties.Resources.resources
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Wealthy RPT.csproj.GenerateResource.cache
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Wealthy RPT.csproj.CoreCompileInputs.cache
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Wealthy RPT.csproj.CopyComplete
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Wealthy RPT.exe
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Wealthy RPT.pdb
