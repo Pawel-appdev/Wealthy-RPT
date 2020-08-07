@@ -1,4 +1,4 @@
-﻿<Window x:Class="Wealthy_RPT.RPT_Detail"
+﻿<Window x:Class="Wealthy_RPT.RPT_Detail" x:Name="frmRPTdetail"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -312,8 +312,8 @@
                                                 <RowDefinition/>
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
-                                            <TextBlock x:Name="lblEmail" Grid.Row="0" Grid.Column="0" FontSize="16" Margin="0,0,10,0" Grid.ColumnSpan="2"><Run Text="Email Contacts"/><InlineUIContainer/></TextBlock>
-                                            <TextBlock x:Name="lblPopFields" Margin="0,5,19,0" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" Width="107" Grid.ColumnSpan="3"><Run Text="ICT Populated Fields"/></TextBlock>
+                                            <TextBlock x:Name="lblEmail" Grid.Row="0" Grid.Column="0" FontSize="16" Margin="0,0,75,0" Grid.ColumnSpan="2"><Run Text="Email Contacts"/><InlineUIContainer/></TextBlock>
+                                            <TextBlock x:Name="lblPopFields" Margin="0,5,10,0" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" Width="110" Grid.ColumnSpan="2"><Run Text="R&amp;I Populated Fields"/></TextBlock>
                                             <TextBox x:Name="txtPopFields" Margin="10,1,0,0" Grid.Row="0" Grid.Column="4" Background="#339966" IsEnabled="False" />
                                             <Button x:Name="cmdEmailAdd" Grid.Row="1" Grid.Column="0" Width="60" Height="30" Margin="0,5,4,5" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailAdd_GotFocus" Click="cmdEmailAdd_Click">
                                                 <TextBlock Text="Add" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Add" />
@@ -390,10 +390,10 @@
                                             <TextBox x:Name="txtFailuresHD" Visibility="Collapsed" Grid.Row="4" Grid.Column="3" Margin="0,3"/>
                                             <TextBlock x:Name="lblLateFiling" Padding="5,10,0,0" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" ><Bold>Late filing / payment history</Bold></TextBlock>
                                             <TextBlock x:Name="lblOpenIDMS" Padding="5,10,0,0" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" >Number of open work items on IDMS</TextBlock>
-                                            <TextBox x:Name="txtOpenIDMS"  Grid.Row="6" Grid.Column="2" Margin="6,3,20,3" Grid.ColumnSpan="2" Text = "{Binding LPOpen, Mode = TwoWay}" GotFocus="TxtOpenIDMS_GotFocus" HorizontalContentAlignment="Right" LostFocus="TxtOpenIDMS_LostFocus"/>
+                                            <TextBox x:Name="txtOpenIDMS"  Grid.Row="6" Grid.Column="2" Margin="6,3,20,3" Grid.ColumnSpan="2" Background="#339966" Text = "{Binding LPOpen, Mode = TwoWay}" GotFocus="TxtOpenIDMS_GotFocus" HorizontalContentAlignment="Right" LostFocus="TxtOpenIDMS_LostFocus" IsEnabled="False"/>
                                             <TextBox x:Name="txtOpenIDMSHD" Visibility="Collapsed" Grid.Row="6" Grid.Column="3" Margin="0,3"/>
                                             <TextBlock x:Name="lblClosedIDMS" Padding="5,10,0,0" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" >Number of closed work items on IDMS</TextBlock>
-                                            <TextBox x:Name="txtClosedIDMS"  Grid.Row="7" Grid.Column="2" Margin="6,5,20,5" Grid.ColumnSpan="2" Text = "{Binding LPClosed, Mode = TwoWay}" GotFocus="TxtClosedIDMS_GotFocus" HorizontalContentAlignment="Right" LostFocus="TxtClosedIDMS_LostFocus"/>
+                                            <TextBox x:Name="txtClosedIDMS"  Grid.Row="7" Grid.Column="2" Margin="6,5,20,5" Grid.ColumnSpan="2" Background="#339966" Text = "{Binding LPClosed, Mode = TwoWay}" GotFocus="TxtClosedIDMS_GotFocus" HorizontalContentAlignment="Right" LostFocus="TxtClosedIDMS_LostFocus" IsEnabled="False"/>
                                             <TextBox x:Name="txtClosedIDMSHD" Visibility="Collapsed" Grid.Row="7" Grid.Column="3" Margin="0,5"/>
                                             <TextBox x:Name="txtPSCalc" Visibility="Collapsed" Grid.Row="8" Grid.Column="3" Margin="0,0,0,10" Grid.RowSpan="2"/>
                                             <TextBox x:Name="txtPFCalc" Visibility="Collapsed" Grid.Row="9" Grid.Column="3" Margin="0,5"/>
@@ -431,17 +431,17 @@
                                 </Grid.RowDefinitions>
                                 <TextBlock x:Name="lblCaseOverview" Grid.Row="0" Grid.Column="0" FontSize="16" Margin="0,0,10,0" Grid.ColumnSpan="2"><Bold>Case Overview</Bold></TextBlock>
                                 <TextBlock x:Name="lblWealth" Grid.Row="1" Grid.Column="0">Approximate level of wealth</TextBlock>
-                                <ComboBox x:Name="cboWealth" Grid.Row="1" Grid.Column="1" Margin="0,2,0,2" GotFocus="CboWealth_GotFocus"/>
+                                <ComboBox x:Name="cboWealth" Grid.Row="1" Grid.Column="1" Margin="0,2,0,2" GotFocus="CboWealth_GotFocus" SelectedValue="{Binding WealthLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock x:Name="lblSector" Grid.Row="1" Grid.Column="3">Sector</TextBlock>
-                                <ComboBox x:Name="cboSector" Grid.Row="1" Grid.Column="4" Margin="0,2,0,2" GotFocus="CboSector_GotFocus"/>
+                                <ComboBox x:Name="cboSector" Grid.Row="1" Grid.Column="4" Margin="0,2,0,2" GotFocus="CboSector_GotFocus" SelectedValue="{Binding Sector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock x:Name="lblPathway" Grid.Row="2" Grid.Column="0">Pathway to wealth</TextBlock>
-                                <ComboBox x:Name="cboPathway" Grid.Row="2" Grid.Column="1" Margin="0,2,0,2" GotFocus="CboPathway_GotFocus"/>
+                                <ComboBox x:Name="cboPathway" Grid.Row="2" Grid.Column="1" Margin="0,2,0,2" GotFocus="CboPathway_GotFocus" SelectedValue="{Binding Pathway, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock x:Name="lblLongTerm" Grid.Row="2" Grid.Column="3">Recent or long term affluence</TextBlock>
-                                <ComboBox x:Name="cboLongTerm" Grid.Row="2" Grid.Column="4" Margin="0,2,0,2" GotFocus="CboLongTerm_GotFocus" />
+                                <ComboBox x:Name="cboLongTerm" Grid.Row="2" Grid.Column="4" Margin="0,2,0,2" GotFocus="CboLongTerm_GotFocus" SelectedValue="{Binding LongTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock x:Name="lblSource" Grid.Row="3" Grid.Column="0">Main source of wealth</TextBlock>
-                                <ComboBox x:Name="cboSource" Grid.Row="3" Grid.Column="1" Margin="0,2,0,2" GotFocus="CboSource_GotFocus"/>
+                                <ComboBox x:Name="cboSource" Grid.Row="3" Grid.Column="1" Margin="0,2,0,2" GotFocus="CboSource_GotFocus" SelectedValue="{Binding Source, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock x:Name="lblLifeEvents" Grid.Row="3" Grid.Column="3">Life Events</TextBlock>
-                                <ComboBox x:Name="cboLifeEvents" Grid.Row="3" Grid.Column="4" Margin="0,2,0,2" GotFocus="CboLifeEvents_GotFocus"/>
+                                <ComboBox x:Name="cboLifeEvents" Grid.Row="3" Grid.Column="4" Margin="0,2,0,2" GotFocus="CboLifeEvents_GotFocus" SelectedValue="{Binding LifeEvents, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </Grid>
                         </StackPanel>
                         <!--#endregion panel: Case Overview-->
@@ -471,15 +471,12 @@
                                     <!--color of selected row-->
                                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#8080FF" />
                                 </DataGrid.Resources>
-                                
+
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Associate ID" Binding="{Binding Associate_ID}" Visibility="Hidden"/>
                                     <DataGridTextColumn Header="Nature of Association" Binding="{Binding Nature_of_Association}" Width="200"/>
                                     <DataGridTextColumn Header="Full name of individual or business entity" Binding="{Binding Associate_Name}"/>
                                     <DataGridTextColumn  Header="UTR / Reference" Width="100" Binding="{Binding Associate_UTR}"/>
-                                    <DataGridTextColumn Header="HNWU" Binding="{Binding HNWU}" Visibility="Hidden"/>
-                                    <DataGridTextColumn Header="HNWU?" Binding="{Binding HNWU?}" ElementStyle="{StaticResource CenterAligned}" />
-                                    <DataGridTextColumn Header=" HMRC Contact" Binding="{Binding Contact_Info}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
 
@@ -559,7 +556,7 @@
                                     <RowDefinition Height="10"/>
                                     <RowDefinition Height="480"/>
                                 </Grid.RowDefinitions>
-                                <ListView x:Name="lvwAdditionalInfo" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" BorderThickness="2" GotFocus="LvwAdditionalInfo_GotFocus">
+                                <ListView x:Name="lvwAdditionalInfo" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" BorderThickness="2" GotFocus="LvwAdditionalInfo_GotFocus" ItemsSource="{Binding Additional_Data}">
                                     <ListView.View>
                                         <GridView>
                                             <GridViewColumn Header="Date" Width="80" DisplayMemberBinding="{Binding Date}" />
@@ -589,7 +586,10 @@
                                     <TextBlock TextWrapping="Wrap" Text="Mark info as Reveiwed" TextAlignment="Center" ToolTip="Mark Info As Reviewed"/>
                                 </Button>
                                 <TextBlock x:Name="lblFeedback" Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2" TextWrapping="Wrap">Select Item from List View to add feedback and actions.</TextBlock>
-                                <RichTextBox x:Name="rtbAdditionalData" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" BorderThickness="2" Margin="0,0,10,10" GotFocus="RtbAdditionalData_GotFocus"/>
+                                <RichTextBox x:Name="rtbAdditionalData" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" BorderThickness="2" Margin="0,0,10,10" GotFocus="RtbAdditionalData_GotFocus">
+                                    <FlowDocument>
+                                    </FlowDocument>
+                                </RichTextBox>
                             </Grid>
                         </StackPanel>
                         <!--#endregion panel: Additional-->
@@ -614,7 +614,7 @@
                                     <RowDefinition Height="400"/>
                                 </Grid.RowDefinitions>
                                 <GroupBox x:Name="grpPreviousScores" Header="Previous Scores" Grid.Row="0" Grid.Column="0">
-                                    <DataGrid x:Name="dgHistorical" HorizontalAlignment="Left" Height="120" Margin="5,10,0,0" VerticalAlignment="Top" Width="470"> 
+                                    <DataGrid x:Name="dgHistorical" HorizontalAlignment="Left" Height="120" Margin="5,10,0,0" VerticalAlignment="Top" Width="470">
                                         <DataGrid.ItemBindingGroup>
                                             <BindingGroup/>
                                         </DataGrid.ItemBindingGroup>

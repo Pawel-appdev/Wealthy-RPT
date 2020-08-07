@@ -39,8 +39,6 @@ namespace Wealthy_RPT
             this.txtName.Text = strAssociate_Name;
             this.txtRef.Text = strAssociate_UTR;
             this.cboNature.Text = strNature_of_Association;
-            if(strHNWU == "True") {chbHMWU.IsChecked  = true;}
-            this.txtContact.Text = strContact_Info;
         }
 
         private void PopulateCombo()
@@ -85,7 +83,6 @@ namespace Wealthy_RPT
         {
             try
             {
-                int intHNWU;
             SqlConnection con = new SqlConnection(Global.ConnectionString);
             con.Open();
 
@@ -95,16 +92,11 @@ namespace Wealthy_RPT
             cmd.Parameters.Add("@nName", SqlDbType.Text).Value = this.txtName.Text;
             cmd.Parameters.Add("@nAssUTR", SqlDbType.Text).Value = this.txtRef.Text;
             cmd.Parameters.Add("@nAssociation", SqlDbType.Text).Value = this.cboNature.Text;
-            if (this.chbHMWU.IsChecked == true)
-            {
-                intHNWU = 1;
-            }
-            else
-            {
-                intHNWU = 0;
-            }
-            cmd.Parameters.Add("@nHNWU", SqlDbType.Bit).Value = intHNWU;
-            cmd.Parameters.Add("@nContactInfo", SqlDbType.Text).Value = this.txtContact.Text;
+            //cmd.Parameters.Add("@nHNWU", SqlDbType.Bit).Value = intHNWU;
+            //cmd.Parameters.Add("@nContactInfo", SqlDbType.Text).Value = this.txtContact.Text;
+            // HNWU? and Contact 'no longer relevant' - Aug 2020
+            cmd.Parameters.Add("@nHNWU", SqlDbType.Bit).Value = 0;
+            cmd.Parameters.Add("@nContactInfo", SqlDbType.Text).Value = "";
             cmd.Parameters.Add("@nUTR", SqlDbType.Float).Value = dUTR;
 
             cmd.ExecuteNonQuery();
@@ -125,7 +117,6 @@ namespace Wealthy_RPT
         {
             try
             {
-                int intHNWU;
             SqlConnection con = new SqlConnection(Global.ConnectionString);
             con.Open();
 
@@ -135,16 +126,11 @@ namespace Wealthy_RPT
             cmd.Parameters.Add("@nName", SqlDbType.Text).Value = this.txtName.Text;
             cmd.Parameters.Add("@nAssUTR", SqlDbType.Text).Value = this.txtRef.Text;
             cmd.Parameters.Add("@nAssociation", SqlDbType.Text).Value = this.cboNature.Text;
-            if (this.chbHMWU.IsChecked == true)
-            {
-                intHNWU = 1;
-            }
-            else
-            {
-                intHNWU = 0;
-            }
-            cmd.Parameters.Add("@nHNWU", SqlDbType.Bit).Value = intHNWU;
-            cmd.Parameters.Add("@nContact", SqlDbType.Text).Value = this.txtContact.Text;
+            //cmd.Parameters.Add("@nHNWU", SqlDbType.Bit).Value = intHNWU;
+            //cmd.Parameters.Add("@nContact", SqlDbType.Text).Value = this.txtContact.Text;
+            // HNWU? and Contact 'no longer relevant' - Aug 2020
+            cmd.Parameters.Add("@nHNWU", SqlDbType.Bit).Value = 0;
+            cmd.Parameters.Add("@nContact", SqlDbType.Text).Value = "";
             cmd.Parameters.Add("oAssociateID",SqlDbType.Int).Value = Convert.ToInt32(Associate_ID);
 
             cmd.ExecuteNonQuery();
@@ -152,7 +138,7 @@ namespace Wealthy_RPT
 
             this.Close();
             int intTab = 1;
-            Forms.reloadForm(dUTR, intTab, dPercentile, sPop);
+                Forms.reloadForm(dUTR, intTab, dPercentile, sPop);
 
             }
             catch

@@ -155,7 +155,7 @@
                 <DataGridTextColumn Header="Seg" Binding="{Binding Segment}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
                 <DataGridTextColumn Header="SegNo" Binding="{Binding SegNo}" Visibility="Hidden" ></DataGridTextColumn>
                 <DataGridTextColumn Header="ProSegNo" Binding="{Binding ProSegNo}" Visibility="Hidden"></DataGridTextColumn>
-                <DataGridTemplateColumn x:Name="IconHeader3"  Header="" CanUserResize="False">
+                <DataGridTemplateColumn x:Name="IconHeader3"  Header="" CanUserResize="False" SortMemberPath="SegMove">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Image Source="" x:Name="SegmentMove" />
@@ -171,8 +171,8 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="SegMove" Binding="{Binding SegMove}" Visibility="Hidden"></DataGridTextColumn>
-                <DataGridTextColumn Header="Enq Window" Binding="{Binding Enq_Window}"></DataGridTextColumn>
-                <DataGridTemplateColumn x:Name="IconHeader4"  Header="" CanUserResize="False">
+                <DataGridTextColumn Header="Enq Window" Binding="{Binding Enq_Window , StringFormat=\{0:dd/MM/yyyy\}}"></DataGridTextColumn>
+                <DataGridTemplateColumn x:Name="IconHeader4"  Header="" CanUserResize="False" SortMemberPath="TimeSpan">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Image Source="" x:Name="Exclamation" />

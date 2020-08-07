@@ -87,6 +87,8 @@ namespace Wealthy_RPT
             private DataTable _historicaldata;
             private DataTable _griddata;
             private DataTable _chartdata;
+            // Additional data
+            private DataTable _additionaldata;
             // CRMM enquiry data
             private int _risksopen;
             private int _settledrisks;
@@ -990,6 +992,20 @@ namespace Wealthy_RPT
                     _chartdata = value;
                 }
             }
+            // Additional data
+
+
+            public DataTable Additional_Data
+            {
+                get
+                {
+                    return _additionaldata;
+                }
+                set
+                {
+                    _additionaldata = value;
+                }
+            }
             #endregion
 
             public bool GetRPDData(double dblUTR, int iYear, double dPercentile, string sPop)
@@ -1125,6 +1141,64 @@ namespace Wealthy_RPT
                         //MessageBox.Show("Agent record not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     }
                     con.Close();
+                }
+                catch
+                {
+                    con.Close();
+                    return false;
+                }
+                return true;
+            }
+
+            public bool GetAddtionalData(double dblUTR)
+            {
+                string strFullParaSQL = "";
+                DataSet ds = new DataSet();
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("qryGetAdditionalDataSourceInfo", con);  // tblAdditional_Data_Sources
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    #region Recordset
+                    if (dr.HasRows)
+                    {
+                        dr.Read();
+                        strFullParaSQL = (dr["Additional_Data_Instruction"] is DBNull) ? "" : Convert.ToString(dr["Additional_Data_Instruction"]);
+                        strFullParaSQL = strFullParaSQL.Replace("#UTR#", Convert.ToString(dblUTR));
+                        //strFullParaSQL = strFullParaSQL.Replace("\r\n", "");
+                    }
+
+                    #endregion
+                    else if (dr.HasRows == false)
+                    {
+                        //MessageBox.Show("Additional data not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    }
+
+                    if (strFullParaSQL !="")
+                    {
+
+                        // set up data source
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        da = new SqlDataAdapter(strFullParaSQL, Global.ConnectionString);
+
+                        // define and run data command
+                        da.SelectCommand.CommandTimeout = Global.TimeOut;
+                        da.SelectCommand.CommandType = CommandType.Text;
+
+                        // populate data table and set to bindingSource.
+                        DataTable dt = new DataTable
+                        {
+                            Locale = System.Globalization.CultureInfo.InvariantCulture
+                        };
+                        da.Fill(ds);
+                        Additional_Data = ds.Tables[0];
+
+
+                        con.Close();
+                    }
                 }
                 catch
                 {

@@ -64,6 +64,9 @@ namespace Wealthy_RPT
                 cboSegment.ItemsSource = lu.dsRPTDetailCombo.Tables[0].DefaultView;
                 cboSegment.DisplayMemberPath = "Options";
                 cboSegment.SelectedValuePath = "DecodedValue";
+                cboSegment.IsReadOnly = true;
+                cboSegment.IsEnabled = false;
+                cboSegment.IsTabStop = false;
 
                 // cboPopFriendly
                 cboPopFriendly.ItemsSource = lu.dsRPTDetailCombo.Tables[1].DefaultView;
@@ -185,16 +188,22 @@ namespace Wealthy_RPT
 
             PopulateAndSetAllocationCombos();
 
-            dblUTR = Convert.ToDouble(txtUTR.Text);
-            GetEmails(dblUTR);
-            GetAssociates(dblUTR);
-
-            if (Globals.gs_CRM.Count < 1) /*test for weightings*/
+            if (txtUTR.Text != "") /* not new case */ 
             {
-                RPT.RPT_Data rpt = new RPT.RPT_Data();
-                rpt.GetCRM();
-            }
+                dblUTR = Convert.ToDouble(txtUTR.Text);
+                GetEmails(dblUTR);
+                GetAssociates(dblUTR);
 
+                RPT.RPT_Data rpt = new RPT.RPT_Data();
+                if (Globals.gs_CRM.Count < 1) /*test for weightings*/
+                {
+
+                    rpt.GetCRM();
+                }
+
+                bool bAddlData = rpt.GetAddtionalData(dblUTR);
+
+            }
             int iTest = Convert.ToInt16(Globals.gs_CRM.ElementAt(0)[1]);
 
             //TabFrames
@@ -1010,7 +1019,7 @@ namespace Wealthy_RPT
                 if (CheckandAddRPD() == false)
                 {
                     System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
-                    MessageBox.Show("Problem adding data. Please try again." + Environment.NewLine + Environment.NewLine + "If the problem persists, take screenshots of the" + Environment.NewLine + "record and error message, and report it to ICT.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Problem adding data. Please try again." + Environment.NewLine + Environment.NewLine + "If the problem persists, take screenshots of the" + Environment.NewLine + "record and error message, and report it to R&I.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
                     cmdSave.IsEnabled = true;
                 }
                 else
@@ -2333,7 +2342,7 @@ namespace Wealthy_RPT
             }
         }
 
-        private void GetAssociates(double UTR)
+        public void GetAssociates(double UTR)
         {
             SqlConnection con = new SqlConnection(Global.ConnectionString);
             SqlCommand cmd = new SqlCommand("qryGetAssociates", con);
