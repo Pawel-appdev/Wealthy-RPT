@@ -55,7 +55,7 @@ namespace Wealthy_RPT
 
             if(txtContact.Text.Trim() == "" || txtEmailAddr.Text.Trim() == "" || txtRole.Text.Trim() == "")
             {
-                MessageBox.Show("None of the required fields appear to have been completed." + "\n" + "\n" + "Please rectify.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("None of the required fields appear to have been completed." + "\n" + "\n" + "Please rectify.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
             try
@@ -82,7 +82,7 @@ namespace Wealthy_RPT
         }
             catch
             {
-                MessageBox.Show("Contact details have not been added", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("Contact details have not been added", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
 
@@ -107,7 +107,7 @@ namespace Wealthy_RPT
         }
             catch
             {
-                MessageBox.Show("Contact details have not been updated", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("Contact details have not been updated", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
 

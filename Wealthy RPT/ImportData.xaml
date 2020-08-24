@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wealthy_RPT"
         mc:Ignorable="d"
-        Title="Import" Height="255" Width="777" Icon="RPT16V1.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Import" Height="255" Width="777" Icon="WRT32V1.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" HorizontalAlignment="Left" Margin="0,0,0,0.2" Width="770">
         <ComboBox x:Name="cboData" HorizontalAlignment="Left" Height="25" Margin="153,39,0,0" VerticalAlignment="Top" Width="346" SelectionChanged="cboData_SelectionChanged"/>
         <Label x:Name="lblData" Content="Data" HorizontalAlignment="Left" Height="36" Margin="32,39,0,0" VerticalAlignment="Top" Width="111" FontSize="14"/>

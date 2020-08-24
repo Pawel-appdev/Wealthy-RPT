@@ -7,12 +7,13 @@
         mc:Ignorable="d"
         Title="About" Height="277.765" Width="662.611" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="NoResize" ShowInTaskbar="False" Background="Turquoise" WindowStyle="ToolWindow" >
     <Grid>
-        <Label x:Name="lblApplicationName" Content="Wealthy RPT" Height="59" Margin="164,32,73.496,0" VerticalAlignment="Top" Width="auto" FontSize="36" HorizontalContentAlignment="Center" Foreground="White"/>
-        <Label x:Name="lblVersion" Content="Version 0.0.0.0" Margin="236,108,147,119" Width="auto" Foreground="White" HorizontalContentAlignment="Center" Background="Turquoise"/>
-        <Image x:Name="imgLogo" HorizontalAlignment="Left" Height="67" Margin="60,32,0,0" VerticalAlignment="Top" Width="72" Source="C:\Users\AT100444\source\repos\WPF Core\WPF Core\Images\Database.png" MouseEnter="ImgLogo_MouseEnter" IsEnabled="True"/>
-        <Label x:Name="lblHelp" Content="lblHelp" Margin="10,155,140,72" Width="auto" Foreground="White" Background="Turquoise"/>
-        <Label x:Name="lblBDAppNumber" Content="lblBDAppNumber" Margin="10,178,140,48" Foreground="White" Background="Turquoise"/>
-        <Label x:Name="lblBDAppName" Content="lblBDAppName" Margin="10,202,333,25" Width="auto" Foreground="White" Background="Turquoise"/>
-        <Label x:Name="lblResolver" Content="lblResolver" Margin="10,225,179,2" Width="auto" Foreground="White" Background="Turquoise"/>
+        <Label x:Name="lblApplicationName" Content="Wealthy Risk Tool" Height="59" Margin="164,32,73.496,0" VerticalAlignment="Top" Width="auto" FontSize="36" HorizontalContentAlignment="Center" Foreground="White"/>
+        <Image x:Name="imgLogo" ToolTip="Click here to re-install" HorizontalAlignment="Left" Height="88" Margin="60,32,0,0" VerticalAlignment="Top" Width="99" Source="Resources/Images/WrtLogo128t2.png" MouseDown="ImgLogo_MouseDown" IsEnabled="True"/>
+        <StackPanel>
+            <Label x:Name="lblVersion" Content="Version 0.0.0.0" Margin="184,100,88,1" Width="auto" Foreground="White" HorizontalContentAlignment="Center" Background="Turquoise"/>
+            <Label x:Name="lblBDAppNumber" Content="lblBDAppNumber" Margin="10,0,10,0" Foreground="White" Background="Turquoise"/>
+            <Label x:Name="lblBDAppName" Content="lblBDAppName" Margin="10,0,10,0" Width="auto" Foreground="White" Background="Turquoise"/>
+            <Label x:Name="lblResolver" Content="lblResolver" Margin="10,0,10,0" Width="auto" Foreground="White" Background="Turquoise"/>
+        </StackPanel>
     </Grid>
 </Window>

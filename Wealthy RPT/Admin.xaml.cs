@@ -2,6 +2,8 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace Wealthy_RPT
 {
@@ -63,6 +65,13 @@ namespace Wealthy_RPT
         private void cboTableName_DropDownClosed(object sender, EventArgs e)
         {
             int intTableIndex = cboTableName.SelectedIndex;
+            int intPrevTableIndex = Convert.ToInt16(cboTableName.Tag);
+            // where selection unchanged, do nothing 
+            if (intTableIndex == intPrevTableIndex)
+            {
+                return;
+            }
+
             try
             {
                 //get Additional_Data_Instruction corresponding to Friendly Name
@@ -75,7 +84,7 @@ namespace Wealthy_RPT
             }
             catch
             {
-                MessageBox.Show("Select the correct value from the drop down list", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Select the correct value from the drop down list", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             
 
@@ -84,6 +93,8 @@ namespace Wealthy_RPT
 
         private void FillTablesGrid(string strAddlDataInstr)
         {
+            dgTables.Columns.Clear();
+
             switch (strAddlDataInstr)
             {
                 case "SELECT * FROM [tblAdditional_Data_Sources]":
@@ -182,7 +193,7 @@ namespace Wealthy_RPT
                     dgTables.ItemsSource = tblSensUTR.dt.DefaultView;
                     break;
 
-                case "SELECT * FROM [tblstndReports]":
+                case "SELECT * FROM [tblStndReports]":
                     tblRep.dt.Clear();
                     tblRep.sda.Fill(tblRep.dt);
                     dgTables.ItemsSource = tblRep.dt.DefaultView;
@@ -194,6 +205,44 @@ namespace Wealthy_RPT
                     dgTables.ItemsSource = tblUser.dt.DefaultView;
                     break;
 
+                case "SELECT * FROM [dbo].[ltUserPopID] ORDER BY UserPID, UserPopID":
+                    tblUserPopID.dt.Clear();
+                    tblUserPopID.sda.Fill(tblUserPopID.dt);
+                    dgTables.ItemsSource = tblUserPopID.dt.DefaultView;
+
+                    // define DataGridTemplateColumn 
+                    DataGridTemplateColumn dgTemplateColumn = new DataGridTemplateColumn();
+                    dgTemplateColumn.Header = "Populations";
+                    dgTables.Columns[2].Visibility = Visibility.Hidden; // hide corresponding standard column
+
+                    // define ComboBox
+                    var cbo = new FrameworkElementFactory(typeof(ComboBox));
+                    cbo.SetValue(ComboBox.NameProperty, "cboPopulations");
+                    SqlConnection conn = new SqlConnection(Global.ConnectionString);
+                    SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM dbo.tblPopulations", conn);
+                    DataSet ds = new DataSet();
+                    da.Fill(ds, "dbo.tblPopulations");
+                    Binding bdCombo = new Binding("");
+                    bdCombo.Mode = BindingMode.OneWay;
+                    bdCombo.Source = ds.Tables[0].DefaultView;
+                    cbo.SetBinding(ComboBox.ItemsSourceProperty, bdCombo);
+                    cbo.SetValue(ComboBox.SelectedValuePathProperty, "PopID");
+                    cbo.SetValue(ComboBox.DisplayMemberPathProperty, "Pop_Friendly_Name");
+
+                    // bind ComboBox to DataGrid
+                    var bdValue = new Binding("UserPopID")
+                    {
+                        Mode = BindingMode.TwoWay,
+                        UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+                    };
+                    cbo.SetBinding(ComboBox.SelectedValueProperty, bdValue);
+                    var dt = new DataTemplate();
+                    dt.VisualTree = cbo;
+                    dgTemplateColumn.CellTemplate = dt;
+
+                    // add combo to the DataGrid
+                    dgTables.Columns.Add(dgTemplateColumn);
+                    break;
             }
 
 
@@ -201,6 +250,7 @@ namespace Wealthy_RPT
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
+            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
             try
             {
 
@@ -350,19 +400,36 @@ namespace Wealthy_RPT
                         tblUser.sda.Update(tblUser.dt);
                         tblUser.conn.Close();
                         break;
+
+                    case "SELECT * FROM [dbo].[ltUserPopID] ORDER BY UserPID, UserPopID":
+                        tblUserPopID.conn.Open();
+                        SqlCommandBuilder bldUserPop = new SqlCommandBuilder(tblUserPopID.sda);
+                        tblUserPopID.sda.UpdateCommand = bldUserPop.GetUpdateCommand();
+                        tblUserPopID.sda.Update(tblUserPopID.dt);
+                        tblUserPopID.conn.Close();
+                        break;
+
+
                 }
+
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.ToString(),"Wealthy RPT",MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+                MessageBox.Show(ex.ToString(),"Wealthy Risk Tool",MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
+            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
         }
 
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void CboTableName_DropDownOpened(object sender, EventArgs e)
+        {
+            cboTableName.Tag = cboTableName.SelectedIndex;
         }
     }
 }

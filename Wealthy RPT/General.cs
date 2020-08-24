@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Data;
 
 namespace Wealthy_RPT
 {
@@ -358,5 +359,6 @@ namespace Wealthy_RPT
                 }
             }
         }        
-    }       
+    }
+
 }

@@ -178,3 +178,4 @@ C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Wealthy RPT.cspro
 C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Wealthy RPT.csproj.CopyComplete
 C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Wealthy RPT.exe
 C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\Wealthy RPT.pdb
+C:\Users\guser\source\repos\Wealthy-RPT3\Wealthy RPT\obj\Debug\GeneratedInternalTypeHelper.g.cs

@@ -23,16 +23,14 @@ namespace Wealthy_RPT
         {
             InitializeComponent();
 
-            lblApplicationName.Content = Global.ApplicationName;
-            lblHelp.Content = "hhh";
+            //lblApplicationName.Content = Global.ApplicationName;
             lblBDAppName.Content = "BDApp Name : " + Global.ApplicationName;
             lblBDAppNumber.Content = "BDApp Number : " + Global.BDAppNo;
             lblResolver.Content = "Resolver Group : " + Global.ResolverGroup;
             lblVersion.Content = "Version : " + Global.CurrentVersion;
-
         }
 
-        private void ImgLogo_MouseEnter(object sender, MouseEventArgs e)
+        private void ImgLogo_MouseDown(object sender, MouseButtonEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("This will initiate the reinstall process.  Click Ok to proceed", Global.ApplicationName, MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
 

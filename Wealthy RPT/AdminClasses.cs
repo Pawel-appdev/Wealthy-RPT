@@ -188,7 +188,7 @@ namespace Wealthy_RPT
     {
         public static SqlConnection conn = new SqlConnection(Global.ConnectionString);
 
-        public static string SQLquery = "SELECT * FROM [tblstndReports]";
+        public static string SQLquery = "SELECT * FROM [tblStndReports]";
 
         public static SqlCommand myCmd = new SqlCommand(SQLquery, conn);
         public static SqlDataAdapter sda = new SqlDataAdapter(myCmd);
@@ -200,6 +200,17 @@ namespace Wealthy_RPT
         public static SqlConnection conn = new SqlConnection(Global.ConnectionString);
 
         public static string SQLquery = "SELECT * FROM [tblUsers]";
+
+        public static SqlCommand myCmd = new SqlCommand(SQLquery, conn);
+        public static SqlDataAdapter sda = new SqlDataAdapter(myCmd);
+        public static DataTable dt = new DataTable("Tables");
+    }
+
+    class tblUserPopID
+    {
+        public static SqlConnection conn = new SqlConnection(Global.ConnectionString);
+
+        public static string SQLquery = "SELECT * FROM [dbo].[ltUserPopID] ORDER BY UserPID, UserPopID";
 
         public static SqlCommand myCmd = new SqlCommand(SQLquery, conn);
         public static SqlDataAdapter sda = new SqlDataAdapter(myCmd);

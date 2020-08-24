@@ -57,7 +57,7 @@ namespace Wealthy_RPT
 
                     if(ImportData.strTable.IndexOf("tblInfo") != -1)
                     {
-                        MessageBox.Show("Unable to delete any particular year." + "\n" + "Select 'All' if you wish to delete all records.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show("Unable to delete any particular year." + "\n" + "Select 'All' if you wish to delete all records.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
                     }
 
@@ -90,7 +90,7 @@ namespace Wealthy_RPT
                 con.Close();
                 
                 this.Close();
-                MessageBox.Show("Data removal process completed.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Data removal process completed.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (SystemException ex)
             {
