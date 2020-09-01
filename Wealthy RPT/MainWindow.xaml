@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wealthy_RPT"
         mc:Ignorable="d"
-        Title="Wealthy RPT" Height="700" MinHeight="300" Width="1300" MinWidth="1100" WindowStartupLocation="CenterScreen" Icon="RPT16V1.ico"
+        Title="Wealthy Risk Tool" Height="700" MinHeight="300" Width="1300" MinWidth="1100" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="WRT32V1.ico"
         KeyDown="MainWindow_KeyDown" Closing="Refresh_Cases">
 
     <Window.Background>
@@ -21,6 +21,42 @@
         <Style x:Key="TextCenter" TargetType="{x:Type TextBlock}" >
             <Setter Property="TextAlignment" Value="Center" />
         </Style>
+        <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
+        <Style x:Key="GroupBoxStyle1" TargetType="{x:Type GroupBox}">
+            <Setter Property="BorderBrush" Value="#D5DFE5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GroupBox}">
+                        <Grid SnapsToDevicePixels="true">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="6"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="6"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="6"/>
+                            </Grid.RowDefinitions>
+                            <Border BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.ColumnSpan="4" Grid.Column="0" CornerRadius="4" Grid.Row="1" Grid.RowSpan="3"/>
+                            <Border BorderBrush="White" BorderThickness="{TemplateBinding BorderThickness}" Grid.ColumnSpan="4" CornerRadius="4" Grid.Row="1" Grid.RowSpan="3">
+                            <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3">
+                                <Border BorderBrush="White" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="2"/>
+                            </Border>
+                            </Border>
+                            <Border x:Name="Header" Grid.Column="1" Padding="3,1,3,0" Grid.Row="0" Grid.RowSpan="2">
+                                <ContentPresenter ContentSource="Header" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </Border>
+                            <ContentPresenter Grid.ColumnSpan="2" Grid.Column="1" Margin="{TemplateBinding Padding}" Grid.Row="2" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
     </Window.Resources>
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Margin="0,0,0,0">
         <Grid.ColumnDefinitions>
@@ -32,6 +68,7 @@
             <ColumnDefinition Width="22*"/>
 
         </Grid.ColumnDefinitions>
+
         <GroupBox x:Name="groupOfficeTeam" Header="" Margin="161.2,76,533.5,0" Padding="10" Height="65" VerticalAlignment="Top" Foreground="{x:Null}" BorderThickness="0" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Grid.ColumnSpan="2" Grid.Column="2">
             <Canvas Margin="-9,-8,8,-10" Height="40" VerticalAlignment="Bottom">
                 <Label x:Name="lblOffice" Content="Office" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="50" Canvas.Left="6" Canvas.Top="10"/>
@@ -68,14 +105,15 @@
             <StatusBarItem x:Name="sbiAccessLevel" Content="Access Level :" Height="26" VerticalAlignment="Top" Width="170"/>
             <StatusBarItem x:Name="sbiVersion" Content="Version : " Height="26" VerticalAlignment="Top" Width="170"/>
         </StatusBar>
-        <GroupBox x:Name="groupPickCase" Header="" HorizontalAlignment="Left" Height="46" Margin="16,38,0,0" VerticalAlignment="Top" Width="675" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Grid.ColumnSpan="3" Grid.Column="1">
-            <Grid Margin="440,47,-157,-2"/>
+        <GroupBox x:Name="groupPickCase" Header="" HorizontalAlignment="Left" Height="50" Margin="20,38,0,0" VerticalAlignment="Top" Width="675" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Grid.ColumnSpan="3" Grid.Column="1" Style="{DynamicResource GroupBoxStyle1}">
+            <StackPanel Orientation="Horizontal">
+                <RadioButton x:Name="rbMyCases" Content="My Cases" HorizontalAlignment="Left" Height="17" Margin="20,5,0,0" VerticalAlignment="Top" Width="100" GroupName="Cases" IsChecked="True" Checked="rbMyCases_Checked" Grid.Column="1"/>
+                <RadioButton x:Name="rbOtherCases" Content="Other Cases" HorizontalAlignment="Left" Height="17" Margin="16.2,5,0,0" VerticalAlignment="Top" Width="100" GroupName="Cases" Checked="rbOtherCases_Checked" Grid.Column="2"/>
+                <Label x:Name="lblKeyword" Content="Keyword" HorizontalAlignment="Left" Margin="100,0,0,0" VerticalAlignment="Top" Width="64" Grid.Column="2"/>
+                <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Height="26" Margin="0,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="151" VerticalContentAlignment="Center" ToolTip="Enter at least 3 characters." Grid.Column="2"/>
+                <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Left" Height="26" Margin="10,0,0,0" VerticalAlignment="Top" Width="95" IsCancel="True" Click="btnSearch_Click" Grid.ColumnSpan="2" Grid.Column="2" />
+            </StackPanel>
         </GroupBox>
-        <RadioButton x:Name="rbMyCases" Content="My Cases" HorizontalAlignment="Left" Height="17" Margin="42,58,0,0" VerticalAlignment="Top" Width="100" GroupName="Cases" IsChecked="True" Checked="rbMyCases_Checked" Grid.Column="1"/>
-        <RadioButton x:Name="rbOtherCases" Content="Other Cases" HorizontalAlignment="Left" Height="17" Margin="16.2,58,0,0" VerticalAlignment="Top" Width="100" GroupName="Cases" Checked="rbOtherCases_Checked" Grid.Column="2"/>
-        <Label x:Name="lblKeyword" Content="Keyword" HorizontalAlignment="Left" Height="26" Margin="177.2,52,0,0" VerticalAlignment="Top" Width="64" Grid.Column="2"/>
-        <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Height="26" Margin="238.2,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="151" VerticalContentAlignment="Center" ToolTip="Enter at least 3 characters." Grid.Column="2"/>
-        <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Left" Height="26" Margin="400.2,53,0,0" VerticalAlignment="Top" Width="95" IsCancel="True" Click="btnSearch_Click" Grid.ColumnSpan="2" Grid.Column="2"/>
         <Label x:Name="lblRows" Content="Rows per page" HorizontalAlignment="Right" Height="26" Margin="0,52,262.5,0" VerticalAlignment="Top" Width="98" Grid.Column="3"/>
         <TextBox x:Name="txtRows" HorizontalAlignment="Right" Height="26" Margin="0,52,228.5,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38" VerticalContentAlignment="Center" Grid.Column="3"/>
         <Button x:Name="btnRows" Content="Update" HorizontalAlignment="Right" Height="25" Margin="0,52,174.5,0" VerticalAlignment="Top" Width="49"  ToolTip="Update" Click="btnRows_Click" Grid.Column="3" />
@@ -92,7 +130,7 @@
         <TextBox x:Name="txtPage" HorizontalAlignment="Right" Height="25" Margin="0,105,65.5,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="227" UndoLimit="98" TextAlignment="Center" VerticalContentAlignment="Center" IsEnabled="False" Grid.Column="3"/>
         <Button x:Name="btnNext" Content="&gt;" HorizontalAlignment="Right" Height="25" Margin="0,105,33.5,0" VerticalAlignment="Top" Width="25" FontSize="16" FontFamily="Microsoft Sans Serif" ToolTip="Next Page" Grid.Column="3" Click="btnNext_Click"/>
         <Button x:Name="btnLastPage" Content="&gt;&gt;" HorizontalAlignment="Right" Height="25" Margin="0,105,3.5,0" VerticalAlignment="Top" Width="25" FontSize="16" FontFamily="Microsoft Sans Serif" ToolTip="Last Page" Grid.Column="3" Click="btnLastPage_Click"/>
-        <DataGrid x:Name="dgCases" HorizontalAlignment="Stretch"  Margin="16,163,2.5,38.4" VerticalAlignment="Stretch" Style="{DynamicResource headerStyle}" FontWeight="Normal" AutoGenerateColumns="False" VerticalGridLinesBrush="#FFD1D1D1" HorizontalGridLinesBrush="#FFD1D1D1" AlternatingRowBackground="WhiteSmoke"  AlternationCount="2" IsReadOnly="True" MouseDoubleClick="DgCases_MouseDoubleClick" Grid.ColumnSpan="3" Grid.Column="1">
+        <DataGrid x:Name="dgCases" HorizontalAlignment="Stretch"  Margin="16,163,2.5,38.4" VerticalAlignment="Stretch" Style="{DynamicResource headerStyle}" FontWeight="Normal" AutoGenerateColumns="False" VerticalGridLinesBrush="#FFD1D1D1" HorizontalGridLinesBrush="#FFD1D1D1" AlternatingRowBackground="WhiteSmoke"  AlternationCount="2" IsReadOnly="True" MouseDoubleClick="DgCases_MouseDoubleClick" Grid.ColumnSpan="3" Grid.Column="1" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Visible"  ScrollViewer.VerticalScrollBarVisibility="Auto">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#8080FF" />
                 <!--color of selected row-->
@@ -155,7 +193,7 @@
                 <DataGridTextColumn Header="Seg" Binding="{Binding Segment}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
                 <DataGridTextColumn Header="SegNo" Binding="{Binding SegNo}" Visibility="Hidden" ></DataGridTextColumn>
                 <DataGridTextColumn Header="ProSegNo" Binding="{Binding ProSegNo}" Visibility="Hidden"></DataGridTextColumn>
-                <DataGridTemplateColumn x:Name="IconHeader3"  Header="" CanUserResize="False">
+                <DataGridTemplateColumn x:Name="IconHeader3"  Header="" CanUserResize="False" SortMemberPath="SegMove">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Image Source="" x:Name="SegmentMove" />
@@ -171,8 +209,9 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="SegMove" Binding="{Binding SegMove}" Visibility="Hidden"></DataGridTextColumn>
-                <DataGridTextColumn Header="Enq Window" Binding="{Binding Enq_Window}"></DataGridTextColumn>
-                <DataGridTemplateColumn x:Name="IconHeader4"  Header="" CanUserResize="False">
+                <DataGridTextColumn Header="Strand" Binding="{Binding Strand}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Enq Window" Binding="{Binding Enq_Window , StringFormat=\{0:dd/MM/yyyy\}}"></DataGridTextColumn>
+                <DataGridTemplateColumn x:Name="IconHeader4"  Header="" CanUserResize="False" SortMemberPath="TimeSpan">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Image Source="" x:Name="Exclamation" />
@@ -188,12 +227,8 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Time_Span" Binding="{Binding TimeSpan}" Visibility="Hidden" ></DataGridTextColumn>
-                <DataGridTextColumn Header="CCM TimeSpan" Binding="{Binding CRM_Name}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="CRM Name" Binding="{Binding CRM_Name}" Width="90"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-
-
-
-
     </Grid>
 </Window>

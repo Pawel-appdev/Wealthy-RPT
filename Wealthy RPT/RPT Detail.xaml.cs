@@ -64,6 +64,9 @@ namespace Wealthy_RPT
                 cboSegment.ItemsSource = lu.dsRPTDetailCombo.Tables[0].DefaultView;
                 cboSegment.DisplayMemberPath = "Options";
                 cboSegment.SelectedValuePath = "DecodedValue";
+                cboSegment.IsReadOnly = true;
+                cboSegment.IsEnabled = false;
+                cboSegment.IsTabStop = false;
 
                 // cboPopFriendly
                 cboPopFriendly.ItemsSource = lu.dsRPTDetailCombo.Tables[1].DefaultView;
@@ -185,20 +188,21 @@ namespace Wealthy_RPT
 
             PopulateAndSetAllocationCombos();
 
-            dblUTR = Convert.ToDouble(txtUTR.Text);
-            GetEmails(dblUTR);
-            GetAssociates(dblUTR);
-
-            if (Globals.gs_CRM.Count < 1) /*test for weightings*/
+            if (txtUTR.Text != "") /* not new case */ 
             {
+                dblUTR = Convert.ToDouble(txtUTR.Text);
+                GetEmails(dblUTR);
+                GetAssociates(dblUTR);
+                GetAddtionalData(dblUTR);
+
                 RPT.RPT_Data rpt = new RPT.RPT_Data();
-                rpt.GetCRM();
+                if (Globals.gs_CRM.Count < 1) /*test for weightings*/
+                {
+
+                    rpt.GetCRM();
+                }
+
             }
-
-            int iTest = Convert.ToInt16(Globals.gs_CRM.ElementAt(0)[1]);
-
-            //TabFrames
-            //this.Activated += AfterLoading;
 
             bFormLoaded = true;
         }
@@ -615,21 +619,6 @@ namespace Wealthy_RPT
             }
         }
 
-        //private void LvwAssociates_GotFocus(object sender, RoutedEventArgs e)
-        //{
-        //    if (Globals.blnAccess == true)
-        //    {
-        //        //ShowActiveControl(lvwAssociates);
-        //    }
-        //}
-
-        //private void lvwEmail_GotFocus(object sender, RoutedEventArgs e)
-        //{
-        //    if (Globals.blnAccess == true)
-        //    {
-        //        ShowActiveControl(lvwEmail);
-        //    }
-        //}
 
         private void TxtOpenRisks_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -767,14 +756,6 @@ namespace Wealthy_RPT
             }
         }
 
-        private void LvwAdditionalInfo_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (Globals.blnAccess == true)
-            {
-                ShowActiveControl(lvwAdditionalInfo);
-            }
-        }
-
         private void RtbAdditionalData_GotFocus(object sender, RoutedEventArgs e)
         {
             if (Globals.blnAccess == true)
@@ -791,13 +772,6 @@ namespace Wealthy_RPT
             }
         }
 
-        //private void LvwPrevRes_GotFocus(object sender, RoutedEventArgs e)
-        //{
-        //    if (Globals.blnAccess == true)
-        //    {
-        //        ShowActiveControl(lvwPrevRes);
-        //    }
-        //}
 
         private void MscHistory_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -868,7 +842,6 @@ namespace Wealthy_RPT
                     cboPopCode.SelectedIndex = cboPopFriendly.SelectedIndex;
                     txtPopFriendly.Text = cboPopFriendly.Text;
                     // update Office options as not all populations may have same office locations
-                    // ##########cboOffice.Items.Clear();
                     bool blnTest = PopulateOfficeCombo();
                     foreach (var item in cboOffice.Items)
                     {
@@ -878,11 +851,9 @@ namespace Wealthy_RPT
                             break;
                         }
                     }
-                    // ###########cboTeam.Items.Clear();
                 }
             }
         }
-
 
         private void ChkDeselected_Checked(object sender, RoutedEventArgs e)
         {
@@ -989,17 +960,16 @@ namespace Wealthy_RPT
 
             //RecalculateResults();  // ensure scores are up to date
 
-            //if (tcmdSave.Text.IndexOf("save", StringComparison.CurrentCultureIgnoreCase) >= 0)
+            // SECTION BELOW REMOVED, AS REQUESTED AUG 2020
+            //if ((cboOffice.Text.Trim() == "") || (cboTeam.Text.Trim() == "") || (cboPopFriendly.Text.Trim() == ""))
             //{
-                if ((cboOffice.Text.Trim() == "") || (cboTeam.Text.Trim() == "") || (cboPopFriendly.Text.Trim() == ""))
-                {
-                    System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
-                    MessageBox.Show("Please assign a Population, an Office and a Team.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
-                    cmdSave.IsEnabled = true;
-                    return;
-                }
+            //    System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+            //    MessageBox.Show("Please assign a Population, an Office and a Team.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+            //    cmdSave.IsEnabled = true;
+            //    return;
+            //}
 
-                if ((txtCRMExplanation.Text.Trim() == "") && (chkCRMDescretion.IsChecked == true))
+            if ((txtCRMExplanation.Text.Trim() == "") && (chkCRMDescretion.IsChecked == true))
                 {
                     System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
                     MessageBox.Show("Please give an explanation of why CCM Discretion has been applied.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
@@ -1010,7 +980,7 @@ namespace Wealthy_RPT
                 if (CheckandAddRPD() == false)
                 {
                     System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
-                    MessageBox.Show("Problem adding data. Please try again." + Environment.NewLine + Environment.NewLine + "If the problem persists, take screenshots of the" + Environment.NewLine + "record and error message, and report it to ICT.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Problem adding data. Please try again." + Environment.NewLine + Environment.NewLine + "If the problem persists, take screenshots of the" + Environment.NewLine + "record and error message, and report it to R&I.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
                     cmdSave.IsEnabled = true;
                 }
                 else
@@ -1099,14 +1069,6 @@ namespace Wealthy_RPT
                 return;
             }
 
-            //PopulateCombo Me.cboTeam, "qryGetOfficeTeams", "Team Identifier", Me.cboOffice.Text, True, cUser.Pop
-            //Me.cboAllocatedTo.Clear
-            //Me.cboAllocatedTo.Text = ""
-
-            //Me.txtOffice.Text = Me.cboOffice.Text
-            //Me.txtTeam.Text = Me.cboTeam.Text
-
-            //Me.cboTeam.Enabled = True
         }
 
         private void TxtUTR_LostFocus(object sender, RoutedEventArgs e)
@@ -1466,11 +1428,12 @@ namespace Wealthy_RPT
                     rpt.Narrative = txtNarrative.Text;
                     rpt.HNWUPID = Convert.ToInt32(Global.PID);
                     rpt.UTR = Convert.ToDouble(txtUTR.Text);
-                    rpt.Pop = cboPopCode.Text;
+                    rpt.Pop = cboPopCode.SelectedValue.ToString();
                     rpt.CRM_Name = cboCRMName.Text;
                     rpt.CRM_Appointed = txtCRMDA.Text;
 
-                    blnRtn = rpt.UpdateCustomerData();
+                    rpt.UpdateCustomerData();
+                    blnRtn = true;
                 }
                 catch
                 {
@@ -1569,7 +1532,8 @@ namespace Wealthy_RPT
                     rpt.AgentTelNo = txtTelNo.Text;
                     rpt.Changed = (cboChange.Text.ToLower() == "yes") == true ? Convert.ToByte(1) : Convert.ToByte(0); /*convert Yes/No to byte*/
                     double dblUTR = Convert.ToDouble(txtUTR.Text.Trim());
-                    blnRtn = rpt.UpdateAgentData(dblUTR);
+                    rpt.UpdateAgentData(dblUTR);
+                    blnRtn = true;
                 }
                 catch
                 {
@@ -1590,7 +1554,6 @@ namespace Wealthy_RPT
             bool blnScores = false;
             bool blnRtn = false;
             string strTest = "";
-            var varSegment = "";
 
             RPT.RPT_Data rpt = new RPT.RPT_Data(); // initialise data
             for (int j = 0; j < 15; j++)
@@ -1734,62 +1697,11 @@ namespace Wealthy_RPT
 
             if (blnScores == true) // save scores data as something has changed
             {
-                // DEVELOPER NOTE - following adapted from legacy system due to time constraints.
-                // Process need flexibility around pop, i.e. not just 10 / 20 Mill and RAG.RAG10M_1 etc.
-
-                if ((cboPopCode.Text.Trim().ToUpper() == "RPT10MILL") && (Global.DisplayRAG == "True"))
-                {
-                    switch (cboPopCode.Text.Trim().ToUpper())
-                    {
-                        case "CERT":
-                            varSegment = "Cert";
-                            break;
-                        case "HIGH":
-                            varSegment = "High";
-                            break;
-                        case "RESO":
-                            varSegment = "Res";
-                            break;
-                        default:
-                            varSegment = "NYR";
-                            break;
-                    }
-                }
-
-                if ((cboPopCode.Text.Trim().ToUpper() == "RPT10MILL") && (Global.DisplayRAG == "False"))
-                {
-                    varSegment = "Res";
-                    if (Convert.ToDouble(txtPercentile.Text) <= RAG.RAG10M_1)
-                    {
-                        varSegment = "Cert";
-                    }
-                    if (Convert.ToDouble(txtPercentile.Text) > RAG.RAG10M_2)
-                    {
-                        varSegment = "High";
-                    }
-                }
-                else
-                {
-                    varSegment = "Res";
-                    if (Convert.ToDouble(txtPercentile.Text) <= RAG.RAG20M_1)
-                    {
-                        varSegment = "Cert";
-                    }
-                    if (Convert.ToDouble(txtPercentile.Text) > RAG.RAG20M_2)
-                    {
-                        varSegment = "High";
-                    }
-                }
-
                 try
                 {
                     // open database table - get previous entry
                     // use new qryUpdateRiskData rather than SQL string 
 
-                    rpt.UTR = dblUTR;
-                    rpt.Pop = cboPopFriendly.SelectedValue.ToString();
-                    try { rpt.CalendarYear = Convert.ToInt16(this.lblPopYear.Text); } catch { rpt.CalendarYear = 2000; }
-                    rpt.Segment = varSegment;
                     rpt.HPPenalty = float.Parse(txtHighestPercent.Text);
                     rpt.LPOpen = int.Parse(txtOpenIDMS.Text);
                     rpt.LPClosed = int.Parse(txtClosedIDMS.Text);
@@ -1808,7 +1720,9 @@ namespace Wealthy_RPT
                     rpt.Percentile = float.Parse(txtPercentile.Text);
                     rpt.CRMExplanation = txtCRMExplanation.Text;
 
-                    blnRtn = rpt.UpdateRiskData();
+                    //// etc ...
+                    rpt.UpdateRiskData();
+                    blnRtn = true;
                 }
                 catch
                 {
@@ -1941,47 +1855,8 @@ namespace Wealthy_RPT
             else
             {
             }
-                //bool blnKeepCRMDA = false;
-                //if (cboTeam.Text == "")
-                //{
-                //    //cboAllocatedTo.Claer;
-                //    cboAllocatedTo.Text = "";
-                //    return;
-                //}
 
-                //if(txtTeam.Text == "")
-                //{
-                //    if(txtTeam.Text == cboTeam.Text)
-                //    {
-                //        return;
-                //    }
-                //}
-
-                //PopulateAllocatedToCombo();
-                //PopulateCRMCombo();
-
-                //blnKeepCRMDA = false;
-
-                //bool itemExists = false;
-                //foreach (ComboBoxItem cbi in cboCRMName.Items)
-                //{
-                //    itemExists = cbi.Content.Equals(txtCRMName.Text);
-                //    if (itemExists)
-                //    {
-                //        blnKeepCRMDA = true;
-                //        break;
-                //    }
-                //}
-
-                //if(blnKeepCRMDA == false)
-                //{
-                //    txtCRMDA.Text = "";
-                //}
-
-                //txtTeam.Text = cboTeam.Text;
-                //cboAllocatedTo.IsEnabled = true;
-
-            }
+        }
 
         private void CmdUpdateClose_Click(object sender, RoutedEventArgs e)
         {
@@ -2073,13 +1948,6 @@ namespace Wealthy_RPT
             RecalculateBehaviours();
         }
 
-        //private void CmdUpdateClose_Click(object sender, RoutedEventArgs e)
-        //{
-        //    RecalculateBehaviours();
-
-        //    BindingExpression obj = txtSecondaryAddress.GetBindingExpression(TextBox.TextProperty);
-        //    obj.UpdateSource();
-        //}
 
         private void ReplotChart()
         {
@@ -2102,7 +1970,6 @@ namespace Wealthy_RPT
             }
             else
             {
-                //iCSuspensions = Convert.ToInt16(this.cboCurrentSuspensions.SelectedItem.ToString());
                 iCSuspensions = Convert.ToInt16(this.cboCurrentSuspensions.SelectedValue.ToString());
             }
 
@@ -2112,7 +1979,6 @@ namespace Wealthy_RPT
             }
             else
             {
-                //iPSuspensions = Convert.ToInt16(this.cboPrevSuspensions.SelectedItem.ToString());
                 iPSuspensions = Convert.ToInt16(this.cboPrevSuspensions.SelectedValue.ToString());
             }
 
@@ -2165,9 +2031,9 @@ namespace Wealthy_RPT
                 cmd.Parameters.Add("@nCurrentPSScore", SqlDbType.Int).Value = Convert.ToInt16(this.txtPRScore.Text.ToString());
                 cmd.Parameters.Add("@nCurrentRank", SqlDbType.Float).Value = Convert.ToDouble(this.txtPercentile.Text.ToString());
                 cmd.Parameters.Add("@nCalendarYear", SqlDbType.Int).Value = iYear;
-                cmd.Parameters.Add("@nUTR", SqlDbType.Int).Value = Convert.ToInt32(this.txtUTR.Text.ToString());
+                //cmd.Parameters.Add("@nUTR", SqlDbType.Int).Value = Convert.ToInt32(this.txtUTR.Text.ToString());
+                cmd.Parameters.Add("@nUTR", SqlDbType.Float).Value = Convert.ToInt64(this.txtUTR.Text.ToString());
                 cmd.Parameters.Add("@nPop", SqlDbType.Text).Value = this.cboPopCode.SelectedValue.ToString();
-
 
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 da.Fill(dt);
@@ -2294,7 +2160,7 @@ namespace Wealthy_RPT
         }
             catch
             {
-                MessageBox.Show("Contact details have not been selected.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Contact details have not been selected.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
 }
@@ -2305,7 +2171,7 @@ namespace Wealthy_RPT
             {
                 DataRowView selectedRow = (DataRowView)dgEmail.SelectedItem;
 
-            MessageBoxResult answer = MessageBox.Show("Do you want to delete " + selectedRow["Email_Address"] + " permanently?", "Wealthy RPT", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult answer = MessageBox.Show("Do you want to delete " + selectedRow["Email_Address"] + " permanently?", "Wealthy Risk Tool", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (answer == MessageBoxResult.Yes)
             {
                 SqlConnection con = new SqlConnection(Global.ConnectionString);
@@ -2329,11 +2195,11 @@ namespace Wealthy_RPT
             }
             catch
             {
-                MessageBox.Show("Contact details have not been selected.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Contact details have not been selected.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
-        private void GetAssociates(double UTR)
+        public void GetAssociates(double UTR)
         {
             SqlConnection con = new SqlConnection(Global.ConnectionString);
             SqlCommand cmd = new SqlCommand("qryGetAssociates", con);
@@ -2413,7 +2279,7 @@ namespace Wealthy_RPT
             }
             catch
             {
-                MessageBox.Show("Associate's details have not been selected.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Associate's details have not been selected.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
         }
@@ -2424,7 +2290,7 @@ namespace Wealthy_RPT
             {
                 DataRowView selectedRow = (DataRowView)dgAssociates.SelectedItem;
 
-                MessageBoxResult answer = MessageBox.Show("Do you want to delete " + selectedRow["Associate_Name"] + " permanently?", "Wealthy RPT", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult answer = MessageBox.Show("Do you want to delete " + selectedRow["Associate_Name"] + " permanently?", "Wealthy Risk Tool", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (answer == MessageBoxResult.Yes)
                 {
                     SqlConnection con = new SqlConnection(Global.ConnectionString);
@@ -2448,9 +2314,131 @@ namespace Wealthy_RPT
             }
             catch
             {
-                MessageBox.Show("Associate's details have not been selected.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Associate's details have not been selected.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
+
+        private void GetAddtionalData(double UTR)
+        {
+            string strFullParaSQL = "";
+            string strRTB = "";
+            string strRTBElement = "";
+            bool blnIsInfo = false;
+            DataSet ds = new DataSet();
+            SqlConnection con = new SqlConnection(Global.ConnectionString);
+            try
+            {
+                SqlCommand cmd = new SqlCommand("qryGetAdditionalDataSourceInfo", con);  // tblAdditional_Data_Sources
+                cmd.CommandTimeout = Global.TimeOut;
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                #region Recordset
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        //dr.Read();
+                        strFullParaSQL = (dr["Additional_Data_Instruction"] is DBNull) ? "" : Convert.ToString(dr["Additional_Data_Instruction"]);
+                        strFullParaSQL = strFullParaSQL.Replace("#UTR#", Convert.ToString(dblUTR));
+                        //strFullParaSQL = strFullParaSQL.Replace("\r\n", "");
+                        blnIsInfo = Convert.ToString(dr["Friendly_Name"]).ToUpper().Trim() == "INFO" ? true : false;
+                        if ((strFullParaSQL != "")&&(blnIsInfo==true))
+                        {
+                            SqlDataAdapter da = new SqlDataAdapter(cmd);
+                            da = new SqlDataAdapter(strFullParaSQL, Global.ConnectionString);
+                            da.SelectCommand.CommandTimeout = Global.TimeOut;
+                            da.SelectCommand.CommandType = CommandType.Text;
+                            DataTable dt = new DataTable
+                            {
+                                Locale = System.Globalization.CultureInfo.InvariantCulture
+                            };
+                            da.Fill(dt);
+                            dt.Columns["Date Of Sale"].ColumnName = "SaleDate";
+                            dt.Columns["Item Value"].ColumnName = "SaleValue";
+                            dt.Columns.Add("SaleDateSort", typeof(string));
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                try { row["SaleDateSort"] = Convert.ToDateTime(row["SaleDate"]).ToString("yyyyMMdd"); } catch { row["SaleDateSort"] = ""; };
+                            }
+                            dt.Columns["Name"].ColumnName = "Seller";
+                            dt.Columns["Noted"].ColumnName = "SaleNoted";
+                            dt.Columns["Feedback/Actions"].ColumnName = "InfoAction";
+                            dt.Columns["Info ID"].ColumnName = "InfoID";
+                            dgAdditionalInfo.ItemsSource = dt.DefaultView;
+                        }
+
+                        // Additional Data to RichTextBox  
+                        if ((strFullParaSQL != "") && (blnIsInfo == false))
+                        {
+                            SqlDataAdapter da = new SqlDataAdapter(cmd);
+                            da = new SqlDataAdapter(strFullParaSQL, Global.ConnectionString);
+                            da.SelectCommand.CommandTimeout = Global.TimeOut;
+                            da.SelectCommand.CommandType = CommandType.Text;
+                            DataTable dt = new DataTable
+                            {
+                                Locale = System.Globalization.CultureInfo.InvariantCulture
+                            };
+                            da.Fill(dt);
+                            strRTB = "";
+                            foreach (DataRow dtRow in dt.Rows)
+                            {
+                                strRTB += (dr["Friendly_Name"] is DBNull) ? "" : " ::::: " + Convert.ToString(dr["Friendly_Name"]) + " ::::: " + Environment.NewLine + Environment.NewLine;
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    strRTB += "[" + dc.ColumnName.ToString() + "] : " +  dtRow[dc.ColumnName].ToString() + Environment.NewLine;
+                                }
+                                strRTB += Environment.NewLine;
+                            }
+                            strRTBElement += strRTB;
+
+                        }
+                        rtbAdditionalData.Document.Blocks.Clear();
+                        rtbAdditionalData.Document.Blocks.Add(new Paragraph(new Run(strRTBElement)));
+                    }
+                }
+
+                #endregion
+                else if (dr.HasRows == false)
+                {
+                    //MessageBox.Show("Additional data not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                }
+                con.Close();
+            }
+            catch
+            {
+                con.Close();
+            }
+        }
+
+    }
+
+    public class BooleanToYesNoConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            switch (value.ToString().ToLower())
+            {
+                case "true":
+                    return "Yes";
+                case "false":
+                    return "No";
+            }
+            return "No";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value is string)
+            {
+                if ((string)value == "Yes")
+                    return true;
+                else
+                    return false;
+            }
+            return false;
+        }
+
     }
 
 }
