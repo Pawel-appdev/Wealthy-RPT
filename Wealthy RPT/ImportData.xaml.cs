@@ -71,13 +71,13 @@ namespace Wealthy_RPT
 
             if (txtSource.Text == "")
             {
-                MessageBox.Show("Please confirm the data to be deleted.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Please confirm the data to be deleted.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
             if (cboData.Text == "")
             {
-                MessageBox.Show("There doesn't appear to be a Table Instruction for this Data." +"\n" + "Please report to the Support Team Mailbox. See Help/About.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("There doesn't appear to be a Table Instruction for this Data." +"\n" + "Please report to the Support Team Mailbox. See Help/About.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
             else
@@ -112,7 +112,7 @@ namespace Wealthy_RPT
         {
             if (txtSource.Text == "")
             {
-                MessageBox.Show("Please confirm Data Source first.","Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Please confirm Data Source first.","Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
@@ -139,7 +139,7 @@ namespace Wealthy_RPT
                 string filename = openFileDlg.FileName;
                 if(filename != "")
                 {
-                    MessageBox.Show("If you would like this location to be the default location in future," + "\n" + "Please update the details using the Update DB Tables Function.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("If you would like this location to be the default location in future," + "\n" + "Please update the details using the Update DB Tables Function.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
 
@@ -153,13 +153,13 @@ namespace Wealthy_RPT
 
             if (txtSource.Text == "")
             {
-                MessageBox.Show("Please confirm the data to be imported.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Please confirm the data to be imported.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
             if (cboData.Text == "")
             {
-                MessageBox.Show("There doesn't appear to be a Table Instruction for this Data." + "\n" + "Please report to the Support Team Mailbox. See Help/About.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("There doesn't appear to be a Table Instruction for this Data." + "\n" + "Please report to the Support Team Mailbox. See Help/About.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
@@ -169,7 +169,7 @@ namespace Wealthy_RPT
 
             if (txtSource.Text == "")
             {
-                MessageBox.Show("Please confirm the source location.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Please confirm the source location.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
             else
@@ -185,7 +185,7 @@ namespace Wealthy_RPT
 
             if (strIdentifier == "")
             {
-                MessageBox.Show("There doesn't appear to be a specifiec Auto Number Data Indentifier for the Data Table." + "\n" + "Please report to the Support Team Mailbox. See Help/About.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("There doesn't appear to be a specifiec Auto Number Data Indentifier for the Data Table." + "\n" + "Please report to the Support Team Mailbox. See Help/About.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
@@ -200,7 +200,7 @@ namespace Wealthy_RPT
                 {
                     if (GetRowsCount(strTable) > 0)
                     {
-                        MessageBox.Show("The Table Top 0 Line Instruction has returned some records." + "\n" + "Please report to the Support Team Mailbox. See Help/About.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show("The Table Top 0 Line Instruction has returned some records." + "\n" + "Please report to the Support Team Mailbox. See Help/About.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
                     
@@ -241,7 +241,7 @@ namespace Wealthy_RPT
                         BC.WriteToServer(dt);
                     }
                     SQLConnection.Close();
-                    MessageBox.Show("Data import complete.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Data import complete.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {
@@ -250,7 +250,7 @@ namespace Wealthy_RPT
             }
             else
             {
-                MessageBox.Show("Check the Source Location as file doesn't appear to exist.", "Wealthy RPT", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("Check the Source Location as file doesn't appear to exist.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
 
 

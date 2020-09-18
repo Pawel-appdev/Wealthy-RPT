@@ -200,7 +200,6 @@ namespace Wealthy_RPT
                     cmd.Parameters.Add("@nTeam", SqlDbType.Text).Value = strTeam;
                     cmd.Parameters.Add("@nYear", SqlDbType.Int).Value = intYear;
 
-
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
 
                     DataSet ds = new DataSet();
@@ -212,67 +211,79 @@ namespace Wealthy_RPT
                     Microsoft.Office.Interop.Excel.Application oexcel = new Microsoft.Office.Interop.Excel.Application();
                     Microsoft.Office.Interop.Excel._Workbook obook = null;
                     Microsoft.Office.Interop.Excel._Worksheet osheet = null;
-                    //try
-                    //{
-                    //    string path = AppDomain.CurrentDomain.BaseDirectory;
-                    object misValue = System.Reflection.Missing.Value;
-                    //    if (strFileName == "")
-                    //    {
-                    // Template hasn't been specified so use a new blank workbook
-                    obook = oexcel.Workbooks.Add(misValue);
-                    osheet = (Microsoft.Office.Interop.Excel.Worksheet)obook.Sheets["Sheet1"];
-                    //    }
-                    //    else
-                    //    {
-                    //        // Template was specified so open the specified template
-                    //        strFileName = path + strFileName;
-                    //        obook = oexcel.Workbooks.Open(strFileName);
-                    //        osheet = (Microsoft.Office.Interop.Excel.Worksheet)obook.Sheets["Data"];
-                    //        osheet.UsedRange.ClearContents();
-                    //    }
-
-                    int colIndex = 0;
-                    int rowIndex = 1;
-
-                    foreach (DataColumn dc in dt.Columns)
+                    try
                     {
-                        colIndex++;
-                        osheet.Cells[1, colIndex] = dc.ColumnName;
-                    }
-                    foreach (DataRow dr in dt.Rows)
-                    {
-                        rowIndex++;
-                        colIndex = 0;
+                        string path = AppDomain.CurrentDomain.BaseDirectory;
+                        object misValue = System.Reflection.Missing.Value;
+
+                        string strFileName = row["Template"].ToString();
+                        if (strFileName == "") 
+                        { 
+                          // Template hasn't been specified so use a new blank workbook
+                            obook = oexcel.Workbooks.Add(misValue);
+                            osheet = (Microsoft.Office.Interop.Excel.Worksheet)obook.Sheets["Sheet1"];
+                        } 
+                        else
+                        { 
+                            try
+                            {
+                                // Template was specified so open the specified template
+                                strFileName = path + strFileName; 
+                                obook = oexcel.Workbooks.Open(strFileName); 
+                                osheet = (Microsoft.Office.Interop.Excel.Worksheet)obook.Sheets["Data"]; 
+                                osheet.UsedRange.ClearContents(); 
+                            }
+                            catch
+                            {
+                                MessageBox.Show("Problem with the report template." + Environment.NewLine
+                                    + Environment.NewLine + "Report will continue, using a blank workbook.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation );
+                                obook = oexcel.Workbooks.Add(misValue);
+                                osheet = (Microsoft.Office.Interop.Excel.Worksheet)obook.Sheets["Sheet1"];
+                            }
+                        } 
+
+                        int colIndex = 0;
+                        int rowIndex = 1;
 
                         foreach (DataColumn dc in dt.Columns)
                         {
                             colIndex++;
-                            osheet.Cells[rowIndex, colIndex] = dr[dc.ColumnName];
+                            osheet.Cells[1, colIndex] = dc.ColumnName;
                         }
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            rowIndex++;
+                            colIndex = 0;
+
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                colIndex++;
+                                osheet.Cells[rowIndex, colIndex] = dr[dc.ColumnName];
+                            }
+                        }
+
+                        osheet.Columns.AutoFit();
                     }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Problem with the report." + Environment.NewLine
+                            + Environment.NewLine + ex.Message, "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
-                    osheet.Columns.AutoFit();
-                    //    }
-                    //catch (Exception ex)
-                    //{
-
-                    //}
+                    }
 
                     //this.TopMost = false;
 
                     oexcel.Visible = true;
 
                     //releaseObject(osheet);
-
                     //releaseObject(obook);
-
                     //releaseObject(oexcel);
 
                     GC.Collect();
 
                 }
             }
-            MessageBox.Show("Report function has finished running.","Wealthy RPT",MessageBoxButton.OK,MessageBoxImage.Information);
+            MessageBox.Show("Report function has finished running.","Wealthy Risk Tool",MessageBoxButton.OK,MessageBoxImage.Information);
             this.Close();
         }
 

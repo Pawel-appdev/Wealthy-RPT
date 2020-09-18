@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wealthy_RPT"
         mc:Ignorable="d"
-        Title="Key Legend" Height="229.134" Width="272.047" Icon="RPT16V1.ico" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Key Legend" Height="229.134" Width="272.047" Icon="WRT32V1.ico" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Canvas>
 
         <Image x:Name="Icon1" HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="16" Canvas.Left="39" Canvas.Top="32" Source="pink-flag-16.ico" />

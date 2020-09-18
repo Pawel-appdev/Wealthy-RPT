@@ -5,33 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wealthy_RPT"
         mc:Ignorable="d"
-        Title="Associates" Height="450" Width="676" WindowStartupLocation="CenterScreen" Icon="RPT16V1.ico">
+        Title="Associates" Height="330" Width="676" WindowStartupLocation="CenterScreen" Icon="WRT32V1.ico">
     <Window.Resources>
         <SolidColorBrush x:Key="LightGreyBrush" Color="#c0c0c0"/>
         <SolidColorBrush x:Key="MidGreyBrush" Color="#A3A3A3"/>
         <SolidColorBrush x:Key="DarkGreyBrush" Color="#404040"/>
     </Window.Resources>
     <Grid Margin="0,0,0,0.0">
-        <Button x:Name="btnAction" HorizontalAlignment="Left" Height="28" Margin="182,354,0,0" VerticalAlignment="Top" Width="100" Click="btnAction_Click">
+        <Button x:Name="btnAction" HorizontalAlignment="Left" Height="28" Margin="182,229,0,0" VerticalAlignment="Top" Width="100" Click="btnAction_Click">
             <TextBlock Text="Button" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Close"/>
         </Button>
 
-        <Button x:Name="btnClose" HorizontalAlignment="Left" Height="28" Margin="379,354,0,0" VerticalAlignment="Top" Width="100" Click="btnClose_Click">
+        <Button x:Name="btnClose" HorizontalAlignment="Left" Height="28" Margin="379,229,0,0" VerticalAlignment="Top" Width="100" Click="btnClose_Click">
             <TextBlock Text="Close" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Close"/>
         </Button>
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="20,20,0,0" TextWrapping="Wrap" Text="Associate details" VerticalAlignment="Top" Width="144" FontSize="16"/>
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="20,66,0,0" TextWrapping="Wrap" Text="Full Name of Individual or Business Entity" VerticalAlignment="Top" Width="229"/>
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="20,99,0,0" TextWrapping="Wrap" Text="Associates UTR/Reference" VerticalAlignment="Top" Width="218"/>
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="20,132,0,0" TextWrapping="Wrap" Text="Nature of Association" VerticalAlignment="Top" Width="218"/>
-        <TextBlock HorizontalAlignment="Left" Height="19" Margin="20,165,0,0" TextWrapping="Wrap" Text="HMWU?" VerticalAlignment="Top" Width="218"/>
-        <TextBlock HorizontalAlignment="Left" Height="19" Margin="20,198,0,0" TextWrapping="Wrap" Text="HMRC Contact" VerticalAlignment="Top" Width="218"/>
-
-
-
         <TextBox x:Name="txtName" HorizontalAlignment="Left" Height="25" Margin="275,62,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="358" VerticalContentAlignment="Center"/>
         <TextBox x:Name="txtRef" HorizontalAlignment="Left" Height="25" Margin="275,93,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="358" VerticalContentAlignment="Center"/>
-        <TextBox x:Name="txtContact" HorizontalAlignment="Left" Height="122" Margin="275,192,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="358" VerticalContentAlignment="Top" />
         <ComboBox x:Name="cboNature" HorizontalAlignment="Left" Height="28" Margin="275,124,0,0" VerticalAlignment="Top" Width="358"/>
-        <CheckBox x:Name="chbHMWU" Content="" HorizontalAlignment="Left" Height="16" Margin="275,165,0,0" VerticalAlignment="Top" Width="20"/>
     </Grid>
 </Window>

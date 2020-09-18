@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="SplashScreen" Height="277.765" Width="530.392" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="NoResize" ShowInTaskbar="False" Background="Turquoise" WindowStyle="None" Loaded="Window_Loaded">
     <Grid>
-        <Label x:Name="lblApplicationName" Content="Wealthy RPT" Height="59" Margin="164,32,73.496,0" VerticalAlignment="Top" Width="auto" FontSize="36" HorizontalContentAlignment="Center" Foreground="White"/>
+        <Label x:Name="lblApplicationName" Content="Wealthy Risk Tool" Height="59" Margin="164,32,73.496,0" VerticalAlignment="Top" Width="auto" FontSize="36" HorizontalContentAlignment="Center" Foreground="White"/>
         <Label x:Name="lblVersion" Content="Version 0.0.0.0" Height="26" Margin="236,91,147.496,161" Width="auto" Foreground="White" HorizontalContentAlignment="Center"/>
-        <Image x:Name="imgLogo" HorizontalAlignment="Left" Height="67" Margin="60,32,0,0" VerticalAlignment="Top" Width="72" Source="logo128.jpg" SnapsToDevicePixels="True" IsEnabled="False"/>
+        <Image x:Name="imgLogo" HorizontalAlignment="Left" Height="88" Margin="60,32,0,0" VerticalAlignment="Top" Width="99" Source="Resources/Images/WrtLogo128t.png" SnapsToDevicePixels="True" IsEnabled="False"/>
         <Label x:Name="lblHelp" Content="lblHelp" Height="26" Margin="10,125,140,127" Width="auto" Foreground="White"/>
         <Label x:Name="lblBDAppNumber" Content="lblBDAppNumber" Height="26" Margin="10,151,140,101" Foreground="White"/>
         <Label x:Name="lblBDAppName" Content="lblBDAppName" Height="26" Margin="10,177,333,75" Width="auto" Foreground="White"/>
