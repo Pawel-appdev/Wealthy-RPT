@@ -6,8 +6,7 @@ using System.Windows.Controls;
 using Microsoft.Office.Interop.Excel;
 using System.Reflection;
 using System.Runtime.InteropServices;
-
-
+using System.Windows.Input;
 
 namespace Wealthy_RPT
 {
@@ -162,6 +161,8 @@ namespace Wealthy_RPT
             string strTeam = cboTeam.Text.ToString();
             int intYear;
 
+            Cursor = Cursors.Wait;
+
             foreach (DataRowView row in dgStReports.Items)
             {
                 if (row["RunReport"].ToString() == "Yes")
@@ -202,17 +203,29 @@ namespace Wealthy_RPT
 
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
 
-                    DataSet ds = new DataSet();
-                    da.Fill(ds);
 
-                    dt = ds.Tables[0];
-
-                    /*Set up work book, work sheets, and excel application*/
-                    Microsoft.Office.Interop.Excel.Application oexcel = new Microsoft.Office.Interop.Excel.Application();
-                    Microsoft.Office.Interop.Excel._Workbook obook = null;
-                    Microsoft.Office.Interop.Excel._Worksheet osheet = null;
                     try
                     {
+                        DataSet ds = new DataSet();
+                        da.Fill(ds);
+
+                        dt = ds.Tables[0];
+                    }
+                    catch
+                    {
+                        Cursor = Cursors.Arrow;
+                        MessageBox.Show("Problem running report query: '" + StoredProcedureName + "'.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        return;
+                    }
+
+
+                    try
+                    {
+                        /*Set up work book, work sheets, and excel application*/
+                        Microsoft.Office.Interop.Excel.Application oexcel = new Microsoft.Office.Interop.Excel.Application();
+                        Microsoft.Office.Interop.Excel._Workbook obook = null;
+                        Microsoft.Office.Interop.Excel._Worksheet osheet = null;
+
                         string path = AppDomain.CurrentDomain.BaseDirectory;
                         object misValue = System.Reflection.Missing.Value;
 
@@ -235,10 +248,10 @@ namespace Wealthy_RPT
                             }
                             catch
                             {
-                                MessageBox.Show("Problem with the report template." + Environment.NewLine
-                                    + Environment.NewLine + "Report will continue, using a blank workbook.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation );
-                                obook = oexcel.Workbooks.Add(misValue);
-                                osheet = (Microsoft.Office.Interop.Excel.Worksheet)obook.Sheets["Sheet1"];
+                                Cursor = Cursors.Arrow;
+                                MessageBox.Show("Problem with the report template.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation );
+                                oexcel.Quit();
+                                return;
                             }
                         } 
 
@@ -254,7 +267,6 @@ namespace Wealthy_RPT
                         {
                             rowIndex++;
                             colIndex = 0;
-
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 colIndex++;
@@ -263,9 +275,11 @@ namespace Wealthy_RPT
                         }
 
                         osheet.Columns.AutoFit();
+                        oexcel.Visible = true;
                     }
                     catch (Exception ex)
                     {
+                        Cursor = Cursors.Arrow;
                         MessageBox.Show("Problem with the report." + Environment.NewLine
                             + Environment.NewLine + ex.Message, "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
@@ -273,7 +287,7 @@ namespace Wealthy_RPT
 
                     //this.TopMost = false;
 
-                    oexcel.Visible = true;
+                    //oexcel.Visible = true;
 
                     //releaseObject(osheet);
                     //releaseObject(obook);
@@ -283,6 +297,7 @@ namespace Wealthy_RPT
 
                 }
             }
+            Cursor = Cursors.Arrow;
             MessageBox.Show("Report function has finished running.","Wealthy Risk Tool",MessageBoxButton.OK,MessageBoxImage.Information);
             this.Close();
         }

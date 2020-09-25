@@ -1102,5 +1102,25 @@ namespace Wealthy_RPT
             ctr_Admin.ShowDialog();
         }
 
+        private void MnuGuidance_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Cursor = Cursors.Wait;
+                Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
+                Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(@Global.GuidanceFile);
+                //Microsoft.Office.Interop.Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
+                //xlApp.WindowState = Microsoft.Office.Interop.Excel.XlWindowState.xlMaximized;
+                xlApp.Visible = true;
+            }
+            catch(Exception ex)
+            {
+                GC.Collect();
+                Cursor = Cursors.Arrow;
+                MessageBox.Show("Cannot open the Guidance." + Environment.NewLine
+                    + Environment.NewLine + ex.Message, "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+            Cursor = Cursors.Arrow;
+        }
     }
 }

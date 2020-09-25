@@ -95,7 +95,7 @@
                 <MenuItem x:Name="mnuQuarterlyUpdate" Header="Quarterly Update" HorizontalAlignment="Left" Height="24" Width="182" Margin="0,0,0,0" Click="mnuQuarterlyUpdate_Click"/>
             </MenuItem>
             <MenuItem x:Name="mnuAbout" Header="About" Height="24" Width="52" Click="MnuAbout_Click"/>
-            <MenuItem x:Name="mnuGuidance" Header="Guidance" Height="24" Width="71"/>
+            <MenuItem x:Name="mnuGuidance" Header="Guidance" Height="24" Width="71" Click="MnuGuidance_Click"/>
             <MenuItem x:Name="mnuKey" Header="Key" Height="24" Width="41" Click="MnuKey_Click"/>
             <MenuItem x:Name="mnuExit" Header="Close" Height="24" Width="63" Click="MnuExit_Click" RenderTransformOrigin="1.703,0.48"/>
         </Menu>
@@ -227,7 +227,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Time_Span" Binding="{Binding TimeSpan}" Visibility="Hidden" ></DataGridTextColumn>
-                <DataGridTextColumn Header="CRM Name" Binding="{Binding CRM_Name}" Width="90"></DataGridTextColumn>
+                <DataGridTextColumn Header="CCM Name" Binding="{Binding CRM_Name}" Width="90"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

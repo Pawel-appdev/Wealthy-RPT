@@ -1196,7 +1196,7 @@ namespace Wealthy_RPT
         {
             if ((cboCurrentSuspensions.Text != "") || (IsNumeric(cboCurrentSuspensions.Text) == true))
             {
-                //CheckWeight(txtCurrentSuspensions, txtCurrentSuspensionsHD);
+                // CheckWeight(txtCurrentSuspensions, txtCurrentSuspensionsHD);
             }
         }
 

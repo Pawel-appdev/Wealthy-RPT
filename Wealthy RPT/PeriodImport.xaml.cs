@@ -160,7 +160,7 @@ namespace Wealthy_RPT
             }
             else
             {
-                strPrevCRMM = this.cboPrevCRMM.SelectedItem.ToString();
+                strPrevCRMM = this.cboPrevCRMM.SelectedValue.ToString();
             }
 
             if ((this.txtRisks.Text == "") || (this.txtAvoidanceScores.Text == "")|| (this.txtCRMMData.Text == ""))

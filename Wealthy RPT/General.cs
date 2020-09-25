@@ -83,6 +83,7 @@ namespace Wealthy_RPT
         private static string _dailyRecalc;
         private static string _annualUpdate;
         private static string _defaultImportFolder;
+        private static string _guidanceFile;
         private static bool _admin;
         private static bool _baadmin;
 
@@ -297,6 +298,18 @@ namespace Wealthy_RPT
             set
             {
                 _defaultImportFolder = value;
+            }
+        }
+
+        public static string GuidanceFile
+        {
+            get
+            {
+                return _guidanceFile;
+            }
+            set
+            {
+                _guidanceFile = value;
             }
         }
 

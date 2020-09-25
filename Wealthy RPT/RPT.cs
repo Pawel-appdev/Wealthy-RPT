@@ -67,7 +67,7 @@ namespace Wealthy_RPT
             private int _calendaryear;
             private int _lpopen;
             private int _lpclosed;
-            private float _hppenalty;
+            private double _hppenalty;
             private byte _pscurrent;
             private byte _psprevious;
             private byte _psfailures;
@@ -689,7 +689,7 @@ namespace Wealthy_RPT
                 }
             }
 
-            public float HPPenalty
+            public double HPPenalty
             {
                 get
                 {
@@ -1166,7 +1166,7 @@ namespace Wealthy_RPT
                         CalendarYear = dr["CalendarYear"] == DBNull.Value ? 0 : Convert.ToInt16(dr["CalendarYear"]);
                         LPOpen = dr["LPOpen"] == DBNull.Value ? 0 : Convert.ToInt16(dr["LPOpen"]);
                         LPClosed = dr["LPClosed"] == DBNull.Value ? 0 : Convert.ToInt16(dr["LPClosed"]);
-                        HPPenalty = dr["HPPenalty"] == DBNull.Value ? 0 : Convert.ToInt32(dr["HPPenalty"]);
+                        HPPenalty = dr["HPPenalty"] == DBNull.Value ? 0 : Convert.ToDouble(dr["HPPenalty"]);
                         byte MaxThreeWay = 2; /*Yes/No/Unknown*/
                         PSCurrent = (dr["PSCurrent"] is DBNull) ? MaxThreeWay : Convert.ToByte(dr["PSCurrent"]);
                         PSCurrent = (PSCurrent > MaxThreeWay) ? MaxThreeWay : PSCurrent;
