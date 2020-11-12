@@ -83,7 +83,7 @@ namespace Wealthy_RPT
                 splashWindow.SetProgress("Performing Annual Update");
                 if (PerformAnnualUpdate() == false)
                 {
-                    MessageBox.Show("Failure to perform annual update.  Please report to R&I.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Failure to perform annual update.  Please report to CADD.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 Thread.Sleep(1000);
             }
@@ -96,7 +96,7 @@ namespace Wealthy_RPT
                 splashWindow.SetProgress("Performing Daily Recalculation");
                 if (PerformDailyRecalc()==false)
                 {
-                    MessageBox.Show("Failure to perform daily recalculation.  Please report to R&I.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Failure to perform daily recalculation.  Please report to CADD.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 Thread.Sleep(1000);
             }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wealthy_RPT"
         mc:Ignorable="d"
-        Title="RPT Simple Reports" Height="450" Width="800" Icon="WRT32V1.ico">
+        Title="WRT Simple Reports" Height="450" Width="800" Icon="WRT32V1.ico">
     <Grid>
         
     </Grid>

@@ -980,7 +980,7 @@ namespace Wealthy_RPT
                 if (CheckandAddRPD() == false)
                 {
                     System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
-                    MessageBox.Show("Problem adding data. Please try again." + Environment.NewLine + Environment.NewLine + "If the problem persists, take screenshots of the" + Environment.NewLine + "record and error message, and report it to R&I.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Problem adding data. Please try again." + Environment.NewLine + Environment.NewLine + "If the problem persists, take screenshots of the" + Environment.NewLine + "record and error message, and report it to CADD.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
                     cmdSave.IsEnabled = true;
                 }
                 else

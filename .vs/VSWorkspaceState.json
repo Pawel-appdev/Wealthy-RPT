@@ -1,6 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Data",
+    "\\Images",
+    "\\Images\\Low Res Images",
+    "\\Wealthy RPT"
   ],
+  "SelectedNode": "\\Wealthy RPT\\MainWindow.xaml.bak",
   "PreviewInSolutionExplorer": false
 }

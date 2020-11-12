@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Wealthy_RPT"
         mc:Ignorable="d"
         xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
-        Title="RPT Detail" Height="700" Width="1050" Icon="WRT32V1.ico" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Language="en-GB">
+        Title="WRT Detail" Height="700" Width="1050" Icon="WRT32V1.ico" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Language="en-GB">
 
     <Window.Resources>
 
@@ -314,7 +314,7 @@
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
                                             <TextBlock x:Name="lblEmail" Grid.Row="0" Grid.Column="0" FontSize="16" Margin="0,0,75,0" Grid.ColumnSpan="2"><Run Text="Email Contacts"/><InlineUIContainer/></TextBlock>
-                                            <TextBlock x:Name="lblPopFields" Margin="0,5,10,0" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" Width="110" Grid.ColumnSpan="2"><Run Text="R&amp;I Populated Fields"/></TextBlock>
+                                            <TextBlock x:Name="lblPopFields" Margin="0,5,10,0" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" Width="125" Grid.ColumnSpan="2"><Run Text="CADD Populated Fields"/></TextBlock>
                                             <TextBox x:Name="txtPopFields" Margin="10,1,0,0" Grid.Row="0" Grid.Column="4" Background="#339966" IsEnabled="False" />
                                             <Button x:Name="cmdEmailAdd" Grid.Row="1" Grid.Column="0" Width="60" Height="30" Margin="0,5,4,5" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailAdd_GotFocus" Click="cmdEmailAdd_Click">
                                                 <TextBlock Text="Add" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Add" />
