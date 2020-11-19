@@ -7,6 +7,7 @@ using Microsoft.Office.Interop.Excel;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
+using ADODB;
 
 namespace Wealthy_RPT
 {
@@ -253,27 +254,32 @@ namespace Wealthy_RPT
                                 oexcel.Quit();
                                 return;
                             }
-                        } 
-
-                        int colIndex = 0;
-                        int rowIndex = 1;
-
-                        foreach (DataColumn dc in dt.Columns)
-                        {
-                            colIndex++;
-                            osheet.Cells[1, colIndex] = dc.ColumnName;
-                        }
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            rowIndex++;
-                            colIndex = 0;
-                            foreach (DataColumn dc in dt.Columns)
-                            {
-                                colIndex++;
-                                osheet.Cells[rowIndex, colIndex] = dr[dc.ColumnName];
-                            }
                         }
 
+                        Recordset rs = DTtoRSconvert.ConvertToRecordSet(dt);
+
+                        osheet.Cells[1,1].CopyFromRecordset(rs);
+
+                        //int colIndex = 0;
+                        //int rowIndex = 1;
+
+                        //foreach (DataColumn dc in dt.Columns)
+                        //{
+                        //    colIndex++;
+                        //    osheet.Cells[1, colIndex] = dc.ColumnName;
+                        //}
+                        //foreach (DataRow dr in dt.Rows)
+                        //{
+                        //    rowIndex++;
+                        //    colIndex = 0;
+                        //    foreach (DataColumn dc in dt.Columns)
+                        //    {
+                        //        colIndex++;
+                        //        osheet.Cells[rowIndex, colIndex] = dr[dc.ColumnName];
+                        //    }
+                        //}
+
+                        osheet.Rows.RowHeight = 12.75;
                         osheet.Columns.AutoFit();
                         oexcel.Visible = true;
                     }
@@ -301,6 +307,5 @@ namespace Wealthy_RPT
             MessageBox.Show("Report function has finished running.","Wealthy Risk Tool",MessageBoxButton.OK,MessageBoxImage.Information);
             this.Close();
         }
-
     }
 }

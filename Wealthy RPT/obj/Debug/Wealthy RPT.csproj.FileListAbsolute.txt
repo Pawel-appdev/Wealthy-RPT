@@ -273,3 +273,8 @@ C:\Users\AT100444\Source\Repos\Wealthy-RPT\Wealthy RPT\obj\Debug\Wealthy_RPT.Pro
 C:\Users\AT100444\Source\Repos\Wealthy-RPT\Wealthy RPT\obj\Debug\Wealthy RPT.csproj.GenerateResource.cache
 C:\Users\AT100444\Source\Repos\Wealthy-RPT\Wealthy RPT\obj\Debug\Wealthy RPT.csproj.CoreCompileInputs.cache
 C:\Users\AT100444\Source\Repos\Wealthy-RPT\Wealthy RPT\obj\Debug\Wealthy RPT.csproj.CopyComplete
+C:\Users\AT100444\source\repos\Wealthy-RPT\Wealthy RPT\obj\Debug\Interop.MSChart20Lib.dll
+C:\Users\AT100444\source\repos\Wealthy-RPT\Wealthy RPT\obj\Debug\Interop.MSDATASRC.dll
+C:\Users\AT100444\source\repos\Wealthy-RPT\Wealthy RPT\obj\Debug\Interop.ADODB.dll
+C:\Users\AT100444\source\repos\Wealthy-RPT\Wealthy RPT\obj\Debug\Interop.ADOR.dll
+C:\Users\AT100444\source\repos\Wealthy-RPT\Wealthy RPT\obj\Debug\Interop.ADOX.dll

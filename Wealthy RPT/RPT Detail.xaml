@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wealthy_RPT"
+        xmlns:DV="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"  
+        xmlns:dvc="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
         mc:Ignorable="d"
-        xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
         Title="WRT Detail" Height="700" Width="1050" Icon="WRT32V1.ico" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Language="en-GB">
 
     <Window.Resources>
@@ -56,8 +57,6 @@
         </Style>
 
     </Window.Resources>
-
-
 
     <Grid>
         <TabControl x:Name="tabRPD" HorizontalAlignment="Stretch" Margin="10,0,10,49">
@@ -583,22 +582,23 @@
                                     <RowDefinition Height="10"/>
                                     <RowDefinition Height="400"/>
                                 </Grid.RowDefinitions>
-                                <GroupBox x:Name="grpPreviousScores" Header="Previous Scores" Grid.Row="0" Grid.Column="0">
-                                    <DataGrid x:Name="dgHistorical" HorizontalAlignment="Left" Height="120" Margin="5,10,0,0" VerticalAlignment="Top" Width="470">
+                                <GroupBox x:Name="grpPreviousScores" Header="Previous Scores" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,423,0">
+                                    <DataGrid x:Name="dgHistorical" HorizontalAlignment="Left" Height="120" Margin="0,10,-2,0" VerticalAlignment="Top" Width="547">
                                         <DataGrid.ItemBindingGroup>
                                             <BindingGroup/>
                                         </DataGrid.ItemBindingGroup>
                                     </DataGrid>
                                 </GroupBox>
-                                <GroupBox x:Name="grpCurrentScores" Header="Current Scores" Grid.Row="0" Grid.Column="1">
-                                    <Grid x:Name="grdCurrentScores" Width="460">
+                                <GroupBox x:Name="grpCurrentScores" Header="Current Scores" Grid.Row="0" Grid.Column="1" Margin="72,0,10,0">
+                                    <Grid x:Name="grdCurrentScores" Width="380">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="15*"/>
-                                            <ColumnDefinition Width="10*"/>
-                                            <ColumnDefinition Width="15*"/>
-                                            <ColumnDefinition Width="10*"/>
-                                            <ColumnDefinition Width="10*"/>
-                                            <ColumnDefinition Width="10*"/>
+                                            <ColumnDefinition Width="70*"/>
+                                            <ColumnDefinition Width="7*"/>
+                                            <ColumnDefinition Width="49*"/>
+                                            <ColumnDefinition Width="98*"/>
+                                            <ColumnDefinition Width="66*"/>
+                                            <ColumnDefinition Width="55*"/>
+                                            <ColumnDefinition Width="49*"/>
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="27"/>
@@ -607,33 +607,33 @@
                                             <RowDefinition Height="27"/>
                                             <RowDefinition Height="27"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock x:Name="lblQSScore" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Padding="0,10,0,10">Behaviours</TextBlock>
-                                        <TextBlock x:Name="lblAVScore" Grid.Row="1" Grid.Column="0"  VerticalAlignment="Center" Padding="0,10,0,10">Avoidance</TextBlock>
-                                        <TextBlock x:Name="lblRiskScore" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Padding="0,10,0,10">Risk Profile</TextBlock>
-                                        <TextBlock x:Name="lblCGScore" Grid.Row="3" Grid.Column="0"  VerticalAlignment="Center" Padding="0,10,0,10">Capital Gains</TextBlock>
-                                        <TextBlock x:Name="lblResScore" Grid.Row="4" Grid.Column="0"  VerticalAlignment="Center" Padding="0,10,0,10">Residence</TextBlock>
-                                        <TextBox x:Name="txtQSScore" Grid.Row="0" Grid.Column="1" Margin="0,2" Text = "{Binding QSScore, Mode = TwoWay}" LostFocus="TxtQSScore_LostFocus"/>
-                                        <TextBox x:Name="txtAVScore" Grid.Row="1" Grid.Column="1" Margin="0,2,0,2" Text = "{Binding RPTAVScore, Mode = TwoWay}"/>
-                                        <TextBox x:Name="txtRSScore" Grid.Row="2" Grid.Column="1" Margin="0,2,0,2" Text = "{Binding RPTPRScore, Mode = TwoWay}"/>
-                                        <TextBox x:Name="txtCGScore" Grid.Row="3" Grid.Column="1" Margin="0,2,0,2" Text = "{Binding CGScore, Mode = TwoWay}"/>
-                                        <TextBox x:Name="txtRESScore" Grid.Row="4" Grid.Column="1" Margin="0,2,0,2" Text = "{Binding ResScore, Mode = TwoWay}"/>
-                                        <CheckBox x:Name="chkCRMDescretion" FlowDirection="RightToLeft"  Margin="15,0,0,0" Grid.Row="0"  Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Checked="ChkCRMDescretion_Checked" Unchecked="ChkCRMDescretion_Unchecked">
+                                        <TextBlock x:Name="lblQSScore" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Padding="0,10,0,10" Height="36" Margin="0,-4,0,22" Grid.RowSpan="2" Grid.ColumnSpan="2">Behaviours</TextBlock>
+                                        <TextBlock x:Name="lblAVScore" Grid.Column="0"  VerticalAlignment="Center" Padding="0,10,0,10" Height="36" Margin="0,22,0,23" Grid.RowSpan="3" Grid.ColumnSpan="2">Avoidance</TextBlock>
+                                        <TextBlock x:Name="lblRiskScore" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Padding="0,10,0,10" Height="36" Margin="0,23,0,22" Grid.RowSpan="3" Grid.ColumnSpan="2">Risk Profile</TextBlock>
+                                        <TextBlock x:Name="lblCGScore" Grid.Row="2" Grid.Column="0"  VerticalAlignment="Center" Padding="0,10,0,10" Height="36" Margin="0,22,0,23" Grid.RowSpan="3" Grid.ColumnSpan="2">Capital Gains</TextBlock>
+                                        <TextBlock x:Name="lblResScore" Grid.Row="3" Grid.Column="0"  VerticalAlignment="Center" Padding="0,10,0,10" Height="36" Margin="0,23,0,-5" Grid.RowSpan="2" Grid.ColumnSpan="2">Residence</TextBlock>
+                                        <TextBox x:Name="txtQSScore" Grid.Row="0" Grid.Column="2" Margin="0,2" Text = "{Binding QSScore, Mode = TwoWay}" LostFocus="TxtQSScore_LostFocus"/>
+                                        <TextBox x:Name="txtAVScore" Grid.Row="1" Grid.Column="2" Margin="0,2,0,2" Text = "{Binding RPTAVScore, Mode = TwoWay}"/>
+                                        <TextBox x:Name="txtRSScore" Grid.Row="2" Grid.Column="2" Margin="0,2,0,2" Text = "{Binding RPTPRScore, Mode = TwoWay}"/>
+                                        <TextBox x:Name="txtCGScore" Grid.Row="3" Grid.Column="2" Margin="0,2,0,2" Text = "{Binding CGScore, Mode = TwoWay}"/>
+                                        <TextBox x:Name="txtRESScore" Grid.Row="4" Grid.Column="2" Margin="0,2,0,2" Text = "{Binding ResScore, Mode = TwoWay}"/>
+                                        <CheckBox x:Name="chkCRMDescretion" FlowDirection="RightToLeft"  Margin="15,6,0,6" Grid.Row="0"  Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Checked="ChkCRMDescretion_Checked" Unchecked="ChkCRMDescretion_Unchecked" Height="15" Width="102" Grid.ColumnSpan="2">
                                             <CheckBox.Resources>
                                                 <Style TargetType="{x:Type Path}">
                                                     <Setter Property="FlowDirection" Value="LeftToRight"/>
                                                 </Style>
                                             </CheckBox.Resources> CCM Discretion
                                         </CheckBox>
-                                        <TextBlock x:Name="lblCRMExplanation" Grid.Row="1" Grid.Column="2"  TextWrapping="Wrap" VerticalAlignment="Top" Padding="15,10,0,10" Grid.RowSpan="2">CCM Explanation</TextBlock>
-                                        <TextBlock x:Name="lblPriorityScore" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Padding="15,10,0,10">Total Priority</TextBlock>
-                                        <TextBlock x:Name="lblPercentile" Grid.Row="4" Grid.Column="2"  VerticalAlignment="Center" Padding="15,10,0,10">Ranking</TextBlock>
-                                        <TextBox x:Name="txtCRMScore" Grid.Row="0" Grid.Column="5" Margin="0,0,0,0" Text = "{Binding CRMScore, Mode = TwoWay}"/>
-                                        <TextBox x:Name="txtCRMExplanation" Grid.Row="1" Grid.Column="3" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.ColumnSpan="3" Grid.RowSpan="2" Margin="0,2,0,2" Text = "{Binding CRMExplanation, Mode = TwoWay}"/>
-                                        <TextBox x:Name="txtPRScore" Grid.Row="3" Grid.Column="5" Margin="0,2,0,2" Text = "{Binding PriorityScore, Mode = TwoWay}"/>
-                                        <Button x:Name="cmdPercentile" Grid.Row="3" Grid.Column="3" Margin="0,13,0,2" Grid.RowSpan="2" Style="{StaticResource 3DButtonStyle}" Click="cmdPercentile_Click">
+                                        <TextBlock x:Name="lblCRMExplanation" Grid.Row="1" Grid.Column="3"  TextWrapping="Wrap" VerticalAlignment="Top" Padding="15,10,0,10" Grid.RowSpan="2" Height="52">CCM Explanation</TextBlock>
+                                        <TextBlock x:Name="lblPriorityScore" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Padding="15,10,0,10" Height="36" Margin="0,22,0,23" Grid.RowSpan="3">Total Priority</TextBlock>
+                                        <TextBlock x:Name="lblPercentile" Grid.Row="3" Grid.Column="3"  VerticalAlignment="Center" Padding="15,10,0,10" Height="36" Margin="0,23,0,-5" Grid.RowSpan="2">Ranking</TextBlock>
+                                        <TextBox x:Name="txtCRMScore" Grid.Row="0" Grid.Column="6" Margin="0,0,0,0" Text = "{Binding CRMScore, Mode = TwoWay}"/>
+                                        <TextBox x:Name="txtCRMExplanation" Grid.Row="1" Grid.Column="3" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.ColumnSpan="4" Grid.RowSpan="2" Margin="85,2,0,2" Text = "{Binding CRMExplanation, Mode = TwoWay}"/>
+                                        <TextBox x:Name="txtPRScore" Grid.Row="3" Grid.Column="6" Margin="0,2,0,2" Text = "{Binding PriorityScore, Mode = TwoWay}"/>
+                                        <Button x:Name="cmdPercentile" Grid.Row="3" Grid.Column="4" Margin="0,13,0,2" Grid.RowSpan="2" Style="{StaticResource 3DButtonStyle}" Click="cmdPercentile_Click">
                                             <TextBlock TextWrapping="Wrap" Text="Re-Check Ranking" TextAlignment="Center" ToolTip="Re-Check Ranking"/>
                                         </Button>
-                                        <TextBox x:Name="txtPercentile" Grid.Row="5" Grid.Column="5" Margin="0,2,0,2" Text = "{Binding Percentile, Mode = TwoWay}"/>
+                                        <TextBox x:Name="txtPercentile" Grid.Row="4" Grid.Column="6" Margin="0,2,0,2" Text = "{Binding Percentile, Mode = TwoWay}"/>
                                     </Grid>
                                 </GroupBox>
                                 <!--<chartingToolkit:Chart  Title="RPT History" x:Name="mscHistory" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" BorderThickness="2" Margin="0,0,10,10" GotFocus="MscHistory_GotFocus">
@@ -669,16 +669,22 @@
                                 Title="Ranking"/>
                                     </chartingToolkit:Chart.Axes>
                                 </chartingToolkit:Chart>-->
-                                <chartingToolkit:Chart Title ="Rank History" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" BorderThickness="2" Margin="0,0,10,10" GotFocus="MscHistory_GotFocus" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Background="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                                    <chartingToolkit:Chart.Series>
-                                        <chartingToolkit:LineSeries x:Name="mscHistory" Title="Rank" ItemsSource="{Binding Chart_Data}" IndependentValueBinding="{Binding DateRecorded}" DependentValueBinding="{Binding Ranking}">
-                                        </chartingToolkit:LineSeries>
-                                    </chartingToolkit:Chart.Series>
-                                    <chartingToolkit:Chart.Axes>
-                                        <chartingToolkit:LinearAxis Orientation="Y" Minimum="0" Maximum="100" Title="Ranking"/>
-                                        <chartingToolkit:CategoryAxis Orientation="X" Title="Date Recorded" />
-                                    </chartingToolkit:Chart.Axes>
-                                </chartingToolkit:Chart>
+                                <!--<dvc:Chart x:Name="crtHistory" Title ="Rank History" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" BorderThickness="2" Margin="0,0,10,10" GotFocus="MscHistory_GotFocus" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Background="LightSteelBlue" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                    <dvc:Chart.Series>
+                                        <dvc:LineSeries x:Name="mscHistory" Title="Rank" IndependentValueBinding="{Binding Path=Key}" DependentValueBinding="{Binding Path=Value}">
+                                        </dvc:LineSeries>
+                                    </dvc:Chart.Series>
+                                    <dvc:Chart.Axes>
+                                        <dvc:LinearAxis Orientation="Y" Minimum="0" Maximum="100" Title="Ranking"/>
+                                        <dvc:CategoryAxis Orientation="X" Title="Date Recorded" />
+                                    </dvc:Chart.Axes>
+                                </dvc:Chart>-->
+                                <dvc:Chart Name="mcChart" Grid.Row="4"  Grid.Column="0" Grid.ColumnSpan="5"   Background="LightSteelBlue">
+                                    <dvc:Chart.Series>
+                                        <dvc:LineSeries Title=" Ranking"  ItemsSource ="{Binding Line1}" IndependentValueBinding="{Binding Path=Id}"  DependentValueBinding="{Binding Path=Value}">
+                                        </dvc:LineSeries>
+                                    </dvc:Chart.Series>                                   
+                                </dvc:Chart>
                             </Grid>
                         </StackPanel>
                         <!--#endregion panel: Results-->
