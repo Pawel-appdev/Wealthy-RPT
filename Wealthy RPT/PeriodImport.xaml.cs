@@ -239,6 +239,9 @@ namespace Wealthy_RPT
         }
         public bool ImportPartA(string strYear, string strPrevCRMM, string strIDMS)
         {
+            StringBuilder errorMessages = new StringBuilder();
+            DateTime CRMMdatetime = DateTime.Parse(strPrevCRMM);
+
             try
             {
                 SqlConnection con = new SqlConnection(Global.ConnectionString);
@@ -263,9 +266,23 @@ namespace Wealthy_RPT
 
                 return true;
             }
-            catch
+            catch (SqlException ex)
             {
-                MessageBox.Show("There was an error performing Part A of the import.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                for (int i = 0; i < ex.Errors.Count; i++)
+                {
+                    errorMessages.Append("Index #" + i + "\n" +
+                        "Message: " + ex.Errors[i].Message + "\n" +
+                        "LineNumber: " + ex.Errors[i].LineNumber + "\n" +
+                        "Source: " + ex.Errors[i].Source + "\n" +
+                        "Procedure: " + ex.Errors[i].Procedure + "\n");
+                }
+
+                MessageBox.Show(errorMessages.ToString(), Global.ApplicationName + " - SQL Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Global.ApplicationName + " - Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return false;
             }
         }

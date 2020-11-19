@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Navigation;
+using System.Windows.Controls.DataVisualization.Charting;
 
 namespace Wealthy_RPT
 {
@@ -2050,17 +2051,25 @@ namespace Wealthy_RPT
 
                 try  //Update Graph
                 {
-                    iChartPoints = Globals.dtGraph.Rows.Count - 1;
-                    Globals.dtGraph.Rows[iChartPoints]["Ranking"] = dt.Rows[0]["NewRank"].ToString();
-                    this.mscHistory.ItemsSource = null;
-                    this.mscHistory.ItemsSource = Globals.dtGraph.DefaultView;
-
                     //Update Grid
                     Globals.dtGrid.Rows[0]["Priority Score"] = dt.Rows[0]["NewPSScore"].ToString();
                     Globals.dtGrid.Rows[0]["Ranking"] = dt.Rows[0]["NewRank"].ToString();
                     Globals.dtGrid.Rows[0]["Segment"] = dt.Rows[0]["NewSegment"].ToString();
                     this.dgHistorical.ItemsSource = null;
                     this.dgHistorical.ItemsSource = Globals.dtGrid.DefaultView;
+
+                    iChartPoints = Globals.dtGraph.Rows.Count - 1;
+                    //Globals.dtGraph.Rows[iChartPoints]["Ranking"] = Convert.ToInt16(dt.Rows[0]["NewRank"].ToString());
+                    //this.crtHistory.DataContext = null;
+                    //this.mcChart.DataContext = Globals.dtGraph.DefaultView;
+                    try
+                    {
+                        
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(string.Format(ex.Message), "Error");
+                    }
                 }
                 catch
                 {
@@ -2438,7 +2447,5 @@ namespace Wealthy_RPT
             }
             return false;
         }
-
     }
-
 }
