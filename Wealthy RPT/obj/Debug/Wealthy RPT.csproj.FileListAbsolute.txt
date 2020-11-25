@@ -278,3 +278,55 @@ C:\Users\AT100444\source\repos\Wealthy-RPT\Wealthy RPT\obj\Debug\Interop.MSDATAS
 C:\Users\AT100444\source\repos\Wealthy-RPT\Wealthy RPT\obj\Debug\Interop.ADODB.dll
 C:\Users\AT100444\source\repos\Wealthy-RPT\Wealthy RPT\obj\Debug\Interop.ADOR.dll
 C:\Users\AT100444\source\repos\Wealthy-RPT\Wealthy RPT\obj\Debug\Interop.ADOX.dll
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\bin\Debug\Wealthy RPT.exe.config
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\bin\Debug\Wealthy RPT.exe
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\bin\Debug\Wealthy RPT.pdb
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\bin\Debug\System.Windows.Controls.DataVisualization.Toolkit.dll
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\bin\Debug\WPFToolkit.dll
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Wealthy RPT.csprojAssemblyReference.cache
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Interop.ADODB.dll
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Interop.ADOR.dll
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Interop.ADOX.dll
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Interop.Microsoft.Office.Core.dll
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Interop.MSChart20Lib.dll
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Interop.MSDATASRC.dll
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Wealthy RPT.csproj.ResolveComReference.cache
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\About.g.cs
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Admin.g.cs
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Associates.g.cs
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\DeleteYear.g.cs
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Email.g.cs
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\ImportData.g.cs
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Key Legend.g.cs
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\MainWindow.g.cs
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\PeriodImport.g.cs
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\RPT Detail.g.cs
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\SimpleReports.g.cs
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\SplashScreen.g.cs
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\StandardReports.g.cs
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Year.g.cs
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\App.g.cs
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Wealthy RPT_MarkupCompile.cache
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Wealthy RPT_MarkupCompile.lref
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\About.baml
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Admin.baml
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Associates.baml
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\DeleteYear.baml
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Email.baml
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\ImportData.baml
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Key Legend.baml
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\MainWindow.baml
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\PeriodImport.baml
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\RPT Detail.baml
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\SimpleReports.baml
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\SplashScreen.baml
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\StandardReports.baml
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Year.baml
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Wealthy RPT.g.resources
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Wealthy_RPT.Properties.Resources.resources
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Wealthy RPT.csproj.GenerateResource.cache
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Wealthy RPT.csproj.CoreCompileInputs.cache
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Wealthy RPT.csproj.CopyComplete
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Wealthy RPT.exe
+C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Wealthy RPT.pdb

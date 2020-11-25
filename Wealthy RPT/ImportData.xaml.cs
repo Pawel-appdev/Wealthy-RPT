@@ -285,26 +285,42 @@ namespace Wealthy_RPT
 
         public static int GetRowsCount(string tablename)
         {
-            string stmt = string.Format("SELECT COUNT(*) FROM {0}", tablename);
+            //string stmt = string.Format("SELECT COUNT(*) FROM {0}", tablename);
             
             string connStr = Global.ConnectionString;
             int count = 0;
+
+            //MessageBox.Show(strTableTop, "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Question);
             try
             {
                 using (SqlConnection thisConnection = new SqlConnection(connStr))
                 {
-                    using (SqlCommand cmdCount = new SqlCommand(stmt, thisConnection))
+                    thisConnection.Open();
+                    var com = thisConnection.CreateCommand();
+                    com.CommandText = strTableTop + ";Select @@RowCount;";
+                    using (var reader = com.ExecuteReader())
                     {
-                        thisConnection.Open();
-                        count = (int)cmdCount.ExecuteScalar();
+                        reader.NextResult();
+                        if(reader.Read())
+                        {
+                            count = (int)reader[0];
+                            //MessageBox.Show(count.ToString(), "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Question);
+                        }
                     }
                 }
+                //{
+                //    using (SqlCommand cmdCount = new SqlCommand(strTableTop, thisConnection))
+                //    {
+                //        thisConnection.Open();
+                //        count = (int)cmdCount.ExecuteScalar();
+                //    }
+                //}
                 return count;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
-                return 0;
+                return 1;  // amended to 1 so instruction doesn't complete as something has gone wrong above. 25/11/2020
             }
         }
 
