@@ -216,4 +216,15 @@ namespace Wealthy_RPT
         public static SqlDataAdapter sda = new SqlDataAdapter(myCmd);
         public static DataTable dt = new DataTable("Tables");
     }
+
+    class tblSector
+    {
+        public static SqlConnection conn = new SqlConnection(Global.ConnectionString);
+
+        public static string SQLquery = "SELECT * FROM [dbo].[ltSector]";
+
+        public static SqlCommand myCmd = new SqlCommand(SQLquery, conn);
+        public static SqlDataAdapter sda = new SqlDataAdapter(myCmd);
+        public static DataTable dt = new DataTable("Tables");
+    }
 }

@@ -81,9 +81,9 @@
 
         <Menu x:Name="menu" HorizontalAlignment="Stretch" Height="24" VerticalAlignment="Top" Grid.ColumnSpan="5" Margin="0,0,-0.4,0">
             <MenuItem x:Name="mnuNewCase" Header="Add New Case" Height="24" Width="93" Click="MnuNewCase_Click"/>
-            <MenuItem x:Name="mnuRefresh" Header="Refresh" Height="24" Width="54"/>
+            <MenuItem x:Name="mnuRefresh" Header="Refresh" Height="24" Width="54" Click="MnuRefresh_Click"/>
             <MenuItem x:Name="mnuReports" Header="Reports" Height="24" Width="58" RenderTransformOrigin="-1.254,0.53">
-                <MenuItem x:Name="mnuSimpleReports" Header="Adhoc Reports" InputGestureText="Ctrl+A" HorizontalAlignment="Left" Height="24" Width="222" Margin="0,0,-1,0" Click="mnuSimpleReports_Click"/>
+                <!--<MenuItem x:Name="mnuSimpleReports" Header="Adhoc Reports" InputGestureText="Ctrl+A" HorizontalAlignment="Left" Height="24" Width="222" Margin="0,0,-1,0" Click="mnuSimpleReports_Click"/>-->
                 <MenuItem x:Name="mnuStandardReports" Header="Standard Reports" InputGestureText="Ctrl+S" HorizontalAlignment="Left" Height="24" Width="222" Margin="0,0,-33,0" Click="mnuStandardReports_Click"/>
             </MenuItem>
             <MenuItem x:Name="mnuAdmin" Header="Admin" Height="24" Width="56" RenderTransformOrigin="-1.134,0.48">

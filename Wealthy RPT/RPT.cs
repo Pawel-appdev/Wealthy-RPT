@@ -1060,7 +1060,7 @@ namespace Wealthy_RPT
                         Domicile = dr["Domicile"].ToString();
                         Office = dr["Office"].ToString();
                         Team = dr["Team"].ToString();
-                        AllocatedTo = "";
+                        AllocatedTo = dr["AllocatedTo"].ToString();
                         WealthLevel = dr["WealthLevel"].ToString();
                         Pathway = dr["Pathway"].ToString();
                         Source = dr["Source"].ToString();
@@ -1510,6 +1510,15 @@ namespace Wealthy_RPT
                     {
                         prm29.Value = CRM_Appointed;
                     }
+                    SqlParameter prm30 = cmd.Parameters.Add("@nHNWUPID", SqlDbType.DateTime);
+                    if (AllocatedTo == "")
+                    {
+                        prm30.Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        prm30.Value = AllocatedTo;
+                    }
                     cmd.CommandTimeout = Global.TimeOut;
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
@@ -1589,7 +1598,7 @@ namespace Wealthy_RPT
                 SqlConnection con = new SqlConnection(Global.ConnectionString);
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("qryUpdateAgent", con);
+                    SqlCommand cmd = new SqlCommand("qryUpdateRiskScores", con);
                     cmd.Parameters.Clear();
                     SqlParameter prm01 = cmd.Parameters.Add("@nLPOpen", SqlDbType.Int);
                     prm01.Value = LPOpen;

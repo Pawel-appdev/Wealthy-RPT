@@ -271,7 +271,7 @@ namespace Wealthy_RPT
                 lu.GetOfficeTeamStaff(strOffice, strTeam);
                 cboAllocatedTo.ItemsSource = lu.dsOfficeTeamStaff.Tables[0].DefaultView;
                 cboAllocatedTo.DisplayMemberPath = "AllocatedTo";
-                cboAllocatedTo.SelectedValuePath = "AllocatedTo";
+                cboAllocatedTo.SelectedValuePath = "PID";
                 return true;
             }
             catch
@@ -1432,6 +1432,7 @@ namespace Wealthy_RPT
                     rpt.Pop = cboPopCode.SelectedValue.ToString();
                     rpt.CRM_Name = cboCRMName.Text;
                     rpt.CRM_Appointed = txtCRMDA.Text;
+                    rpt.AllocatedTo = cboAllocatedTo.Text;
 
                     rpt.UpdateCustomerData();
                     blnRtn = true;

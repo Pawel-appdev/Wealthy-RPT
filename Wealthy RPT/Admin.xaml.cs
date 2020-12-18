@@ -199,7 +199,7 @@ namespace Wealthy_RPT
                     dgTables.ItemsSource = tblRep.dt.DefaultView;
                     break;
 
-                case "SELECT * FROM [tblUsers]":
+                case "SELECT * FROM [tblUsers] Order By [PID]":
                     tblUser.dt.Clear();
                     tblUser.sda.Fill(tblUser.dt);
                     dgTables.ItemsSource = tblUser.dt.DefaultView;
@@ -209,6 +209,13 @@ namespace Wealthy_RPT
                     tblUserPopID.dt.Clear();
                     tblUserPopID.sda.Fill(tblUserPopID.dt);
                     dgTables.ItemsSource = tblUserPopID.dt.DefaultView;
+                    break;
+
+                case "SELECT * FROM [ltSector]":
+                    tblSector.dt.Clear();
+                    tblSector.sda.Fill(tblSector.dt);
+                    dgTables.ItemsSource = tblSector.dt.DefaultView;
+                    break;
 
                     // define DataGridTemplateColumn 
                     DataGridTemplateColumn dgTemplateColumn = new DataGridTemplateColumn();
@@ -393,7 +400,7 @@ namespace Wealthy_RPT
                         tblRep.conn.Close();
                         break;
 
-                    case "SELECT * FROM [tblUsers]":
+                    case "SELECT * FROM [tblUsers] Order By [PID]":
                         tblUser.conn.Open();
                         SqlCommandBuilder bldUser = new SqlCommandBuilder(tblUser.sda);
                         tblUser.sda.UpdateCommand = bldUser.GetUpdateCommand();
@@ -407,6 +414,14 @@ namespace Wealthy_RPT
                         tblUserPopID.sda.UpdateCommand = bldUserPop.GetUpdateCommand();
                         tblUserPopID.sda.Update(tblUserPopID.dt);
                         tblUserPopID.conn.Close();
+                        break;
+
+                    case "SELECT * FROM [dbo].[ltSector]":
+                        tblSector.conn.Open();
+                        SqlCommandBuilder bldSector = new SqlCommandBuilder(tblSector.sda);
+                        tblSector.sda.UpdateCommand = bldSector.GetUpdateCommand();
+                        tblSector.sda.Update(tblSector.dt);
+                        tblSector.conn.Close();
                         break;
 
 

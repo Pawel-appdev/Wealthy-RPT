@@ -116,8 +116,21 @@ namespace Wealthy_RPT
             ImportData importData = new ImportData();
             importData.Show();
         }
+
+        private void MnuRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                PopulateCases();
+                MessageBox.Show("Refresh Completed.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch
+            {
+                MessageBox.Show("Refresh failed.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
         #endregion
-        
+
         public MainWindow()
         {
             InitializeComponent();

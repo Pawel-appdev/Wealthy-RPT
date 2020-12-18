@@ -328,7 +328,7 @@
                                     </StackPanel>
                                     <!--#endregion-->
                                     <!--#region Behaviours-->
-                                    <TextBlock x:Name="lblBehaviours" FontSize="18"><Bold>Behaviours</Bold></TextBlock>
+                                    <TextBlock x:Name="lblBehaviours" FontSize="18"><Bold>Caseflow</Bold></TextBlock>
                                     <GroupBox x:Name="grpBehaviours" Header="CRMM Data - last updated" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Height="106" Width="384">
                                         <Grid x:Name="grdBehaviours">
                                             <Grid.ColumnDefinitions>
