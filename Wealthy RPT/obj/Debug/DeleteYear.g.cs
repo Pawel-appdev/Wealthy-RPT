@@ -85,7 +85,7 @@ namespace Wealthy_RPT {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Wealthy RPT;component/deleteyear.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Wealthy Risk Tool;component/deleteyear.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\DeleteYear.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

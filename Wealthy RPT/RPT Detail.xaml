@@ -62,7 +62,7 @@
         <TabControl x:Name="tabRPD" HorizontalAlignment="Stretch" Margin="10,0,10,49">
             <!--#region Tab 01 : Customer-->
             <TabItem  x:Name="pgCustomer" Header="Customer">
-                <GroupBox x:Name="grpCustomer" Header="Customer" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Height="650" Width="995">
+                <GroupBox x:Name="grpCustomer" Header="Customer" Margin="0,0,6,0" VerticalAlignment="Top" Height="650">
                     <StackPanel x:Name="pnlCustomer00" Margin="0,0,0,0">
                         <!--#region Customer Segment header row-->
                         <StackPanel x:Name="pnlCustomer01" Width="970" Margin="10,0,0,0" HorizontalAlignment="Left" Orientation="Horizontal">
@@ -172,7 +172,7 @@
                                             <ComboBox x:Name="cboMarital" Height="22" Width="160" Margin="7,3,7,2" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="CboMarital_GotFocus" SelectedValue="{Binding Marital, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                             <TextBlock x:Name="lblGender" Margin="5,2,9.867,2" Grid.Row="4"  Grid.Column="5">Gender</TextBlock>
                                             <ComboBox x:Name="cboGender" Height="22" Margin="5.133,3,10.867,2" Grid.Row="4" Grid.Column="6" GotFocus="CboGender_GotFocus" SelectedValue="{Binding Gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" />
-                                            <TextBlock x:Name="lblPrivateAddress" Margin="8,2,9,2" Grid.Row="5"  Grid.Column="0" Grid.ColumnSpan="2">Private Address</TextBlock>
+                                            <TextBlock x:Name="lblPrivateAddress" Margin="8,2,9,2" Grid.Row="5"  Grid.Column="0" MaxWidth="470" Grid.ColumnSpan="2">Private Address</TextBlock>
                                             <TextBox x:Name="txtPrivateAddress" Margin="5,2,9.867,2" Grid.Row="5"  Grid.Column="2" Grid.ColumnSpan="6" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" GotFocus="TxtPrivateAddress_GotFocus" Text = "{Binding MainAdd, Mode = TwoWay}"/>
                                             <TextBlock x:Name="lblPostcode" Margin="8,2,9,2" Grid.Row="6"  Grid.Column="0" Grid.ColumnSpan="2">Postcode</TextBlock>
                                             <TextBox x:Name="txtPostcode" Margin="5,2,9,2" HorizontalAlignment="Left" Width="100" Grid.Row="6"  Grid.Column="2" GotFocus="TxtPostcode_GotFocus" Text = "{Binding MainPC, Mode = TwoWay}"/>
@@ -185,7 +185,7 @@
                                             </CheckBox>
                                             <TextBox x:Name="txtDeselected" Margin="5.133,2,10.867,2" Grid.Row="6"  Grid.Column="6" GotFocus="TxtDeselected_GotFocus" Text = "{Binding Deselected, Mode = TwoWay}" Grid.ColumnSpan="2"/>
                                             <TextBlock x:Name="lblSecondaryAddress" Margin="8,2" Grid.Row="7"  Grid.Column="0" Grid.ColumnSpan="2">Secondary Address</TextBlock>
-                                            <TextBox x:Name="txtSecondaryAddress" Margin="6,2,8.867,2" Grid.Row="7"  Grid.Column="2" Grid.ColumnSpan="6" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" GotFocus="TxtSecondaryAddress_GotFocus" Text = "{Binding SecAdd, Mode = TwoWay}"/>
+                                            <TextBox x:Name="txtSecondaryAddress" Margin="5,2,11,2" Grid.Row="7"  Grid.Column="2" Grid.ColumnSpan="6" MaxWidth="470" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" GotFocus="TxtSecondaryAddress_GotFocus" Text = "{Binding SecAdd, Mode = TwoWay}"/>
                                             <TextBlock x:Name="lblResidence" Margin="8,2" Grid.Row="8"  Grid.Column="0" Grid.ColumnSpan="2">Residence Status</TextBlock>
                                             <ComboBox x:Name="cboResidence" Height="22" Margin="7,2,6,2" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="CboResidence_GotFocus" SelectedValue="{Binding Residence, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                             <TextBlock x:Name="lblDomicile" Margin="7,2,7.867,2" Grid.Row="8"  Grid.Column="5">Domicile Status</TextBlock>
@@ -328,8 +328,8 @@
                                     </StackPanel>
                                     <!--#endregion-->
                                     <!--#region Behaviours-->
-                                    <TextBlock x:Name="lblBehaviours" FontSize="18"><Bold>Caseflow</Bold></TextBlock>
-                                    <GroupBox x:Name="grpBehaviours" Header="CRMM Data - last updated" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Height="106" Width="384">
+                                    <TextBlock x:Name="lblBehaviours" FontSize="18"><Bold>Behaviour</Bold></TextBlock>
+                                    <GroupBox x:Name="grpBehaviours" Header="Caseflow / CRMM Data - last updated" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Height="106" Width="384">
                                         <Grid x:Name="grdBehaviours">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="227*"/>
@@ -607,13 +607,13 @@
                                             <RowDefinition Height="27"/>
                                             <RowDefinition Height="27"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock x:Name="lblQSScore" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Padding="0,10,0,10" Height="36" Margin="0,-4,0,22" Grid.RowSpan="2" Grid.ColumnSpan="2">Behaviours</TextBlock>
+                                        <TextBlock x:Name="lblQSScore" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Padding="0,10,0,10" Height="36" Margin="0,-4,0,22" Grid.RowSpan="2" Grid.ColumnSpan="2">Behaviour</TextBlock>
                                         <TextBlock x:Name="lblAVScore" Grid.Column="0"  VerticalAlignment="Center" Padding="0,10,0,10" Height="36" Margin="0,22,0,23" Grid.RowSpan="3" Grid.ColumnSpan="2">Avoidance</TextBlock>
                                         <TextBlock x:Name="lblRiskScore" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Padding="0,10,0,10" Height="36" Margin="0,23,0,22" Grid.RowSpan="3" Grid.ColumnSpan="2">Risk Profile</TextBlock>
                                         <TextBlock x:Name="lblCGScore" Grid.Row="2" Grid.Column="0"  VerticalAlignment="Center" Padding="0,10,0,10" Height="36" Margin="0,22,0,23" Grid.RowSpan="3" Grid.ColumnSpan="2">Capital Gains</TextBlock>
                                         <TextBlock x:Name="lblResScore" Grid.Row="3" Grid.Column="0"  VerticalAlignment="Center" Padding="0,10,0,10" Height="36" Margin="0,23,0,-5" Grid.RowSpan="2" Grid.ColumnSpan="2">Residence</TextBlock>
                                         <TextBox x:Name="txtQSScore" Grid.Row="0" Grid.Column="2" Margin="0,2" Text = "{Binding QSScore, Mode = TwoWay}" LostFocus="TxtQSScore_LostFocus"/>
-                                        <TextBox x:Name="txtAVScore" Grid.Row="1" Grid.Column="2" Margin="0,2,0,2" Text = "{Binding RPTAVScore, Mode = TwoWay}"/>
+                                        <TextBox x:Name="txtAVScore" Grid.Row="1" Grid.Column="2" Margin="0,2,0,0" Text = "{Binding RPTAVScore, Mode = TwoWay}" Height="23" VerticalAlignment="Top"/>
                                         <TextBox x:Name="txtRSScore" Grid.Row="2" Grid.Column="2" Margin="0,2,0,2" Text = "{Binding RPTPRScore, Mode = TwoWay}"/>
                                         <TextBox x:Name="txtCGScore" Grid.Row="3" Grid.Column="2" Margin="0,2,0,2" Text = "{Binding CGScore, Mode = TwoWay}"/>
                                         <TextBox x:Name="txtRESScore" Grid.Row="4" Grid.Column="2" Margin="0,2,0,2" Text = "{Binding ResScore, Mode = TwoWay}"/>
@@ -683,7 +683,7 @@
                                     <dvc:Chart.Series>
                                         <dvc:LineSeries Title=" Ranking"  ItemsSource ="{Binding Line1}" IndependentValueBinding="{Binding Path=Id}"  DependentValueBinding="{Binding Path=Value}">
                                         </dvc:LineSeries>
-                                    </dvc:Chart.Series>                                   
+                                    </dvc:Chart.Series>
                                 </dvc:Chart>
                             </Grid>
                         </StackPanel>
@@ -709,7 +709,7 @@
 
                 </Button>
                 <Button x:Name="cmdSave" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdSave_GotFocus" Click="CmdSave_Click">
-                    <TextBlock x:Name="tcmdSave" Text="Save Changes" VerticalAlignment="Top" ToolTip="Save Changes" Margin="2,2,2,0" />
+                    <TextBlock x:Name="tcmdSave" Text="Save Changes" ToolTip="Save Changes" Margin="2" />
                 </Button>
                 <Button x:Name="cmdUpdateClose" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdUpdateClose_GotFocus" Click="CmdUpdateClose_Click">
                     <TextBlock x:Name="tcmdUpdateClose" Text="Save &amp; Close" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Save &amp; Close"/>

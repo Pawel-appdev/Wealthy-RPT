@@ -77,7 +77,7 @@ namespace Wealthy_RPT {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Wealthy RPT;component/year.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Wealthy Risk Tool;component/year.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\Year.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

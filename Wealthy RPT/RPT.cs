@@ -997,6 +997,7 @@ namespace Wealthy_RPT
             {
                 if (GetCustomerData(dblUTR) == false)
                 {
+                    MessageBox.Show("Problem loading Customer Data.", "WRT Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return false;
                 }
 
@@ -1075,17 +1076,20 @@ namespace Wealthy_RPT
                         CRM_Appointed = sDate;
                         try { sDate = Convert.ToDateTime(dr["CDLU"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
                         CDLU = sDate;
+                        //MessageBox.Show(Strand + " : " + AllocatedTo, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                     }
-                        #endregion
+                    #endregion
                     else if (dr.HasRows == false)
                     {
-                        //MessageBox.Show("Customer record not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        MessageBox.Show("Customer record not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     }
                     con.Close();
                 }
                 catch
                 {
                     con.Close();
+                    //MessageBox.Show("Customer record failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     return false;
                 }
                 return true;
@@ -1123,13 +1127,14 @@ namespace Wealthy_RPT
                     #endregion
                     else if (dr.HasRows == false)
                     {
-                        //MessageBox.Show("Agent record not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        MessageBox.Show("Agent record not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     }
                     con.Close();
                 }
                 catch
                 {
                     con.Close();
+                    //MessageBox.Show("Agent record failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     return false;
                 }
                 return true;
@@ -1187,7 +1192,7 @@ namespace Wealthy_RPT
                         RiskingComplete = Convert.ToByte(dr["RiskingComplete"]);
                         //SegmentRecorded = dr["Segment_Recorded"].ToString();
                         //RSDLU = dr["RSDLU"].ToString();
-                        //CRMExplanation = dr["CRM_Explanation"].ToString();
+                        CRMExplanation = dr["CRMExplanation"] == DBNull.Value ? "":dr["CRMExplanation"].ToString();
                     }
                     #endregion
                     else if (dr.HasRows == false)
@@ -1199,6 +1204,7 @@ namespace Wealthy_RPT
                 catch
                 {
                     con.Close();
+                    //MessageBox.Show("Behaviours record failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     return false;
                 }
                 return true;
@@ -1252,7 +1258,7 @@ namespace Wealthy_RPT
                     //    Percentile = Convert.ToInt32(dr["Percentile"]);
                     //    SegmentRecorded = dr["Segment_Recorded"].ToString();
                     //    RSDLU = dr["RSDLU"].ToString();
-                    //    CRMExplanation = dr["CRM_Explanation"].ToString();
+                    //    CRMExplanation dr["CRMExplanation"].ToString();
                     //}
                     //#endregion
                     //else if (dr.HasRows == false)
@@ -1494,7 +1500,7 @@ namespace Wealthy_RPT
                     SqlParameter prm24 = cmd.Parameters.Add("@nNarrative", SqlDbType.NVarChar);
                     prm24.Value = Narrative;
                     SqlParameter prm25 = cmd.Parameters.Add("@nHNWU", SqlDbType.Int);
-                    prm25.Value = HNWUPID;
+                    prm25.Value = Convert.ToInt32(AllocatedTo);
                     SqlParameter prm26 = cmd.Parameters.Add("@oUTR", SqlDbType.Float);
                     prm26.Value = UTR;
                     SqlParameter prm27 = cmd.Parameters.Add("@nPop", SqlDbType.NVarChar);
@@ -1510,15 +1516,15 @@ namespace Wealthy_RPT
                     {
                         prm29.Value = CRM_Appointed;
                     }
-                    SqlParameter prm30 = cmd.Parameters.Add("@nHNWUPID", SqlDbType.DateTime);
-                    if (AllocatedTo == "")
-                    {
-                        prm30.Value = DBNull.Value;
-                    }
-                    else
-                    {
-                        prm30.Value = AllocatedTo;
-                    }
+                    //SqlParameter prm30 = cmd.Parameters.Add("@nHNWUPID", SqlDbType.DateTime);
+                    //if (AllocatedTo == "")
+                    //{
+                    //    prm30.Value = DBNull.Value;
+                    //}
+                    //else
+                    //{
+                    //    prm30.Value = AllocatedTo;
+                    //}
                     cmd.CommandTimeout = Global.TimeOut;
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
@@ -1643,7 +1649,7 @@ namespace Wealthy_RPT
                     }
                     SqlParameter prm18 = cmd.Parameters.Add("@nCalendarYear", SqlDbType.Int);
                     prm18.Value = CalendarYear;
-                    SqlParameter prm19 = cmd.Parameters.Add("@fUTR", SqlDbType.Float);
+                    SqlParameter prm19 = cmd.Parameters.Add("@nUTR", SqlDbType.Float);
                     prm19.Value = UTR;
                     SqlParameter prm20 = cmd.Parameters.Add("@nPop", SqlDbType.NVarChar);
                     prm20.Value = Pop;
@@ -1659,6 +1665,7 @@ namespace Wealthy_RPT
                 catch (Exception ex)
                 {
                     Console.Write("SQL error: " + ex.Message);
+                    MessageBox.Show(ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     con.Close();
                     return false;
                 }

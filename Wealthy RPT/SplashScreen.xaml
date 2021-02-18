@@ -12,7 +12,7 @@
         <Image x:Name="imgLogo" HorizontalAlignment="Left" Height="88" Margin="60,32,0,0" VerticalAlignment="Top" Width="99" Source="Resources/Images/WrtLogo128t.png" SnapsToDevicePixels="True" IsEnabled="False"/>
         <Label x:Name="lblHelp" Content="lblHelp" Height="26" Margin="10,125,140,127" Width="auto" Foreground="White"/>
         <Label x:Name="lblBDAppNumber" Content="lblBDAppNumber" Height="26" Margin="10,151,140,101" Foreground="White"/>
-        <Label x:Name="lblBDAppName" Content="lblBDAppName" Height="26" Margin="10,177,333,75" Width="auto" Foreground="White"/>
+        <Label x:Name="lblBDAppName" Content="lblBDAppName" Height="26" Margin="10,177,140,75" Width="auto" Foreground="White"/>
         <Label x:Name="lblResolver" Content="lblResolver" Height="26" Margin="10,203,179,49" Width="auto" Foreground="White" Panel.ZIndex="1"/>
         <Label x:Name="lblStatus" Content="lblStatus" Height="26" Margin="10,242,333,10" Width="auto" Foreground="White" />
 

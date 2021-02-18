@@ -201,8 +201,37 @@ namespace Wealthy_RPT
                 {
 
                     rpt.GetCRM();
+                    
                 }
 
+                if (this.txtCRMExplanation.Text != "")
+                {
+                    this.chkCRMDescretion.IsChecked = true;
+                }
+                else
+                {
+                    this.chkCRMDescretion.IsChecked = false;
+                }
+
+            }
+            else //new case
+            {
+                this.txtAVScore.Text = "0";
+                this.txtCGScore.Text = "0";
+                this.txtClosedIDMS.Text = "0";
+                this.txtOpenIDMS.Text = "0";
+                this.txtPercentile.Text = "0";
+                this.txtPRScore.Text = "0";
+                this.txtQSScore.Text = "0";
+                this.txtRSScore.Text = "0";
+                this.txtRESScore.Text = "0";
+                this.txtCRMScore.Text = "0";
+                this.txtOpenRisks.Text = "0";
+                this.txtSettled.Text = "0";
+                this.txtHighestSettled.Text = "0";
+                this.txtHighestPercent.Text = "0";
+                this.grpCustomer.Header = "Enquiry Data - last updated " + DateTime.Now.ToString("dd MMM yyyy");
+                //this.txtUTR.Focus();
             }
 
             bFormLoaded = true;
@@ -271,7 +300,8 @@ namespace Wealthy_RPT
                 lu.GetOfficeTeamStaff(strOffice, strTeam);
                 cboAllocatedTo.ItemsSource = lu.dsOfficeTeamStaff.Tables[0].DefaultView;
                 cboAllocatedTo.DisplayMemberPath = "AllocatedTo";
-                cboAllocatedTo.SelectedValuePath = "PID";
+                cboAllocatedTo.SelectedValuePath = "AllocatedTo";
+                //cboAllocatedTo.Text = cboAllocatedTo.SelectedValue.ToString(); //Not actually required
                 return true;
             }
             catch
@@ -887,8 +917,11 @@ namespace Wealthy_RPT
             }
             int iWeighting = CRMWeighting(cboPopCode.SelectedValue.ToString().ToUpper());
             txtCRMScore.Text = iWeighting.ToString();
-            txtCRMExplanation.Text = "";
-            txtCRMExplanation.IsEnabled = true;
+            if (bFormLoaded == true)
+            {
+                txtCRMExplanation.Text = "";
+                txtCRMExplanation.IsEnabled = true;
+            }
             RecalculateBehaviours();
             //RecalculateResults();
         }
@@ -935,6 +968,13 @@ namespace Wealthy_RPT
 
             RPT.RPT_Data rpt = new RPT.RPT_Data(); // initialise data
 
+            if (txtUTR.Text.Trim() == "")
+            {
+                System.Windows.MessageBox.Show("Please confirm the UTR for this case.", "UTR", MessageBoxButton.OK, MessageBoxImage.Information);
+                cmdSave.IsEnabled = true;
+                return;
+            }
+
             if (txtHighestPercent.Text != "" && IsNumeric(txtHighestPercent.Text) == false)
             {
                 if (Convert.ToInt16(txtHighestPercent.Text) > 500)
@@ -949,7 +989,14 @@ namespace Wealthy_RPT
 
             if ((cboCRMName.Text.Trim() == "") || (txtCRMDA.Text.Trim() == ""))
             {
-                System.Windows.MessageBox.Show("Please confirm the CRM for this case" + Environment.NewLine + "and/or the date of their appointment.", "CRM", MessageBoxButton.OK, MessageBoxImage.Information);
+                System.Windows.MessageBox.Show("Please confirm the CCM for this case" + Environment.NewLine + "and/or the date of their appointment.", "CCM", MessageBoxButton.OK, MessageBoxImage.Information);
+                cmdSave.IsEnabled = true;
+                return;
+            }
+
+            if(cboAllocatedTo.Text.Trim() == "")
+            {
+                System.Windows.MessageBox.Show("Please confirm who this case is Allocated To.", "Allocated To", MessageBoxButton.OK, MessageBoxImage.Information);
                 cmdSave.IsEnabled = true;
                 return;
             }
@@ -1128,7 +1175,7 @@ namespace Wealthy_RPT
 
             System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
 
-            System.Windows.MessageBox.Show("Error checking UTR for existing customer record.", "UTR", MessageBoxButton.OK, MessageBoxImage.Information);
+            //System.Windows.MessageBox.Show("Error checking UTR for existing customer record.", "UTR", MessageBoxButton.OK, MessageBoxImage.Information);
 
         }
 
@@ -1177,11 +1224,21 @@ namespace Wealthy_RPT
             }
         }
 
+
         private void TxtHighestPercent_LostFocus(object sender, RoutedEventArgs e)
         {
-            if ((txtHighestPercent.Text != "") || (IsNumeric(txtHighestPercent.Text) == true))
+            if ((txtHighestPercent.Text != "") && (IsNumeric(txtHighestPercent.Text) == true))
             {
-                CheckWeight(txtHighestPercent, txtHighestPercentHD);
+                if ((Convert.ToInt16(txtHighestPercent.Text) >= 0) && (Convert.ToInt16(txtHighestPercent.Text) <= 100))
+                {
+                    CheckWeight(txtHighestPercent, txtHighestPercentHD);
+                }
+                else
+                {
+                    txtHighestPercent.Text = "0";
+                    MessageBox.Show("The Highest Percentage value should be 0 - 100 Percent." + Environment.NewLine + Environment.NewLine + "Please rectify.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+                    txtHighestPercent.Focus();
+                }
             }
         }
 
@@ -1267,11 +1324,27 @@ namespace Wealthy_RPT
         {
             bool blnRtn = true;
 
-            blnRtn = CheckandSaveScoresData();
+            //blnRtn = CheckandSaveScoresData();                        
 
+            //blnRtn = CheckandSaveCustomerData();
+
+            //blnRtn = CheckandSaveAgentData();
+
+            //return blnRtn;
+
+            //Amended 18/02/2021
             blnRtn = CheckandSaveCustomerData();
+            if (blnRtn == false)
+            {
+                return blnRtn;
+            }
 
             blnRtn = CheckandSaveAgentData();
+            if (blnRtn == false)
+            {
+                return blnRtn;
+            }
+            blnRtn = CheckandSaveScoresData();
 
             return blnRtn;
         }
@@ -1280,13 +1353,16 @@ namespace Wealthy_RPT
         {
             bool blnCustomer = false;
             bool blnRtn = false;
+            //string strTest = "";
                 
-            for (int j = 0; j < 27; j++)
+            for (int j = 0; j < 28; j++)
             {
                 switch (j)
                 {
                     case 0:
-                        if (cboPopCode.SelectedValue != GetDataContextValue("Pop").ToString()){ blnCustomer = true; }
+                        //strTest = GetDataContextValue("Pop") == null ? "" : GetDataContextValue("Pop").ToString();
+                        //if (cboPopCode.SelectedValue != strTest) { blnCustomer = true; }
+                        if (cboPopCode.SelectedValue != GetDataContextValue("Pop").ToString()) { blnCustomer = true; }
                         break;
                     case 1:
                         if (cboSegment.Text != GetDataContextValue("Segment").ToString()) { blnCustomer = true; }
@@ -1377,7 +1453,7 @@ namespace Wealthy_RPT
                         if (txtNarrative.Text != GetDataContextValue("Narrative").ToString()) { blnCustomer = true; }
                         break;
                     case 26:
-                        if (cboAllocatedTo.Text != GetDataContextValue("HNWUPID").ToString())
+                        if (cboAllocatedTo.Text != GetDataContextValue("AllocatedTo").ToString())
                         {
                             blnCustomer = true;
                             if(cboAllocatedTo.Text.Trim() == "")
@@ -1390,11 +1466,18 @@ namespace Wealthy_RPT
                             }
                         } 
                         break;
+                    case 27:
+                        //strTest = GetDataContextValue("Strand") == null ? "" : GetDataContextValue("Strand").ToString();
+                        //if (cboStrand.SelectedValue != strTest) { blnCustomer = true; }
+                        if (cboStrand.Text != GetDataContextValue("Strand").ToString()) { blnCustomer = true; }
+                        break;
                     default:
                         break;
                 }
                 if (blnCustomer == true) { break;}
             }
+
+            blnCustomer = true; //because above doesn't always realise items have changed
 
             if (blnCustomer == true) // save case as something has changed
             {
@@ -1433,6 +1516,7 @@ namespace Wealthy_RPT
                     rpt.CRM_Name = cboCRMName.Text;
                     rpt.CRM_Appointed = txtCRMDA.Text;
                     rpt.AllocatedTo = cboAllocatedTo.Text;
+                    rpt.AllocatedTo = rpt.AllocatedTo.Substring(0, 7); //just need leading 7 digits
 
                     rpt.UpdateCustomerData();
                     blnRtn = true;
@@ -1703,15 +1787,18 @@ namespace Wealthy_RPT
                 {
                     // open database table - get previous entry
                     // use new qryUpdateRiskData rather than SQL string 
-
+                    rpt.UTR = Convert.ToDouble(txtUTR.Text);
+                    rpt.Pop = cboPopCode.SelectedValue.ToString();
+                    rpt.Segment = cboSegment.SelectedValue.ToString();
+                    rpt.CalendarYear = int.Parse(lblPopYear.Text);
                     rpt.HPPenalty = float.Parse(txtHighestPercent.Text);
                     rpt.LPOpen = int.Parse(txtOpenIDMS.Text);
                     rpt.LPClosed = int.Parse(txtClosedIDMS.Text);
                     rpt.HPPenalty = float.Parse(txtHighestPercent.Text);
                     /* following are Yes/No/Unknown. Last is default = 2*/
-                    try { rpt.PSCurrent = byte.Parse(cboCurrentSuspensions.SelectedValue.ToString()); } catch { rpt.PSCurrent = 2; }
-                    try { rpt.PSPrevious = byte.Parse(cboPrevSuspensions.SelectedValue.ToString()); } catch { rpt.PSPrevious = 2; }
-                    try { rpt.PSFailures = byte.Parse(cboFailures.SelectedValue.ToString()); } catch { rpt.PSFailures = 2; }
+                    try { rpt.PSCurrent = byte.Parse(cboCurrentSuspensions.SelectedValue.ToString()); } catch { rpt.PSCurrent = 0; }
+                    try { rpt.PSPrevious = byte.Parse(cboPrevSuspensions.SelectedValue.ToString()); } catch { rpt.PSPrevious = 0; }
+                    try { rpt.PSFailures = byte.Parse(cboFailures.SelectedValue.ToString()); } catch { rpt.PSFailures = 0; }
                     rpt.QSScore = int.Parse(txtQSScore.Text);
                     rpt.RPTPRScore = int.Parse(txtRSScore.Text);
                     rpt.RPTAVScore = int.Parse(txtAVScore.Text);
@@ -1883,7 +1970,6 @@ namespace Wealthy_RPT
         {
             int PSScore = 0;
 
-
             if (IsParseable(txtQSScore.Text.ToString(), false) == false)
             {
                 return;
@@ -1931,8 +2017,8 @@ namespace Wealthy_RPT
                     txtCRMScore.Text = "0";
                 }
                 else
-                { 
-                    MessageBox.Show("Unable to calculate Priority Score.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+                {
+                    MessageBox.Show("Unable to calculate Priority Score.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);   
                 }
                 return false;
             }
@@ -2058,6 +2144,8 @@ namespace Wealthy_RPT
                     Globals.dtGrid.Rows[0]["Segment"] = dt.Rows[0]["NewSegment"].ToString();
                     this.dgHistorical.ItemsSource = null;
                     this.dgHistorical.ItemsSource = Globals.dtGrid.DefaultView;
+                    this.dgHistorical.Columns[1].Visibility = Visibility.Collapsed; //Collapse DateSort Column
+                    this.dgHistorical.Columns[0].SortMemberPath = this.dgHistorical.Columns[1].Header.ToString();  // sort column 0 based on column 1
 
                     iChartPoints = Globals.dtGraph.Rows.Count - 1;
                     //Globals.dtGraph.Rows[iChartPoints]["Ranking"] = Convert.ToInt16(dt.Rows[0]["NewRank"].ToString());
@@ -2065,6 +2153,7 @@ namespace Wealthy_RPT
                     //this.mcChart.DataContext = Globals.dtGraph.DefaultView;
                     try
                     {
+
                         
                     }
                     catch (Exception ex)
@@ -2079,7 +2168,10 @@ namespace Wealthy_RPT
             }
             catch
             {
-                System.Windows.MessageBox.Show("Unable to recalculate score.  Press ReCheck Ranking Button to try again.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                if (txtUTR.Text != "")
+                {
+                    System.Windows.MessageBox.Show("Unable to recalculate score.  Press ReCheck Ranking Button to try again.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 

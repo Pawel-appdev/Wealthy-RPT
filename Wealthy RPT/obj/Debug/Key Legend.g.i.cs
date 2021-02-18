@@ -69,7 +69,7 @@ namespace Wealthy_RPT {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Wealthy RPT;component/key%20legend.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Wealthy Risk Tool;component/key%20legend.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\Key Legend.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

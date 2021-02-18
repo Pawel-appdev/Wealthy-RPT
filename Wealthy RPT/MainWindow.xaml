@@ -104,6 +104,7 @@
             <StatusBarItem x:Name="sbiName" Content="Name : " Height="26" VerticalAlignment="Top" Width="270"/>
             <StatusBarItem x:Name="sbiAccessLevel" Content="Access Level :" Height="26" VerticalAlignment="Top" Width="170"/>
             <StatusBarItem x:Name="sbiVersion" Content="Version : " Height="26" VerticalAlignment="Top" Width="170"/>
+            <StatusBarItem x:Name="sbiTotalRows" Content="Total Rows : " Height="26" VerticalAlignment="Top" Width="186" HorizontalAlignment="Right"/>
         </StatusBar>
         <GroupBox x:Name="groupPickCase" Header="" HorizontalAlignment="Left" Height="50" Margin="20,38,0,0" VerticalAlignment="Top" Width="675" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Grid.ColumnSpan="3" Grid.Column="1" Style="{DynamicResource GroupBoxStyle1}">
             <StackPanel Orientation="Horizontal">

@@ -36,10 +36,10 @@ namespace Wealthy_RPT
         #region menu items
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.A && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-            {
-                mnuSimpleReports_Click(sender, e);
-            }
+            //if (e.Key == Key.A && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
+            //{
+            //    mnuSimpleReports_Click(sender, e);
+            //}
             if (e.Key == Key.S && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
             {
                 mnuStandardReports_Click(sender, e);
@@ -105,11 +105,11 @@ namespace Wealthy_RPT
             standardReports.Show();
         }
 
-        private void mnuSimpleReports_Click(object sender, RoutedEventArgs e)
-        {
-            SimpleReports simpleReports = new SimpleReports();
-            simpleReports.Show();
-        }
+        //private void mnuSimpleReports_Click(object sender, RoutedEventArgs e)
+        //{
+        //    SimpleReports simpleReports = new SimpleReports();
+        //    simpleReports.Show();
+        //}
 
         private void mnuImportData_Click(object sender, RoutedEventArgs e)
         {
@@ -121,6 +121,7 @@ namespace Wealthy_RPT
         {
             try
             {
+                resetValues();
                 PopulateCases();
                 MessageBox.Show("Refresh Completed.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
@@ -219,21 +220,24 @@ namespace Wealthy_RPT
             groupOfficeTeam.Visibility = Visibility.Hidden ;
 
             int intPID = Convert.ToInt32(Global.PID);
-            int intYear;
-            string strPop;
+            int intYear = DateTime.Today.Year;
+            string strPop = "rPt10Mill";
             string strOffice = (cboOffice.SelectedIndex == -1) ? "All" : cboOffice.SelectedValue.ToString();
             string strTeam = (cboTeam.SelectedIndex == -1) ? "All" : cboTeam.SelectedValue.ToString();
             try
             {
-                if (string.IsNullOrEmpty(this.cboYear.Text))
-                {
-                    intYear = DateTime.Today.Year;
-                }
-                else
-                {
-                    intYear = Convert.ToInt32(this.cboYear.SelectedValue);
-                }
-                strPop = cboPopulation.SelectedValue.ToString();
+                if (blnCombosInitialised == true)
+                    {
+                        if (string.IsNullOrEmpty(this.cboYear.Text))
+                        {
+                            intYear = DateTime.Today.Year;
+                        }
+                        else
+                        {
+                            intYear = Convert.ToInt32(this.cboYear.SelectedValue);
+                        }
+                        strPop = cboPopulation.SelectedValue.ToString();
+                    }
             }
             catch
             {
@@ -282,7 +286,12 @@ namespace Wealthy_RPT
                 string strOffice = (cboOffice.SelectedIndex == -1) ? "All" : ((DataRowView)cboOffice.SelectedItem).Row.ItemArray[0].ToString();
                 string strTeam = (cboTeam.SelectedIndex == -1) ? "All" : ((DataRowView)cboTeam.SelectedItem).Row.ItemArray[0].ToString();
                 int intPID = Convert.ToInt32(Global.PID);
-                string strPop = this.cboPopulation.SelectedValue.ToString();
+                string strPop = "rPt10Mill";
+
+                if (blnCombosInitialised == true)
+                {
+                    strPop = this.cboPopulation.SelectedValue.ToString();
+                }
 
                 resetValues();
 
@@ -569,16 +578,16 @@ namespace Wealthy_RPT
                     }
                     else
                     {
-                        switch (dr["Strand"].ToString())
-                        {
+                        //switch (dr["Strand"].ToString())
+                        //{
 
-                            case "High Risk Wealth":
-                                dr["Strand"] = "HRW";
-                                break;
-                            case "Tax Events & Assurance":
-                                dr["Strand"] = "TEA";
-                                break;
-                        }
+                        //    case "High Risk Wealth":
+                        //        dr["Strand"] = "HRW";
+                        //        break;
+                        //    case "Tax Events & Assurance":
+                        //        dr["Strand"] = "TEA";
+                        //        break;
+                        //}
                     }
 
                     if (Global.DisplayRAG == "True")
@@ -599,17 +608,17 @@ namespace Wealthy_RPT
 
                                     if (Convert.ToDouble(dr["DailyRank"]) <= RAG.RAG10M_1)
                                     {
-                                        dr["Segment"] = "Cert";
+                                        dr["Segment"] = "Certainty";
                                         dr["SegNo"] = 1;
                                     }
                                     else if (Convert.ToDouble(dr["DailyRank"]) > RAG.RAG10M_2)
                                     {
-                                        dr["Segment"] = "High";
+                                        dr["Segment"] = "High Risk";
                                         dr["SegNo"] = 3;
                                     }
                                     else
                                     {
-                                        dr["Segment"] = "Res";
+                                        dr["Segment"] = "Resource to Risk";
                                         dr["SegNo"] = 2;
                                     }
                                 }
@@ -621,17 +630,17 @@ namespace Wealthy_RPT
 
                                     if (Convert.ToDouble(dr["DailyRank"]) <= RAG.RAG20M_1)
                                     {
-                                        dr["Segment"] = "Cert";
+                                        dr["Segment"] = "Certertainty";
                                         dr["SegNo"] = 1;
                                     }
                                     else if (Convert.ToDouble(dr["DailyRank"]) > RAG.RAG20M_2)
                                     {
-                                        dr["Segment"] = "High";
+                                        dr["Segment"] = "High Risk";
                                         dr["SegNo"] = 3;
                                     }
                                     else
                                     {
-                                        dr["Segment"] = "Res";
+                                        dr["Segment"] = "Resource to Risk";
                                         dr["SegNo"] = 2;
                                     }
                                 }
@@ -643,17 +652,17 @@ namespace Wealthy_RPT
 
                                     if (Convert.ToDouble(dr["DailyRank"]) <= 33.33)
                                     {
-                                        dr["Segment"] = "Cert";
+                                        dr["Segment"] = "Certainty";
                                         dr["SegNo"] = 1;
                                     }
                                     else if (Convert.ToDouble(dr["DailyRank"]) > 66.67)
                                     {
-                                        dr["Segment"] = "High";
+                                        dr["Segment"] = "High Risk";
                                         dr["SegNo"] = 3;
                                     }
                                     else
                                     {
-                                        dr["Segment"] = "Res";
+                                        dr["Segment"] = "Resource to Risk";
                                         dr["SegNo"] = 2;
                                     }
                                 }
@@ -751,7 +760,7 @@ namespace Wealthy_RPT
                             dr["ProSegNo"] = 0;
                             break;
 
-                        case "CERT":
+                        case "CERTAINTY":
                             dr["ProSegNo"] = 1;
                             break;
 
@@ -759,11 +768,11 @@ namespace Wealthy_RPT
                             dr["ProSegNo"] = 1;
                             break;
 
-                        case "RES":
+                        case "RESOURCE TO RISK":
                             dr["ProSegNo"] = 2;
                             break;
 
-                        case "HIGH":
+                        case "HIGH RISK":
                             dr["ProSegNo"] = 3;
                             break;
                     }
@@ -879,9 +888,11 @@ namespace Wealthy_RPT
 
             try 
             {
-                this.txtSearch.Text = "";
-                this.dgCases.Margin = new Thickness(32, 150, 25, 38);
-
+                if (blnCombosInitialised == true)
+                {
+                    this.txtSearch.Text = "";
+                    this.dgCases.Margin = new Thickness(16, 150, 2.5, 38);
+                }
             } 
             catch { }
             
@@ -899,6 +910,7 @@ namespace Wealthy_RPT
             }
 
             txtPage.Text = "Showing page " + intCurrentPage.ToString() + " of " + intLastPage.ToString();
+            sbiTotalRows.Content = "Total Rows : " + intTotalRows;
         }
 
         private void btnGoTo_Click(object sender, RoutedEventArgs e)
@@ -1044,16 +1056,15 @@ namespace Wealthy_RPT
 
             rbMyCases.IsChecked = false;
             rbOtherCases.IsChecked = false;
-            dgCases.Margin = new Thickness(32, 100, 25, 38);
+            dgCases.Margin = new Thickness(16, 100, 2.5, 38);
         }
 
         private void mnuPercCalculation_Click(object sender, RoutedEventArgs e)
         {
-            
-           IniFile GlobalFile = new IniFile(LoadAppVariables.GlobalFile);
+            PerformDailyRecalc();
+            PopulateCases();
 
-
-            GlobalFile.IniWriteValue("System", "DailyRecalc", DateTime.Now.ToString("dd/MM/yyyy"));
+            MessageBox.Show("Daily Recalculation Completed.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
             
         }
 
@@ -1076,6 +1087,7 @@ namespace Wealthy_RPT
             try { dPercentile = Convert.ToDouble((dgCases.Columns[iPercentileIndex].GetCellContent(dgCases.CurrentCell.Item) as TextBlock).Text); } catch { dPercentile = 0; } // text can be 'N/A'
             string sPop = "";
             try { sPop = this.cboPopulation.SelectedValue.ToString(); } catch {}
+            //MessageBox.Show("Starting to load WRT Data.", "WRT Data", MessageBoxButton.OK, MessageBoxImage.Information);
             if (rpt.GetRPDData(dUTR, iYear, dPercentile, sPop) == false)
             {
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
@@ -1099,6 +1111,7 @@ namespace Wealthy_RPT
         public void Refresh_Cases(object sender, System.ComponentModel.CancelEventArgs e)
         {
             System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
+            resetValues();
             PopulateCases();
             System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
         }
@@ -1134,6 +1147,39 @@ namespace Wealthy_RPT
                     + Environment.NewLine + ex.Message, "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             Cursor = Cursors.Arrow;
+        }
+
+        public bool PerformDailyRecalc()
+        {
+            IniFile GlobalFile = new IniFile(LoadAppVariables.GlobalFile);
+
+            GlobalFile.IniWriteValue("System", "DailyRecalc", DateTime.Now.ToString("dd/MM/yyyy"));
+
+            // check how many Data populations we have and perform recalculate for each population
+
+            try
+            {
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                SqlCommand cmd = new SqlCommand("qryNewDailyPercentileRecalculation", con);
+                cmd.CommandTimeout = Global.TimeOut;
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                con.Open();
+
+                cmd.CommandText = "qryNewDailyPercentileRecalculation";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.ExecuteNonQuery();
+
+                con.Close();
+                cmd.Dispose();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

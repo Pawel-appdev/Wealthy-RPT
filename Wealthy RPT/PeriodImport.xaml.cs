@@ -239,52 +239,58 @@ namespace Wealthy_RPT
         }
         public bool ImportPartA(string strYear, string strPrevCRMM, string strIDMS)
         {
+            string strProcess = "qryQTR_Process_Part";
             StringBuilder errorMessages = new StringBuilder();
             DateTime CRMMdatetime = DateTime.Parse(strPrevCRMM);
 
-            try
+            for (int process = 1; process < 4; process++)
             {
-                SqlConnection con = new SqlConnection(Global.ConnectionString);
-                SqlCommand cmd = new SqlCommand("qryQTR_Process", con);
-                cmd.CommandTimeout = Global.TimeOut;
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                con.Open();
-
-                cmd.Parameters.Clear();
-                cmd.CommandText = "qryQTR_Process";
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@nYear", strYear);
-                cmd.Parameters.AddWithValue("@nPrevCRMMDate", strPrevCRMM);
-                cmd.Parameters.AddWithValue("@nTodaysDate", DateTime.Now.ToString());
-                cmd.Parameters.AddWithValue("@nIDMS", strIDMS);
-                cmd.ExecuteNonQuery();
-
-                con.Close();
-                cmd.Dispose();
-                cmd.Parameters.Clear();
-
-                return true;
-            }
-            catch (SqlException ex)
-            {
-                for (int i = 0; i < ex.Errors.Count; i++)
+                try
                 {
-                    errorMessages.Append("Index #" + i + "\n" +
-                        "Message: " + ex.Errors[i].Message + "\n" +
-                        "LineNumber: " + ex.Errors[i].LineNumber + "\n" +
-                        "Source: " + ex.Errors[i].Source + "\n" +
-                        "Procedure: " + ex.Errors[i].Procedure + "\n");
-                }
+                    SqlConnection con = new SqlConnection(Global.ConnectionString);
+                    SqlCommand cmd = new SqlCommand(strProcess + process, con);
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                MessageBox.Show(errorMessages.ToString(), Global.ApplicationName + " - SQL Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                return false;
+                    con.Open();
+
+                    cmd.Parameters.Clear();
+                    cmd.CommandText = strProcess + process;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@nYear", strYear);
+                    cmd.Parameters.AddWithValue("@nPrevCRMMDate", strPrevCRMM);
+                    cmd.Parameters.AddWithValue("@nTodaysDate", DateTime.Now.ToString());
+                    cmd.Parameters.AddWithValue("@nIDMS", strIDMS);
+                    cmd.ExecuteNonQuery();
+
+                    con.Close();
+                    cmd.Dispose();
+                    cmd.Parameters.Clear();
+
+                    //return true;
+                }
+                catch (SqlException ex)
+                {
+                    for (int i = 0; i < ex.Errors.Count; i++)
+                    {
+                        errorMessages.Append("Index #" + i + "\n" +
+                            "Message: " + ex.Errors[i].Message + "\n" +
+                            "LineNumber: " + ex.Errors[i].LineNumber + "\n" +
+                            "Source: " + ex.Errors[i].Source + "\n" +
+                            "Procedure: " + ex.Errors[i].Procedure + "\n");
+                    }
+
+                    MessageBox.Show(errorMessages.ToString(), Global.ApplicationName + " - SQL Error : Process_Part" + process, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    return false;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), Global.ApplicationName + " - Error  Process_Part" + process, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    return false;
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), Global.ApplicationName + " - Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                return false;
-            }
+
+            return true;
         }
         
         private void PopulateCombos()
