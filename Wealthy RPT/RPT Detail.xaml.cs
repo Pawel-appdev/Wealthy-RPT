@@ -987,18 +987,26 @@ namespace Wealthy_RPT
                 }
             }
 
-            if ((cboCRMName.Text.Trim() == "") || (txtCRMDA.Text.Trim() == ""))
+            // if Office or Team is Unallocated then we can miss these next 2 checks
+            if ((cboOffice.Text.ToLower() == "unallocated") || (cboTeam.Text.ToLower() == "unallocated"))
             {
-                System.Windows.MessageBox.Show("Please confirm the CCM for this case" + Environment.NewLine + "and/or the date of their appointment.", "CCM", MessageBoxButton.OK, MessageBoxImage.Information);
-                cmdSave.IsEnabled = true;
-                return;
+                //One of the above is unallocated so user can step over this check.
             }
-
-            if(cboAllocatedTo.Text.Trim() == "")
+            else
             {
-                System.Windows.MessageBox.Show("Please confirm who this case is Allocated To.", "Allocated To", MessageBoxButton.OK, MessageBoxImage.Information);
-                cmdSave.IsEnabled = true;
-                return;
+                if ((cboCRMName.Text.Trim() == "") || (txtCRMDA.Text.Trim() == ""))
+                {
+                    System.Windows.MessageBox.Show("Please confirm the CCM for this case" + Environment.NewLine + "and/or the date of their appointment.", "CCM", MessageBoxButton.OK, MessageBoxImage.Information);
+                    cmdSave.IsEnabled = true;
+                    return;
+                }
+
+                if (cboAllocatedTo.Text.Trim() == "")
+                {
+                    System.Windows.MessageBox.Show("Please confirm who this case is Allocated To.", "Allocated To", MessageBoxButton.OK, MessageBoxImage.Information);
+                    cmdSave.IsEnabled = true;
+                    return;
+                }
             }
 
             // run through each element to check if it needs updating and then update relevant elements.
@@ -2051,6 +2059,7 @@ namespace Wealthy_RPT
             int iYear = 2000;
             var vSegment = "";
             int iChartPoints;
+            string sPercentile;
 
             if (this.cboCurrentSuspensions.SelectedItem == null)
             {
@@ -2128,7 +2137,8 @@ namespace Wealthy_RPT
 
                 this.txtQSScore.Text = dt.Rows[0]["NewQSScore"].ToString();
                 this.txtPRScore.Text = dt.Rows[0]["NewPSScore"].ToString();
-                this.txtPercentile.Text = dt.Rows[0]["NewRank"].ToString();
+                this.txtPercentile.Text = String.Format("{0:0.00}", dt.Rows[0]["NewRank"]);  // displays to 2 dp
+                //this.txtPercentile.Text = dt.Rows[0]["NewRank"].ToString();  //Replaced with line above
                 vSegment = dt.Rows[0]["NewSegment"].ToString();
                 if (vSegment == "")
                 {
@@ -2136,11 +2146,13 @@ namespace Wealthy_RPT
                 }
                 this.cboSegment.SelectedValue = vSegment.Trim();
 
+
                 try  //Update Graph
                 {
                     //Update Grid
                     Globals.dtGrid.Rows[0]["Priority Score"] = dt.Rows[0]["NewPSScore"].ToString();
-                    Globals.dtGrid.Rows[0]["Ranking"] = dt.Rows[0]["NewRank"].ToString();
+                    Globals.dtGrid.Rows[0]["Ranking"] = String.Format("{0:0.00}", dt.Rows[0]["NewRank"]); 
+                    //Globals.dtGrid.Rows[0]["Ranking"] = dt.Rows[0]["NewRank"].ToString(); // replaced with line above
                     Globals.dtGrid.Rows[0]["Segment"] = dt.Rows[0]["NewSegment"].ToString();
                     this.dgHistorical.ItemsSource = null;
                     this.dgHistorical.ItemsSource = Globals.dtGrid.DefaultView;
@@ -2513,6 +2525,26 @@ namespace Wealthy_RPT
             }
         }
 
+        private void CmdGuidance_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Cursor = Cursors.Wait;
+                Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
+                Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(@Global.GuidanceFile);
+                //Microsoft.Office.Interop.Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
+                //xlApp.WindowState = Microsoft.Office.Interop.Excel.XlWindowState.xlMaximized;
+                xlApp.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                GC.Collect();
+                Cursor = Cursors.Arrow;
+                MessageBox.Show("Cannot open the Guidance." + Environment.NewLine
+                    + Environment.NewLine + ex.Message, "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+            Cursor = Cursors.Arrow;
+        }
     }
 
     public class BooleanToYesNoConverter : IValueConverter

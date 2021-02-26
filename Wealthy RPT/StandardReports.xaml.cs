@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.Office.Interop.Excel;
+using Excel = Microsoft.Office.Interop.Excel;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
@@ -225,7 +225,7 @@ namespace Wealthy_RPT
                         /*Set up work book, work sheets, and excel application*/
                         Microsoft.Office.Interop.Excel.Application oexcel = new Microsoft.Office.Interop.Excel.Application();
                         Microsoft.Office.Interop.Excel._Workbook obook = null;
-                        Microsoft.Office.Interop.Excel._Worksheet osheet = null;
+                        Microsoft.Office.Interop.Excel._Worksheet osheet = null;                        
 
                         string path = AppDomain.CurrentDomain.BaseDirectory;
                         object misValue = System.Reflection.Missing.Value;
@@ -244,8 +244,9 @@ namespace Wealthy_RPT
                                 // Template was specified so open the specified template
                                 strFileName = path + strFileName; 
                                 obook = oexcel.Workbooks.Open(strFileName); 
-                                osheet = (Microsoft.Office.Interop.Excel.Worksheet)obook.Sheets["Data"]; 
-                                osheet.UsedRange.ClearContents(); 
+                                osheet = (Microsoft.Office.Interop.Excel.Worksheet)obook.Sheets["Data"];
+                                Excel.Range newRng = osheet.UsedRange;
+                                newRng.Offset[1,0].ClearContents(); 
                             }
                             catch
                             {
@@ -258,7 +259,7 @@ namespace Wealthy_RPT
 
                         Recordset rs = DTtoRSconvert.ConvertToRecordSet(dt);
 
-                        osheet.Cells[1,1].CopyFromRecordset(rs);
+                        osheet.Cells[2,1].CopyFromRecordset(rs);
 
                         //int colIndex = 0;
                         //int rowIndex = 1;

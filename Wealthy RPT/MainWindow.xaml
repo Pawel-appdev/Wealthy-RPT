@@ -141,9 +141,19 @@
                 <Style TargetType="{x:Type DataGridCell}">
                     <!--font color according to value in column Seg-->
                     <Style.Triggers>
+                        <DataTrigger Binding="{Binding Segment}" Value="Certainty">
+                            <Setter Property="Foreground" Value="Green" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Segment}" Value="High Risk">
+                            <Setter Property="Foreground" Value="Red" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Segment}" Value="Resource to Risk">
+                            <Setter Property="Foreground" Value="Orange"  />
+                        </DataTrigger>
                         <DataTrigger Binding="{Binding Segment}" Value="Cert">
                             <Setter Property="Foreground" Value="Green" />
                         </DataTrigger>
+                        
                         <DataTrigger Binding="{Binding Segment}" Value="High">
                             <Setter Property="Foreground" Value="Red" />
                         </DataTrigger>
@@ -191,7 +201,7 @@
                 <DataGridTextColumn Header="Res" Binding="{Binding ResScore}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Priority" Binding="{Binding PriorityScore}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Daily Ranking" Binding="{Binding DailyRank}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Seg" Binding="{Binding Segment}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Segment" Binding="{Binding Segment}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
                 <DataGridTextColumn Header="SegNo" Binding="{Binding SegNo}" Visibility="Hidden" ></DataGridTextColumn>
                 <DataGridTextColumn Header="ProSegNo" Binding="{Binding ProSegNo}" Visibility="Hidden"></DataGridTextColumn>
                 <DataGridTemplateColumn x:Name="IconHeader3"  Header="" CanUserResize="False" SortMemberPath="SegMove">

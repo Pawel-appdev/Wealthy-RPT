@@ -75,6 +75,8 @@ namespace Wealthy_RPT
                 RPT_Detail rPT_Detail = new RPT_Detail();
                 User user = new User();
                 Globals.blnIgnoreEvents = true;
+                Globals.dtGrid = null;
+                Globals.dtGraph = null;
 
                 rPT_Detail.cboPopCode.SelectedValue = user.Pop_Code_Name.ToString();
                 rPT_Detail.cboPopFriendly.SelectedIndex = rPT_Detail.cboPopCode.SelectedIndex;
@@ -217,6 +219,9 @@ namespace Wealthy_RPT
 
         private void rbMyCases_Checked(object sender, RoutedEventArgs e)
         {
+
+            this.Cursor = Cursors.Wait;
+
             groupOfficeTeam.Visibility = Visibility.Hidden ;
 
             int intPID = Convert.ToInt32(Global.PID);
@@ -251,10 +256,14 @@ namespace Wealthy_RPT
             {
                 GetdgCases(intYear, strOffice, strTeam, intPID, strPop, intOffset);
             }
+
+            this.Cursor = null;
         }
 
         private void rbOtherCases_Checked(object sender, RoutedEventArgs e)
         {
+            this.Cursor = Cursors.Wait;
+            
             string strPop = "";
             try
             {
@@ -262,6 +271,7 @@ namespace Wealthy_RPT
             }
             catch
             {
+                this.Cursor = null;
                 MessageBox.Show("Unable to establish your access level. The application will now close.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 Environment.Exit(0);
             }
@@ -276,10 +286,15 @@ namespace Wealthy_RPT
             resetValues();
 
             GetdgCases(intYear, strOffice, strTeam, intPID, strPop, intOffset);
+
+            this.Cursor = null;
         }
 
         private void cboYear_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
+            this.Cursor = Cursors.Wait;
+
             try
             {
                 int intYear = Convert.ToInt32(cboYear.SelectedValue);
@@ -301,9 +316,14 @@ namespace Wealthy_RPT
             {
                 //the value of cboPopulation has not been selected yet - do nothing
             }
+
+            this.Cursor = null;
         }
         private void cboPopulation_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
+            this.Cursor = Cursors.Wait;
+
             int intYear = Convert.ToInt32(cboYear.SelectedValue);
             string strOffice;
 
@@ -326,11 +346,15 @@ namespace Wealthy_RPT
             {
                 GetdgCases(intYear, strOffice, strTeam, intPID, strPop, intOffset);
             }
+
+            this.Cursor = null;
         }
 
 
         private void cboOffice_DropDownClosed(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.Wait;
+
             try//to get teams for specific office
             {  
 
@@ -361,16 +385,18 @@ namespace Wealthy_RPT
                 resetValues();
 
                 GetdgCases(intYear, strOffice, strTeam, intPID, strPop, intOffset);
-        }
+            }
             catch
             {
             //    MessageBox.Show("Unable to get cases from this office.", "Error",MessageBoxButton.OK, MessageBoxImage.Error);
             //    cboOffice.Text = "";
             }
+            this.Cursor = null;
         }
 
         private void cboTeam_DropDownClosed(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.Wait;
 
             try
             {
@@ -389,6 +415,8 @@ namespace Wealthy_RPT
                 //MessageBox.Show("Unable to get cases from this team.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 //cboTeam.Text = "";
             }
+
+            this.Cursor = null;
         }
 
 
@@ -630,7 +658,7 @@ namespace Wealthy_RPT
 
                                     if (Convert.ToDouble(dr["DailyRank"]) <= RAG.RAG20M_1)
                                     {
-                                        dr["Segment"] = "Certertainty";
+                                        dr["Segment"] = "Certainty";
                                         dr["SegNo"] = 1;
                                     }
                                     else if (Convert.ToDouble(dr["DailyRank"]) > RAG.RAG20M_2)
@@ -998,15 +1026,20 @@ namespace Wealthy_RPT
 
             private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            if(txtSearch.Text.Length > 2)
+            this.Cursor = Cursors.Wait;
+
+            if (txtSearch.Text.Length > 2)
             {
                 KeywordSearch();
             }
             else
             {
+                this.Cursor = null;
                 MessageBox.Show("Search box must contain at least three characters.", "Try again", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            
+
+            this.Cursor = null;
+
         }
         private void KeywordSearch()
         {

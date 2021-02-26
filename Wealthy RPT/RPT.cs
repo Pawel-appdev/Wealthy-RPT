@@ -1086,6 +1086,10 @@ namespace Wealthy_RPT
                     }
                     con.Close();
                 }
+                catch (SqlException)
+                {
+                    MessageBox.Show("Customer record not found due to SQL issue.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                }
                 catch
                 {
                     con.Close();
@@ -1127,9 +1131,13 @@ namespace Wealthy_RPT
                     #endregion
                     else if (dr.HasRows == false)
                     {
-                        MessageBox.Show("Agent record not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        //MessageBox.Show("Agent record not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     }
                     con.Close();
+                }
+                catch (SqlException)
+                {
+                    MessageBox.Show("Agent record not found due to SQL issue.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
                 catch
                 {
@@ -1200,6 +1208,10 @@ namespace Wealthy_RPT
                         //MessageBox.Show("Behaviours scores data not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     }
                     con.Close();
+                }
+                catch (SqlException)
+                {
+                    MessageBox.Show("RPD Scores Data not found due to SQL issue.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
                 catch
                 {

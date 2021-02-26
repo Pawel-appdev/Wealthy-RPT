@@ -704,7 +704,7 @@
                     <ColumnDefinition Width="14*"/>
                     <ColumnDefinition Width="27*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="cmdGuidance"  Grid.Column="0"  HorizontalAlignment="Left" Margin="10,0,205,10" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdGuidance_GotFocus">
+                <Button x:Name="cmdGuidance"  Grid.Column="0"  HorizontalAlignment="Left" Margin="10,0,205,10" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdGuidance_GotFocus" Click="CmdGuidance_Click">
                     <TextBlock Text="Guidance" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Guidance" />
 
                 </Button>

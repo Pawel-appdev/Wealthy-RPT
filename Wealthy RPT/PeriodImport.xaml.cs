@@ -249,7 +249,14 @@ namespace Wealthy_RPT
                 {
                     SqlConnection con = new SqlConnection(Global.ConnectionString);
                     SqlCommand cmd = new SqlCommand(strProcess + process, con);
-                    cmd.CommandTimeout = Global.TimeOut;
+                    if (process == 2)
+                    {
+                        cmd.CommandTimeout = 0;
+                    }
+                    else
+                    {
+                        cmd.CommandTimeout = Global.TimeOut;
+                    }
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     con.Open();
