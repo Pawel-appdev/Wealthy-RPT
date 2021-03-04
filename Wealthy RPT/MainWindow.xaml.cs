@@ -165,6 +165,14 @@ namespace Wealthy_RPT
             int intYear = Convert.ToInt32(cboYear.SelectedValue);
             string strOffice = (cboOffice.SelectedIndex == -1) ? "All" : cboOffice.SelectedValue.ToString();
             string strTeam = (cboTeam.SelectedIndex == -1) ? "All" : cboTeam.SelectedValue.ToString();
+            if(strOffice== "System.Data.DataRowView")
+            {
+                strOffice = cboOffice.Text.ToString();
+            }
+            if (strTeam == "System.Data.DataRowView")
+            {
+                strTeam = cboTeam.Text.ToString();
+            }
             int intPID = Convert.ToInt32(Global.PID);
             string strPop = "";
             try
