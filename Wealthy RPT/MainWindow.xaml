@@ -165,7 +165,7 @@
             </DataGrid.CellStyle>
 
             <DataGrid.Columns>
-                <DataGridTemplateColumn x:Name="IconHeader1"  Header="" CanUserResize="False">
+                <DataGridTemplateColumn x:Name="IconHeader1"  Header="" CanUserResize="False" SortMemberPath="ScoreUp">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Image Source="" x:Name="CRMBoost" />
@@ -182,7 +182,7 @@
                 <DataGridTextColumn Header="Year" Binding="{Binding CalendarYear}" Visibility="Hidden"></DataGridTextColumn>
                 <DataGridTextColumn Header="Office" Binding="{Binding Office}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Team" Binding="{Binding Team}"></DataGridTextColumn>
-                <DataGridTemplateColumn x:Name="IconHeader2"  Header="Info" CanUserResize="False">
+                <DataGridTemplateColumn x:Name="IconHeader2"  Header="Info" CanUserResize="False" SortMemberPath="IsInfo">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Image Source="" x:Name="PinkFlag" />
@@ -193,7 +193,7 @@
                             </DataTemplate.Triggers>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                </DataGridTemplateColumn>                
                 <DataGridTextColumn Header="Behaviours" Binding="{Binding QSScore}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Risk" Binding="{Binding RPTPRScore}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
                 <DataGridTextColumn Header="AV" Binding="{Binding RPTAVScore}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
