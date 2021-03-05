@@ -11,8 +11,8 @@ namespace Wealthy_RPT
 {
     class RAG
     {
-        //public static double RAG2M_1;
-        //public static double RAG2M_2;
+        public static double RAG2M_1;
+        public static double RAG2M_2;
         public static double RAG10M_1;
         public static double RAG10M_2;
         public static double RAG20M_1;
@@ -39,10 +39,10 @@ namespace Wealthy_RPT
                 switch (strPop)
                 {
 
-                    //case "rPt2Mill":
-                    //    if (dr["RAG_Break"].ToString().Replace(" ", string.Empty) == "GreenAmber") { RAG2M_1 = Convert.ToDouble(dr["Percent"]); }
-                    //    if (dr["RAG_Break"].ToString().Replace(" ", string.Empty) == "AmberRed") { RAG2M_2 = Convert.ToDouble(dr["Percent"]); }
-                    //    break;
+                    case "rPt2Mill":
+                        if (dr["RAG_Break"].ToString().Replace(" ", string.Empty) == "GreenAmber") { RAG2M_1 = Convert.ToDouble(dr["Percent"]); }
+                        if (dr["RAG_Break"].ToString().Replace(" ", string.Empty) == "AmberRed") { RAG2M_2 = Convert.ToDouble(dr["Percent"]); }
+                        break;
 
                     case "rPt10Mill":
 

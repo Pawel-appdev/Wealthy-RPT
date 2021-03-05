@@ -55,7 +55,7 @@ namespace Wealthy_RPT
 
         }
 
-        public void GetRPTDetailOfficeCRMs()
+        public void GetRPTDetailOfficeCRMs(string strOffice)
         {
 
             try
@@ -64,10 +64,10 @@ namespace Wealthy_RPT
                 {
                     using (SqlCommand cmd = new SqlCommand())
                     {
-                        //cmd.CommandText = "qryFrmDetailsOfficeCRMs";
-                        cmd.CommandText = "qryGetCRMs";
-                        //SqlParameter prm = cmd.Parameters.Add("@nOffice", SqlDbType.Text);
-                        //prm.Value = "";
+                        //cmd.CommandText = "qryGetCRMs";
+                        cmd.CommandText = "qryGetOfficeCRMs";
+                        SqlParameter prm = cmd.Parameters.Add("@nOffice", SqlDbType.Text);
+                        prm.Value = strOffice;
                         cmd.Connection = con;
                         cmd.CommandType = CommandType.StoredProcedure;
 
@@ -122,7 +122,7 @@ namespace Wealthy_RPT
 
         }
 
-        public void GetOfficeCRMs(string strOffice, string strPopCode)
+        public void GetOfficeTeams(string strOffice, string strPopCode)
         {
             // returns matching tblOfficeCRM:  Office, [Team Identifier], Pop
             try

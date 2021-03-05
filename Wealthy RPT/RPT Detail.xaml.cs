@@ -51,7 +51,7 @@ namespace Wealthy_RPT
             {
                 Lookups lu = new Lookups();
                 lu.GetRPTDetailLookups();
-                lu.GetRPTDetailOfficeCRMs();
+                //lu.GetRPTDetailOfficeCRMs("Birmingham");
                 //lu.GetOfficeCRMs();
 
                 // == Customer Segment
@@ -118,9 +118,9 @@ namespace Wealthy_RPT
                 // cboAllocatedTo: populated on Window_Loaded() / PopulateAndSetAllocationCombos()  in order to pass selected Office and Team
 
                 //cboCRMName
-                cboCRMName.ItemsSource = lu.dsRPTDetailOfficeCRMs.Tables[0].DefaultView;
-                cboCRMName.DisplayMemberPath = "CRM_Name";
-                cboCRMName.SelectedValuePath = "CRM_Name";
+                //cboCRMName.ItemsSource = lu.dsRPTDetailOfficeCRMs.Tables[0].DefaultView;
+                //cboCRMName.DisplayMemberPath = "CRM_Name";
+                //cboCRMName.SelectedValuePath = "CRM_Name";
 
                 // == Appointed Agent
 
@@ -243,6 +243,7 @@ namespace Wealthy_RPT
             bool blnTest = PopulateOfficeCombo();
             blnTest = PopulateTeamCombo();
             blnTest = PopulateAllocatedToCombo();
+            blnTest = PopulateCRM();
         }
 
         private bool PopulateOfficeCombo()
@@ -275,7 +276,7 @@ namespace Wealthy_RPT
                 // populate cboTeam, based on Office and PopCode
                 strOffice = this.cboOffice.SelectedValue.ToString();
                 strPopCode = this.cboPopCode.SelectedValue.ToString();
-                lu.GetOfficeCRMs(strOffice, strPopCode); // "rPt20Mill"
+                lu.GetOfficeTeams(strOffice, strPopCode); // "rPt20Mill"
                 cboTeam.ItemsSource = lu.dsOfficeTeams.Tables[0].DefaultView;
                 cboTeam.DisplayMemberPath = "Team Identifier";
                 cboTeam.SelectedValuePath = "Team Identifier";
@@ -294,7 +295,7 @@ namespace Wealthy_RPT
             Lookups lu = new Lookups();
             try
             {
-                // populate cboAllocatedTo, based on Office and Team
+                // populate cboAllocatedTo, based on Office (previously included team but as taht data is no longer available office only needs to be used)
                 strOffice = this.cboOffice.SelectedValue.ToString();
                 strTeam = this.cboTeam.SelectedValue.ToString();
                 lu.GetOfficeTeamStaff(strOffice, strTeam);
@@ -302,6 +303,26 @@ namespace Wealthy_RPT
                 cboAllocatedTo.DisplayMemberPath = "AllocatedTo";
                 cboAllocatedTo.SelectedValuePath = "AllocatedTo";
                 //cboAllocatedTo.Text = cboAllocatedTo.SelectedValue.ToString(); //Not actually required
+                return true;
+            }
+            catch
+            {
+                return false;
+            };
+        }
+
+        private bool PopulateCRM()
+        {
+            string strOffice = "";
+            Lookups lu = new Lookups();
+            try
+            {
+                // populate cboCCMs, based on Office
+                strOffice = this.cboOffice.SelectedValue.ToString();
+                lu.GetRPTDetailOfficeCRMs(strOffice); 
+                cboCRMName.ItemsSource = lu.dsRPTDetailOfficeCRMs.Tables[0].DefaultView;
+                cboCRMName.DisplayMemberPath = "CRM_Name";
+                cboCRMName.SelectedValuePath = "CRM_Name";
                 return true;
             }
             catch
@@ -990,7 +1011,11 @@ namespace Wealthy_RPT
             // if Office or Team is Unallocated then we can miss these next 2 checks
             if ((cboOffice.Text.ToLower() == "unallocated") || (cboTeam.Text.ToLower() == "unallocated"))
             {
-                //One of the above is unallocated so user can step over this check.
+                //One of the above is unallocated so user can step over this check but need to drop crmda if no crm
+                if(cboCRMName.Text.Trim() == "")
+                {
+                    txtCRMDA.Text = "";
+                }
             }
             else
             {
@@ -1461,18 +1486,21 @@ namespace Wealthy_RPT
                         if (txtNarrative.Text != GetDataContextValue("Narrative").ToString()) { blnCustomer = true; }
                         break;
                     case 26:
-                        if (cboAllocatedTo.Text != GetDataContextValue("AllocatedTo").ToString())
+                        if (cboAllocatedTo.Text != "")
                         {
-                            blnCustomer = true;
-                            if(cboAllocatedTo.Text.Trim() == "")
+                            if (cboAllocatedTo.Text != GetDataContextValue("AllocatedTo").ToString())
                             {
-                                blnRtn = true; // case can't be left unallocated
+                                blnCustomer = true;
+                                if (cboAllocatedTo.Text.Trim() == "")
+                                {
+                                    //blnRtn = true; // case can now be left unallocated
+                                }
+                                else
+                                {
+                                    break;
+                                }
                             }
-                            else
-                            {
-                                break;
-                            }
-                        } 
+                        }
                         break;
                     case 27:
                         //strTest = GetDataContextValue("Strand") == null ? "" : GetDataContextValue("Strand").ToString();
@@ -1524,8 +1552,14 @@ namespace Wealthy_RPT
                     rpt.CRM_Name = cboCRMName.Text;
                     rpt.CRM_Appointed = txtCRMDA.Text;
                     rpt.AllocatedTo = cboAllocatedTo.Text;
-                    rpt.AllocatedTo = rpt.AllocatedTo.Substring(0, 7); //just need leading 7 digits
-
+                    if (rpt.AllocatedTo == "")
+                    { 
+                        //case must be unallocated
+                    }
+                    else
+                    {
+                        rpt.AllocatedTo = rpt.AllocatedTo.Substring(0, 7); //just need leading 7 digits
+                    }
                     rpt.UpdateCustomerData();
                     blnRtn = true;
                 }

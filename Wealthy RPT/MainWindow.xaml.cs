@@ -682,6 +682,35 @@ namespace Wealthy_RPT
                                 }
                                 break;
 
+                            case "rPt2Mill":
+                                if (string.IsNullOrEmpty(dr["Segment"].ToString()) == true)
+                                {
+                                    dr["SegNo"] = 0;
+                                    dr["Segment"] = "NYR";
+                                }
+
+
+                                if (string.IsNullOrEmpty(dr["DailyRank"].ToString()) == false)
+                                {
+
+                                    if (Convert.ToDouble(dr["DailyRank"]) <= RAG.RAG2M_1)
+                                    {
+                                        dr["Segment"] = "Certainty";
+                                        dr["SegNo"] = 1;
+                                    }
+                                    else if (Convert.ToDouble(dr["DailyRank"]) > RAG.RAG2M_2)
+                                    {
+                                        dr["Segment"] = "High Risk";
+                                        dr["SegNo"] = 3;
+                                    }
+                                    else
+                                    {
+                                        dr["Segment"] = "Resource to Risk";
+                                        dr["SegNo"] = 2;
+                                    }
+                                }
+                                break;
+
                             default:
                                 if (string.IsNullOrEmpty(dr["DailyRank"].ToString()) == false)
                                 {
@@ -751,6 +780,28 @@ namespace Wealthy_RPT
                                         dr["SegNo"] = 1;
                                     }
                                     else if (Convert.ToDouble(dr["DailyRank"]) > RAG.RAG20M_2)
+                                    {
+                                        //dr["Segment"] = "High";
+                                        dr["SegNo"] = 3;
+                                    }
+                                    else
+                                    {
+                                        //dr["Segment"] = "Res";
+                                        dr["SegNo"] = 2;
+                                    }
+                                }
+                                break;
+
+                            case "rPt2Mill":
+                                if (string.IsNullOrEmpty(dr["DailyRank"].ToString()) == false)
+                                {
+
+                                    if (Convert.ToDouble(dr["DailyRank"]) <= RAG.RAG2M_1)
+                                    {
+                                        //dr["Segment"] = "Cert";
+                                        dr["SegNo"] = 1;
+                                    }
+                                    else if (Convert.ToDouble(dr["DailyRank"]) > RAG.RAG2M_2)
                                     {
                                         //dr["Segment"] = "High";
                                         dr["SegNo"] = 3;

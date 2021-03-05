@@ -1512,7 +1512,14 @@ namespace Wealthy_RPT
                     SqlParameter prm24 = cmd.Parameters.Add("@nNarrative", SqlDbType.NVarChar);
                     prm24.Value = Narrative;
                     SqlParameter prm25 = cmd.Parameters.Add("@nHNWU", SqlDbType.Int);
-                    prm25.Value = Convert.ToInt32(AllocatedTo);
+                    if (AllocatedTo == "")
+                    {
+                        prm25.Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        prm25.Value = Convert.ToInt32(AllocatedTo);
+                    }
                     SqlParameter prm26 = cmd.Parameters.Add("@oUTR", SqlDbType.Float);
                     prm26.Value = UTR;
                     SqlParameter prm27 = cmd.Parameters.Add("@nPop", SqlDbType.NVarChar);
