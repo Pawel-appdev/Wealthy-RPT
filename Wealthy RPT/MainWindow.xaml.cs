@@ -158,6 +158,12 @@ namespace Wealthy_RPT
             if (Global.Admin != true)
             {
                 mnuAdmin.IsEnabled = false;
+                //mnuAdmin.Visibility = Visibility.Hidden;
+            }
+            if (Global.Report_User != true)
+            {
+                mnuReports.IsEnabled = false;
+                //mnuReports.Visibility = Visibility.Hidden;
             }
         }
         private void PopulateCases()

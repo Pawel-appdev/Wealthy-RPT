@@ -72,6 +72,7 @@ namespace Wealthy_RPT
         private bool _active = false; // 0 = No, 1 = Yes
         private bool _admin = false; // 0 = No, 1 = Yes
         private bool _baadmin = false;// 0 = No, 1 = Yes
+        private bool _reportuser = false;// 0 = No, 1 = Yes
         private string _accesslevel = "";
         private string _popcodename = "";
 
@@ -120,6 +121,18 @@ namespace Wealthy_RPT
             set
             {
                 _baadmin = value;
+            }
+        }
+
+        public bool Report_User
+        {
+            get
+            {
+                return _reportuser;
+            }
+            set
+            {
+                _reportuser = value;
             }
         }
 
@@ -236,6 +249,7 @@ namespace Wealthy_RPT
                 {
                     Admin = reader.GetBoolean(0);
                     BA_Admin = reader.GetBoolean(1);
+                    Report_User = reader.GetBoolean(2);
                 }
             }
 

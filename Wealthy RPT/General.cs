@@ -86,6 +86,7 @@ namespace Wealthy_RPT
         private static string _guidanceFile;
         private static bool _admin;
         private static bool _baadmin;
+        private static bool _reportuser;
 
         public static string PID
         {
@@ -144,6 +145,18 @@ namespace Wealthy_RPT
             set
             {
                 _baadmin = value;
+            }
+        }
+
+        public static bool Report_User
+        {
+            get
+            {
+                return _reportuser;
+            }
+            set
+            {
+                _reportuser = value;
             }
         }
 
