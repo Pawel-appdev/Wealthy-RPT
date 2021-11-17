@@ -61,7 +61,7 @@
     <Grid>
         <TabControl x:Name="tabRPD" HorizontalAlignment="Stretch" Margin="10,0,10,49">
             <!--#region Tab 01 : Customer-->
-            <TabItem  x:Name="pgCustomer" Header="Customer">
+            <TabItem  x:Name="pgCustomer" Header="Customer" Margin="-2,-2,-2,2">
                 <GroupBox x:Name="grpCustomer" Header="Customer" Margin="0,0,6,0" VerticalAlignment="Top" Height="650">
                     <StackPanel x:Name="pnlCustomer00" Margin="0,0,0,0">
                         <!--#region Customer Segment header row-->
@@ -83,8 +83,8 @@
                                 </Grid.RowDefinitions>
                                 <TextBlock x:Name="lblStrand" Margin="8,2,0,2" Grid.Row="0"  Grid.Column="0" FontSize="16"><Bold>Strand</Bold></TextBlock>
                                 <ComboBox x:Name="cboStrand" Grid.Row="0"  Grid.Column="1" Margin="0,4,5,4" GotFocus="CboStrand_GotFocus" SelectedValue="{Binding Strand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                <TextBlock x:Name="lblCustomerSegment" Margin="0,2,0,2" Grid.Row="0"  Grid.Column="2" FontSize="16"><Bold>Customer Segment</Bold></TextBlock>
-                                <ComboBox x:Name="cboSegment" Grid.Row="0"  Grid.Column="3" Margin="5,4,6,4" GotFocus="CboSegment_GotFocus" SelectedValue="{Binding Segment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock x:Name="lblCustomerSegment" Margin="0,2,0,2" Grid.Row="0"  Grid.Column="2" FontSize="16" Visibility="Hidden" IsEnabled="False"><Bold>Customer Segment</Bold></TextBlock>
+                                <ComboBox x:Name="cboSegment" Grid.Row="0"  Grid.Column="3" Margin="5,4,6,4" GotFocus="CboSegment_GotFocus" SelectedValue="{Binding Segment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="Hidden" IsEnabled="False" />
                                 <TextBlock x:Name="lblPopulation" Margin="8,2,9,2" Grid.Row="0"  Grid.Column="4" FontSize="16" HorizontalAlignment="Right"><Bold>Population</Bold></TextBlock>
                                 <ComboBox x:Name="cboPopFriendly" Grid.Row="0"  Grid.Column="5" Background="LightGray" IsEnabled="True" Margin="11,4,2,4" GotFocus="CboPopFriendly_GotFocus" SelectionChanged="CboPopFriendly_SelectionChanged"/>
                                 <ComboBox x:Name="cboPopCode" Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="3" Margin="0,4,121,4" SelectedValue="{Binding Pop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -313,8 +313,8 @@
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
                                             <TextBlock x:Name="lblEmail" Grid.Row="0" Grid.Column="0" FontSize="16" Margin="0,0,75,0" Grid.ColumnSpan="2"><Run Text="Email Contacts"/><InlineUIContainer/></TextBlock>
-                                            <TextBlock x:Name="lblPopFields" Margin="0,5,10,0" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" Width="125" Grid.ColumnSpan="2"><Run Text="CADD Populated Fields"/></TextBlock>
-                                            <TextBox x:Name="txtPopFields" Margin="10,1,0,0" Grid.Row="0" Grid.Column="4" Background="#339966" IsEnabled="False" />
+                                            <TextBlock x:Name="lblPopFields" Margin="0,5,10,0" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" Width="125" Grid.ColumnSpan="2" Visibility="Hidden"><Run Text="CADD Populated Fields" IsEnabled="False"/></TextBlock>
+                                            <TextBox x:Name="txtPopFields" Margin="10,1,0,0" Grid.Row="0" Grid.Column="4" Background="#339966" IsEnabled="False" Visibility="Hidden" />
                                             <Button x:Name="cmdEmailAdd" Grid.Row="1" Grid.Column="0" Width="60" Height="30" Margin="0,5,4,5" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailAdd_GotFocus" Click="cmdEmailAdd_Click">
                                                 <TextBlock Text="Add" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Add" />
                                             </Button>
@@ -328,8 +328,8 @@
                                     </StackPanel>
                                     <!--#endregion-->
                                     <!--#region Behaviours-->
-                                    <TextBlock x:Name="lblBehaviours" FontSize="18"><Bold>Behaviour</Bold></TextBlock>
-                                    <GroupBox x:Name="grpBehaviours" Header="Caseflow / CRMM Data - last updated" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Height="106" Width="384">
+                                    <TextBlock x:Name="lblBehaviours" FontSize="18" Visibility="Hidden" IsEnabled="False"><Bold>Behaviour</Bold></TextBlock>
+                                    <GroupBox x:Name="grpBehaviours" Header="Caseflow / CRMM Data - last updated" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Height="106" Width="384" Visibility="Hidden" IsEnabled="False">
                                         <Grid x:Name="grdBehaviours">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="227*"/>
@@ -359,7 +359,8 @@
                                         <Grid  Width="384">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="23*"/>
-                                                <ColumnDefinition Width="204"/>
+                                                <ColumnDefinition Width="175.663"/>
+                                                <ColumnDefinition Width="28.337"/>
                                                 <ColumnDefinition Width="134*"/>
                                                 <ColumnDefinition Width="23*"/>
                                             </Grid.ColumnDefinitions>
@@ -375,28 +376,28 @@
                                                 <RowDefinition Height="Auto"/>
                                                 <RowDefinition Height="30"/>
                                             </Grid.RowDefinitions>
-                                            <TextBlock x:Name="lblHighestPercent" Padding="5,10,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" >Highest percentage penalty charged*</TextBlock>
-                                            <TextBox x:Name="txtHighestPercent" Margin="6,3,20,3"  Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" GotFocus="TxtHighestPercent_GotFocus" Text = "{Binding HPPenalty, Mode = TwoWay}" HorizontalContentAlignment="Right" LostFocus="TxtHighestPercent_LostFocus"/>
-                                            <TextBox x:Name="txtHighestPercentHD" Visibility="Collapsed" Grid.Row="0" Grid.Column="3" Margin="0,3"/>
-                                            <TextBlock x:Name="lblPenalty" Padding="5,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ><Bold>Penalty suspensions</Bold></TextBlock>
-                                            <TextBlock x:Name="lblCurrentSuspensions" Padding="5,10,0,0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" >Any current suspension periods</TextBlock>
-                                            <ComboBox x:Name="cboCurrentSuspensions"  Grid.Row="2" Grid.Column="2" Margin="6,3,20,3" Grid.ColumnSpan="2" GotFocus="CboCurrentSuspensions_GotFocus" SelectedValue="{Binding PSCurrent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" LostFocus="CboCurrentSuspensions_LostFocus"/>
-                                            <TextBox x:Name="txtCurrentSuspensionsHD" Visibility="Collapsed" Grid.Row="2" Grid.Column="3" Margin="0,3"/>
-                                            <TextBlock x:Name="lblPrevSuspensions" Padding="5,10,0,0" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" >Any previous suspensions</TextBlock>
-                                            <ComboBox x:Name="cboPrevSuspensions"  Grid.Row="3" Grid.Column="2" Margin="6,5,20,5" Grid.ColumnSpan="2" GotFocus="CboPrevSuspensions_GotFocus" SelectedValue="{Binding PSPrevious, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" LostFocus="CboPrevSuspensions_LostFocus"/>
-                                            <TextBox x:Name="txtPrevSuspensionsHD" Visibility="Collapsed" Grid.Row="3" Grid.Column="3" Margin="0,5"/>
-                                            <TextBlock x:Name="lblFailures" Padding="5,10,0,0" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" >Any failure to meet suspension conditions</TextBlock>
-                                            <ComboBox x:Name="cboFailures"  Grid.Row="4" Grid.Column="2" Margin="6,3,20,3" Grid.ColumnSpan="2" GotFocus="CboFailures_GotFocus" SelectedValue="{Binding PSFailures, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" LostFocus="CboFailures_LostFocus"/>
-                                            <TextBox x:Name="txtFailuresHD" Visibility="Collapsed" Grid.Row="4" Grid.Column="3" Margin="0,3"/>
-                                            <TextBlock x:Name="lblLateFiling" Padding="5,10,0,0" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" ><Bold>Late filing / payment history</Bold></TextBlock>
-                                            <TextBlock x:Name="lblOpenIDMS" Padding="5,10,0,0" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" >Number of open work items on IDMS</TextBlock>
-                                            <TextBox x:Name="txtOpenIDMS"  Grid.Row="6" Grid.Column="2" Margin="6,3,20,3" Grid.ColumnSpan="2" Background="#339966" Text = "{Binding LPOpen, Mode = TwoWay}" GotFocus="TxtOpenIDMS_GotFocus" HorizontalContentAlignment="Right" LostFocus="TxtOpenIDMS_LostFocus" IsEnabled="False"/>
-                                            <TextBox x:Name="txtOpenIDMSHD" Visibility="Collapsed" Grid.Row="6" Grid.Column="3" Margin="0,3"/>
-                                            <TextBlock x:Name="lblClosedIDMS" Padding="5,10,0,0" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" >Number of closed work items on IDMS</TextBlock>
-                                            <TextBox x:Name="txtClosedIDMS"  Grid.Row="7" Grid.Column="2" Margin="6,5,20,5" Grid.ColumnSpan="2" Background="#339966" Text = "{Binding LPClosed, Mode = TwoWay}" GotFocus="TxtClosedIDMS_GotFocus" HorizontalContentAlignment="Right" LostFocus="TxtClosedIDMS_LostFocus" IsEnabled="False"/>
-                                            <TextBox x:Name="txtClosedIDMSHD" Visibility="Collapsed" Grid.Row="7" Grid.Column="3" Margin="0,5"/>
-                                            <TextBox x:Name="txtPSCalc" Visibility="Collapsed" Grid.Row="8" Grid.Column="3" Margin="0,0,0,10" Grid.RowSpan="2"/>
-                                            <TextBox x:Name="txtPFCalc" Visibility="Collapsed" Grid.Row="9" Grid.Column="3" Margin="0,5"/>
+                                            <TextBlock x:Name="lblHighestPercent" Padding="5,10,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Hidden" >Highest percentage penalty charged*</TextBlock>
+                                            <TextBox x:Name="txtHighestPercent" Margin="6,3,20,3"  Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" GotFocus="TxtHighestPercent_GotFocus" Text = "{Binding HPPenalty, Mode = TwoWay}" HorizontalContentAlignment="Right" LostFocus="TxtHighestPercent_LostFocus" Visibility="Hidden" IsEnabled="False"/>
+                                            <TextBox x:Name="txtHighestPercentHD" Visibility="Collapsed" Grid.Row="0" Grid.Column="4" Margin="0,3"/>
+                                            <TextBlock x:Name="lblPenalty" Padding="5,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Hidden" ><Bold>Penalty suspensions</Bold></TextBlock>
+                                            <TextBlock x:Name="lblCurrentSuspensions" Padding="5,10,0,0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Hidden" >Any current suspension periods</TextBlock>
+                                            <ComboBox x:Name="cboCurrentSuspensions"  Grid.Row="2" Grid.Column="3" Margin="6,3,20,3" Grid.ColumnSpan="2" GotFocus="CboCurrentSuspensions_GotFocus" SelectedValue="{Binding PSCurrent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" LostFocus="CboCurrentSuspensions_LostFocus" Visibility="Hidden"/>
+                                            <TextBox x:Name="txtCurrentSuspensionsHD" Visibility="Collapsed" Grid.Row="2" Grid.Column="4" Margin="0,3"/>
+                                            <TextBlock x:Name="lblPrevSuspensions" Padding="5,10,0,0" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Hidden" >Any previous suspensions</TextBlock>
+                                            <ComboBox x:Name="cboPrevSuspensions"  Grid.Row="3" Grid.Column="3" Margin="6,5,20,5" Grid.ColumnSpan="2" GotFocus="CboPrevSuspensions_GotFocus" SelectedValue="{Binding PSPrevious, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" LostFocus="CboPrevSuspensions_LostFocus" Visibility="Hidden"/>
+                                            <TextBox x:Name="txtPrevSuspensionsHD" Visibility="Collapsed" Grid.Row="3" Grid.Column="4" Margin="0,5"/>
+                                            <TextBlock x:Name="lblFailures" Padding="5,10,0,0" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Hidden" >Any failure to meet suspension conditions</TextBlock>
+                                            <ComboBox x:Name="cboFailures"  Grid.Row="4" Grid.Column="3" Margin="6,3,20,3" Grid.ColumnSpan="2" GotFocus="CboFailures_GotFocus" SelectedValue="{Binding PSFailures, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" LostFocus="CboFailures_LostFocus" Visibility="Hidden"/>
+                                            <TextBox x:Name="txtFailuresHD" Visibility="Collapsed" Grid.Row="4" Grid.Column="4" Margin="0,3"/>
+                                            <TextBlock x:Name="lblLateFiling" Padding="5,10,0,0" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Hidden" ><Bold>Late filing / payment history</Bold></TextBlock>
+                                            <TextBlock x:Name="lblOpenIDMS" Padding="5,10,0,0" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Hidden" >Number of open work items on IDMS</TextBlock>
+                                            <TextBox x:Name="txtOpenIDMS"  Grid.Row="6" Grid.Column="3" Margin="6,3,20,3" Grid.ColumnSpan="2" Background="#339966" Text = "{Binding LPOpen, Mode = TwoWay}" GotFocus="TxtOpenIDMS_GotFocus" HorizontalContentAlignment="Right" LostFocus="TxtOpenIDMS_LostFocus" Visibility="Hidden"/>
+                                            <TextBox x:Name="txtOpenIDMSHD" Visibility="Collapsed" Grid.Row="6" Grid.Column="4" Margin="0,3"/>
+                                            <TextBlock x:Name="lblClosedIDMS" Padding="5,10,0,0" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Hidden" >Number of closed work items on IDMS</TextBlock>
+                                            <TextBox x:Name="txtClosedIDMS"  Grid.Row="7" Grid.Column="3" Margin="6,5,20,5" Grid.ColumnSpan="2" Background="#339966" Text = "{Binding LPClosed, Mode = TwoWay}" GotFocus="TxtClosedIDMS_GotFocus" HorizontalContentAlignment="Right" LostFocus="TxtClosedIDMS_LostFocus" Visibility="Hidden"/>
+                                            <TextBox x:Name="txtClosedIDMSHD" Visibility="Collapsed" Grid.Row="7" Grid.Column="4" Margin="0,5"/>
+                                            <TextBox x:Name="txtPSCalc" Visibility="Collapsed" Grid.Row="8" Grid.Column="4" Margin="0,0,0,10" Grid.RowSpan="2"/>
+                                            <TextBox x:Name="txtPFCalc" Visibility="Collapsed" Grid.Row="9" Grid.Column="4" Margin="0,5"/>
                                         </Grid>
                                     </StackPanel>
                                     <!--#endregion-->
@@ -567,7 +568,7 @@
             </TabItem>
             <!--#endregion Tab 03 : Information-->
             <!--#region Tab 04 : Results-->
-            <TabItem x:Name="pgResults" Header="Results" GotFocus="PgResults_GotFocus">
+            <TabItem x:Name="pgResults" Header="Results" GotFocus="PgResults_GotFocus" Visibility="Hidden">
                 <StackPanel x:Name="pnlResults00" >
                     <GroupBox x:Name="grpResults" Header="Results" HorizontalAlignment="Left" Margin="5,4,0,0" VerticalAlignment="Top" Height="580" Width="1000">
                         <!--#region panel: Results-->

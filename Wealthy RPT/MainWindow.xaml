@@ -137,9 +137,9 @@
                 <!--color of selected row-->
             </DataGrid.Resources>
 
-            <DataGrid.CellStyle>
+            <!--<DataGrid.CellStyle>
                 <Style TargetType="{x:Type DataGridCell}">
-                    <!--font color according to value in column Seg-->
+                    --><!--font color according to value in column Seg--><!--
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Segment}" Value="Certainty">
                             <Setter Property="Foreground" Value="Green" />
@@ -162,13 +162,13 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </DataGrid.CellStyle>
+            </DataGrid.CellStyle>-->
 
             <DataGrid.Columns>
                 <DataGridTemplateColumn x:Name="IconHeader1"  Header="" CanUserResize="False" SortMemberPath="ScoreUp">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Image Source="" x:Name="CRMBoost" />
+                            <Image Source="" x:Name="CRMBoost" Visibility="Hidden" />
                             <DataTemplate.Triggers>
                                 <DataTrigger Binding="{Binding Path=[ScoreUp]}" Value="ScoreUp" >
                                     <Setter TargetName="CRMBoost" Property="Source" Value="pack://application:,,,/Resources/Images/arrow-up-16.ico"/>
@@ -194,20 +194,20 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>                
-                <DataGridTextColumn Header="Behaviours" Binding="{Binding QSScore}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Risk" Binding="{Binding RPTPRScore}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
-                <DataGridTextColumn Header="AV" Binding="{Binding RPTAVScore}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
-                <DataGridTextColumn Header="CG" Binding="{Binding CGScore}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Res" Binding="{Binding ResScore}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Priority" Binding="{Binding PriorityScore}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Daily Ranking" Binding="{Binding DailyRank}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Segment" Binding="{Binding Segment}" ElementStyle="{StaticResource TextCenter}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Behaviours" Binding="{Binding QSScore}" ElementStyle="{StaticResource TextCenter}" Visibility="Hidden"></DataGridTextColumn>
+                <DataGridTextColumn Header="Risk" Binding="{Binding RPTPRScore}" ElementStyle="{StaticResource TextCenter}" Visibility="Hidden"></DataGridTextColumn>
+                <DataGridTextColumn Header="AV" Binding="{Binding RPTAVScore}" ElementStyle="{StaticResource TextCenter}" Visibility="Hidden"></DataGridTextColumn>
+                <DataGridTextColumn Header="CG" Binding="{Binding CGScore}" ElementStyle="{StaticResource TextCenter}" Visibility="Hidden"></DataGridTextColumn>
+                <DataGridTextColumn Header="Res" Binding="{Binding ResScore}" ElementStyle="{StaticResource TextCenter}" Visibility="Hidden"></DataGridTextColumn>
+                <DataGridTextColumn Header="Priority" Binding="{Binding PriorityScore}" ElementStyle="{StaticResource TextCenter}" Visibility="Hidden"></DataGridTextColumn>
+                <DataGridTextColumn Header="Daily Ranking" Binding="{Binding DailyRank}" ElementStyle="{StaticResource TextCenter}" Visibility="Hidden"></DataGridTextColumn>
+                <DataGridTextColumn Header="Segment" Binding="{Binding Segment}" ElementStyle="{StaticResource TextCenter}" Visibility="Hidden"></DataGridTextColumn>
                 <DataGridTextColumn Header="SegNo" Binding="{Binding SegNo}" Visibility="Hidden" ></DataGridTextColumn>
                 <DataGridTextColumn Header="ProSegNo" Binding="{Binding ProSegNo}" Visibility="Hidden"></DataGridTextColumn>
                 <DataGridTemplateColumn x:Name="IconHeader3"  Header="" CanUserResize="False" SortMemberPath="SegMove">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Image Source="" x:Name="SegmentMove" />
+                            <Image Source="" x:Name="SegmentMove" Visibility="Hidden" />
                             <DataTemplate.Triggers>
                                 <DataTrigger Binding="{Binding Path=[SegMove]}" Value="1" >
                                     <Setter TargetName="SegmentMove" Property="Source" Value="pack://application:,,,/Resources/Images/up-arrow-16.ico"/>
