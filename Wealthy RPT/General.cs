@@ -84,6 +84,7 @@ namespace Wealthy_RPT
         private static string _annualUpdate;
         private static string _defaultImportFolder;
         private static string _guidanceFile;
+        private static string _technicalFile;
         private static bool _admin;
         private static bool _baadmin;
         private static bool _reportuser;
@@ -323,6 +324,18 @@ namespace Wealthy_RPT
             set
             {
                 _guidanceFile = value;
+            }
+        }
+
+        public static string TechnicalFile
+        {
+            get
+            {
+                return _technicalFile;
+            }
+            set
+            {
+                _technicalFile = value;
             }
         }
 

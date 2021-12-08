@@ -65,6 +65,7 @@ namespace Wealthy_RPT
             Global.DefaultImportFolder = iniGlobal.IniReadValue("System", "DefaultImportFolder");
             Global.DefaultImportFolder = Global.DefaultImportFolder == "" ? "C:\\" : Global.DefaultImportFolder;
             Global.GuidanceFile =  iniGlobal.IniReadValue("AppDetails", "Guidance");
+            Global.TechnicalFile = iniGlobal.IniReadValue("AppDetails", "TechnicalGuide");
 
 
             // Application Name, default to Assembly Name

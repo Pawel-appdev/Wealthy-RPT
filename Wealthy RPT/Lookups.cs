@@ -14,12 +14,47 @@ namespace Wealthy_RPT
     class Lookups
     {
         SqlDataAdapter adapter = new SqlDataAdapter();
+        public DataSet ds = new DataSet();
         public DataSet dsRPTDetailCombo = new DataSet();
         public DataSet dsRPTDetailOfficeCRMs = new DataSet();
         public DataSet dsRPTDetailPopulations = new DataSet();
         public DataSet dsOfficeTeams = new DataSet();
         public DataSet dsOffices= new DataSet();
         public DataSet dsOfficeTeamStaff = new DataSet();
+
+        public void GetMainLookups()
+        {
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(Global.ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.CommandText = "qryFrmMainCombo";
+                        SqlParameter prm = cmd.Parameters.Add("@nPID", SqlDbType.Int);
+                        prm.Value = Global.PID;
+                        cmd.Connection = con;
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        con.Open();
+
+                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                        adapter.Fill(ds);
+                        con.Close();
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                //con.Close();
+                MessageBox.Show("Unable to retrieve drop-down lists using: 'qryFrmMainCombo'." + Environment.NewLine + Environment.NewLine
+                    + "Error: " + e.Number + Environment.NewLine + e.Message
+                    , Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+
+            }
+
+        }
 
         public void GetRPTDetailLookups()
         {

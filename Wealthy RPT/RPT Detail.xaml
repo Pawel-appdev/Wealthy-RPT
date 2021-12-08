@@ -7,7 +7,7 @@
         xmlns:DV="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"  
         xmlns:dvc="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
         mc:Ignorable="d"
-        Title="WRT Detail" Height="700" Width="1050" Icon="WRT32V1.ico" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Language="en-GB">
+        Title="WRT Detail" Height="800" Width="1050" Icon="WRT32V1.ico" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Language="en-GB">
 
     <Window.Resources>
 
@@ -59,7 +59,19 @@
     </Window.Resources>
 
     <Grid>
-        <TabControl x:Name="tabRPD" HorizontalAlignment="Stretch" Margin="10,0,10,49">
+        <Menu x:Name="menu" HorizontalAlignment="Stretch" Height="24" VerticalAlignment="Top" Grid.ColumnSpan="5" Margin="0,0,-0.4,0">
+            <MenuItem x:Name="mnuGuidance" Header="Links" Height="24" >
+                <!--<MenuItem x:Name="mnuWRTGuidance" Header="WRT Guidance" Height="24" Click="mnuWRTGuidance_Click"/>
+                <MenuItem x:Name="mnuTechnicalGuidance" Header="Technical Guidance" Height="24" Click="mnuTechnicalGuidance_Click" />-->
+            </MenuItem>            
+            <MenuItem x:Name="mnuSharePoint" Header="SharePoint Links" Height="24" >
+                <MenuItem x:Name="mnuYearMinus2" Header="" Height="24" Width="Auto"/>
+                <MenuItem x:Name="mnuYearMinus1" Header="" Height="24" Width="Auto"/>
+                <MenuItem x:Name="mnuCurrentYear" Header="" Height="24" Width="Auto"/>              
+            </MenuItem>
+        </Menu>
+
+        <TabControl x:Name="tabRPD" HorizontalAlignment="Stretch" Margin="10,34,10,49">
             <!--#region Tab 01 : Customer-->
             <TabItem  x:Name="pgCustomer" Header="Customer" Margin="-2,-2,-2,2">
                 <GroupBox x:Name="grpCustomer" Header="Customer" Margin="0,0,6,0" VerticalAlignment="Top" Height="650">
@@ -83,10 +95,12 @@
                                 </Grid.RowDefinitions>
                                 <TextBlock x:Name="lblStrand" Margin="8,2,0,2" Grid.Row="0"  Grid.Column="0" FontSize="16"><Bold>Strand</Bold></TextBlock>
                                 <ComboBox x:Name="cboStrand" Grid.Row="0"  Grid.Column="1" Margin="0,4,5,4" GotFocus="CboStrand_GotFocus" SelectedValue="{Binding Strand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <!--<TextBlock x:Name="lblClassification" Margin="0,2,0,2" Grid.Row="0"  Grid.Column="3" FontSize="16" IsEnabled="False"><Bold>Classification</Bold></TextBlock>
+                                <ComboBox x:Name="cboClasification" Grid.Row="0"  Grid.Column="4" Margin="0,4,5,4" SelectedValue="{Binding ????, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>-->
                                 <TextBlock x:Name="lblCustomerSegment" Margin="0,2,0,2" Grid.Row="0"  Grid.Column="2" FontSize="16" Visibility="Hidden" IsEnabled="False"><Bold>Customer Segment</Bold></TextBlock>
                                 <ComboBox x:Name="cboSegment" Grid.Row="0"  Grid.Column="3" Margin="5,4,6,4" GotFocus="CboSegment_GotFocus" SelectedValue="{Binding Segment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="Hidden" IsEnabled="False" />
-                                <TextBlock x:Name="lblPopulation" Margin="8,2,9,2" Grid.Row="0"  Grid.Column="4" FontSize="16" HorizontalAlignment="Right"><Bold>Population</Bold></TextBlock>
-                                <ComboBox x:Name="cboPopFriendly" Grid.Row="0"  Grid.Column="5" Background="LightGray" IsEnabled="True" Margin="11,4,2,4" GotFocus="CboPopFriendly_GotFocus" SelectionChanged="CboPopFriendly_SelectionChanged"/>
+                                <TextBlock x:Name="lblPopulation" Margin="8,2,9,2" Grid.Row="0"  Grid.Column="4" FontSize="16" HorizontalAlignment="Right" Visibility="Hidden"><Bold>Population</Bold></TextBlock>
+                                <ComboBox x:Name="cboPopFriendly" Grid.Row="0"  Grid.Column="5" Background="LightGray" IsEnabled="True" Margin="11,4,2,4" GotFocus="CboPopFriendly_GotFocus" SelectionChanged="CboPopFriendly_SelectionChanged" Visibility="Hidden"/>
                                 <ComboBox x:Name="cboPopCode" Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="3" Margin="0,4,121,4" SelectedValue="{Binding Pop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock x:Name="txtPopFriendly" Grid.Row="0"  Grid.Column="7" Grid.ColumnSpan="2" Margin="0,4,121,4"/>
                                 <TextBlock x:Name="lblPopYear" Margin="29,2,10,2" Grid.Row="0"  Grid.Column="8" FontSize="16" FontWeight="Bold" HorizontalAlignment="Right"/>
@@ -238,9 +252,9 @@
                                                 <ColumnDefinition Width="61*"/>
                                                 <ColumnDefinition Width="106*"/>
                                                 <ColumnDefinition Width="18*"/>
-                                                <ColumnDefinition Width="86*"/>
-                                                <ColumnDefinition Width="42*"/>
-                                                <ColumnDefinition Width="127*"/>
+                                                <ColumnDefinition Width="116*"/>
+                                                <ColumnDefinition Width="35*"/>
+                                                <ColumnDefinition Width="104*"/>
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="22"/>
@@ -263,9 +277,9 @@
                                             <TextBox x:Name="txtNamedAgent"  Margin="6,2,4,2" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Text = "{Binding NamedAgent, Mode = TwoWay}" GotFocus="TxtNamedAgent_GotFocus"/>
                                             <TextBox x:Name="txtOtherContact"  Margin="6,2,4,2" Grid.Row="4" Grid.Column="6" Grid.ColumnSpan="2" Text = "{Binding OtherContact, Mode = TwoWay}" GotFocus="TxtOtherContact_GotFocus"/>
                                             <TextBlock x:Name="lbl648" Margin="8,2,9,2" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">64-8 held?</TextBlock>
-                                            <ComboBox x:Name="cbo648" Height="22" Margin="6,2,4,2" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" SelectedValue="{Binding 'Agent648Held', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="Cbo648_GotFocus"/>
+                                            <ComboBox x:Name="cbo648" Margin="6,2,4,3" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" SelectedValue="{Binding 'Agent648Held', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="Cbo648_GotFocus"/>
                                             <TextBlock x:Name="lblChange" Margin="8,2,9,2" Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" >Changed in past year?</TextBlock>
-                                            <ComboBox x:Name="cboChange" Height="22" Margin="6,2,4,2" Grid.Row="5" Grid.Column="6" Grid.ColumnSpan="2" SelectedValue="{Binding 'Changed', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="CboChange_GotFocus"/>
+                                            <ComboBox x:Name="cboChange" Margin="6,2,4,3" Grid.Row="5" Grid.Column="6" Grid.ColumnSpan="2" SelectedValue="{Binding 'Changed', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="CboChange_GotFocus"/>
                                         </Grid>
                                     </StackPanel>
                                     <!--#endregion-->
@@ -294,7 +308,6 @@
                                                 <DataGridTextColumn Header="Role" Binding="{Binding Contact_Role, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                                 <DataGridTextColumn Header="Date Added" Binding="{Binding Contact_Date_Added, Mode=TwoWay, StringFormat=dd MMM yyy, UpdateSourceTrigger=PropertyChanged}" Width="90"/>
                                             </DataGrid.Columns>
-
                                         </DataGrid>
                                         <Grid x:Name="grdEmailContacts" Width="460" Margin=" -220,0,0,0">
                                             <Grid.ColumnDefinitions>
@@ -324,6 +337,29 @@
                                             <Button x:Name="cmdEmailDelete" Grid.Row="3"  Grid.Column="0" Width="60" Height="30" Margin="0,5,4,11" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailDelete_GotFocus" Click="cmdEmailDelete_Click">
                                                 <TextBlock Text="Delete" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Delete" />
                                             </Button>
+                                        </Grid>
+                                    </StackPanel>
+                                    <!--#endregion-->
+                                    <!--#region Email-->
+                                    <StackPanel x:Name="grpEmail" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Height="106" Width="384">
+                                        <Grid x:Name="grdEmail">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="227*"/>
+                                                <ColumnDefinition Width="132*"/>
+                                                <ColumnDefinition Width="13*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock x:Name="lblDateEmailAuthority" Padding="0,0,0,0" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Date email authorisation obtained:</TextBlock>
+                                            <TextBox x:Name="txtDateEmailAuthority" Margin="5,2,8,2" Grid.Row="1"  Grid.Column="1" MaxLength="10" Tag="Date of email authoristaion" GotFocus="txtDateEmailAuthority_GotFocus" Text = "{Binding EmailAuthorityDate, StringFormat=dd/MM/yyyy, Mode = TwoWay}" Grid.ColumnSpan="2" LostFocus="txtDateEmailAuthority_LostFocus"/>
+                                            <TextBlock x:Name="lblExpiryDate" Padding="0,0,0,0" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Expiry date:</TextBlock>
+                                            <TextBox x:Name="txtExpiryDate" Margin="5,2,8,2" Grid.Row="2"  Grid.Column="1" MaxLength="10" KeyDown="TxtDOD_KeyDown" LostFocus="TxtDOD_LostFocus" Tag="Expiry date" GotFocus="TxtDOD_GotFocus" Text = "{Binding EmailExpiryDate, StringFormat=dd/MM/yyyy, Mode = TwoWay}" Grid.ColumnSpan="2"/>
+                                            <TextBlock x:Name="lblLegacyAvoidance"  Padding="0,0,0,0" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Legacy Avoidance</TextBlock>
+                                            <ComboBox x:Name="cboLegacyAvoidance" Height="22" Margin="5.133,4,10.867,4" Grid.Row="3" Grid.Column="1" SelectedValue="{Binding LegacyAvoidance, Mode=TwoWay}" Grid.ColumnSpan="2" />
                                         </Grid>
                                     </StackPanel>
                                     <!--#endregion-->
@@ -443,6 +479,9 @@
                                 <ComboBox x:Name="cboSource" Grid.Row="3" Grid.Column="1" Margin="0,2,0,2" GotFocus="CboSource_GotFocus" SelectedValue="{Binding Source, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock x:Name="lblLifeEvents" Grid.Row="3" Grid.Column="3">Life Events</TextBlock>
                                 <ComboBox x:Name="cboLifeEvents" Grid.Row="3" Grid.Column="4" Margin="0,2,0,2" GotFocus="CboLifeEvents_GotFocus" SelectedValue="{Binding LifeEvents, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Button x:Name="cmdRiskStencil" Grid.Row="1" Grid.Column="5" Margin="10,5,10,5" Grid.RowSpan="2" Style="{StaticResource 3DButtonStyle}" Visibility="Hidden" >
+                                    <TextBlock Text="Open Risk Stencil" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" ToolTip="Add Associate"/>
+                                </Button>
                             </Grid>
                         </StackPanel>
                         <!--#endregion panel: Case Overview-->
@@ -513,8 +552,8 @@
             <!--#region Tab 03 : Information-->
             <TabItem x:Name="pgInformation" Header="Information">
                 <!--<Grid Background="#FFE5E5E5"/>-->
-                <StackPanel x:Name="pnlInformation00" >
-                    <GroupBox x:Name="grpAdditional" Header="Additional Data" HorizontalAlignment="Left" Margin="5,4,0,0" VerticalAlignment="Top" Height="590" Width="1000">
+                <GroupBox x:Name="grpAdditional" Header="Additional Data" HorizontalAlignment="Left" Margin="5,4,0,0" VerticalAlignment="Top" Height="590" Width="1000">
+                    <StackPanel x:Name="pnlInformation00" >
                         <!--#region panel: Additional-->
                         <StackPanel x:Name="xpnlOverview01" Width="970" Margin="0,0,0,0" HorizontalAlignment="Left" Orientation="Horizontal">
                             <Grid x:Name="xgrdOverview01" Width="980">
@@ -563,11 +602,283 @@
                             </Grid>
                         </StackPanel>
                         <!--#endregion panel: Additional-->
-                    </GroupBox>
-                </StackPanel>
+
+                    </StackPanel>
+                </GroupBox>
             </TabItem>
             <!--#endregion Tab 03 : Information-->
-            <!--#region Tab 04 : Results-->
+            <!--#region Tab 04 : NST-->
+            <TabItem x:Name="pgNST" Header="Segmentation Info">
+                <GroupBox x:Name="grpNST" Header="Segmentation Info" HorizontalAlignment="Left" Margin="5,4,0,0" VerticalAlignment="Top" Height="580" Width="1000">
+                    <StackPanel x:Name="pnlNST00" >
+                        <!--#region panel: NST-->
+                        <!--#region panel: NST Overview-->
+                        <StackPanel x:Name="pnlNST01" Margin="10,0,0,0" HorizontalAlignment="Left" Orientation="Horizontal">
+                            <Grid x:Name="xgrdNST01" Width="980">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="250*"/>
+                                    <ColumnDefinition Width="148*"/>
+                                    <ColumnDefinition Width="57*"/>
+                                    <ColumnDefinition Width="250*"/>
+                                    <ColumnDefinition Width="148*"/>
+                                    <ColumnDefinition Width="147*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock x:Name="lblHRWTEACFRef" Grid.Row="0" Grid.Column="0">HRW/TEA CF Ref</TextBlock>
+                                <TextBox x:Name="txtHRWTEACFRef" Margin="0,0,0,0" HorizontalAlignment="Left" Width="100" Grid.Row="0"  Grid.Column="1"  Text = "{Binding HRWCFRef, Mode = TwoWay}"/>
+                                <TextBlock x:Name="lblHRWRiskingGroup" Grid.Row="1" Grid.Column="0">HRW Risking Group</TextBlock>
+                                <ComboBox x:Name="cboHRWRiskingGroup" Grid.Row="1" Grid.Column="1" Margin="0,2,0,2" SelectedValue="{Binding HRWRiskingGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="cboHRWRiskingGroup_GotFocus"/>
+                                <TextBlock x:Name="lblRiskingOutcome" Grid.Row="2" Grid.Column="0">Risking Outcome</TextBlock>
+                                <ComboBox x:Name="cboRiskingOutcome" Grid.Row="2" Grid.Column="1" Margin="0,2,0,2" SelectedValue="{Binding HRWRiskingOutcome, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="cboRiskingOutcome_GotFocus"/>
+                                <TextBlock x:Name="lblHRWRemoval" Grid.Row="3" Grid.Column="0">Potential HRW Removal</TextBlock>
+                                <!--<ComboBox x:Name="cboHRWRemoval" Grid.Row="3" Grid.Column="1" Margin="0,2,0,2" SelectedValue="{Binding HRWRemoval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="cboHRWRemoval_GotFocus"/>-->
+                                <CheckBox x:Name="chkHRWRemoval" Grid.Row="3"  Grid.Column="1" VerticalAlignment="Center" IsChecked = "{Binding PotHRWRemoval, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
+                                    <CheckBox.Resources>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                        </Style>
+                                    </CheckBox.Resources>
+                                </CheckBox>
+                                <TextBlock x:Name="lblSectorFlag" Grid.Row="4" Grid.Column="0">Sectors Flag</TextBlock>
+                                <ComboBox x:Name="cboSectorFlag" Grid.Row="4" Grid.Column="1" Margin="0,2,0,2" SelectedValue="{Binding SectorFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="cboSectorFlag_GotFocus"/>
+                                <TextBlock x:Name="lblNationalFlag" Grid.Row="5" Grid.Column="0">National Flag</TextBlock>
+                                <ComboBox x:Name="cboNationalFlag" Grid.Row="5" Grid.Column="1" Margin="0,2,0,2" SelectedValue="{Binding NationalFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="cboNationalFlag_GotFocus"/>
+                                <TextBlock x:Name="lblHRWPFlag" Grid.Row="6" Grid.Column="0">HRWP Flag</TextBlock>
+                                <ComboBox x:Name="cboHRWPFlag" Grid.Row="6" Grid.Column="1" Margin="0,2,0,2" SelectedValue="{Binding HRWFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="cboHRWPFlag_GotFocus"/>
+                            </Grid>
+                        </StackPanel>
+                        <!--#endregion panel: NST Overview-->
+                        <!--#region panel: Checkboxes-->
+                        <StackPanel x:Name="pnlNST02" Margin="10,0,0,0" HorizontalAlignment="Left" Orientation="Horizontal">
+                            <Grid x:Name="xgrdNST02" Width="980">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="240*"/>
+                                    <ColumnDefinition Width="240*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="240*"/>
+                                    <ColumnDefinition Width="240*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="10"/>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <Rectangle Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Fill="Aquamarine"></Rectangle>
+                                <Rectangle Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="3" Fill="Aquamarine"></Rectangle>
+                                <TextBlock x:Name="lblHRWHeader" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" FontWeight="Bold" HorizontalAlignment="Center">High Risk Wealthy Characteristics</TextBlock>
+                                <!--<CheckBox x:Name="chkHRWUltraWealth" Grid.Row="2" Grid.Column="1">Ultra Wealth</CheckBox>-->
+                                <CheckBox x:Name="chkHRWUltraWealth" Grid.Row="2"  Grid.Column="1" IsChecked = "{Binding HRWUW, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
+                                    <CheckBox.Resources>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                        </Style>
+                                    </CheckBox.Resources> Ultra Wealth
+                                </CheckBox>
+                                <!--<CheckBox x:Name="chkHRWComplex" Grid.Row="3" Grid.Column="1">Complex and/or Offshore Affairs</CheckBox>-->
+                                <CheckBox x:Name="chkHRWComplex" Grid.Row="3"  Grid.Column="1" IsChecked = "{Binding HRWComp, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
+                                    <CheckBox.Resources>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                        </Style>
+                                    </CheckBox.Resources> Complex and/or Offshore Affairs
+                                </CheckBox>
+                                <!--<CheckBox x:Name="chkHRWEvasion" Grid.Row="4" Grid.Column="1">Evasion Referral Made</CheckBox>-->
+                                <CheckBox x:Name="chkHRWEvasion" Grid.Row="4"  Grid.Column="1" IsChecked = "{Binding HRWErt, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
+                                    <CheckBox.Resources>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                        </Style>
+                                    </CheckBox.Resources> Evasion Referral Made
+                                </CheckBox>
+                                <!--<CheckBox x:Name="chkHRWAvoidance" Grid.Row="5" Grid.Column="1">Avoidance User</CheckBox>-->
+                                <CheckBox x:Name="chkHRWAvoidance" Grid.Row="5"  Grid.Column="1" IsChecked = "{Binding HRWAv, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
+                                    <CheckBox.Resources>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                        </Style>
+                                    </CheckBox.Resources> Avoidance User
+                                </CheckBox>
+                                <!--<CheckBox x:Name="chkHRWComplexEvasion" Grid.Row="6" Grid.Column="1">Complex Evasion Case</CheckBox>-->
+                                <CheckBox x:Name="chkHRWComplexEvasion" Grid.Row="6"  Grid.Column="1" IsChecked = "{Binding HRWCep, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
+                                    <CheckBox.Resources>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                        </Style>
+                                    </CheckBox.Resources> Complex Evasion Case
+                                </CheckBox>
+                                <!--<CheckBox x:Name="chkHRWSensitive" Grid.Row="2" Grid.Column="2">Sensitive Case</CheckBox>-->
+                                <CheckBox x:Name="chkHRWSensitive" Grid.Row="2"  Grid.Column="2" IsChecked = "{Binding HRWSens, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
+                                    <CheckBox.Resources>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                        </Style>
+                                    </CheckBox.Resources> Sensitive Case
+                                </CheckBox>
+                                <!--<CheckBox x:Name="chkHRWDeliberate" Grid.Row="3" Grid.Column="2">Deliberate Behaviours</CheckBox>-->
+                                <CheckBox x:Name="chkHRWDeliberate" Grid.Row="3"  Grid.Column="2" IsChecked = "{Binding HRWPens, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
+                                    <CheckBox.Resources>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                        </Style>
+                                    </CheckBox.Resources> Deliberate Behaviours
+                                </CheckBox>
+                                <!--<CheckBox x:Name="chkHRWBoundary" Grid.Row="4" Grid.Column="2">Boundary Pusher</CheckBox>-->
+                                <CheckBox x:Name="chkHRWBoundary" Grid.Row="4"  Grid.Column="2" IsChecked = "{Binding HRWBdries, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
+                                    <CheckBox.Resources>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                        </Style>
+                                    </CheckBox.Resources> Boundary Pusher
+                                </CheckBox>
+                                <!--<CheckBox x:Name="chkHRWFIS" Grid.Row="5" Grid.Column="2">FIS COP 8 Case</CheckBox>-->
+                                <CheckBox x:Name="chkHRWFIS" Grid.Row="5"  Grid.Column="2" IsChecked = "{Binding HRWCop8, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
+                                    <CheckBox.Resources>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                        </Style>
+                                    </CheckBox.Resources> FIS COP 8 Case
+                                </CheckBox>
+                                <TextBlock x:Name="lblTEAHeader" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="3" FontWeight="Bold" HorizontalAlignment="Center">Tax Events &amp; Assurance Characteristics</TextBlock>
+                                <!--<CheckBox x:Name="chkTEAAvoidance" Grid.Row="2" Grid.Column="5">Avoidance User</CheckBox>-->
+                                <CheckBox x:Name="chkTEAAvoidance" Grid.Row="2"  Grid.Column="5" IsChecked = "{Binding TEAAv, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
+                                    <CheckBox.Resources>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                        </Style>
+                                    </CheckBox.Resources> Avoidance User
+                                </CheckBox>
+                                <!--<CheckBox x:Name="chkTEACorporate" Grid.Row="3" Grid.Column="5">Corporate Partner</CheckBox>-->
+                                <CheckBox x:Name="chkTEACorporate" Grid.Row="3"  Grid.Column="5" IsChecked = "{Binding TEACorp, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
+                                    <CheckBox.Resources>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                        </Style>
+                                    </CheckBox.Resources> Corporate Partner
+                                </CheckBox>
+                                <!--<CheckBox x:Name="chkTEADeceased" Grid.Row="4" Grid.Column="5">Deceased Customer</CheckBox>-->
+                                <CheckBox x:Name="chkTEADeceased" Grid.Row="4"  Grid.Column="5" IsChecked = "{Binding TEADecd, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
+                                    <CheckBox.Resources>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                        </Style>
+                                    </CheckBox.Resources> Deceased Customer
+                                </CheckBox>
+                                <!--<CheckBox x:Name="chkTEAPenalty" Grid.Row="5" Grid.Column="5">Penalty Case</CheckBox>-->
+                                <CheckBox x:Name="chkTEAPenalty" Grid.Row="5"  Grid.Column="5" IsChecked = "{Binding TEAPen, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
+                                    <CheckBox.Resources>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                        </Style>
+                                    </CheckBox.Resources> Penalty Case
+                                </CheckBox>
+                                <!--<CheckBox x:Name="chkTEABeneficiary" Grid.Row="6" Grid.Column="5">Beneficiary</CheckBox>-->
+                                <CheckBox x:Name="chkTEABeneficiary" Grid.Row="6"  Grid.Column="5" IsChecked = "{Binding TEABenf, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
+                                    <CheckBox.Resources>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                        </Style>
+                                    </CheckBox.Resources> Beneficiary
+                                </CheckBox>
+                                <!--<CheckBox x:Name="chkTEADeemed" Grid.Row="2" Grid.Column="6">Deemed Dom</CheckBox>-->
+                                <CheckBox x:Name="chkTEADeemed" Grid.Row="2"  Grid.Column="6" IsChecked = "{Binding TEADd, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
+                                    <CheckBox.Resources>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                        </Style>
+                                    </CheckBox.Resources> Deemed Dom
+                                </CheckBox>
+                                <!--<CheckBox x:Name="chkTEARedAmber" Grid.Row="3" Grid.Column="6">Red or Amber Case</CheckBox>-->
+                                <CheckBox x:Name="chkTEARedAmber" Grid.Row="3"  Grid.Column="6" IsChecked = "{Binding TEARa, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
+                                    <CheckBox.Resources>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                        </Style>
+                                    </CheckBox.Resources> Red or Amber Case
+                                </CheckBox>
+                            </Grid>
+                        </StackPanel>
+                        <!--#endregion panel: Checkboxes-->
+                        <!--#region panel: History-->
+                        <StackPanel x:Name="pnlNST03" Margin="10,0,0,0" HorizontalAlignment="Left" Orientation="Horizontal">
+                            <Grid x:Name="xgrdNST03" Width="980">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="240*"/>
+                                    <ColumnDefinition Width="240*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="240*"/>
+                                    <ColumnDefinition Width="240*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock x:Name="lblHRWHeaderDummy" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" FontWeight="Bold" HorizontalAlignment="Center">Placeholder for History Data - Data Grid?</TextBlock>
+                            </Grid>
+                        </StackPanel>
+                        <!--#endregion panel: History-->
+                    </StackPanel>
+                </GroupBox>
+            </TabItem>
+            <!--#endregion Tab 04 : NST-->
+            <!--#region Tab 05 : NST-->
+            <TabItem x:Name="pgRecentHistory" Header="Recent History">
+                <GroupBox x:Name="grpRH" Header="Recent History" HorizontalAlignment="Left" Margin="5,4,0,0" VerticalAlignment="Top" Height="580" Width="1000">
+                    <StackPanel x:Name="pnlRH00" >
+                        <!--#region panel: RH-->
+                        <!--#region panel: RCH-->
+                        <StackPanel x:Name="pnlRCH01" Margin="10,10,0,10" HorizontalAlignment="Left" Orientation="Horizontal">
+                            <DataGrid x:Name="dgRCH" Height="108" VerticalAlignment="Top" AutoGenerateColumns="False" VerticalGridLinesBrush="#FFD1D1D1" HorizontalGridLinesBrush="#FFD1D1D1" SelectionMode="Single" IsReadOnly="True" RowHeaderWidth="0" >
+                                <DataGrid.Resources>
+                                    <!--color of selected row-->
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#8080FF" />
+                                </DataGrid.Resources>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Caseflow Reference" Binding="{Binding CHCaseflow_Reference, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                                    <DataGridTextColumn Header="Project Title" Binding="{Binding CHProject_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                                    <DataGridTextColumn Header="Case Status" Binding="{Binding CHCase_Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                        <!--#endregion panel: RCH-->
+                        <StackPanel x:Name="pnlRCH02" Margin="10,10,0,0" HorizontalAlignment="Left" Orientation="Horizontal">
+                        </StackPanel>
+                        <!--#region panel: RUH-->
+                        <StackPanel x:Name="pnlRH03" Margin="10,10,0,10" HorizontalAlignment="Left" Orientation="Horizontal">
+                            <DataGrid x:Name="dgRUH" Height="108" VerticalAlignment="Top" AutoGenerateColumns="False" VerticalGridLinesBrush="#FFD1D1D1" HorizontalGridLinesBrush="#FFD1D1D1" SelectionMode="Single" IsReadOnly="True" RowHeaderWidth="0" >
+                                <DataGrid.Resources>
+                                    <!--color of selected row-->
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#8080FF" />
+                                </DataGrid.Resources>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="OTM Reference" Binding="{Binding UOTMReference, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                                    <DataGridTextColumn Header="Project Name" Binding="{Binding UProject_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                                    <DataGridTextColumn Header="Case Status" Binding="{Binding UCase_Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                        <!--#endregion panel: RUH-->
+                        <!--#endregion panel: RH-->
+                    </StackPanel>
+                </GroupBox>
+            </TabItem>
+            <!--#endregion Tab 05 : NST-->
+            <!--#region Tab 06 : Results-->
             <TabItem x:Name="pgResults" Header="Results" GotFocus="PgResults_GotFocus" Visibility="Hidden">
                 <StackPanel x:Name="pnlResults00" >
                     <GroupBox x:Name="grpResults" Header="Results" HorizontalAlignment="Left" Margin="5,4,0,0" VerticalAlignment="Top" Height="580" Width="1000">
@@ -692,7 +1003,7 @@
                     </GroupBox>
                 </StackPanel>
             </TabItem>
-            <!--#endregion Tab 04 : Results-->
+            <!--#endregion Tab 06 : Results-->
         </TabControl>
 
         <!--#region Form Footer-->
@@ -700,23 +1011,33 @@
 
             <Grid Width="850">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30*"/>
-                    <ColumnDefinition Width="14*"/>
-                    <ColumnDefinition Width="14*"/>
-                    <ColumnDefinition Width="27*"/>
+                    <ColumnDefinition Width="113*"/>
+                    <ColumnDefinition Width="136*"/>
+                    <ColumnDefinition Width="166*"/>
+                    <ColumnDefinition Width="135*"/>
+                    <ColumnDefinition Width="135*"/>
+                    <ColumnDefinition Width="165*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="cmdGuidance"  Grid.Column="0"  HorizontalAlignment="Left" Margin="10,0,205,10" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdGuidance_GotFocus" Click="CmdGuidance_Click">
+                <Button x:Name="cmdGuidance"  Grid.Column="0"  HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdGuidance_GotFocus" Click="CmdGuidance_Click" Visibility="Hidden">
                     <TextBlock Text="Guidance" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Guidance" />
 
                 </Button>
-                <Button x:Name="cmdSave" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdSave_GotFocus" Click="CmdSave_Click">
+                <Button x:Name="cmdSave" Grid.Column="3" HorizontalAlignment="Left" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdSave_GotFocus" Click="CmdSave_Click">
                     <TextBlock x:Name="tcmdSave" Text="Save Changes" ToolTip="Save Changes" Margin="2" />
                 </Button>
-                <Button x:Name="cmdUpdateClose" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdUpdateClose_GotFocus" Click="CmdUpdateClose_Click">
+                <Button x:Name="cmdUpdateClose" Grid.Column="4" HorizontalAlignment="Left" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdUpdateClose_GotFocus" Click="CmdUpdateClose_Click">
                     <TextBlock x:Name="tcmdUpdateClose" Text="Save &amp; Close" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Save &amp; Close"/>
                 </Button>
-                <Button x:Name="cmdCancel" Grid.Column="3" HorizontalAlignment="Left" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdCancel_GotFocus" Click="CmdCancel_Click">
+                <Button x:Name="cmdCancel" Grid.Column="5" HorizontalAlignment="Left" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="85" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdCancel_GotFocus" Click="CmdCancel_Click">
                     <TextBlock x:Name="tcmdCancel" Text="Close" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Close"/>
+                </Button>
+                <Button x:Name="cmdHRWGuide"  Grid.Column="1"  HorizontalAlignment="Left" Margin="1,0,0,10" VerticalAlignment="Bottom" Width="120" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdGuidance_GotFocus" Click="cmdHRWGuide_Click" Visibility="Hidden" >
+                    <TextBlock Text="HRW Guidance" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="HRW Guidance" />
+
+                </Button>
+                <Button x:Name="cmdTEAGuide"  Grid.Column="2"  HorizontalAlignment="Left" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="120" RenderTransformOrigin="0.08,0.6" Height="28" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdGuidance_GotFocus" Click="cmdTEAGuide_Click" Visibility="Hidden" >
+                    <TextBlock Text="TE&amp;A Guidance" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="TE&amp;A Guidance" Margin="14,2,0,2" />
+
                 </Button>
 
 

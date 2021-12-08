@@ -39,7 +39,11 @@ namespace Wealthy_RPT
             this.WindowState = WindowState.Maximized;
 
         }
-
+        public bool IsDate(string input)
+        {
+            DateTime result;
+            return DateTime.TryParse(input, out result);
+        }
 
         private void PopulateCombos()
         {
@@ -176,6 +180,36 @@ namespace Wealthy_RPT
                 cboLifeEvents.ItemsSource = lu.dsRPTDetailCombo.Tables[11].DefaultView;
                 cboLifeEvents.DisplayMemberPath = "Options";
                 cboLifeEvents.SelectedValuePath = "DecodedValue";
+                //NST
+                //NST Dropdowns
+                //HRW Risking Group
+                cboHRWRiskingGroup.ItemsSource = lu.dsRPTDetailCombo.Tables[14].DefaultView;
+                cboHRWRiskingGroup.DisplayMemberPath = "RiskingGroupName";
+                cboHRWRiskingGroup.SelectedValuePath = "RiskingGroupName";
+                //HRW Risking Outcome
+                cboRiskingOutcome.ItemsSource = lu.dsRPTDetailCombo.Tables[15].DefaultView;
+                cboRiskingOutcome.DisplayMemberPath = "RiskingOutcomeDescription";
+                cboRiskingOutcome.SelectedValuePath = "RiskingOutcomeDescription";
+                //Potential HRW Removal
+                //cboHRWRemoval.ItemsSource = lu.dsRPTDetailCombo.Tables[16].DefaultView;
+                //cboHRWRemoval.DisplayMemberPath = "Options";
+                //cboHRWRemoval.SelectedValuePath = "DecodedValue";
+                //Sector Flag
+                cboSectorFlag.ItemsSource = lu.dsRPTDetailCombo.Tables[17].DefaultView;
+                cboSectorFlag.DisplayMemberPath = "SectorFlagDescription";
+                cboSectorFlag.SelectedValuePath = "SectorFlagDescription";
+                //National Flag
+                cboNationalFlag.ItemsSource = lu.dsRPTDetailCombo.Tables[18].DefaultView;
+                cboNationalFlag.DisplayMemberPath = "NationalFlagDescription";
+                cboNationalFlag.SelectedValuePath = "NationalFlagDescription";
+                //HRWP Flag
+                cboHRWPFlag.ItemsSource = lu.dsRPTDetailCombo.Tables[19].DefaultView;
+                cboHRWPFlag.DisplayMemberPath = "HRWFlagDescription";
+                cboHRWPFlag.SelectedValuePath = "HRWFlagDescription";
+                //Legal Avoidance
+                cboLegacyAvoidance.ItemsSource = lu.dsRPTDetailCombo.Tables[20].DefaultView;
+                cboLegacyAvoidance.DisplayMemberPath = "LegacyAvoidanceDescription";
+                cboLegacyAvoidance.SelectedValuePath = "LegacyAvoidanceDescription";
             }
             catch
             {
@@ -193,11 +227,13 @@ namespace Wealthy_RPT
             {
                 dblUTR = Convert.ToDouble(txtUTR.Text);
                 GetEmails(dblUTR);
+                GetRecentHistory(dblUTR);
                 GetAssociates(dblUTR);
                 GetAddtionalData(dblUTR);
 
                 RPT.RPT_Data rpt = new RPT.RPT_Data();
                 if (Globals.gs_CRM.Count < 1) /*test for weightings*/
+                
                 {
 
                     rpt.GetCRM();
@@ -295,9 +331,19 @@ namespace Wealthy_RPT
             Lookups lu = new Lookups();
             try
             {
-                // populate cboAllocatedTo, based on Office (previously included team but as taht data is no longer available office only needs to be used)
+                // populate cboAllocatedTo, based on Office (previously included team but as that data is no longer available office only needs to be used)
                 strOffice = this.cboOffice.SelectedValue.ToString();
-                strTeam = this.cboTeam.SelectedValue.ToString();
+
+
+
+                if (string.IsNullOrEmpty(this.cboTeam.Text))
+                {
+                    strTeam = "";
+                }
+                else
+                {
+                    strTeam = this.cboTeam.SelectedValue.ToString();
+                }
                 lu.GetOfficeTeamStaff(strOffice, strTeam);
                 cboAllocatedTo.ItemsSource = lu.dsOfficeTeamStaff.Tables[0].DefaultView;
                 cboAllocatedTo.DisplayMemberPath = "AllocatedTo";
@@ -1019,9 +1065,9 @@ namespace Wealthy_RPT
             }
             else
             {
-                if ((cboCRMName.Text.Trim() == "") || (txtCRMDA.Text.Trim() == ""))
+                if ((cboOffice.Text.ToLower() == ""))
                 {
-                    System.Windows.MessageBox.Show("Please confirm the CCM for this case" + Environment.NewLine + "and/or the date of their appointment.", "CCM", MessageBoxButton.OK, MessageBoxImage.Information);
+                    System.Windows.MessageBox.Show("Please confirm the case Office.", "Office", MessageBoxButton.OK, MessageBoxImage.Information);
                     cmdSave.IsEnabled = true;
                     return;
                 }
@@ -1032,6 +1078,13 @@ namespace Wealthy_RPT
                     cmdSave.IsEnabled = true;
                     return;
                 }
+
+                if ((cboCRMName.Text.Trim() == "") || (txtCRMDA.Text.Trim() == ""))
+                {
+                    System.Windows.MessageBox.Show("Please confirm the CCM for this case" + Environment.NewLine + "and/or the date of their appointment.", "CCM", MessageBoxButton.OK, MessageBoxImage.Information);
+                    cmdSave.IsEnabled = true;
+                    return;
+                }                
             }
 
             // run through each element to check if it needs updating and then update relevant elements.
@@ -1377,6 +1430,13 @@ namespace Wealthy_RPT
             {
                 return blnRtn;
             }
+
+            blnRtn = CheckandSaveNSTData();
+            if (blnRtn == false)
+            {
+                return blnRtn;
+            }
+
             blnRtn = CheckandSaveScoresData();
 
             return blnRtn;
@@ -1388,7 +1448,7 @@ namespace Wealthy_RPT
             bool blnRtn = false;
             //string strTest = "";
                 
-            for (int j = 0; j < 28; j++)
+            for (int j = 0; j < 30; j++)
             {
                 switch (j)
                 {
@@ -1507,6 +1567,12 @@ namespace Wealthy_RPT
                         //if (cboStrand.SelectedValue != strTest) { blnCustomer = true; }
                         if (cboStrand.Text != GetDataContextValue("Strand").ToString()) { blnCustomer = true; }
                         break;
+                    case 28:
+                        if (txtDateEmailAuthority.Text != GetDataContextValue("EmailAuthorityDate").ToString()) { blnCustomer = true; }
+                        break;
+                    case 29: //Legacy Avoidance
+                        if (cboLegacyAvoidance.Text.ToUpper() != GetDataContextValue("LegacyAvoidance").ToString()) { blnCustomer = true; }
+                        break;
                     default:
                         break;
                 }
@@ -1560,6 +1626,8 @@ namespace Wealthy_RPT
                     {
                         rpt.AllocatedTo = rpt.AllocatedTo.Substring(0, 7); //just need leading 7 digits
                     }
+                    rpt.EmailAuthorityDate = txtDateEmailAuthority.Text;
+                    rpt.LegacyAvoidance = cboLegacyAvoidance.Text;
                     rpt.UpdateCustomerData();
                     blnRtn = true;
                 }
@@ -1661,6 +1729,479 @@ namespace Wealthy_RPT
                     rpt.Changed = (cboChange.Text.ToLower() == "yes") == true ? Convert.ToByte(1) : Convert.ToByte(0); /*convert Yes/No to byte*/
                     double dblUTR = Convert.ToDouble(txtUTR.Text.Trim());
                     rpt.UpdateAgentData(dblUTR);
+                    blnRtn = true;
+                }
+                catch
+                {
+                    blnRtn = false;
+                }
+            }
+            else // don't save as nothing has changed
+            {
+                //leave as it as checks found no changes so no point in resaving data.
+                blnRtn = true;
+            }
+
+            return blnRtn;
+        }
+
+        public bool CheckandSaveNSTData()
+        {
+            bool blnNST = false;
+            bool blnRtn = false;
+            //string strTest = "";
+
+            for (int j = 0; j < 23; j++)
+            {
+                switch (j)
+                {
+                    case 0:
+                        if (txtHRWTEACFRef.Text != GetDataContextValue("HRWCFRef").ToString()) { blnNST = true; }
+                        break;
+                    case 1:
+                        if (cboHRWRiskingGroup.Text != GetDataContextValue("HRWRiskingGroup").ToString()) { blnNST = true; }
+                        break;
+                    case 2:
+                        if (cboRiskingOutcome.Text != GetDataContextValue("HRWRiskingOutcome").ToString()) { blnNST = true; }
+                        break;
+                    case 3:
+                        if (chkHRWRemoval.IsChecked == true)
+                        {
+                            if (GetDataContextValue("PotHRWRemoval") == 0)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        else
+                        { 
+                            if (GetDataContextValue("PotHRWRemoval") == 1)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        break;
+                    case 4:
+                        if (cboSectorFlag.Text != GetDataContextValue("SectorFlag").ToString()) { blnNST = true; }
+                        break;
+                    case 5:
+                        if (cboNationalFlag.Text != GetDataContextValue("NationalFlag").ToString()) { blnNST = true; }
+                        break;
+                    case 6:
+                        if (cboHRWPFlag.Text != GetDataContextValue("HRWFlag").ToString()) { blnNST = true; }
+                        break;
+                    case 7:
+                        if (chkHRWUltraWealth.IsChecked == true)
+                        {
+                            if (GetDataContextValue("HRWUW") == 0)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        else
+                        {
+                            if (GetDataContextValue("HRWUW") == 1)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        break;
+                    case 8:
+                        if (chkHRWComplex.IsChecked == true)
+                        {
+                            if (GetDataContextValue("HRWComp") == 0)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        else
+                        {
+                            if (GetDataContextValue("HRWComp") == 1)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        break;
+                    case 9:
+                        if (chkHRWEvasion.IsChecked == true)
+                        {
+                            if (GetDataContextValue("HRWErt") == 0)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        else
+                        {
+                            if (GetDataContextValue("HRWErt") == 1)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        break;
+                    case 10:
+                        if (chkHRWAvoidance.IsChecked == true)
+                        {
+                            if (GetDataContextValue("HRWAv") == 0)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        else
+                        {
+                            if (GetDataContextValue("HRWAv") == 1)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        break;
+                    case 11:
+                        if (chkHRWComplexEvasion.IsChecked == true)
+                        {
+                            if (GetDataContextValue("HRWCep") == 0)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        else
+                        {
+                            if (GetDataContextValue("HRWCep") == 1)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        break;
+                    case 12:
+                        if (chkHRWSensitive.IsChecked == true)
+                        {
+                            if (GetDataContextValue("HRWSens") == 0)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        else
+                        {
+                            if (GetDataContextValue("HRWSens") == 1)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        break;
+                    case 13:
+                        if (chkHRWDeliberate.IsChecked == true)
+                        {
+                            if (GetDataContextValue("HRWPens") == 0)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        else
+                        {
+                            if (GetDataContextValue("HRWPens") == 1)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        break;
+                    case 14:
+                        if (chkHRWBoundary.IsChecked == true)
+                        {
+                            if (GetDataContextValue("HRWBdries") == 0)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        else
+                        {
+                            if (GetDataContextValue("HRWBdries") == 1)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        break;
+                    case 15:
+                        if (chkHRWFIS.IsChecked == true)
+                        {
+                            if (GetDataContextValue("HRWCop8") == 0)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        else
+                        {
+                            if (GetDataContextValue("HRWCop8") == 1)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        break;
+                    case 16:
+                        if (chkTEAAvoidance.IsChecked == true)
+                        {
+                            if (GetDataContextValue("TEAAv") == 0)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        else
+                        {
+                            if (GetDataContextValue("TEAAv") == 1)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        break;
+                    case 17:
+                        if (chkTEACorporate.IsChecked == true)
+                        {
+                            if (GetDataContextValue("TEACorp") == 0)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        else
+                        {
+                            if (GetDataContextValue("TEACorp") == 1)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        break;
+                    case 18:
+                        if (chkTEADeceased.IsChecked == true)
+                        {
+                            if (GetDataContextValue("TEADecd") == 0)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        else
+                        {
+                            if (GetDataContextValue("TEADecd") == 1)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        break;
+                    case 19:
+                        if (chkTEAPenalty.IsChecked == true)
+                        {
+                            if (GetDataContextValue("TEAPen") == 0)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        else
+                        {
+                            if (GetDataContextValue("TEAPen") == 1)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        break;
+                    case 20:
+                        if (chkTEABeneficiary.IsChecked == true)
+                        {
+                            if (GetDataContextValue("TEABenf") == 0)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        else
+                        {
+                            if (GetDataContextValue("TEABenf") == 1)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        break;
+                    case 21:
+                        if (chkTEADeemed.IsChecked == true)
+                        {
+                            if (GetDataContextValue("TEADd") == 0)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        else
+                        {
+                            if (GetDataContextValue("TEADd") == 1)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        break;
+                    case 22:
+                        if (chkTEARedAmber.IsChecked == true)
+                        {
+                            if (GetDataContextValue("TEARa") == 0)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        else
+                        {
+                            if (GetDataContextValue("TEARa") == 1)
+                            {
+                                blnNST = true;
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                if (blnNST == true) { break; }
+            }
+
+            blnNST = true; //because above doesn't always realise items have changed
+
+            if (blnNST == true) // save case as something has changed
+            {
+                try
+                {
+                    RPT.RPT_Data rpt = new RPT.RPT_Data(); // initialise data
+                    rpt.HRWCFRef = txtHRWTEACFRef.Text;
+                    rpt.HRWRiskingGroup = cboHRWRiskingGroup.Text;
+                    rpt.HRWRiskingOutcome = cboRiskingOutcome.Text;
+                    if (chkHRWRemoval.IsChecked ==true)
+                    {
+                        rpt.PotHRWRemoval = 1;
+                    }
+                    else
+                    {
+                        rpt.PotHRWRemoval = 0;
+                    }
+                    rpt.SectorFlag = cboSectorFlag.Text;
+                    rpt.NationalFlag = cboNationalFlag.Text;
+                    rpt.HRWFlag = cboHRWPFlag.Text;
+                    if (chkHRWUltraWealth.IsChecked == true)
+                    {
+                        rpt.HRWUW = 1;
+                    }
+                    else
+                    {
+                        rpt.HRWUW = 0;
+                    }
+                    if (chkHRWComplex.IsChecked == true)
+                    {
+                        rpt.HRWComp = 1;
+                    }
+                    else
+                    {
+                        rpt.HRWComp = 0;
+                    }
+                    if (chkHRWEvasion.IsChecked == true)
+                    {
+                        rpt.HRWErt = 1;
+                    }
+                    else
+                    {
+                        rpt.HRWErt = 0;
+                    }
+                    if (chkHRWAvoidance.IsChecked == true)
+                    {
+                        rpt.HRWAv = 1;
+                    }
+                    else
+                    {
+                        rpt.HRWAv = 0;
+                    }
+                    if (chkHRWComplexEvasion.IsChecked == true)
+                    {
+                        rpt.HRWCep = 1;
+                    }
+                    else
+                    {
+                        rpt.HRWCep = 0;
+                    }
+                    if (chkHRWSensitive.IsChecked == true)
+                    {
+                        rpt.HRWSens = 1;
+                    }
+                    else
+                    {
+                        rpt.HRWSens = 0;
+                    }
+                    if (chkHRWDeliberate.IsChecked == true)
+                    {
+                        rpt.HRWPens = 1;
+                    }
+                    else
+                    {
+                        rpt.HRWPens = 0;
+                    }
+                    if (chkHRWBoundary.IsChecked == true)
+                    {
+                        rpt.HRWBdries = 1;
+                    }
+                    else
+                    {
+                        rpt.HRWBdries = 0;
+                    }
+                    if (chkHRWFIS.IsChecked == true)
+                    {
+                        rpt.HRWCop8 = 1;
+                    }
+                    else
+                    {
+                        rpt.HRWCop8 = 0;
+                    }
+                    if (chkTEAAvoidance.IsChecked == true)
+                    {
+                        rpt.TEAAv = 1;
+                    }
+                    else
+                    {
+                        rpt.TEAAv = 0;
+                    }
+                    if (chkTEACorporate.IsChecked == true)
+                    {
+                        rpt.TEACorp = 1;
+                    }
+                    else
+                    {
+                        rpt.TEACorp = 0;
+                    }
+                    if (chkTEADeceased.IsChecked == true)
+                    {
+                        rpt.TEADecd = 1;
+                    }
+                    else
+                    {
+                        rpt.TEADecd = 0;
+                    }
+                    if (chkTEAPenalty.IsChecked == true)
+                    {
+                        rpt.TEAPen = 1;
+                    }
+                    else
+                    {
+                        rpt.TEAPen = 0;
+                    }
+                    if (chkTEABeneficiary.IsChecked == true)
+                    {
+                        rpt.TEABenf = 1;
+                    }
+                    else
+                    {
+                        rpt.TEABenf = 0;
+                    }
+                    if (chkTEADeemed.IsChecked == true)
+                    {
+                        rpt.TEADd = 1;
+                    }
+                    else
+                    {
+                        rpt.TEADd = 0;
+                    }
+                    if (chkTEARedAmber.IsChecked == true)
+                    {
+                        rpt.TEARa = 1;
+                    }
+                    else
+                    {
+                        rpt.TEARa = 0;
+                    }
+                    rpt.UTR = Convert.ToDouble(txtUTR.Text);
+                    rpt.UpdateNSTData();
                     blnRtn = true;
                 }
                 catch
@@ -2257,6 +2798,38 @@ namespace Wealthy_RPT
             con.Close();
         }
 
+        private void GetRecentHistory(double UTR)
+        {
+
+            SqlConnection con = new SqlConnection(Global.ConnectionString);
+            SqlCommand cmd = new SqlCommand("qryGetRecentHistory", con);
+            cmd.Parameters.Clear();
+            SqlParameter prm = cmd.Parameters.Add("@nUTR", SqlDbType.Float);
+            prm.Value = UTR;
+            cmd.CommandTimeout = Global.TimeOut;
+            cmd.CommandType = CommandType.StoredProcedure;
+            con.Open();
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+
+            //DataTable dtRCH = new DataTable("dgRCH");
+
+            //da.Fill(dtRCH);
+
+            dgRCH.ItemsSource = ds.Tables[0].DefaultView;
+
+            //DataTable dtRUH = new DataTable("dgRUH");
+
+            //da.Fill(dtRUH);
+
+            dgRUH.ItemsSource = ds.Tables[1].DefaultView;
+
+            con.Close();
+        }
+
         private void cmdEmailAdd_Click(object sender, RoutedEventArgs e)
         {
             if(txtUTR.Text.Length != 10)
@@ -2566,18 +3139,140 @@ namespace Wealthy_RPT
                 Cursor = Cursors.Wait;
                 Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
                 Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(@Global.GuidanceFile);
-                //Microsoft.Office.Interop.Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
-                //xlApp.WindowState = Microsoft.Office.Interop.Excel.XlWindowState.xlMaximized;
                 xlApp.Visible = true;
             }
             catch (Exception ex)
             {
                 GC.Collect();
                 Cursor = Cursors.Arrow;
-                MessageBox.Show("Cannot open the Guidance." + Environment.NewLine
+                MessageBox.Show("Cannot open the WRT Guidance." + Environment.NewLine
                     + Environment.NewLine + ex.Message, "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             Cursor = Cursors.Arrow;
+        }
+
+        private void cmdHRWGuide_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Cursor = Cursors.Wait;
+                Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
+                Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(@Global.TechnicalFile);
+                xlApp.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                GC.Collect();
+                Cursor = Cursors.Arrow;
+                MessageBox.Show("Cannot open the Technical Guidance." + Environment.NewLine
+                    + Environment.NewLine + ex.Message, "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+            Cursor = Cursors.Arrow;
+        }
+
+        private void cmdTEAGuide_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Cursor = Cursors.Wait;
+                Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
+                Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(@Global.TechnicalFile);
+                xlApp.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                GC.Collect();
+                Cursor = Cursors.Arrow;
+                MessageBox.Show("Cannot open the Technical Guidance." + Environment.NewLine
+                    + Environment.NewLine + ex.Message, "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+            Cursor = Cursors.Arrow;
+        }
+
+        private void cboHRWRiskingGroup_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (Globals.blnAccess == true)
+            {
+                ShowActiveControl(cboHRWRiskingGroup);
+            }
+        }
+
+        private void cboRiskingOutcome_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (Globals.blnAccess == true)
+            {
+                ShowActiveControl(cboRiskingOutcome);
+            }
+        }
+
+        //private void cboHRWRemoval_GotFocus(object sender, RoutedEventArgs e)
+        //{
+        //    if (Globals.blnAccess == true)
+        //    {
+        //        ShowActiveControl(cboHRWRemoval);
+        //    }
+        //}
+
+        private void cboSectorFlag_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (Globals.blnAccess == true)
+            {
+                ShowActiveControl(cboSectorFlag);
+            }
+        }
+
+        private void cboNationalFlag_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (Globals.blnAccess == true)
+            {
+                ShowActiveControl(cboNationalFlag);
+            }
+        }
+
+        private void cboHRWPFlag_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (Globals.blnAccess == true)
+            {
+                ShowActiveControl(cboHRWPFlag);
+            }
+        }
+
+        private void chkHRWUltraWealth_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void chkHRWUltraWealth_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void chkHRWUltraWealth_Unchecked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void txtDateEmailAuthority_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtDateEmailAuthority.Text))
+            {
+                // Do nothing as no date entered
+            }
+            else
+            {
+                if (IsDate(txtDateEmailAuthority.Text.ToString()))
+                {
+                    DateTime dateAuthority = DateTime.Parse(txtDateEmailAuthority.Text.ToString());
+                    TimeSpan duration = new TimeSpan(161, 0, 0, 0);
+                    DateTime dateExpiry = dateAuthority.Add(duration);
+                    txtExpiryDate.Text = dateExpiry.ToString("dd/MM/yyyy");
+                }
+            }
+        }
+
+        private void txtDateEmailAuthority_GotFocus(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 

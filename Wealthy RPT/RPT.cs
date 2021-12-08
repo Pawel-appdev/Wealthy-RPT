@@ -60,7 +60,10 @@ namespace Wealthy_RPT
             private string _othercontact;
             private string _agenttelno;
             private byte _changed;
-            // Behavious Data
+            private string _legacyavoidance;
+            private string _emailauthoritydate;
+            private string _emailexpirydate;
+            // Behaviours Data
             private Int32 _rpdid;
             private string _updateddate;
             private Int32 _updatedby;
@@ -95,6 +98,33 @@ namespace Wealthy_RPT
             //private string _crmmdata;
             //private float _crmmscore;
             private string _crmmdateadded;
+
+            //NST Data
+            private string _hrwcfref;
+            private string _hrwriskinggroup;
+            private string _hrwriskingoutcome;
+            private byte _pothrwremoval;
+            private string _sectorflag;
+            private string _nationalflag;
+            private string _hrwflag;
+            private byte _hrwuw;
+            private byte _hrwsens;
+            private byte _hrwcomp;
+            private byte _hrwpens;
+            private byte _hrwert;
+            private byte _hrwbdries;
+            private byte _hrwav;
+            private byte _hrwcop8;
+            private byte _hrwcep;
+            private byte _teaav;
+            private byte _teacorp;
+            private byte _teadecd;
+            private byte _teapen;
+            private byte _teabenf;
+            private byte _teadd;
+            private byte _teara;
+            private DataTable _caseflowdata;
+            private DataTable _upstreamdata;
 
             #endregion
 
@@ -615,6 +645,42 @@ namespace Wealthy_RPT
                 }
             }
 
+            public string LegacyAvoidance
+            {
+                get
+                {
+                    return _legacyavoidance;
+                }
+                set
+                {
+                    _legacyavoidance = value;
+                }
+            }
+
+            public string EmailAuthorityDate
+            {
+                get
+                {
+                    return _emailauthoritydate;
+                }
+                set
+                {
+                    _emailauthoritydate = value;
+                }
+            }
+
+            public string EmailExpiryDate
+            {
+                get
+                {
+                    return _emailexpirydate;
+                }
+                set
+                {
+                    _emailexpirydate = value;
+                }
+            }
+
             // Behaviours Data
 
             public Int32 RPD_ID
@@ -991,6 +1057,293 @@ namespace Wealthy_RPT
                 }
             }
 
+            public string HRWCFRef
+            {
+                get
+                {
+                    return _hrwcfref;
+                }
+                set
+                {
+                    _hrwcfref = value;
+                }
+            }
+
+            public string HRWRiskingGroup
+            {
+                get
+                {
+                    return _hrwriskinggroup;
+                }
+                set
+                {
+                    _hrwriskinggroup = value;
+                }
+            }
+
+            public string HRWRiskingOutcome
+            {
+                get
+                {
+                    return _hrwriskingoutcome;
+                }
+                set
+                {
+                    _hrwriskingoutcome = value;
+                }
+            }
+
+            public byte PotHRWRemoval
+            {
+                get
+                {
+                    return _pothrwremoval;
+                }
+                set
+                {
+                    _pothrwremoval = value;
+                }
+            }
+
+            public string SectorFlag
+            {
+                get
+                {
+                    return _sectorflag;
+                }
+                set
+                {
+                    _sectorflag = value;
+                }
+            }
+
+            public string NationalFlag
+            {
+                get
+                {
+                    return _nationalflag;
+                }
+                set
+                {
+                    _nationalflag = value;
+                }
+            }
+
+            public string HRWFlag
+            {
+                get
+                {
+                    return _hrwflag;
+                }
+                set
+                {
+                    _hrwflag = value;
+                }
+            }
+
+            public byte HRWUW
+            {
+                get
+                {
+                    return _hrwuw;
+                }
+                set
+                {
+                    _hrwuw = value;
+                }
+            }
+
+            public byte HRWSens
+            {
+                get
+                {
+                    return _hrwsens;
+                }
+                set
+                {
+                    _hrwsens = value;
+                }
+            }
+            public byte HRWComp
+            {
+                get
+                {
+                    return _hrwcomp;
+                }
+                set
+                {
+                    _hrwcomp = value;
+                }
+            }
+            public byte HRWPens
+            {
+                get
+                {
+                    return _hrwpens;
+                }
+                set
+                {
+                    _hrwpens = value;
+                }
+            }
+
+            public byte HRWErt
+            {
+                get
+                {
+                    return _hrwert;
+                }
+                set
+                {
+                    _hrwert = value;
+                }
+            }
+            public byte HRWBdries
+            {
+                get
+                {
+                    return _hrwbdries;
+                }
+                set
+                {
+                    _hrwbdries = value;
+                }
+            }
+            public byte HRWAv
+            {
+                get
+                {
+                    return _hrwav;
+                }
+                set
+                {
+                    _hrwav = value;
+                }
+            }
+            public byte HRWCop8
+            {
+                get
+                {
+                    return _hrwcop8;
+                }
+                set
+                {
+                    _hrwcop8 = value;
+                }
+            }
+            public byte HRWCep
+            {
+                get
+                {
+                    return _hrwcep;
+                }
+                set
+                {
+                    _hrwcep = value;
+                }
+            }
+            public byte TEAAv
+            {
+                get
+                {
+                    return _teaav;
+                }
+                set
+                {
+                    _teaav = value;
+                }
+            }
+            public byte TEACorp
+            {
+                get
+                {
+                    return _teacorp;
+                }
+                set
+                {
+                    _teacorp = value;
+                }
+            }
+            public byte TEADecd
+            {
+                get
+                {
+                    return _teadecd;
+                }
+                set
+                {
+                    _teadecd = value;
+                }
+            }
+            public byte TEAPen
+            {
+                get
+                {
+                    return _teapen;
+                }
+                set
+                {
+                    _teapen = value;
+                }
+            }
+            public byte TEABenf
+            {
+                get
+                {
+                    return _teabenf;
+                }
+                set
+                {
+                    _teabenf = value;
+                }
+            }
+            public byte TEADd
+            {
+                get
+                {
+                    return _teadd;
+                }
+                set
+                {
+                    _teadd = value;
+                }
+            }
+            public byte TEARa
+            {
+                get
+                {
+                    return _teara;
+                }
+                set
+                {
+                    _teara = value;
+                }
+            }
+
+            public DataTable Upstream_Data
+            {
+                get
+                {
+                    return _upstreamdata;
+                }
+                set
+                {
+                    _upstreamdata = value;
+                }
+            }
+
+            public DataTable Caseflow_Data
+            {
+                get
+                {
+                    return _caseflowdata;
+                }
+                set
+                {
+                    _caseflowdata = value;
+                }
+            }
+
             #endregion
 
             public bool GetRPDData(double dblUTR, int iYear, double dPercentile, string sPop)
@@ -1002,6 +1355,11 @@ namespace Wealthy_RPT
                 }
 
                 if (GetAgentData(dblUTR) == false)
+                {
+                    return false;
+                }
+
+                if (GetNSTData(dblUTR) == false)
                 {
                     return false;
                 }
@@ -1077,7 +1435,11 @@ namespace Wealthy_RPT
                         try { sDate = Convert.ToDateTime(dr["CDLU"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
                         CDLU = sDate;
                         //MessageBox.Show(Strand + " : " + AllocatedTo, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                        LegacyAvoidance = (string.IsNullOrEmpty(dr["LegacyAvoidance"].ToString()) == true) ? "" : dr["LegacyAvoidance"].ToString();                        
+                        try { sDate = Convert.ToDateTime(dr["EmailAuthority"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
+                        EmailAuthorityDate = sDate;                         
+                        try { sDate = Convert.ToDateTime(dr["EmailExpiryDate"]).Date.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); } catch { sDate = ""; }
+                        EmailExpiryDate = sDate;
                     }
                     #endregion
                     else if (dr.HasRows == false)
@@ -1148,7 +1510,83 @@ namespace Wealthy_RPT
                 return true;
             }
 
-
+            public bool GetNSTData(double dblUTR)
+            {
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("qryGetNSTData", con);  // tblAgent_Details
+                    cmd.Parameters.Clear();
+                    SqlParameter prm01 = cmd.Parameters.Add("@nUTR", SqlDbType.Float);
+                    prm01.Value = dblUTR;
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    #region Recordset
+                    if (dr.HasRows)
+                    {
+                        dr.Read();
+                        HRWCFRef = dr["HRW_TEA_CF_Ref"].ToString();
+                        HRWRiskingGroup = dr["HRWRiskingGroup"].ToString();
+                        HRWRiskingOutcome = dr["RiskingOutcome"].ToString();
+                        bool blnPHRWRemoval = (dr["PotentialHRWRemoval"] is DBNull) ? false : Convert.ToBoolean(dr["PotentialHRWRemoval"]);
+                        PotHRWRemoval = Convert.ToByte(blnPHRWRemoval);
+                        SectorFlag = dr["SectorFlag"].ToString();
+                        NationalFlag = dr["NationalFlag"].ToString();
+                        HRWFlag = (dr["HRWPFlag"] is DBNull) ? "" : dr["HRWPFlag"].ToString();
+                        bool blnHRWUW = (dr["HRWUW"] is DBNull) ? false : Convert.ToBoolean(dr["HRWUW"]);
+                        HRWUW = Convert.ToByte(blnHRWUW);
+                        bool blnHRWSens = (dr["HRWSens"] is DBNull) ? false : Convert.ToBoolean(dr["HRWSens"]);
+                        HRWSens = Convert.ToByte(blnHRWSens);
+                        bool blnHRWComp = (dr["HRWComp"] is DBNull) ? false : Convert.ToBoolean(dr["HRWComp"]);
+                        HRWComp = Convert.ToByte(blnHRWComp);
+                        bool blnHRWPens = (dr["HRWPens"] is DBNull) ? false : Convert.ToBoolean(dr["HRWPens"]);
+                        HRWPens = Convert.ToByte(blnHRWPens);
+                        bool blnHRWERT = (dr["HRWERT"] is DBNull) ? false : Convert.ToBoolean(dr["HRWERT"]);
+                        HRWErt = Convert.ToByte(blnHRWERT);
+                        bool blnHRWBdries = (dr["HRWBdries"] is DBNull) ? false : Convert.ToBoolean(dr["HRWBdries"]);
+                        HRWBdries = Convert.ToByte(blnHRWBdries);
+                        bool blnHRWAv = (dr["HRWAv"] is DBNull) ? false : Convert.ToBoolean(dr["HRWAv"]);
+                        HRWAv = Convert.ToByte(blnHRWAv);
+                        bool blnHRWCop8 = (dr["HRWCop8"] is DBNull) ? false : Convert.ToBoolean(dr["HRWCop8"]);
+                        HRWCop8 = Convert.ToByte(blnHRWCop8);
+                        bool blnHRWCEP = (dr["HRWCEP"] is DBNull) ? false : Convert.ToBoolean(dr["HRWCEP"]);
+                        HRWCep = Convert.ToByte(blnHRWCEP);
+                        bool blnTEAAv = (dr["TEAAv"] is DBNull) ? false : Convert.ToBoolean(dr["TEAAv"]);
+                        TEAAv = Convert.ToByte(blnTEAAv);
+                        bool blnTEACorpPart = (dr["TEACorpPart"] is DBNull) ? false : Convert.ToBoolean(dr["TEACorpPart"]);
+                        TEACorp = Convert.ToByte(blnTEACorpPart);
+                        bool blnTEADecd = (dr["TEADecd"] is DBNull) ? false : Convert.ToBoolean(dr["TEADecd"]);
+                        TEADecd = Convert.ToByte(blnTEADecd);
+                        bool blnTEAPen = (dr["TEAPen"] is DBNull) ? false : Convert.ToBoolean(dr["TEAPen"]);
+                        TEAPen = Convert.ToByte(blnTEAPen);
+                        bool blnTEABenf = (dr["TEABenf"] is DBNull) ? false : Convert.ToBoolean(dr["TEABenf"]);
+                        TEABenf = Convert.ToByte(blnTEABenf);
+                        bool blnTEADd = (dr["TEADd"] is DBNull) ? false : Convert.ToBoolean(dr["TEADd"]);
+                        TEADd = Convert.ToByte(blnTEADd);
+                        bool blnTEARa = (dr["TEARa"] is DBNull) ? false : Convert.ToBoolean(dr["TEARa"]);
+                        TEARa = Convert.ToByte(blnTEARa);                        
+                    }
+                    #endregion
+                    else if (dr.HasRows == false)
+                    {
+                        //MessageBox.Show("Agent record not found.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    }
+                    con.Close();
+                }
+                catch (SqlException)
+                {
+                    MessageBox.Show("NST Data not found due to SQL issue.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                }
+                catch
+                {
+                    con.Close();
+                    //MessageBox.Show("Agent record failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    return false;
+                }
+                return true;
+            }
 
             public bool GetRPDScoresData(double dblUTR, int iYear, string sPop)
             {
@@ -1520,20 +1958,31 @@ namespace Wealthy_RPT
                     {
                         prm25.Value = Convert.ToInt32(AllocatedTo);
                     }
-                    SqlParameter prm26 = cmd.Parameters.Add("@oUTR", SqlDbType.Float);
-                    prm26.Value = UTR;
-                    SqlParameter prm27 = cmd.Parameters.Add("@nPop", SqlDbType.NVarChar);
-                    prm27.Value = Pop;
-                    SqlParameter prm28 = cmd.Parameters.Add("@nCRMName", SqlDbType.NVarChar);
-                    prm28.Value = CRM_Name;
-                    SqlParameter prm29 = cmd.Parameters.Add("@nCRMDA", SqlDbType.DateTime);
-                    if (CRM_Appointed == "")
+                    SqlParameter prm26 = cmd.Parameters.Add("@nEmailAuthorityDate", SqlDbType.DateTime);
+                    if (EmailAuthorityDate == "")
                     {
-                        prm29.Value = DBNull.Value;
+                        prm26.Value = DBNull.Value;
                     }
                     else
                     {
-                        prm29.Value = CRM_Appointed;
+                        prm26.Value = EmailAuthorityDate;
+                    }
+                    SqlParameter prm27 = cmd.Parameters.Add("@nLegacyAvoidance", SqlDbType.NVarChar);
+                    prm27.Value = LegacyAvoidance;
+                    SqlParameter prm28 = cmd.Parameters.Add("@oUTR", SqlDbType.Float);
+                    prm28.Value = UTR;
+                    SqlParameter prm29 = cmd.Parameters.Add("@nPop", SqlDbType.NVarChar);
+                    prm29.Value = Pop;
+                    SqlParameter prm30 = cmd.Parameters.Add("@nCRMName", SqlDbType.NVarChar);
+                    prm30.Value = CRM_Name;
+                    SqlParameter prm31 = cmd.Parameters.Add("@nCRMDA", SqlDbType.DateTime);
+                    if (CRM_Appointed == "")
+                    {
+                        prm31.Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        prm31.Value = CRM_Appointed;
                     }
                     //SqlParameter prm30 = cmd.Parameters.Add("@nHNWUPID", SqlDbType.DateTime);
                     //if (AllocatedTo == "")
@@ -1612,6 +2061,74 @@ namespace Wealthy_RPT
                 catch (Exception ex)
                 {
                     Console.Write("SQL error: " + ex.Message);
+                    con.Close();
+                    return false;
+                }
+                return true;
+            }
+
+            public bool UpdateNSTData()
+            {
+                SqlConnection con = new SqlConnection(Global.ConnectionString);
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("qryUpdateNSTData", con);
+                    cmd.Parameters.Clear();
+                    SqlParameter prm01 = cmd.Parameters.Add("@nHRWCFRef", SqlDbType.NVarChar);
+                    prm01.Value = HRWCFRef;
+                    SqlParameter prm02 = cmd.Parameters.Add("@nHRWRiskingGroup", SqlDbType.NVarChar);
+                    prm02.Value = HRWRiskingGroup;
+                    SqlParameter prm03 = cmd.Parameters.Add("@nHRWRiskingOutcome", SqlDbType.NVarChar);
+                    prm03.Value = HRWRiskingOutcome;
+                    SqlParameter prm04 = cmd.Parameters.Add("@nPotHRWRemoval", SqlDbType.Bit);
+                    prm04.Value = PotHRWRemoval;
+                    SqlParameter prm05 = cmd.Parameters.Add("@nSectorFlag", SqlDbType.NVarChar);
+                    prm05.Value = SectorFlag;
+                    SqlParameter prm06 = cmd.Parameters.Add("@nNationalFlag", SqlDbType.NVarChar);
+                    prm06.Value = NationalFlag;
+                    SqlParameter prm07 = cmd.Parameters.Add("@nHRWFlag", SqlDbType.NVarChar);
+                    prm07.Value = HRWFlag;
+                    SqlParameter prm08 = cmd.Parameters.Add("@nHRWUW", SqlDbType.Bit);
+                    prm08.Value = HRWUW;
+                    SqlParameter prm09 = cmd.Parameters.Add("@nHRWComp", SqlDbType.Bit);
+                    prm09.Value = HRWComp;
+                    SqlParameter prm10 = cmd.Parameters.Add("@nHRWErt", SqlDbType.Bit);
+                    prm10.Value = HRWErt;
+                    SqlParameter prm11 = cmd.Parameters.Add("@nHRWAv", SqlDbType.Bit);
+                    prm11.Value = HRWAv;
+                    SqlParameter prm12 = cmd.Parameters.Add("@nHRWCep", SqlDbType.Bit);
+                    prm12.Value = HRWCep;
+                    SqlParameter prm13 = cmd.Parameters.Add("@nHRWSens", SqlDbType.Bit);
+                    prm13.Value = HRWSens;
+                    SqlParameter prm014 = cmd.Parameters.Add("@nHRWPens", SqlDbType.Bit);
+                    prm014.Value = HRWPens;
+                    SqlParameter prm15 = cmd.Parameters.Add("@nHRWBdries", SqlDbType.Bit);
+                    prm15.Value = HRWBdries;
+                    SqlParameter prm16 = cmd.Parameters.Add("@nHRWFIS", SqlDbType.Bit);
+                    prm16.Value = HRWCop8;
+                    SqlParameter prm17 = cmd.Parameters.Add("@nTEAAv", SqlDbType.Bit);
+                    prm17.Value = TEAAv;
+                    SqlParameter prm18 = cmd.Parameters.Add("@nTEACorp", SqlDbType.Bit);
+                    prm18.Value = TEACorp;
+                    SqlParameter prm19 = cmd.Parameters.Add("@nTEADecd", SqlDbType.Bit);
+                    prm19.Value = TEADecd;
+                    SqlParameter prm20 = cmd.Parameters.Add("@nTEAPen", SqlDbType.Bit);
+                    prm20.Value = TEAPen;
+                    SqlParameter prm21 = cmd.Parameters.Add("@nTEABenf", SqlDbType.Bit);
+                    prm21.Value = TEABenf;
+                    SqlParameter prm22 = cmd.Parameters.Add("@nTEADd", SqlDbType.Bit);
+                    prm22.Value = TEADd;
+                    SqlParameter prm23 = cmd.Parameters.Add("@nTEARa", SqlDbType.Bit);
+                    prm23.Value = TEARa;
+                    SqlParameter prm24 = cmd.Parameters.Add("@oUTR", SqlDbType.Float);
+                    prm24.Value = UTR;                    
+                    cmd.CommandTimeout = Global.TimeOut;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
                     con.Close();
                     return false;
                 }

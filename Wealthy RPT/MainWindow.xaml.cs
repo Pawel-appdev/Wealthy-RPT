@@ -1,22 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Diagnostics;
+using System.Data;
+using System.Data.SqlClient;
 using Ini;
+using System.Collections.Generic;
 
 namespace Wealthy_RPT
 {
@@ -205,29 +195,65 @@ namespace Wealthy_RPT
             }
             cboYear.SelectedValue = intCurrentYear;
 
-            //cboPopulation
-            SqlConnection conn = new SqlConnection(Global.ConnectionString);
-            //SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM dbo.tblPopulations", conn);//get all populations
-            SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM dbo.vwUserPermissionLevel WHERE PID = " + Global.PID + "AND Pop_Friendly_Name IS NOT NULL", conn);
-            DataSet ds = new DataSet();
-            da.Fill(ds, "dbo.tblPopulations");
-            cboPopulation.ItemsSource = ds.Tables[0].DefaultView;
-            cboPopulation.DisplayMemberPath = ds.Tables[0].Columns["Pop_Friendly_Name"].ToString();
-            cboPopulation.SelectedValuePath = ds.Tables[0].Columns["Pop_Code_Name"].ToString();
-            cboPopulation.SelectedIndex = 0;
+            try
+            {
+                Lookups lu = new Lookups();
+                lu.GetMainLookups();
 
-            //cboOffice
-            if(Global.AccessLevel == "National")
-            {
-                SqlDataAdapter sqlda = new SqlDataAdapter("SELECT DISTINCT Office FROM dbo.tblOfficeCRM UNION SELECT 'All'", conn);
-                DataSet dset = new DataSet();
-                sqlda.Fill(dset, "OfficeList");
-                cboOffice.ItemsSource = dset.Tables[0].DefaultView;
-                cboOffice.DisplayMemberPath = dset.Tables[0].Columns["Office"].ToString();
+                ////cboPopulation
+                //SqlConnection conn = new SqlConnection(Global.ConnectionString);
+                ////SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM dbo.tblPopulations", conn);//get all populations
+                //SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM dbo.vwUserPermissionLevel WHERE PID = " + Global.PID + "AND Pop_Friendly_Name IS NOT NULL", conn);
+                //DataSet ds = new DataSet();
+                //da.Fill(ds, "dbo.tblPopulations");
+                //cboPopulation.ItemsSource = ds.Tables[0].DefaultView;
+                //cboPopulation.DisplayMemberPath = ds.Tables[0].Columns["Pop_Friendly_Name"].ToString();
+                //cboPopulation.SelectedValuePath = ds.Tables[0].Columns["Pop_Code_Name"].ToString();
+                //cboPopulation.SelectedIndex = 0;
+
+                ////cboOffice
+                //if (Global.AccessLevel == "National")
+                //{
+                //    SqlDataAdapter sqlda = new SqlDataAdapter("SELECT DISTINCT Office FROM dbo.tblOfficeCRM UNION SELECT 'All'", conn);
+                //    DataSet dset = new DataSet();
+                //    sqlda.Fill(dset, "OfficeList");
+                //    cboOffice.ItemsSource = dset.Tables[0].DefaultView;
+                //    cboOffice.DisplayMemberPath = dset.Tables[0].Columns["Office"].ToString();
+                //}
+                //else
+                //{
+                //    cboOffice.Items.Add(Global.AccessLevel);
+                //}
+
+                ////Add Guidance Menu Items
+                //SqlDataAdapter sqldaMu = new SqlDataAdapter("SELECT * FROM [dbo].[ltGuidanceMenu] where bitInactive <> 1", conn);
+                //DataSet dsetMu = new DataSet();
+                //sqldaMu.Fill(dsetMu);
+                //AddGuidanceMenuItems(dsetMu.Tables[0]);
+
+                //cboPopulation
+                cboPopulation.ItemsSource = lu.ds.Tables[0].DefaultView;
+                cboPopulation.DisplayMemberPath = "Pop_Friendly_Name";
+                cboPopulation.SelectedValuePath = "Pop_Code_Name";
+                cboPopulation.SelectedIndex = 0;
+
+                //cboOffice
+                if (Global.AccessLevel == "National")
+                {
+                    cboOffice.ItemsSource = lu.ds.Tables[1].DefaultView;
+                    cboOffice.DisplayMemberPath = "Office";
+                }
+                else
+                {
+                    cboOffice.Items.Add(Global.AccessLevel);
+                }
+
+                //Add Guidance Menu Items
+                AddGuidanceMenuItems(lu.ds.Tables[2]);
             }
-            else
+            catch
             {
-                cboOffice.Items.Add(Global.AccessLevel);
+
             }
         }
 
@@ -1200,6 +1226,25 @@ namespace Wealthy_RPT
                 rptDetail.cboPopFriendly.SelectedIndex = this.cboPopulation.SelectedIndex;
                 rptDetail.cboPopCode.SelectedIndex = this.cboPopulation.SelectedIndex;
                 try { rptDetail.lblPopYear.Text = this.cboYear.SelectedValue.ToString(); } catch { DateTime.Now.Year.ToString(); }
+
+
+                //Copy menu items over
+                foreach (MenuItem mnuitm in mnuGuidance.Items)
+                {
+                    MenuItem newGuidanceMenuItem = new MenuItem();
+                    newGuidanceMenuItem.Name = mnuitm.Name;
+                    newGuidanceMenuItem.Header = mnuitm.Header;
+                    newGuidanceMenuItem.Tag = mnuitm.Tag;
+                    newGuidanceMenuItem.Click += GuidanceMenu_Click;
+                    rptDetail.mnuGuidance.Items.Add(newGuidanceMenuItem);
+                }
+
+                //update SharePoint Links Menu
+                int intCurrentYear = DateTime.Today.Year;
+                rptDetail.mnuCurrentYear.Header = string.Concat(intCurrentYear, " - ", dUTR);
+                rptDetail.mnuYearMinus1.Header = string.Concat(intCurrentYear - 1, " - ", dUTR);
+                rptDetail.mnuYearMinus2.Header = string.Concat(intCurrentYear - 2, " - ", dUTR);
+
                 rptDetail.Closing += new System.ComponentModel.CancelEventHandler(Refresh_Cases); /*grab child form closing event for parent refesh */
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
                 rptDetail.Show();
@@ -1226,22 +1271,20 @@ namespace Wealthy_RPT
             ctr_Admin.ShowDialog();
         }
 
-        private void MnuGuidance_Click(object sender, RoutedEventArgs e)
+        private void mnuWRTGuidance_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 Cursor = Cursors.Wait;
                 Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
                 Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(@Global.GuidanceFile);
-                //Microsoft.Office.Interop.Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
-                //xlApp.WindowState = Microsoft.Office.Interop.Excel.XlWindowState.xlMaximized;
                 xlApp.Visible = true;
             }
             catch(Exception ex)
             {
                 GC.Collect();
                 Cursor = Cursors.Arrow;
-                MessageBox.Show("Cannot open the Guidance." + Environment.NewLine
+                MessageBox.Show("Cannot open the WRT Guidance." + Environment.NewLine
                     + Environment.NewLine + ex.Message, "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             Cursor = Cursors.Arrow;
@@ -1277,6 +1320,61 @@ namespace Wealthy_RPT
             catch
             {
                 return false;
+            }
+        }
+
+        private void mnuTechnicalGuidance_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Cursor = Cursors.Wait;
+                Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
+                Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(@Global.TechnicalFile);
+                xlApp.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                GC.Collect();
+                Cursor = Cursors.Arrow;
+                MessageBox.Show("Cannot open the Technical Guidance." + Environment.NewLine
+                    + Environment.NewLine + ex.Message, "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+            Cursor = Cursors.Arrow;
+        }
+
+        public void AddGuidanceMenuItems(DataTable dt)
+        {
+            try 
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    MenuItem newGuidanceMenuItem = new MenuItem();
+                    newGuidanceMenuItem.Name = row["strGuidanceMenuName"].ToString();
+                    newGuidanceMenuItem.Header = row["strGuidanceMenuDescription"].ToString();
+                    newGuidanceMenuItem.Tag = row["strGuidanceURL"].ToString();
+                    newGuidanceMenuItem.Click += GuidanceMenu_Click;
+                    this.mnuGuidance.Items.Add(newGuidanceMenuItem);
+                }
+            }
+            catch
+            {
+                //Skip Additions
+            }
+        }
+
+        public void GuidanceMenu_Click(object sender, System.EventArgs e)
+        {
+            //Click event for runtime menu items
+            var menuItem = (System.Windows.Controls.MenuItem)sender;
+            string strLink = menuItem.Tag.ToString();
+            try 
+            {
+                //open link
+                System.Diagnostics.Process.Start(strLink);
+            }
+            catch
+            {
+                MessageBox.Show("Cannot open guidance link: " + strLink + ".", "Guidance", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
     }

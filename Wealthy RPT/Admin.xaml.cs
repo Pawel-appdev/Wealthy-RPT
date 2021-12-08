@@ -211,7 +211,13 @@ namespace Wealthy_RPT
                     dgTables.ItemsSource = tblUserPopID.dt.DefaultView;
                     break;
 
-                case "SELECT * FROM [ltSector]":
+                case "SELECT * FROM [ltGuidanceMenu]":
+                    tblGuidanceMenu.dt.Clear();
+                    tblGuidanceMenu.sda.Fill(tblGuidanceMenu.dt);
+                    dgTables.ItemsSource = tblGuidanceMenu.dt.DefaultView;
+                    break;
+
+                case "SELECT * FROM [ltSector] Order By Options":
                     tblSector.dt.Clear();
                     tblSector.sda.Fill(tblSector.dt);
                     dgTables.ItemsSource = tblSector.dt.DefaultView;
@@ -416,7 +422,15 @@ namespace Wealthy_RPT
                         tblUserPopID.conn.Close();
                         break;
 
-                    case "SELECT * FROM [dbo].[ltSector]":
+                    case "SELECT * FROM [ltGuidanceMenu]":
+                        tblGuidanceMenu.conn.Open();
+                        SqlCommandBuilder bldGuidanceMenu = new SqlCommandBuilder(tblGuidanceMenu.sda);
+                        tblGuidanceMenu.sda.UpdateCommand = bldGuidanceMenu.GetUpdateCommand();
+                        tblGuidanceMenu.sda.Update(tblGuidanceMenu.dt);
+                        tblGuidanceMenu.conn.Close();
+                        break;
+
+                    case "SELECT * FROM [ltSector] ORDER BY Options":
                         tblSector.conn.Open();
                         SqlCommandBuilder bldSector = new SqlCommandBuilder(tblSector.sda);
                         tblSector.sda.UpdateCommand = bldSector.GetUpdateCommand();
