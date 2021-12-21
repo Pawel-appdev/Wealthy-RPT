@@ -1749,6 +1749,7 @@ namespace Wealthy_RPT
         {
             bool blnNST = false;
             bool blnRtn = false;
+            string strSegmentationState = "";
             //string strTest = "";
 
             for (int j = 0; j < 23; j++)
@@ -1790,7 +1791,7 @@ namespace Wealthy_RPT
                         if (cboHRWPFlag.Text != GetDataContextValue("HRWFlag").ToString()) { blnNST = true; }
                         break;
                     case 7:
-                        if (chkHRWUltraWealth.IsChecked == true)
+                        if (radHRWUltraWealth.IsChecked == true)
                         {
                             if (GetDataContextValue("HRWUW") == 0)
                             {
@@ -1802,11 +1803,12 @@ namespace Wealthy_RPT
                             if (GetDataContextValue("HRWUW") == 1)
                             {
                                 blnNST = true;
+                                strSegmentationState = "HRWUW";
                             }
                         }
                         break;
                     case 8:
-                        if (chkHRWComplex.IsChecked == true)
+                        if (radHRWComplex.IsChecked == true)
                         {
                             if (GetDataContextValue("HRWComp") == 0)
                             {
@@ -1818,11 +1820,12 @@ namespace Wealthy_RPT
                             if (GetDataContextValue("HRWComp") == 1)
                             {
                                 blnNST = true;
+                                strSegmentationState = "HRWComp";
                             }
                         }
                         break;
                     case 9:
-                        if (chkHRWEvasion.IsChecked == true)
+                        if (radHRWEvasion.IsChecked == true)
                         {
                             if (GetDataContextValue("HRWErt") == 0)
                             {
@@ -1834,11 +1837,12 @@ namespace Wealthy_RPT
                             if (GetDataContextValue("HRWErt") == 1)
                             {
                                 blnNST = true;
+                                strSegmentationState = "HRWErt";
                             }
                         }
                         break;
                     case 10:
-                        if (chkHRWAvoidance.IsChecked == true)
+                        if (radHRWAvoidance.IsChecked == true)
                         {
                             if (GetDataContextValue("HRWAv") == 0)
                             {
@@ -1850,11 +1854,12 @@ namespace Wealthy_RPT
                             if (GetDataContextValue("HRWAv") == 1)
                             {
                                 blnNST = true;
+                                strSegmentationState = "HRWAv";
                             }
                         }
                         break;
                     case 11:
-                        if (chkHRWComplexEvasion.IsChecked == true)
+                        if (radHRWComplexEvasion.IsChecked == true)
                         {
                             if (GetDataContextValue("HRWCep") == 0)
                             {
@@ -1866,11 +1871,12 @@ namespace Wealthy_RPT
                             if (GetDataContextValue("HRWCep") == 1)
                             {
                                 blnNST = true;
+                                strSegmentationState = "HRWCep";
                             }
                         }
                         break;
                     case 12:
-                        if (chkHRWSensitive.IsChecked == true)
+                        if (radHRWSensitive.IsChecked == true)
                         {
                             if (GetDataContextValue("HRWSens") == 0)
                             {
@@ -1882,11 +1888,12 @@ namespace Wealthy_RPT
                             if (GetDataContextValue("HRWSens") == 1)
                             {
                                 blnNST = true;
+                                strSegmentationState = "HRWSens";
                             }
                         }
                         break;
                     case 13:
-                        if (chkHRWDeliberate.IsChecked == true)
+                        if (radHRWDeliberate.IsChecked == true)
                         {
                             if (GetDataContextValue("HRWPens") == 0)
                             {
@@ -1898,11 +1905,12 @@ namespace Wealthy_RPT
                             if (GetDataContextValue("HRWPens") == 1)
                             {
                                 blnNST = true;
+                                strSegmentationState = "HRWPens";
                             }
                         }
                         break;
                     case 14:
-                        if (chkHRWBoundary.IsChecked == true)
+                        if (radHRWBoundary.IsChecked == true)
                         {
                             if (GetDataContextValue("HRWBdries") == 0)
                             {
@@ -1914,11 +1922,12 @@ namespace Wealthy_RPT
                             if (GetDataContextValue("HRWBdries") == 1)
                             {
                                 blnNST = true;
+                                strSegmentationState = "HRWBdries";
                             }
                         }
                         break;
                     case 15:
-                        if (chkHRWFIS.IsChecked == true)
+                        if (radHRWFIS.IsChecked == true)
                         {
                             if (GetDataContextValue("HRWCop8") == 0)
                             {
@@ -1930,11 +1939,12 @@ namespace Wealthy_RPT
                             if (GetDataContextValue("HRWCop8") == 1)
                             {
                                 blnNST = true;
+                                strSegmentationState = "HRWCop8";
                             }
                         }
                         break;
                     case 16:
-                        if (chkTEAAvoidance.IsChecked == true)
+                        if (radTEAAvoidance.IsChecked == true)
                         {
                             if (GetDataContextValue("TEAAv") == 0)
                             {
@@ -1946,11 +1956,12 @@ namespace Wealthy_RPT
                             if (GetDataContextValue("TEAAv") == 1)
                             {
                                 blnNST = true;
+                                strSegmentationState = "TEAAv";
                             }
                         }
                         break;
                     case 17:
-                        if (chkTEACorporate.IsChecked == true)
+                        if (radTEACorporate.IsChecked == true)
                         {
                             if (GetDataContextValue("TEACorp") == 0)
                             {
@@ -1962,11 +1973,12 @@ namespace Wealthy_RPT
                             if (GetDataContextValue("TEACorp") == 1)
                             {
                                 blnNST = true;
+                                strSegmentationState = "TEACorp";
                             }
                         }
                         break;
                     case 18:
-                        if (chkTEADeceased.IsChecked == true)
+                        if (radTEADeceased.IsChecked == true)
                         {
                             if (GetDataContextValue("TEADecd") == 0)
                             {
@@ -1977,12 +1989,13 @@ namespace Wealthy_RPT
                         {
                             if (GetDataContextValue("TEADecd") == 1)
                             {
+                                strSegmentationState = "TEADecd";
                                 blnNST = true;
                             }
                         }
                         break;
                     case 19:
-                        if (chkTEAPenalty.IsChecked == true)
+                        if (radTEAPenalty.IsChecked == true)
                         {
                             if (GetDataContextValue("TEAPen") == 0)
                             {
@@ -1994,11 +2007,12 @@ namespace Wealthy_RPT
                             if (GetDataContextValue("TEAPen") == 1)
                             {
                                 blnNST = true;
+                                strSegmentationState = "TEAPen";
                             }
                         }
                         break;
                     case 20:
-                        if (chkTEABeneficiary.IsChecked == true)
+                        if (radTEABeneficiary.IsChecked == true)
                         {
                             if (GetDataContextValue("TEABenf") == 0)
                             {
@@ -2010,11 +2024,12 @@ namespace Wealthy_RPT
                             if (GetDataContextValue("TEABenf") == 1)
                             {
                                 blnNST = true;
+                                strSegmentationState = "TEABenf";
                             }
                         }
                         break;
                     case 21:
-                        if (chkTEADeemed.IsChecked == true)
+                        if (radTEADeemed.IsChecked == true)
                         {
                             if (GetDataContextValue("TEADd") == 0)
                             {
@@ -2026,11 +2041,12 @@ namespace Wealthy_RPT
                             if (GetDataContextValue("TEADd") == 1)
                             {
                                 blnNST = true;
+                                strSegmentationState = "TEADd";
                             }
                         }
                         break;
                     case 22:
-                        if (chkTEARedAmber.IsChecked == true)
+                        if (radTEARedAmber.IsChecked == true)
                         {
                             if (GetDataContextValue("TEARa") == 0)
                             {
@@ -2042,6 +2058,7 @@ namespace Wealthy_RPT
                             if (GetDataContextValue("TEARa") == 1)
                             {
                                 blnNST = true;
+                                strSegmentationState = "TEARa";
                             }
                         }
                         break;
@@ -2072,136 +2089,157 @@ namespace Wealthy_RPT
                     rpt.SectorFlag = cboSectorFlag.Text;
                     rpt.NationalFlag = cboNationalFlag.Text;
                     rpt.HRWFlag = cboHRWPFlag.Text;
-                    if (chkHRWUltraWealth.IsChecked == true)
+                    if (radHRWUltraWealth.IsChecked == true)
                     {
                         rpt.HRWUW = 1;
+                        strSegmentationState = "HRWUW";
                     }
                     else
                     {
                         rpt.HRWUW = 0;
                     }
-                    if (chkHRWComplex.IsChecked == true)
+                    if (radHRWComplex.IsChecked == true)
                     {
                         rpt.HRWComp = 1;
+                        strSegmentationState = "HRWComp";
                     }
                     else
                     {
                         rpt.HRWComp = 0;
                     }
-                    if (chkHRWEvasion.IsChecked == true)
+                    if (radHRWEvasion.IsChecked == true)
                     {
                         rpt.HRWErt = 1;
+                        strSegmentationState = "HRWErt";
                     }
                     else
                     {
                         rpt.HRWErt = 0;
                     }
-                    if (chkHRWAvoidance.IsChecked == true)
+                    if (radHRWAvoidance.IsChecked == true)
                     {
                         rpt.HRWAv = 1;
+                        strSegmentationState = "HRWAv";
                     }
                     else
                     {
                         rpt.HRWAv = 0;
                     }
-                    if (chkHRWComplexEvasion.IsChecked == true)
+                    if (radHRWComplexEvasion.IsChecked == true)
                     {
                         rpt.HRWCep = 1;
+                        strSegmentationState = "HRWCep";
                     }
                     else
                     {
                         rpt.HRWCep = 0;
                     }
-                    if (chkHRWSensitive.IsChecked == true)
+                    if (radHRWSensitive.IsChecked == true)
                     {
                         rpt.HRWSens = 1;
+                        strSegmentationState = "HRWSens";
                     }
                     else
                     {
                         rpt.HRWSens = 0;
                     }
-                    if (chkHRWDeliberate.IsChecked == true)
+                    if (radHRWDeliberate.IsChecked == true)
                     {
                         rpt.HRWPens = 1;
+                        strSegmentationState = "HRWPens";
                     }
                     else
                     {
                         rpt.HRWPens = 0;
                     }
-                    if (chkHRWBoundary.IsChecked == true)
+                    if (radHRWBoundary.IsChecked == true)
                     {
                         rpt.HRWBdries = 1;
+                        strSegmentationState = "HRWBdries";
                     }
                     else
                     {
                         rpt.HRWBdries = 0;
                     }
-                    if (chkHRWFIS.IsChecked == true)
+                    if (radHRWFIS.IsChecked == true)
                     {
                         rpt.HRWCop8 = 1;
+                        strSegmentationState = "HRWCop8";
                     }
                     else
                     {
                         rpt.HRWCop8 = 0;
                     }
-                    if (chkTEAAvoidance.IsChecked == true)
+                    if (radTEAAvoidance.IsChecked == true)
                     {
                         rpt.TEAAv = 1;
+                        strSegmentationState = "TEAAv";
                     }
                     else
                     {
                         rpt.TEAAv = 0;
                     }
-                    if (chkTEACorporate.IsChecked == true)
+                    if (radTEACorporate.IsChecked == true)
                     {
                         rpt.TEACorp = 1;
+                        strSegmentationState = "TEACorp";
                     }
                     else
                     {
                         rpt.TEACorp = 0;
                     }
-                    if (chkTEADeceased.IsChecked == true)
+                    if (radTEADeceased.IsChecked == true)
                     {
                         rpt.TEADecd = 1;
+                        strSegmentationState = "TEADecd";
                     }
                     else
                     {
                         rpt.TEADecd = 0;
                     }
-                    if (chkTEAPenalty.IsChecked == true)
+                    if (radTEAPenalty.IsChecked == true)
                     {
                         rpt.TEAPen = 1;
+                        strSegmentationState = "TEAPen";
                     }
                     else
                     {
                         rpt.TEAPen = 0;
                     }
-                    if (chkTEABeneficiary.IsChecked == true)
+                    if (radTEABeneficiary.IsChecked == true)
                     {
                         rpt.TEABenf = 1;
+                        strSegmentationState = "TEABenf";
                     }
                     else
                     {
                         rpt.TEABenf = 0;
                     }
-                    if (chkTEADeemed.IsChecked == true)
+                    if (radTEADeemed.IsChecked == true)
                     {
                         rpt.TEADd = 1;
+                        strSegmentationState = "TEADd";
                     }
                     else
                     {
                         rpt.TEADd = 0;
                     }
-                    if (chkTEARedAmber.IsChecked == true)
+                    if (radTEARedAmber.IsChecked == true)
                     {
                         rpt.TEARa = 1;
+                        strSegmentationState = "TEARa";
                     }
                     else
                     {
                         rpt.TEARa = 0;
                     }
+                    rpt.OldSegmentationState = txtOldSegmentationState.Text;
+                    rpt.NewSegmentationState = strSegmentationState.ToString();
                     rpt.UTR = Convert.ToDouble(txtUTR.Text);
-                    rpt.UpdateNSTData();
+                    if (rpt.UpdateNSTData())
+                    {
+                        txtOldSegmentationState.Text = strSegmentationState.ToString();
+                    }
                     blnRtn = true;
                 }
                 catch
@@ -2827,6 +2865,8 @@ namespace Wealthy_RPT
 
             dgRUH.ItemsSource = ds.Tables[1].DefaultView;
 
+            dgRSH.ItemsSource = ds.Tables[2].DefaultView;
+
             con.Close();
         }
 
@@ -3237,17 +3277,17 @@ namespace Wealthy_RPT
             }
         }
 
-        private void chkHRWUltraWealth_GotFocus(object sender, RoutedEventArgs e)
+        private void radHRWUltraWealth_GotFocus(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void chkHRWUltraWealth_Checked(object sender, RoutedEventArgs e)
+        private void radHRWUltraWealth_Checked(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void chkHRWUltraWealth_Unchecked(object sender, RoutedEventArgs e)
+        private void radHRWUltraWealth_Unchecked(object sender, RoutedEventArgs e)
         {
 
         }
@@ -3273,6 +3313,86 @@ namespace Wealthy_RPT
         private void txtDateEmailAuthority_GotFocus(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void radHRWUltraWealth_Click(object sender, RoutedEventArgs e)
+        {
+            cboStrand.SelectedValue = "High Risk Wealth";
+        }
+
+        private void radHRWComplex_Click(object sender, RoutedEventArgs e)
+        {
+            cboStrand.SelectedValue = "High Risk Wealth";
+        }
+
+        private void radHRWEvasion_Click(object sender, RoutedEventArgs e)
+        {
+            cboStrand.SelectedValue = "High Risk Wealth";
+        }
+
+        private void radHRWAvoidance_Click(object sender, RoutedEventArgs e)
+        {
+            cboStrand.SelectedValue = "High Risk Wealth";
+        }
+
+        private void radHRWComplexEvasion_Click(object sender, RoutedEventArgs e)
+        {
+            cboStrand.SelectedValue = "High Risk Wealth";
+        }
+
+        private void radHRWSensitive_Click(object sender, RoutedEventArgs e)
+        {
+            cboStrand.SelectedValue = "High Risk Wealth";
+        }
+
+        private void radHRWDeliberate_Click(object sender, RoutedEventArgs e)
+        {
+            cboStrand.SelectedValue = "High Risk Wealth";
+        }
+
+        private void radHRWBoundary_Click(object sender, RoutedEventArgs e)
+        {
+            cboStrand.SelectedValue = "High Risk Wealth";
+        }
+
+        private void radHRWFIS_Click(object sender, RoutedEventArgs e)
+        {
+            cboStrand.SelectedValue = "High Risk Wealth";
+        }
+
+        private void radTEAAvoidance_Click(object sender, RoutedEventArgs e)
+        {
+            cboStrand.SelectedValue = "Tax Events & Assurance";
+        }
+
+        private void radTEACorporate_Click(object sender, RoutedEventArgs e)
+        {
+            cboStrand.SelectedValue = "Tax Events & Assurance";
+        }
+
+        private void radTEADeceased_Click(object sender, RoutedEventArgs e)
+        {
+            cboStrand.SelectedValue = "Tax Events & Assurance";
+        }
+
+        private void radTEAPenalty_Click(object sender, RoutedEventArgs e)
+        {
+            cboStrand.SelectedValue = "Tax Events & Assurance";
+        }
+
+        private void radTEABeneficiary_Click(object sender, RoutedEventArgs e)
+        {
+            cboStrand.SelectedValue = "Tax Events & Assurance";
+        }
+
+        private void radTEADeemed_Click(object sender, RoutedEventArgs e)   
+        {
+            cboStrand.SelectedValue = "Tax Events & Assurance";
+        }
+
+        private void radTEARedAmber_Click(object sender, RoutedEventArgs e)
+        {
+            cboStrand.SelectedValue = "Tax Events & Assurance";
         }
     }
 

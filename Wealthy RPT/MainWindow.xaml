@@ -84,15 +84,18 @@
             <MenuItem x:Name="mnuRefresh" Header="Refresh" Height="24" Width="54" Click="MnuRefresh_Click"/>
             <MenuItem x:Name="mnuReports" Header="Reports" Height="24" Width="58" RenderTransformOrigin="-1.254,0.53">
                 <!--<MenuItem x:Name="mnuSimpleReports" Header="Adhoc Reports" InputGestureText="Ctrl+A" HorizontalAlignment="Left" Height="24" Width="222" Margin="0,0,-1,0" Click="mnuSimpleReports_Click"/>-->
-                <MenuItem x:Name="mnuStandardReports" Header="Standard Reports" InputGestureText="Ctrl+S" HorizontalAlignment="Left" Height="24" Width="222" Margin="0,0,-33,0" Click="mnuStandardReports_Click"/>
+                <MenuItem x:Name="mnuStandardReports" Header="Standard Reports" InputGestureText="Ctrl+S" HorizontalAlignment="Left" Height="24" Margin="0,0,0,0" Click="mnuStandardReports_Click"/>
             </MenuItem>
             <MenuItem x:Name="mnuAdmin" Header="Admin" Height="24" Width="56" RenderTransformOrigin="-1.134,0.48">
-                <MenuItem x:Name="mnuImportData" Header="Import Data" HorizontalAlignment="Left" Height="24" Width="211" Margin="0,0,0,0" Click="mnuImportData_Click"/>
+                <MenuItem x:Name="mnuImportData" Header="Import Data" HorizontalAlignment="Left" Height="24" Width="211" Margin="0,0,0,0" Click="mnuImportData_Click"/>                
                 <MenuItem x:Name="mnuPercCalculation" Header="Percentile Recalculation" HorizontalAlignment="Left" Height="24" Width="211" Margin="0,0,0,0" Click="mnuPercCalculation_Click"/>
                 <MenuItem x:Name="mnuUpdateDBTables" Header="Update DB Tables" HorizontalAlignment="Left" Height="24" Width="211" Margin="0,0,0,0" Click="mnuUpdateDBTables_Click"/>
             </MenuItem>
             <MenuItem x:Name="mnuUpdates" Header="Updates" Height="24" Width="62" RenderTransformOrigin="-1.114,0.58">
                 <MenuItem x:Name="mnuQuarterlyUpdate" Header="Quarterly Update" HorizontalAlignment="Left" Height="24" Width="182" Margin="0,0,0,0" Click="mnuQuarterlyUpdate_Click"/>
+                <Separator />
+                <MenuItem x:Name="mnuImportCH" Header="Import Case History" HorizontalAlignment="Left" Height="24" Margin="0,0,0,0" Click="mnuImportCH_Click"/>
+                <MenuItem x:Name="mnuImportUH" Header="Import Upstream History" HorizontalAlignment="Left" Height="24" Margin="0,0,0,0" Click="mnuImportUH_Click"/>
             </MenuItem>
             <MenuItem x:Name="mnuAbout" Header="About" Height="24" Width="52" Click="MnuAbout_Click"/>
             <MenuItem x:Name="mnuGuidance" Header="Links" Height="24" Width="71" >
@@ -124,9 +127,9 @@
         <Label x:Name="lblGoTo" Content="Go to page" HorizontalAlignment="Right" Height="26" Margin="0,52,82.5,0" VerticalAlignment="Top" Width="76" Grid.Column="3"/>
         <TextBox x:Name="txtGoTo" HorizontalAlignment="Right" Height="26" Margin="0,52,50.5,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38" VerticalContentAlignment="Center" Grid.Column="3"/>
         <Button x:Name="btnGoTo" Content="&gt;&gt;&gt;" HorizontalAlignment="Right" Height="25" Margin="0,52,3.5,0" VerticalAlignment="Top" Width="43" FontSize="16" FontFamily="Microsoft Sans Serif" ToolTip="Go to page" Click="btnGoTo_Click" Grid.Column="3" />
-        <Label x:Name="lblPopulation" Content="Population" HorizontalAlignment="Left" Height="25" Margin="128,105,0,0" VerticalAlignment="Top" Width="74" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <Label x:Name="lblPopulation" Content="Population" HorizontalAlignment="Left" Height="25" Margin="128,105,0,0" VerticalAlignment="Top" Width="74" Grid.ColumnSpan="2" Grid.Column="1" Visibility="Hidden"/>
         <ComboBox x:Name="cboYear" HorizontalAlignment="Left" Height="25" Margin="54,105,0,0" VerticalAlignment="Top" Width="59" SelectionChanged="cboYear_SelectionChanged" Grid.Column="1"/>
-        <ComboBox x:Name="cboPopulation" HorizontalAlignment="Left" Height="25" Margin="23.2,105,0,0" VerticalAlignment="Top" Width="126" SelectionChanged="cboPopulation_SelectionChanged" Grid.Column="2">
+        <ComboBox x:Name="cboPopulation" HorizontalAlignment="Left" Height="25" Margin="23.2,105,0,0" VerticalAlignment="Top" Width="126" SelectionChanged="cboPopulation_SelectionChanged" Grid.Column="2" Visibility="Hidden">
         </ComboBox>
         <Label x:Name="lblYear" Content="Year" HorizontalAlignment="Left" Height="25" Margin="16,105,0,0" VerticalAlignment="Top" Width="48" Grid.Column="1"/>
         <Button x:Name="btnFirstPage" Content="&lt;&lt;" HorizontalAlignment="Right" Height="25" Margin="0,105,327.5,0" VerticalAlignment="Top" Width="25" FontSize="16" FontFamily="Microsoft Sans Serif" ToolTip="First Page" Click="btnFirstPage_Click" Grid.Column="3"/>

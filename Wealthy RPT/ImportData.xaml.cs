@@ -217,7 +217,9 @@ namespace Wealthy_RPT
                     string ConStr;
                     string HDR;
                     HDR = "YES";
-                    ConStr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source="
+                    //ConStr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source="
+                    //    + fileFullPath + ";Extended Properties=\"Excel 8.0;HDR=" + HDR + ";IMEX=0\"";
+                    ConStr = "Provider=Microsoft.Ace.OLEDB.12.0;Data Source="
                         + fileFullPath + ";Extended Properties=\"Excel 8.0;HDR=" + HDR + ";IMEX=0\"";
                     OleDbConnection cnn = new OleDbConnection(ConStr);
 

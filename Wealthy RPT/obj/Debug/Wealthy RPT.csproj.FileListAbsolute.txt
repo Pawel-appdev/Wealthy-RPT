@@ -332,7 +332,6 @@ C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Wealt
 C:\Users\AT100444\Source\Repos\Wealthy-RPT2-20201124\Wealthy RPT\obj\Debug\Wealthy RPT.pdb
 C:\Users\AT100444\Source\Repos\Wealthy-RPT2\Wealthy RPT\bin\Debug\System.Windows.Controls.DataVisualization.Toolkit.dll
 C:\Users\AT100444\Source\Repos\Wealthy-RPT2\Wealthy RPT\bin\Debug\WPFToolkit.dll
-C:\Users\AT100444\Source\Repos\Wealthy-RPT2\Wealthy RPT\obj\Debug\Wealthy RPT.csprojAssemblyReference.cache
 C:\Users\AT100444\Source\Repos\Wealthy-RPT2\Wealthy RPT\obj\Debug\Interop.ADODB.dll
 C:\Users\AT100444\Source\Repos\Wealthy-RPT2\Wealthy RPT\obj\Debug\Interop.ADOR.dll
 C:\Users\AT100444\Source\Repos\Wealthy-RPT2\Wealthy RPT\obj\Debug\Interop.ADOX.dll
@@ -382,3 +381,16 @@ C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\obj\Debug\Wealthy Risk T
 C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\obj\Debug\Wealthy Risk Tool.g.resources
 C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\obj\Debug\Wealthy Risk Tool.exe
 C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\obj\Debug\Wealthy Risk Tool.pdb
+C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\obj\Debug\Interop.JRO.dll
+C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\obj\Debug\Interop.MSDAOSP.dll
+C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\obj\Debug\Interop.MSDASC.dll
+C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\bin\Debug\CsvHelper.dll
+C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\bin\Debug\System.Buffers.dll
+C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\bin\Debug\System.Memory.dll
+C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\bin\Debug\System.ValueTuple.dll
+C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\bin\Debug\CsvHelper.xml
+C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\bin\Debug\System.Buffers.xml
+C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\bin\Debug\System.Memory.xml
+C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\obj\Debug\Wealthy RPT.csproj.AssemblyReference.cache

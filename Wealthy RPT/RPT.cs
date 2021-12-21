@@ -123,8 +123,11 @@ namespace Wealthy_RPT
             private byte _teabenf;
             private byte _teadd;
             private byte _teara;
+            private string _oldsegmentationstate;
+            private string _newsegmentationstate;
             private DataTable _caseflowdata;
             private DataTable _upstreamdata;
+            private DataTable _segmentationhistory;
 
             #endregion
 
@@ -1320,6 +1323,30 @@ namespace Wealthy_RPT
                 }
             }
 
+            public string OldSegmentationState
+            {
+                get
+                {
+                    return _oldsegmentationstate;
+                }
+                set
+                {
+                    _oldsegmentationstate = value;
+                }
+            }
+
+            public string NewSegmentationState
+            {
+                get
+                {
+                    return _newsegmentationstate;
+                }
+                set
+                {
+                    _newsegmentationstate = value;
+                }
+            }
+
             public DataTable Upstream_Data
             {
                 get
@@ -1341,6 +1368,18 @@ namespace Wealthy_RPT
                 set
                 {
                     _caseflowdata = value;
+                }
+            }
+
+            public DataTable Segmentation_History
+            {
+                get
+                {
+                    return _segmentationhistory;
+                }
+                set
+                {
+                    _segmentationhistory = value;
                 }
             }
 
@@ -1566,7 +1605,8 @@ namespace Wealthy_RPT
                         bool blnTEADd = (dr["TEADd"] is DBNull) ? false : Convert.ToBoolean(dr["TEADd"]);
                         TEADd = Convert.ToByte(blnTEADd);
                         bool blnTEARa = (dr["TEARa"] is DBNull) ? false : Convert.ToBoolean(dr["TEARa"]);
-                        TEARa = Convert.ToByte(blnTEARa);                        
+                        TEARa = Convert.ToByte(blnTEARa);
+                        OldSegmentationState = (dr["OldState"] is DBNull) ? "" : dr["OldState"].ToString(); 
                     }
                     #endregion
                     else if (dr.HasRows == false)
@@ -2120,15 +2160,26 @@ namespace Wealthy_RPT
                     prm22.Value = TEADd;
                     SqlParameter prm23 = cmd.Parameters.Add("@nTEARa", SqlDbType.Bit);
                     prm23.Value = TEARa;
-                    SqlParameter prm24 = cmd.Parameters.Add("@oUTR", SqlDbType.Float);
-                    prm24.Value = UTR;                    
+                    SqlParameter prm24 = cmd.Parameters.Add("@oOldSegmentationState", SqlDbType.NVarChar);
+                    prm24.Value = OldSegmentationState;
+                    SqlParameter prm25 = cmd.Parameters.Add("@nNewSegmentationState", SqlDbType.NVarChar);
+                    prm25.Value = NewSegmentationState;
+                    SqlParameter prm26 = cmd.Parameters.Add("@oUTR", SqlDbType.Float);
+                    prm26.Value = UTR;                    
                     cmd.CommandTimeout = Global.TimeOut;
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (SqlException ex)
                 {
+                    Console.WriteLine(ex);
+                    con.Close();
+                    return false;
+                }
+                catch  (Exception ex)
+                {
+                    Console.WriteLine(ex);
                     con.Close();
                     return false;
                 }

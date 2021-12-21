@@ -1377,5 +1377,15 @@ namespace Wealthy_RPT
                 MessageBox.Show("Cannot open guidance link: " + strLink + ".", "Guidance", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
+
+        private void mnuImportCH_Click(object sender, RoutedEventArgs e)
+        {
+            bool importSuccess = ExPat_UI.Imports.ImportCH.ImportCaseflowHistory();
+        }
+
+        private void mnuImportUH_Click(object sender, RoutedEventArgs e)
+        {
+            bool importSuccess = ExPat_UI.Imports.ImportUH.ImportUpstreamHistory();
+        }
     }
 }

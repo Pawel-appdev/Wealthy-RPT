@@ -73,8 +73,8 @@
 
         <TabControl x:Name="tabRPD" HorizontalAlignment="Stretch" Margin="10,34,10,49">
             <!--#region Tab 01 : Customer-->
-            <TabItem  x:Name="pgCustomer" Header="Customer" Margin="-2,-2,-2,2">
-                <GroupBox x:Name="grpCustomer" Header="Customer" Margin="0,0,6,0" VerticalAlignment="Top" Height="650">
+            <TabItem  x:Name="pgCustomer" Header="Customer">
+                <GroupBox x:Name="grpCustomer" Header="Customer" Margin="0,4,-2,0" VerticalAlignment="Top" Height="650">
                     <StackPanel x:Name="pnlCustomer00" Margin="0,0,0,0">
                         <!--#region Customer Segment header row-->
                         <StackPanel x:Name="pnlCustomer01" Width="970" Margin="10,0,0,0" HorizontalAlignment="Left" Orientation="Horizontal">
@@ -641,7 +641,7 @@
                                 <ComboBox x:Name="cboRiskingOutcome" Grid.Row="2" Grid.Column="1" Margin="0,2,0,2" SelectedValue="{Binding HRWRiskingOutcome, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="cboRiskingOutcome_GotFocus"/>
                                 <TextBlock x:Name="lblHRWRemoval" Grid.Row="3" Grid.Column="0">Potential HRW Removal</TextBlock>
                                 <!--<ComboBox x:Name="cboHRWRemoval" Grid.Row="3" Grid.Column="1" Margin="0,2,0,2" SelectedValue="{Binding HRWRemoval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="cboHRWRemoval_GotFocus"/>-->
-                                <CheckBox x:Name="chkHRWRemoval" Grid.Row="3"  Grid.Column="1" VerticalAlignment="Center" IsChecked = "{Binding PotHRWRemoval, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
+                                <CheckBox x:Name="chkHRWRemoval" Grid.Row="3"  Grid.Column="1" VerticalAlignment="Center" IsChecked = "{Binding PotHRWRemoval, Mode = OneWay}" GotFocus="radHRWUltraWealth_GotFocus" >
                                     <CheckBox.Resources>
                                         <Style TargetType="{x:Type Path}">
                                             <Setter Property="FlowDirection" Value="LeftToRight"/>
@@ -654,6 +654,7 @@
                                 <ComboBox x:Name="cboNationalFlag" Grid.Row="5" Grid.Column="1" Margin="0,2,0,2" SelectedValue="{Binding NationalFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="cboNationalFlag_GotFocus"/>
                                 <TextBlock x:Name="lblHRWPFlag" Grid.Row="6" Grid.Column="0">HRWP Flag</TextBlock>
                                 <ComboBox x:Name="cboHRWPFlag" Grid.Row="6" Grid.Column="1" Margin="0,2,0,2" SelectedValue="{Binding HRWFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="cboHRWPFlag_GotFocus"/>
+                                <TextBox x:Name="txtOldSegmentationState" Grid.Column="4" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="1" Width="125" IsEnabled="False" Text = "{Binding OldSegmentationState, Mode = TwoWay}"/>
                             </Grid>
                         </StackPanel>
                         <!--#endregion panel: NST Overview-->
@@ -682,154 +683,160 @@
                                 <Rectangle Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="3" Fill="Aquamarine"></Rectangle>
                                 <TextBlock x:Name="lblHRWHeader" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" FontWeight="Bold" HorizontalAlignment="Center">High Risk Wealthy Characteristics</TextBlock>
                                 <!--<CheckBox x:Name="chkHRWUltraWealth" Grid.Row="2" Grid.Column="1">Ultra Wealth</CheckBox>-->
-                                <CheckBox x:Name="chkHRWUltraWealth" Grid.Row="2"  Grid.Column="1" IsChecked = "{Binding HRWUW, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
-                                    <CheckBox.Resources>
+                                <RadioButton x:Name="radHRWUltraWealth" Grid.Row="2"  Grid.Column="1" IsChecked = "{Binding HRWUW, Mode = OneWay}" Click="radHRWUltraWealth_Click" >
+                                    <RadioButton.Resources>
                                         <Style TargetType="{x:Type Path}">
                                             <Setter Property="FlowDirection" Value="LeftToRight"/>
                                         </Style>
-                                    </CheckBox.Resources> Ultra Wealth
-                                </CheckBox>
+                                    </RadioButton.Resources> Ultra Wealth
+                                </RadioButton>
                                 <!--<CheckBox x:Name="chkHRWComplex" Grid.Row="3" Grid.Column="1">Complex and/or Offshore Affairs</CheckBox>-->
-                                <CheckBox x:Name="chkHRWComplex" Grid.Row="3"  Grid.Column="1" IsChecked = "{Binding HRWComp, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
-                                    <CheckBox.Resources>
+                                <RadioButton x:Name="radHRWComplex" Grid.Row="3"  Grid.Column="1" IsChecked = "{Binding HRWComp, Mode = OneWay}" Click="radHRWComplex_Click" >
+                                    <RadioButton.Resources>
                                         <Style TargetType="{x:Type Path}">
                                             <Setter Property="FlowDirection" Value="LeftToRight"/>
                                         </Style>
-                                    </CheckBox.Resources> Complex and/or Offshore Affairs
-                                </CheckBox>
+                                    </RadioButton.Resources> Complex and/or Offshore Affairs
+                                </RadioButton>
                                 <!--<CheckBox x:Name="chkHRWEvasion" Grid.Row="4" Grid.Column="1">Evasion Referral Made</CheckBox>-->
-                                <CheckBox x:Name="chkHRWEvasion" Grid.Row="4"  Grid.Column="1" IsChecked = "{Binding HRWErt, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
-                                    <CheckBox.Resources>
+                                <RadioButton x:Name="radHRWEvasion" Grid.Row="4"  Grid.Column="1" IsChecked = "{Binding HRWErt, Mode = OneWay}" Click="radHRWEvasion_Click" >
+                                    <RadioButton.Resources>
                                         <Style TargetType="{x:Type Path}">
                                             <Setter Property="FlowDirection" Value="LeftToRight"/>
                                         </Style>
-                                    </CheckBox.Resources> Evasion Referral Made
-                                </CheckBox>
+                                    </RadioButton.Resources> Evasion Referral Made
+                                </RadioButton>
                                 <!--<CheckBox x:Name="chkHRWAvoidance" Grid.Row="5" Grid.Column="1">Avoidance User</CheckBox>-->
-                                <CheckBox x:Name="chkHRWAvoidance" Grid.Row="5"  Grid.Column="1" IsChecked = "{Binding HRWAv, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
-                                    <CheckBox.Resources>
+                                <RadioButton x:Name="radHRWAvoidance" Grid.Row="5"  Grid.Column="1" IsChecked = "{Binding HRWAv, Mode = OneWay}" Click="radHRWAvoidance_Click" >
+                                    <RadioButton.Resources>
                                         <Style TargetType="{x:Type Path}">
                                             <Setter Property="FlowDirection" Value="LeftToRight"/>
                                         </Style>
-                                    </CheckBox.Resources> Avoidance User
-                                </CheckBox>
+                                    </RadioButton.Resources> Avoidance User
+                                </RadioButton>
                                 <!--<CheckBox x:Name="chkHRWComplexEvasion" Grid.Row="6" Grid.Column="1">Complex Evasion Case</CheckBox>-->
-                                <CheckBox x:Name="chkHRWComplexEvasion" Grid.Row="6"  Grid.Column="1" IsChecked = "{Binding HRWCep, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
-                                    <CheckBox.Resources>
+                                <RadioButton x:Name="radHRWComplexEvasion" Grid.Row="6"  Grid.Column="1" IsChecked = "{Binding HRWCep, Mode = OneWay}" Click="radHRWComplexEvasion_Click" >
+                                    <RadioButton.Resources>
                                         <Style TargetType="{x:Type Path}">
                                             <Setter Property="FlowDirection" Value="LeftToRight"/>
                                         </Style>
-                                    </CheckBox.Resources> Complex Evasion Case
-                                </CheckBox>
+                                    </RadioButton.Resources> Complex Evasion Case
+                                </RadioButton>
                                 <!--<CheckBox x:Name="chkHRWSensitive" Grid.Row="2" Grid.Column="2">Sensitive Case</CheckBox>-->
-                                <CheckBox x:Name="chkHRWSensitive" Grid.Row="2"  Grid.Column="2" IsChecked = "{Binding HRWSens, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
-                                    <CheckBox.Resources>
+                                <RadioButton x:Name="radHRWSensitive" Grid.Row="2"  Grid.Column="2" IsChecked = "{Binding HRWSens, Mode = OneWay}" Click="radHRWSensitive_Click" >
+                                    <RadioButton.Resources>
                                         <Style TargetType="{x:Type Path}">
                                             <Setter Property="FlowDirection" Value="LeftToRight"/>
                                         </Style>
-                                    </CheckBox.Resources> Sensitive Case
-                                </CheckBox>
+                                    </RadioButton.Resources> Sensitive Case
+                                </RadioButton>
                                 <!--<CheckBox x:Name="chkHRWDeliberate" Grid.Row="3" Grid.Column="2">Deliberate Behaviours</CheckBox>-->
-                                <CheckBox x:Name="chkHRWDeliberate" Grid.Row="3"  Grid.Column="2" IsChecked = "{Binding HRWPens, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
-                                    <CheckBox.Resources>
+                                <RadioButton x:Name="radHRWDeliberate" Grid.Row="3"  Grid.Column="2" IsChecked = "{Binding HRWPens, Mode = OneWay}" Click="radHRWDeliberate_Click" >
+                                    <RadioButton.Resources>
                                         <Style TargetType="{x:Type Path}">
                                             <Setter Property="FlowDirection" Value="LeftToRight"/>
                                         </Style>
-                                    </CheckBox.Resources> Deliberate Behaviours
-                                </CheckBox>
+                                    </RadioButton.Resources> Deliberate Behaviours
+                                </RadioButton>
                                 <!--<CheckBox x:Name="chkHRWBoundary" Grid.Row="4" Grid.Column="2">Boundary Pusher</CheckBox>-->
-                                <CheckBox x:Name="chkHRWBoundary" Grid.Row="4"  Grid.Column="2" IsChecked = "{Binding HRWBdries, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
-                                    <CheckBox.Resources>
+                                <RadioButton x:Name="radHRWBoundary" Grid.Row="4"  Grid.Column="2" IsChecked = "{Binding HRWBdries, Mode = OneWay}" Click="radHRWBoundary_Click" >
+                                    <RadioButton.Resources>
                                         <Style TargetType="{x:Type Path}">
                                             <Setter Property="FlowDirection" Value="LeftToRight"/>
                                         </Style>
-                                    </CheckBox.Resources> Boundary Pusher
-                                </CheckBox>
+                                    </RadioButton.Resources> Boundary Pusher
+                                </RadioButton>
                                 <!--<CheckBox x:Name="chkHRWFIS" Grid.Row="5" Grid.Column="2">FIS COP 8 Case</CheckBox>-->
-                                <CheckBox x:Name="chkHRWFIS" Grid.Row="5"  Grid.Column="2" IsChecked = "{Binding HRWCop8, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
-                                    <CheckBox.Resources>
+                                <RadioButton x:Name="radHRWFIS" Grid.Row="5"  Grid.Column="2" IsChecked = "{Binding HRWCop8, Mode = OneWay}" Click="radHRWFIS_Click" >
+                                    <RadioButton.Resources>
                                         <Style TargetType="{x:Type Path}">
                                             <Setter Property="FlowDirection" Value="LeftToRight"/>
                                         </Style>
-                                    </CheckBox.Resources> FIS COP 8 Case
-                                </CheckBox>
+                                    </RadioButton.Resources> FIS COP 8 Case
+                                </RadioButton>
                                 <TextBlock x:Name="lblTEAHeader" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="3" FontWeight="Bold" HorizontalAlignment="Center">Tax Events &amp; Assurance Characteristics</TextBlock>
                                 <!--<CheckBox x:Name="chkTEAAvoidance" Grid.Row="2" Grid.Column="5">Avoidance User</CheckBox>-->
-                                <CheckBox x:Name="chkTEAAvoidance" Grid.Row="2"  Grid.Column="5" IsChecked = "{Binding TEAAv, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
-                                    <CheckBox.Resources>
+                                <RadioButton x:Name="radTEAAvoidance" Grid.Row="2"  Grid.Column="5" IsChecked = "{Binding TEAAv, Mode = OneWay}" Click="radTEAAvoidance_Click" >
+                                    <RadioButton.Resources>
                                         <Style TargetType="{x:Type Path}">
                                             <Setter Property="FlowDirection" Value="LeftToRight"/>
                                         </Style>
-                                    </CheckBox.Resources> Avoidance User
-                                </CheckBox>
+                                    </RadioButton.Resources> Avoidance User
+                                </RadioButton>
                                 <!--<CheckBox x:Name="chkTEACorporate" Grid.Row="3" Grid.Column="5">Corporate Partner</CheckBox>-->
-                                <CheckBox x:Name="chkTEACorporate" Grid.Row="3"  Grid.Column="5" IsChecked = "{Binding TEACorp, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
-                                    <CheckBox.Resources>
+                                <RadioButton x:Name="radTEACorporate" Grid.Row="3"  Grid.Column="5" IsChecked = "{Binding TEACorp, Mode = OneWay}" Click="radTEACorporate_Click" >
+                                    <RadioButton.Resources>
                                         <Style TargetType="{x:Type Path}">
                                             <Setter Property="FlowDirection" Value="LeftToRight"/>
                                         </Style>
-                                    </CheckBox.Resources> Corporate Partner
-                                </CheckBox>
+                                    </RadioButton.Resources> Corporate Partner
+                                </RadioButton>
                                 <!--<CheckBox x:Name="chkTEADeceased" Grid.Row="4" Grid.Column="5">Deceased Customer</CheckBox>-->
-                                <CheckBox x:Name="chkTEADeceased" Grid.Row="4"  Grid.Column="5" IsChecked = "{Binding TEADecd, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
-                                    <CheckBox.Resources>
+                                <RadioButton x:Name="radTEADeceased" Grid.Row="4"  Grid.Column="5" IsChecked = "{Binding TEADecd, Mode = OneWay}" Click="radTEADeceased_Click" >
+                                    <RadioButton.Resources>
                                         <Style TargetType="{x:Type Path}">
                                             <Setter Property="FlowDirection" Value="LeftToRight"/>
                                         </Style>
-                                    </CheckBox.Resources> Deceased Customer
-                                </CheckBox>
+                                    </RadioButton.Resources> Deceased Customer
+                                </RadioButton>
                                 <!--<CheckBox x:Name="chkTEAPenalty" Grid.Row="5" Grid.Column="5">Penalty Case</CheckBox>-->
-                                <CheckBox x:Name="chkTEAPenalty" Grid.Row="5"  Grid.Column="5" IsChecked = "{Binding TEAPen, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
-                                    <CheckBox.Resources>
+                                <RadioButton x:Name="radTEAPenalty" Grid.Row="5"  Grid.Column="5" IsChecked = "{Binding TEAPen, Mode = OneWay}" Click="radTEAPenalty_Click" >
+                                    <RadioButton.Resources>
                                         <Style TargetType="{x:Type Path}">
                                             <Setter Property="FlowDirection" Value="LeftToRight"/>
                                         </Style>
-                                    </CheckBox.Resources> Penalty Case
-                                </CheckBox>
+                                    </RadioButton.Resources> Penalty Case
+                                </RadioButton>
                                 <!--<CheckBox x:Name="chkTEABeneficiary" Grid.Row="6" Grid.Column="5">Beneficiary</CheckBox>-->
-                                <CheckBox x:Name="chkTEABeneficiary" Grid.Row="6"  Grid.Column="5" IsChecked = "{Binding TEABenf, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
-                                    <CheckBox.Resources>
+                                <RadioButton x:Name="radTEABeneficiary" Grid.Row="6"  Grid.Column="5" IsChecked = "{Binding TEABenf, Mode = OneWay}" Click="radTEABeneficiary_Click" >
+                                    <RadioButton.Resources>
                                         <Style TargetType="{x:Type Path}">
                                             <Setter Property="FlowDirection" Value="LeftToRight"/>
                                         </Style>
-                                    </CheckBox.Resources> Beneficiary
-                                </CheckBox>
+                                    </RadioButton.Resources> Beneficiary
+                                </RadioButton>
                                 <!--<CheckBox x:Name="chkTEADeemed" Grid.Row="2" Grid.Column="6">Deemed Dom</CheckBox>-->
-                                <CheckBox x:Name="chkTEADeemed" Grid.Row="2"  Grid.Column="6" IsChecked = "{Binding TEADd, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
-                                    <CheckBox.Resources>
+                                <RadioButton x:Name="radTEADeemed" Grid.Row="2"  Grid.Column="6" IsChecked = "{Binding TEADd, Mode = OneWay}" Click="radTEADeemed_Click" >
+                                    <RadioButton.Resources>
                                         <Style TargetType="{x:Type Path}">
                                             <Setter Property="FlowDirection" Value="LeftToRight"/>
                                         </Style>
-                                    </CheckBox.Resources> Deemed Dom
-                                </CheckBox>
+                                    </RadioButton.Resources> Deemed Dom
+                                </RadioButton>
                                 <!--<CheckBox x:Name="chkTEARedAmber" Grid.Row="3" Grid.Column="6">Red or Amber Case</CheckBox>-->
-                                <CheckBox x:Name="chkTEARedAmber" Grid.Row="3"  Grid.Column="6" IsChecked = "{Binding TEARa, Mode = OneWay}" GotFocus="chkHRWUltraWealth_GotFocus" >
-                                    <CheckBox.Resources>
+                                <RadioButton x:Name="radTEARedAmber" Grid.Row="3"  Grid.Column="6" IsChecked = "{Binding TEARa, Mode = OneWay}" Click="radTEARedAmber_Click" >
+                                    <RadioButton.Resources>
                                         <Style TargetType="{x:Type Path}">
                                             <Setter Property="FlowDirection" Value="LeftToRight"/>
                                         </Style>
-                                    </CheckBox.Resources> Red or Amber Case
-                                </CheckBox>
+                                    </RadioButton.Resources> Red or Amber Case
+                                </RadioButton>
                             </Grid>
                         </StackPanel>
                         <!--#endregion panel: Checkboxes-->
                         <!--#region panel: History-->
                         <StackPanel x:Name="pnlNST03" Margin="10,0,0,0" HorizontalAlignment="Left" Orientation="Horizontal">
-                            <Grid x:Name="xgrdNST03" Width="980">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="10"/>
-                                    <ColumnDefinition Width="240*"/>
-                                    <ColumnDefinition Width="240*"/>
-                                    <ColumnDefinition Width="10"/>
-                                    <ColumnDefinition Width="10"/>
-                                    <ColumnDefinition Width="240*"/>
-                                    <ColumnDefinition Width="240*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="25"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock x:Name="lblHRWHeaderDummy" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" FontWeight="Bold" HorizontalAlignment="Center">Placeholder for History Data - Data Grid?</TextBlock>
-                            </Grid>
+                            <GroupBox x:Name="grpSH" Header="Segmentation History" HorizontalAlignment="Left" Margin="5,4,0,0" VerticalAlignment="Top" Height="150" Width="1000">
+                                <StackPanel x:Name="pnlRSH00" >
+                                    <!--#region panel: RH-->
+                                    <!--#region panel: RCH-->
+                                    <StackPanel x:Name="pnlRSH01" Margin="10,10,0,10" HorizontalAlignment="Left" Orientation="Horizontal">
+                                        <DataGrid x:Name="dgRSH" Height="108" VerticalAlignment="Top" AutoGenerateColumns="False" VerticalGridLinesBrush="#FFD1D1D1" HorizontalGridLinesBrush="#FFD1D1D1" SelectionMode="Single" IsReadOnly="True" RowHeaderWidth="0" >
+                                            <DataGrid.Resources>
+                                                <!--color of selected row-->
+                                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#8080FF" />
+                                            </DataGrid.Resources>
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="New State" Binding="{Binding SHNewState, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                                                <DataGridTextColumn Header="Old State" Binding="{Binding SHOldState, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                                                <DataGridTextColumn Header="Date Changed" Binding="{Binding SHDateChanged, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </StackPanel>
+                                    <!--#endregion panel: RSH-->
+                                    <!--#endregion panel: RSH-->
+                                </StackPanel>
+                            </GroupBox>
                         </StackPanel>
                         <!--#endregion panel: History-->
                     </StackPanel>
@@ -840,9 +847,10 @@
             <TabItem x:Name="pgRecentHistory" Header="Recent History">
                 <GroupBox x:Name="grpRH" Header="Recent History" HorizontalAlignment="Left" Margin="5,4,0,0" VerticalAlignment="Top" Height="580" Width="1000">
                     <StackPanel x:Name="pnlRH00" >
+                        <Label x:Name="lblRCH" Content="Recent Caseflow History" />
                         <!--#region panel: RH-->
                         <!--#region panel: RCH-->
-                        <StackPanel x:Name="pnlRCH01" Margin="10,10,0,10" HorizontalAlignment="Left" Orientation="Horizontal">
+                        <StackPanel x:Name="pnlRCH01" Margin="10,10,0,10" HorizontalAlignment="Left" Orientation="Horizontal">                            
                             <DataGrid x:Name="dgRCH" Height="108" VerticalAlignment="Top" AutoGenerateColumns="False" VerticalGridLinesBrush="#FFD1D1D1" HorizontalGridLinesBrush="#FFD1D1D1" SelectionMode="Single" IsReadOnly="True" RowHeaderWidth="0" >
                                 <DataGrid.Resources>
                                     <!--color of selected row-->
@@ -857,6 +865,7 @@
                         </StackPanel>
                         <!--#endregion panel: RCH-->
                         <StackPanel x:Name="pnlRCH02" Margin="10,10,0,0" HorizontalAlignment="Left" Orientation="Horizontal">
+                            <Label x:Name="lblRUH" Content="Recent Upstream History" />
                         </StackPanel>
                         <!--#region panel: RUH-->
                         <StackPanel x:Name="pnlRH03" Margin="10,10,0,10" HorizontalAlignment="Left" Orientation="Horizontal">
@@ -1009,7 +1018,7 @@
         <!--#region Form Footer-->
         <StackPanel x:Name="pnlFormFooter" Orientation="Horizontal">
 
-            <Grid Width="850">
+            <Grid Width="1020">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="113*"/>
                     <ColumnDefinition Width="136*"/>

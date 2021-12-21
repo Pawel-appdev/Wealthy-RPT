@@ -89,18 +89,19 @@ namespace Wealthy_RPT
                 Thread.Sleep(1000);
             }
 
-            splashWindow.SetProgress("Checking Daily Recalculation");
-            Thread.Sleep(1000);
-            if (Global.DailyRecalc != DateTime.Now.ToString("dd/MM/yyyy"))
-            {
-                //MessageBox.Show( Global.DailyRecalc + ":" + DateTime.Now.ToString("dd/MM/yyyy"), Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
-                splashWindow.SetProgress("Performing Daily Recalculation");
-                if (PerformDailyRecalc()==false)
-                {
-                    MessageBox.Show("Failure to perform daily recalculation.  Please report to CADD.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                Thread.Sleep(1000);
-            }
+            //Removed 08/12/2021 as Scoring no longer required
+            //splashWindow.SetProgress("Checking Daily Recalculation");
+            //Thread.Sleep(1000);
+            //if (Global.DailyRecalc != DateTime.Now.ToString("dd/MM/yyyy"))
+            //{
+            //    //MessageBox.Show( Global.DailyRecalc + ":" + DateTime.Now.ToString("dd/MM/yyyy"), Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information);
+            //    splashWindow.SetProgress("Performing Daily Recalculation");
+            //    if (PerformDailyRecalc()==false)
+            //    {
+            //        MessageBox.Show("Failure to perform daily recalculation.  Please report to CADD.", Global.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Error);
+            //    }
+            //    Thread.Sleep(1000);
+            //}
 
             splashWindow.SetProgress("Loading Application");
             Thread.Sleep(1500);
