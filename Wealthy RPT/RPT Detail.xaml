@@ -7,7 +7,7 @@
         xmlns:DV="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"  
         xmlns:dvc="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
         mc:Ignorable="d"
-        Title="WRT Detail" Height="800" Width="1050" Icon="WRT32V1.ico" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Language="en-GB">
+        Title="CMT Detail" Height="800" Width="1050" Icon="CMTIcon (32).ico" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Language="en-GB">
 
     <Window.Resources>
 
@@ -59,19 +59,24 @@
     </Window.Resources>
 
     <Grid>
-        <Menu x:Name="menu" HorizontalAlignment="Stretch" Height="24" VerticalAlignment="Top" Grid.ColumnSpan="5" Margin="0,0,-0.4,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="385*"/>
+            <ColumnDefinition Width="657*"/>
+        </Grid.ColumnDefinitions>
+        <Menu x:Name="menu" HorizontalAlignment="Stretch" Height="24" VerticalAlignment="Top" Grid.ColumnSpan="2">
             <MenuItem x:Name="mnuGuidance" Header="Links" Height="24" >
                 <!--<MenuItem x:Name="mnuWRTGuidance" Header="WRT Guidance" Height="24" Click="mnuWRTGuidance_Click"/>
                 <MenuItem x:Name="mnuTechnicalGuidance" Header="Technical Guidance" Height="24" Click="mnuTechnicalGuidance_Click" />-->
-            </MenuItem>            
+            </MenuItem>
             <MenuItem x:Name="mnuSharePoint" Header="SharePoint Links" Height="24" >
-                <MenuItem x:Name="mnuYearMinus2" Header="" Height="24" Width="Auto"/>
-                <MenuItem x:Name="mnuYearMinus1" Header="" Height="24" Width="Auto"/>
-                <MenuItem x:Name="mnuCurrentYear" Header="" Height="24" Width="Auto"/>              
+                <MenuItem x:Name="mnuRoot" Header="SharePoint Default" Height="24" Width="Auto" Click="mnuRoot_Click"/>                
+                <MenuItem x:Name="mnuCurrentYear" Header="" Height="24" Width="Auto" Click="mnuCurrentYear_Click"/>                
+                <MenuItem x:Name="mnuYearMinus1" Header="" Height="24" Width="Auto" Click="mnuYearMinus1_Click"/>
+                <MenuItem x:Name="mnuYearMinus2" Header="" Height="24" Width="Auto" Click="mnuYearMinus2_Click"/>
             </MenuItem>
         </Menu>
 
-        <TabControl x:Name="tabRPD" HorizontalAlignment="Stretch" Margin="10,34,10,49">
+        <TabControl x:Name="tabRPD" HorizontalAlignment="Stretch" Margin="10,34,10,49" Grid.ColumnSpan="2">
             <!--#region Tab 01 : Customer-->
             <TabItem  x:Name="pgCustomer" Header="Customer">
                 <GroupBox x:Name="grpCustomer" Header="Customer" Margin="0,4,-2,0" VerticalAlignment="Top" Height="650">
@@ -309,15 +314,15 @@
                                                 <DataGridTextColumn Header="Date Added" Binding="{Binding Contact_Date_Added, Mode=TwoWay, StringFormat=dd MMM yyy, UpdateSourceTrigger=PropertyChanged}" Width="90"/>
                                             </DataGrid.Columns>
                                         </DataGrid>
-                                        <Grid x:Name="grdEmailContacts" Width="460" Margin=" -220,0,0,0">
+                                        <Grid x:Name="grdEmailContacts" Width="385" Margin=" -220,0,0,0">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="120*"/>
-                                                <ColumnDefinition Width="355*"/>
-                                                <ColumnDefinition Width="75*"/>
+                                                <ColumnDefinition Width="13*"/>
+                                                <ColumnDefinition Width="14*"/>
                                                 <ColumnDefinition Width="18*"/>
-                                                <ColumnDefinition Width="155*"/>
-                                                <ColumnDefinition Width="90*"/>
-                                                <ColumnDefinition Width="38*"/>
+                                                <ColumnDefinition Width="6*"/>
+                                                <ColumnDefinition Width="16*"/>
+                                                <ColumnDefinition Width="21*"/>
+                                                <ColumnDefinition Width="4*"/>
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto"/>
@@ -325,16 +330,16 @@
                                                 <RowDefinition/>
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
-                                            <TextBlock x:Name="lblEmail" Grid.Row="0" Grid.Column="0" FontSize="16" Margin="0,0,75,0" Grid.ColumnSpan="2"><Run Text="Email Contacts"/><InlineUIContainer/></TextBlock>
-                                            <TextBlock x:Name="lblPopFields" Margin="0,5,10,0" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" Width="125" Grid.ColumnSpan="2" Visibility="Hidden"><Run Text="CADD Populated Fields" IsEnabled="False"/></TextBlock>
+                                            <TextBlock x:Name="lblEmail" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" FontSize="16"><Run Text="Email Contacts"/><InlineUIContainer/></TextBlock>
+                                            <TextBlock x:Name="lblPopFields" Margin="0,5,10,0" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" Width="125" Visibility="Hidden" Grid.ColumnSpan="2"><Run Text="CADD Populated Fields" IsEnabled="False"/></TextBlock>
                                             <TextBox x:Name="txtPopFields" Margin="10,1,0,0" Grid.Row="0" Grid.Column="4" Background="#339966" IsEnabled="False" Visibility="Hidden" />
-                                            <Button x:Name="cmdEmailAdd" Grid.Row="1" Grid.Column="0" Width="60" Height="30" Margin="0,5,4,5" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailAdd_GotFocus" Click="cmdEmailAdd_Click">
+                                            <Button x:Name="cmdEmailAdd" Grid.Row="1" Grid.Column="0" Margin="0,5,5,5" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailAdd_GotFocus" Click="cmdEmailAdd_Click">
                                                 <TextBlock Text="Add" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Add" />
                                             </Button>
-                                            <Button x:Name="cmdEmailUpdate" Grid.Row="2"  Grid.Column="0" Width="60" Height="30" Margin="0,5,4,5" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailUpdate_GotFocus" Click="cmdEmailUpdate_Click">
+                                            <Button x:Name="cmdEmailUpdate" Grid.Row="2"  Grid.Column="0" Margin="0,5,5,5" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailUpdate_GotFocus" Click="cmdEmailUpdate_Click">
                                                 <TextBlock Text="Update" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Update" />
                                             </Button>
-                                            <Button x:Name="cmdEmailDelete" Grid.Row="3"  Grid.Column="0" Width="60" Height="30" Margin="0,5,4,11" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailDelete_GotFocus" Click="cmdEmailDelete_Click">
+                                            <Button x:Name="cmdEmailDelete" Grid.Row="3"  Grid.Column="0" Margin="0,5,5,11" Style="{StaticResource 3DButtonStyle}" GotFocus="CmdEmailDelete_GotFocus" Click="cmdEmailDelete_Click">
                                                 <TextBlock Text="Delete" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Delete" />
                                             </Button>
                                         </Grid>
@@ -654,7 +659,7 @@
                                 <ComboBox x:Name="cboNationalFlag" Grid.Row="5" Grid.Column="1" Margin="0,2,0,2" SelectedValue="{Binding NationalFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="cboNationalFlag_GotFocus"/>
                                 <TextBlock x:Name="lblHRWPFlag" Grid.Row="6" Grid.Column="0">HRWP Flag</TextBlock>
                                 <ComboBox x:Name="cboHRWPFlag" Grid.Row="6" Grid.Column="1" Margin="0,2,0,2" SelectedValue="{Binding HRWFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="cboHRWPFlag_GotFocus"/>
-                                <TextBox x:Name="txtOldSegmentationState" Grid.Column="4" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="1" Width="125" IsEnabled="False" Text = "{Binding OldSegmentationState, Mode = TwoWay}"/>
+                                <TextBox x:Name="txtOldSegmentationState" Grid.Column="4" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="1" Width="125" IsEnabled="False" Text = "{Binding OldSegmentationState, Mode = TwoWay}" Visibility="Hidden"/>
                             </Grid>
                         </StackPanel>
                         <!--#endregion panel: NST Overview-->
@@ -816,7 +821,7 @@
                         <!--#endregion panel: Checkboxes-->
                         <!--#region panel: History-->
                         <StackPanel x:Name="pnlNST03" Margin="10,0,0,0" HorizontalAlignment="Left" Orientation="Horizontal">
-                            <GroupBox x:Name="grpSH" Header="Segmentation History" HorizontalAlignment="Left" Margin="5,4,0,0" VerticalAlignment="Top" Height="150" Width="1000">
+                            <GroupBox x:Name="grpSH" Header="Segmentation History" HorizontalAlignment="Left" Margin="5,4,0,0" VerticalAlignment="Top" Height="150">
                                 <StackPanel x:Name="pnlRSH00" >
                                     <!--#region panel: RH-->
                                     <!--#region panel: RCH-->
@@ -844,13 +849,13 @@
             </TabItem>
             <!--#endregion Tab 04 : NST-->
             <!--#region Tab 05 : NST-->
-            <TabItem x:Name="pgRecentHistory" Header="Recent History">
-                <GroupBox x:Name="grpRH" Header="Recent History" HorizontalAlignment="Left" Margin="5,4,0,0" VerticalAlignment="Top" Height="580" Width="1000">
+            <TabItem x:Name="pgRecentHistory" Header="History">
+                <GroupBox x:Name="grpRH" Header="History" HorizontalAlignment="Left" Margin="5,4,0,0" VerticalAlignment="Top" Height="580" Width="1000">
                     <StackPanel x:Name="pnlRH00" >
                         <Label x:Name="lblRCH" Content="Recent Caseflow History" />
                         <!--#region panel: RH-->
                         <!--#region panel: RCH-->
-                        <StackPanel x:Name="pnlRCH01" Margin="10,10,0,10" HorizontalAlignment="Left" Orientation="Horizontal">                            
+                        <StackPanel x:Name="pnlRCH01" Margin="10,10,0,10" HorizontalAlignment="Left" Orientation="Horizontal">
                             <DataGrid x:Name="dgRCH" Height="108" VerticalAlignment="Top" AutoGenerateColumns="False" VerticalGridLinesBrush="#FFD1D1D1" HorizontalGridLinesBrush="#FFD1D1D1" SelectionMode="Single" IsReadOnly="True" RowHeaderWidth="0" >
                                 <DataGrid.Resources>
                                     <!--color of selected row-->
@@ -882,6 +887,24 @@
                             </DataGrid>
                         </StackPanel>
                         <!--#endregion panel: RUH-->
+                        <StackPanel x:Name="pnlCRH01" Margin="10,10,0,0" HorizontalAlignment="Left" Orientation="Horizontal">
+                            <Label x:Name="lblCRH" Content="CRMM Risk History" />
+                        </StackPanel>
+                        <!--#region panel: CRH-->
+                        <StackPanel x:Name="pnlCRH02" Margin="10,10,0,10" HorizontalAlignment="Left" Orientation="Horizontal">
+                            <DataGrid x:Name="dgCRH" Height="108" VerticalAlignment="Top" AutoGenerateColumns="False" VerticalGridLinesBrush="#FFD1D1D1" HorizontalGridLinesBrush="#FFD1D1D1" SelectionMode="Single" IsReadOnly="True" RowHeaderWidth="0" >
+                                <DataGrid.Resources>
+                                    <!--color of selected row-->
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#8080FF" />
+                                </DataGrid.Resources>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Risk ID" Binding="{Binding CRMMRiskID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                                    <DataGridTextColumn Header="Risk Status" Binding="{Binding CRMMRiskStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                                    <DataGridTextColumn Header="Date Settled" Binding="{Binding CRMMRiskSettled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                        <!--#endregion panel: CRH-->
                         <!--#endregion panel: RH-->
                     </StackPanel>
                 </GroupBox>
@@ -1016,7 +1039,7 @@
         </TabControl>
 
         <!--#region Form Footer-->
-        <StackPanel x:Name="pnlFormFooter" Orientation="Horizontal">
+        <StackPanel x:Name="pnlFormFooter" Orientation="Horizontal" Grid.ColumnSpan="2">
 
             <Grid Width="1020">
                 <Grid.ColumnDefinitions>

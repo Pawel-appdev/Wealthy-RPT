@@ -394,3 +394,4 @@ C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\bin\Debug\System.Buffers
 C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\bin\Debug\System.Memory.xml
 C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\obj\Debug\Wealthy RPT.csproj.AssemblyReference.cache
+C:\Users\AT100444\source\repos\Wealthy-RPT2\Wealthy RPT\obj\Debug\Interop.GrooveAPIPrivate.dll

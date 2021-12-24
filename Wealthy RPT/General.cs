@@ -83,6 +83,7 @@ namespace Wealthy_RPT
         private static string _dailyRecalc;
         private static string _annualUpdate;
         private static string _defaultImportFolder;
+        private static string _defaultsharepointlocation;
         private static string _guidanceFile;
         private static string _technicalFile;
         private static bool _admin;
@@ -312,6 +313,18 @@ namespace Wealthy_RPT
             set
             {
                 _defaultImportFolder = value;
+            }
+        }
+
+        public static string DefaultSharepointLocation
+        {
+            get
+            {
+                return _defaultsharepointlocation;
+            }
+            set
+            {
+                _defaultsharepointlocation = value;
             }
         }
 

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wealthy_RPT"
         mc:Ignorable="d"
-        Title="WRT Standard Reports" Height="470" Width="700" Icon="WRT32V1.ico">
+        Title="CMT Standard Reports" Height="470" Width="700" Icon="CMTIcon (32).ico">
     <Window.Resources>
         <!--data grid column header style-->
         <Style x:Key="CenterGridHeaderStyle" TargetType="DataGridColumnHeader">

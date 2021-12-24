@@ -1389,7 +1389,7 @@ namespace Wealthy_RPT
             {
                 if (GetCustomerData(dblUTR) == false)
                 {
-                    MessageBox.Show("Problem loading Customer Data.", "WRT Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Problem loading Customer Data.", "CMT Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return false;
                 }
 

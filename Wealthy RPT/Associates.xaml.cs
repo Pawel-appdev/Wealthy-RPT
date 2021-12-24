@@ -55,7 +55,7 @@ namespace Wealthy_RPT
             }
             catch
             {
-                MessageBox.Show("Unable to connect to database" + "\n" + "Association types have not been populated", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Unable to connect to database" + "\n" + "Association types have not been populated", "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
@@ -109,7 +109,7 @@ namespace Wealthy_RPT
         }
             catch
             {
-            MessageBox.Show("Associate's details have not been added", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            MessageBox.Show("Associate's details have not been added", "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
 }
 
@@ -143,7 +143,7 @@ namespace Wealthy_RPT
             }
             catch
             {
-                MessageBox.Show("Associate's details have not been updated", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("Associate's details have not been updated", "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
     }

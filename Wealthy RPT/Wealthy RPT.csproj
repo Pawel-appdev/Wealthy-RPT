@@ -106,6 +106,7 @@
     <Compile Include="DeleteYear.xaml.cs">
       <DependentUpon>DeleteYear.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ImportCRH.cs" />
     <Compile Include="ImportData.xaml.cs">
       <DependentUpon>ImportData.xaml</DependentUpon>
     </Compile>
@@ -348,6 +349,15 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+    <COMReference Include="GrooveAPIPrivate">
+      <Guid>{7E36E7CB-14FB-4F9E-B597-693CE6305ADC}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
     <COMReference Include="JRO">
       <Guid>{AC3B8B4C-B6CA-11D1-9F31-00C04FC29D52}</Guid>
       <VersionMajor>2</VersionMajor>
@@ -411,6 +421,15 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="CMT.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="CMTIcon %2832%29.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,10 +7,10 @@
         mc:Ignorable="d"
         Title="About" Height="277.765" Width="662.611" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="NoResize" ShowInTaskbar="False" Background="Turquoise" WindowStyle="ToolWindow" >
     <Grid>
-        <Label x:Name="lblApplicationName" Content="Wealthy Risk Tool" Height="59" Margin="164,32,73.496,0" VerticalAlignment="Top" Width="auto" FontSize="36" HorizontalContentAlignment="Center" Foreground="White"/>
-        <Image x:Name="imgLogo" ToolTip="Click here to re-install" HorizontalAlignment="Left" Height="88" Margin="60,32,0,0" VerticalAlignment="Top" Width="99" Source="Resources/Images/WrtLogo128t2.png" MouseDown="ImgLogo_MouseDown" IsEnabled="True"/>
+        <Label x:Name="lblApplicationName" Content="Customer Management Tool" Height="45" Margin="135,45,37,0" VerticalAlignment="Top" Width="auto" FontSize="24" HorizontalContentAlignment="Center" Foreground="White"/>
+        <Image x:Name="imgLogo" ToolTip="Click here to re-install" HorizontalAlignment="Left" Height="78" Margin="10,32,0,0" VerticalAlignment="Top" Width="120" Source="CMT.png" MouseDown="ImgLogo_MouseDown" IsEnabled="True"/>
         <StackPanel>
-            <Label x:Name="lblVersion" Content="Version 0.0.0.0" Margin="184,100,88,1" Width="auto" Foreground="White" HorizontalContentAlignment="Center" Background="Turquoise"/>
+            <Label x:Name="lblVersion" Content="Version 0.0.0.0" Margin="170,100,88,1" Width="auto" Foreground="White" HorizontalContentAlignment="Center" Background="Turquoise"/>
             <Label x:Name="lblBDAppNumber" Content="lblBDAppNumber" Margin="10,0,10,0" Foreground="White" Background="Turquoise"/>
             <Label x:Name="lblBDAppName" Content="lblBDAppName" Margin="10,0,10,0" Width="auto" Foreground="White" Background="Turquoise"/>
             <Label x:Name="lblResolver" Content="lblResolver" Margin="10,0,10,0" Width="auto" Foreground="White" Background="Turquoise"/>

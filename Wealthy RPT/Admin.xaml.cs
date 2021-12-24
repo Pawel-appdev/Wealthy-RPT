@@ -84,7 +84,7 @@ namespace Wealthy_RPT
             }
             catch
             {
-                MessageBox.Show("Select the correct value from the drop down list", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Select the correct value from the drop down list", "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             
 
@@ -445,7 +445,7 @@ namespace Wealthy_RPT
             catch(Exception ex)
             {
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
-                MessageBox.Show(ex.ToString(),"Wealthy Risk Tool",MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.ToString(),"Customer Management Tool",MessageBoxButton.OK, MessageBoxImage.Error);
             }
             System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
         }

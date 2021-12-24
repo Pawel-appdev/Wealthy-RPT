@@ -64,6 +64,7 @@ namespace Wealthy_RPT
             Global.AnnualUpdate = iniGlobal.IniReadValue("System", "LastAnnualUpdate");
             Global.DefaultImportFolder = iniGlobal.IniReadValue("System", "DefaultImportFolder");
             Global.DefaultImportFolder = Global.DefaultImportFolder == "" ? "C:\\" : Global.DefaultImportFolder;
+            Global.DefaultSharepointLocation = iniGlobal.IniReadValue("System", "DefaultSharePoint");
             Global.GuidanceFile =  iniGlobal.IniReadValue("AppDetails", "Guidance");
             Global.TechnicalFile = iniGlobal.IniReadValue("AppDetails", "TechnicalGuide");
 

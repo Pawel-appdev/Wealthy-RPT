@@ -215,7 +215,7 @@ namespace Wealthy_RPT
                     catch
                     {
                         Cursor = Cursors.Arrow;
-                        MessageBox.Show("Problem running report query: '" + StoredProcedureName + "'.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        MessageBox.Show("Problem running report query: '" + StoredProcedureName + "'.", "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                         return;
                     }
 
@@ -251,7 +251,7 @@ namespace Wealthy_RPT
                             catch
                             {
                                 Cursor = Cursors.Arrow;
-                                MessageBox.Show("Problem with the report template.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation );
+                                MessageBox.Show("Problem with the report template.", "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation );
                                 oexcel.Quit();
                                 return;
                             }
@@ -288,7 +288,7 @@ namespace Wealthy_RPT
                     {
                         Cursor = Cursors.Arrow;
                         MessageBox.Show("Problem with the report." + Environment.NewLine
-                            + Environment.NewLine + ex.Message, "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                            + Environment.NewLine + ex.Message, "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
                     }
 
@@ -305,7 +305,7 @@ namespace Wealthy_RPT
                 }
             }
             Cursor = Cursors.Arrow;
-            MessageBox.Show("Report function has finished running.","Wealthy Risk Tool",MessageBoxButton.OK,MessageBoxImage.Information);
+            MessageBox.Show("Report function has finished running.","Customer Management Tool",MessageBoxButton.OK,MessageBoxImage.Information);
             this.Close();
         }
     }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wealthy_RPT"
         mc:Ignorable="d"
-        Title="" Height="326" Width="641.6" WindowStartupLocation="CenterScreen" Icon="WRT32V1.ico">
+        Title="" Height="326" Width="641.6" WindowStartupLocation="CenterScreen" Icon="CMTIcon (32).ico">
 
     <Window.Resources>
         <SolidColorBrush x:Key="LightGreyBrush" Color="#c0c0c0"/>

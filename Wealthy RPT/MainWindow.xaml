@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wealthy_RPT"
         mc:Ignorable="d"
-        Title="Wealthy Risk Tool" Height="700" MinHeight="300" Width="1300" MinWidth="1100" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="WRT32V1.ico"
+        Title="Customer Management Tool" Height="700" MinHeight="300" Width="1300" MinWidth="1100" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="CMTIcon (32).ico"
         KeyDown="MainWindow_KeyDown" Closing="Refresh_Cases">
 
     <Window.Background>
@@ -96,6 +96,7 @@
                 <Separator />
                 <MenuItem x:Name="mnuImportCH" Header="Import Case History" HorizontalAlignment="Left" Height="24" Margin="0,0,0,0" Click="mnuImportCH_Click"/>
                 <MenuItem x:Name="mnuImportUH" Header="Import Upstream History" HorizontalAlignment="Left" Height="24" Margin="0,0,0,0" Click="mnuImportUH_Click"/>
+                <MenuItem x:Name="mnuImportCRH" Header="Import CRMM Risk History" HorizontalAlignment="Left" Height="24" Margin="0,0,0,0" Click="mnuImportCRH_Click"/>
             </MenuItem>
             <MenuItem x:Name="mnuAbout" Header="About" Height="24" Width="52" Click="MnuAbout_Click"/>
             <MenuItem x:Name="mnuGuidance" Header="Links" Height="24" Width="71" >

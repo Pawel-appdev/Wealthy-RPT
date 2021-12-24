@@ -1216,7 +1216,7 @@ namespace Wealthy_RPT
             {
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
                 rptDetail.Close();
-                MessageBox.Show("Problem loading WRT Data.", "WRT Data", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Problem loading CMT Data.", "CMT Data", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
@@ -1247,6 +1247,7 @@ namespace Wealthy_RPT
 
                 rptDetail.Closing += new System.ComponentModel.CancelEventHandler(Refresh_Cases); /*grab child form closing event for parent refesh */
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+                rptDetail.Title = rptDetail.Title + " : " + dUTR.ToString();
                 rptDetail.Show();
             }
         }
@@ -1284,8 +1285,8 @@ namespace Wealthy_RPT
             {
                 GC.Collect();
                 Cursor = Cursors.Arrow;
-                MessageBox.Show("Cannot open the WRT Guidance." + Environment.NewLine
-                    + Environment.NewLine + ex.Message, "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("Cannot open the CMT Guidance." + Environment.NewLine
+                    + Environment.NewLine + ex.Message, "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             Cursor = Cursors.Arrow;
         }
@@ -1337,7 +1338,7 @@ namespace Wealthy_RPT
                 GC.Collect();
                 Cursor = Cursors.Arrow;
                 MessageBox.Show("Cannot open the Technical Guidance." + Environment.NewLine
-                    + Environment.NewLine + ex.Message, "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    + Environment.NewLine + ex.Message, "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             Cursor = Cursors.Arrow;
         }
@@ -1387,5 +1388,11 @@ namespace Wealthy_RPT
         {
             bool importSuccess = ExPat_UI.Imports.ImportUH.ImportUpstreamHistory();
         }
+
+        private void mnuImportCRH_Click(object sender, RoutedEventArgs e)
+        {
+            bool importSuccess = ExPat_UI.Imports.ImportCRH.ImportCRMMRiskHistory();
+        }
     }
 }
+

@@ -71,13 +71,13 @@ namespace Wealthy_RPT
 
             if (txtSource.Text == "")
             {
-                MessageBox.Show("Please confirm the data to be deleted.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Please confirm the data to be deleted.", "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
             if (cboData.Text == "")
             {
-                MessageBox.Show("There doesn't appear to be a Table Instruction for this Data." +"\n" + "Please report to the Support Team Mailbox. See Help/About.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("There doesn't appear to be a Table Instruction for this Data." +"\n" + "Please report to the Support Team Mailbox. See Help/About.", "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
             else
@@ -112,7 +112,7 @@ namespace Wealthy_RPT
         {
             if (txtSource.Text == "")
             {
-                MessageBox.Show("Please confirm Data Source first.","Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Please confirm Data Source first.","Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
@@ -139,7 +139,7 @@ namespace Wealthy_RPT
                 string filename = openFileDlg.FileName;
                 if(filename != "")
                 {
-                    MessageBox.Show("If you would like this location to be the default location in future," + "\n" + "Please update the details using the Update DB Tables Function.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("If you would like this location to be the default location in future," + "\n" + "Please update the details using the Update DB Tables Function.", "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
 
@@ -153,13 +153,13 @@ namespace Wealthy_RPT
 
             if (txtSource.Text == "")
             {
-                MessageBox.Show("Please confirm the data to be imported.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Please confirm the data to be imported.", "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
             if (cboData.Text == "")
             {
-                MessageBox.Show("There doesn't appear to be a Table Instruction for this Data." + "\n" + "Please report to the Support Team Mailbox. See Help/About.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("There doesn't appear to be a Table Instruction for this Data." + "\n" + "Please report to the Support Team Mailbox. See Help/About.", "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
@@ -169,7 +169,7 @@ namespace Wealthy_RPT
 
             if (txtSource.Text == "")
             {
-                MessageBox.Show("Please confirm the source location.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Please confirm the source location.", "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
             else
@@ -185,7 +185,7 @@ namespace Wealthy_RPT
 
             if (strIdentifier == "")
             {
-                MessageBox.Show("There doesn't appear to be a specifiec Auto Number Data Indentifier for the Data Table." + "\n" + "Please report to the Support Team Mailbox. See Help/About.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("There doesn't appear to be a specifiec Auto Number Data Indentifier for the Data Table." + "\n" + "Please report to the Support Team Mailbox. See Help/About.", "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
@@ -200,7 +200,7 @@ namespace Wealthy_RPT
                 {
                     if (GetRowsCount(strTable) > 0)
                     {
-                        MessageBox.Show("The Table Top 0 Line Instruction has returned some records." + "\n" + "Please report to the Support Team Mailbox. See Help/About.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show("The Table Top 0 Line Instruction has returned some records." + "\n" + "Please report to the Support Team Mailbox. See Help/About.", "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
                     
@@ -243,7 +243,7 @@ namespace Wealthy_RPT
                         BC.WriteToServer(dt);
                     }
                     SQLConnection.Close();
-                    MessageBox.Show("Data import complete.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Data import complete.", "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {
@@ -252,7 +252,7 @@ namespace Wealthy_RPT
             }
             else
             {
-                MessageBox.Show("Check the Source Location as file doesn't appear to exist.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("Check the Source Location as file doesn't appear to exist.", "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
 
 
@@ -292,7 +292,7 @@ namespace Wealthy_RPT
             string connStr = Global.ConnectionString;
             int count = 0;
 
-            //MessageBox.Show(strTableTop, "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Question);
+            //MessageBox.Show(strTableTop, "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Question);
             try
             {
                 using (SqlConnection thisConnection = new SqlConnection(connStr))
@@ -306,7 +306,7 @@ namespace Wealthy_RPT
                         if(reader.Read())
                         {
                             count = (int)reader[0];
-                            //MessageBox.Show(count.ToString(), "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Question);
+                            //MessageBox.Show(count.ToString(), "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Question);
                         }
                     }
                 }

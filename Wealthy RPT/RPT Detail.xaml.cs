@@ -2867,6 +2867,8 @@ namespace Wealthy_RPT
 
             dgRSH.ItemsSource = ds.Tables[2].DefaultView;
 
+            dgCRH.ItemsSource = ds.Tables[3].DefaultView;
+
             con.Close();
         }
 
@@ -2921,7 +2923,7 @@ namespace Wealthy_RPT
         }
             catch
             {
-                MessageBox.Show("Contact details have not been selected.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Contact details have not been selected.", "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
 }
@@ -2932,7 +2934,7 @@ namespace Wealthy_RPT
             {
                 DataRowView selectedRow = (DataRowView)dgEmail.SelectedItem;
 
-            MessageBoxResult answer = MessageBox.Show("Do you want to delete " + selectedRow["Email_Address"] + " permanently?", "Wealthy Risk Tool", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult answer = MessageBox.Show("Do you want to delete " + selectedRow["Email_Address"] + " permanently?", "Customer Management Tool", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (answer == MessageBoxResult.Yes)
             {
                 SqlConnection con = new SqlConnection(Global.ConnectionString);
@@ -2956,7 +2958,7 @@ namespace Wealthy_RPT
             }
             catch
             {
-                MessageBox.Show("Contact details have not been selected.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Contact details have not been selected.", "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -3040,7 +3042,7 @@ namespace Wealthy_RPT
             }
             catch
             {
-                MessageBox.Show("Associate's details have not been selected.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Associate's details have not been selected.", "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
         }
@@ -3051,7 +3053,7 @@ namespace Wealthy_RPT
             {
                 DataRowView selectedRow = (DataRowView)dgAssociates.SelectedItem;
 
-                MessageBoxResult answer = MessageBox.Show("Do you want to delete " + selectedRow["Associate_Name"] + " permanently?", "Wealthy Risk Tool", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult answer = MessageBox.Show("Do you want to delete " + selectedRow["Associate_Name"] + " permanently?", "Customer Management Tool", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (answer == MessageBoxResult.Yes)
                 {
                     SqlConnection con = new SqlConnection(Global.ConnectionString);
@@ -3075,7 +3077,7 @@ namespace Wealthy_RPT
             }
             catch
             {
-                MessageBox.Show("Associate's details have not been selected.", "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Associate's details have not been selected.", "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -3185,8 +3187,8 @@ namespace Wealthy_RPT
             {
                 GC.Collect();
                 Cursor = Cursors.Arrow;
-                MessageBox.Show("Cannot open the WRT Guidance." + Environment.NewLine
-                    + Environment.NewLine + ex.Message, "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("Cannot open the CMT Guidance." + Environment.NewLine
+                    + Environment.NewLine + ex.Message, "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             Cursor = Cursors.Arrow;
         }
@@ -3205,7 +3207,7 @@ namespace Wealthy_RPT
                 GC.Collect();
                 Cursor = Cursors.Arrow;
                 MessageBox.Show("Cannot open the Technical Guidance." + Environment.NewLine
-                    + Environment.NewLine + ex.Message, "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    + Environment.NewLine + ex.Message, "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             Cursor = Cursors.Arrow;
         }
@@ -3224,7 +3226,7 @@ namespace Wealthy_RPT
                 GC.Collect();
                 Cursor = Cursors.Arrow;
                 MessageBox.Show("Cannot open the Technical Guidance." + Environment.NewLine
-                    + Environment.NewLine + ex.Message, "Wealthy Risk Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    + Environment.NewLine + ex.Message, "Customer Management Tool", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             Cursor = Cursors.Arrow;
         }
@@ -3393,6 +3395,93 @@ namespace Wealthy_RPT
         private void radTEARedAmber_Click(object sender, RoutedEventArgs e)
         {
             cboStrand.SelectedValue = "Tax Events & Assurance";
+        }
+
+        private void mnuYearMinus2_Click(object sender, RoutedEventArgs e)
+        {
+            int intCurrentYear = DateTime.Today.Year;
+            LinkToSharePointFolder(intCurrentYear - 2);
+        }
+
+        private void mnuYearMinus1_Click(object sender, RoutedEventArgs e)
+        {
+            int intCurrentYear = DateTime.Today.Year;
+            LinkToSharePointFolder(intCurrentYear - 1);
+        }
+
+        private void mnuCurrentYear_Click(object sender, RoutedEventArgs e)
+        {
+            int intCurrentYear = DateTime.Today.Year;
+            LinkToSharePointFolder(intCurrentYear);
+        }
+
+        private void LinkToSharePointFolder(int TaxYear)
+        {
+            string strRoot = Global.DefaultSharepointLocation.ToString();
+            string strYearRoot;
+            string strUTRRoot;
+
+            //strYearRoot
+            if(strRoot.EndsWith("/"))
+            {
+                strYearRoot = strRoot + TaxYear.ToString();
+            }
+            else
+            {
+                strYearRoot = strRoot + "/" + TaxYear.ToString(); 
+            }
+
+            strUTRRoot = strYearRoot + "/" + txtUTR.Text;
+
+            //Try above locations in reverse order
+            try
+            {
+                //check link
+
+                //open UTR link
+                System.Diagnostics.Process.Start(strUTRRoot);
+            }
+            catch
+            {
+                //try 
+                //{
+                //    //open Year link
+                //    System.Diagnostics.Process.Start(strYearRoot);
+                //}
+                //catch
+                //{
+                //    try
+                //    {
+                //        //open Root link
+                //        System.Diagnostics.Process.Start(strRoot);
+                //    }
+                //    catch
+                //    {
+                        MessageBox.Show("Cannot open link: " + strUTRRoot + ".", "Sharepoint Link", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                       //}
+                //}                
+            }
+        }
+
+        private void mnuRoot_Click(object sender, RoutedEventArgs e)
+        {
+            string strRoot = Global.DefaultSharepointLocation.ToString();
+
+            //strRoot
+            if (strRoot.EndsWith("/"))
+            {
+                strRoot = strRoot.Remove(strRoot.Length-1,1);
+            }
+
+            try
+            {
+                //open UTR link
+                System.Diagnostics.Process.Start(strRoot);
+            }
+            catch
+            {
+           
+            }
         }
     }
 
